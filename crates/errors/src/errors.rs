@@ -1,4 +1,7 @@
+use std::fmt::Display;
+
 use drv_errors_derive::DrvError;
+use models::state::types::account_type::AccountType;
 use serde::{Deserialize, Serialize};
 #[cfg(feature = "on-chain")]
 use solana_program::{msg, program_error::ProgramError, pubkey::Pubkey};
@@ -19,8 +22,8 @@ impl<T, E> ResultExt<T, E> for Result<T, E> {
 }
 
 #[cfg(feature = "on-chain")]
-impl From<DeriverseError> for ProgramError {
-    fn from(e: DeriverseError) -> Self {
+impl From<DeriverseErrorKind> for ProgramError {
+    fn from(e: DeriverseErrorKind) -> Self {
         msg!("{}", e.to_json().to_string());
         ProgramError::Custom(e.code())
     }
@@ -33,438 +36,424 @@ impl From<DeriverseError> for u32 {
     }
 }
 
-#[derive(Debug, DrvError, Serialize, Deserialize, Eq, PartialEq)]
-pub enum DeriverseError {
-    // Errors with parameters for demonstration
+#[derive(Debug, Serialize, Deserialize, PartialEq)]
+pub struct ErrorLocation {
+    pub file: &'static str,
+    pub line: u32,
+}
+
+pub struct DeriverseError {
+    error: DeriverseErrorKind,
+    location: ErrorLocation,
+}
+
+impl DeriverseError {
+    pub fn new(error: DeriverseErrorKind, file: &'static str, line: u32) -> Self {
+        Self {
+            error,
+            location: ErrorLocation { file, line },
+        }
+    }
+
+    pub fn code(&self) -> u32 {
+        self.error.code()
+    }
+
+    pub fn to_json(&self) -> serde_json::Value {
+        let mut json = self.error.to_json();
+        json["location"] = serde_json::json!({
+            "file": self.location.file,
+            "line": self.location.line
+        });
+        json
+    }
+}
+
+#[macro_export]
+macro_rules! drv_err {
+    ($error:expr) => {
+        DeriverseError::new($error, file!(), line!())
+    };
+}
+
+#[macro_export]
+macro_rules! drv_result {
+    ($error:expr) => {
+        DeriverseError::new($error, file!(), line!())
+    };
+}
+
+#[test]
+fn error_location_test() {
+    let error: DeriverseError = drv_err!(DeriverseErrorKind::InvalidDataLength {
+        expected: 100,
+        actual: 12
+    });
+
+    let current_file = file!();
+    let line_plus_six = line!();
+
+    assert_eq!(current_file, error.location.file);
+    assert_eq!(line_plus_six - 6, error.location.line);
+}
+
+#[test]
+fn some_test() {
+    let error = DeriverseErrorKind::InvalidMintAccount {
+        token_id: 10,
+        expected_address: Pubkey::new_unique(),
+        actual_address: Pubkey::new_unique(),
+    };
+
+    println!("{:?}", error.to_json());
+}
+
+#[derive(Debug, DrvError, Serialize, Deserialize, PartialEq)]
+pub enum DeriverseErrorKind {
     #[error(
         code = 101,
-        msg = "Invalid accounts number: expected {expected}, got {actual}"
+        msg = "Invalid provided accounts number: expected {expected}, got {actual}"
     )]
     InvalidAccountsNumber { expected: usize, actual: usize },
 
     #[error(
         code = 102,
-        msg = "Invalid data length: expected {expected}, got {actual}"
+        msg = "Invalid instructions data length, expected {expected} < actual {actual}"
     )]
     InvalidDataLength { expected: usize, actual: usize },
 
-    #[error(code = 103, msg = "Invalid root account {account}")]
-    InvalidRootAccount { account: Pubkey },
+    #[error(code = 104, msg = "{address} must be signer")]
+    MustBeSigner { address: Pubkey },
 
+    #[error(code = 246, msg = "{address} must be read only")]
+    MustBeReadOnly { address: Pubkey },
+
+    #[error(code = 246, msg = "{address} must be writable")]
+    MustBeWritable { address: Pubkey },
     #[error(
-        code = 104,
-        msg = "Invalid signer account {account}, expected {expected_signer}"
+        code = 122,
+        msg = "Invalid token program ID, expected {expected} != actual {actual}"
     )]
-    InvalidSignerAccount {
-        account: Pubkey,
-        expected_signer: Pubkey,
+    InvalidTokenProgramId {
+        expected: TokenProgram,
+        actual: TokenProgram,
     },
+    #[error(code = 123, msg = "Unsupported token program id")]
+    UnsupportedTokenProgramId { address: Pubkey },
 
-    // Simple errors without parameters
-    #[error(code = 133, msg = "Invalid Client Primary Account")]
-    InvalidClientPrimaryAccount,
+    #[error(code = 124, msg = "Invalid mint address for token {token_id}")]
+    InvalidMintAccount {
+        token_id: u32,
+        expected_address: Pubkey,
+        actual_address: Pubkey,
+    },
+    #[error(
+        code = 126,
+        msg = "Invalid mint token program, expected {expected} != actual {actual}"
+    )]
+    InvalidMintProgramId {
+        expected: TokenProgram,
+        actual: TokenProgram,
+        mint_address: Pubkey,
+    },
+    #[error(code = 127, msg = "Invalid LUT program ID")]
+    InvalidLutProgramId { actual: Pubkey },
 
-    #[error(code = 134, msg = "Invalid Client Derivatives Account")]
-    InvalidClientDerivativesAccount,
+    #[error(code = 128, msg = "Invalid LUT account")]
+    InvalidLutAccount { expected: Pubkey, actual: Pubkey },
 
-    #[error(code = 105, msg = "Invalid Instrument Static Account")]
-    InvalidInstrStaticAccount,
-
-    #[error(code = 106, msg = "Invalid Instrument Trace Account")]
-    InvalidInstrTraceAccount,
-
-    #[error(code = 107, msg = "Invalid Instrument Account")]
-    InvalidInstrAccount,
-
-    #[error(code = 108, msg = "Invalid Spot Bids Tree Account")]
-    InvalidSpotBidsTreeAccount,
-
-    #[error(code = 109, msg = "Invalid Spot Asks Tree Account")]
-    InvalidSpotAsksTreeAccount,
-
-    #[error(code = 110, msg = "Invalid Spot Bid Orders Account")]
-    InvalidSpotBidOrdersAccount,
-
-    #[error(code = 111, msg = "Invalid Spot Ask Orders Account")]
-    InvalidSpotAskOrdersAccount,
-
-    #[error(code = 112, msg = "Invalid Spot Lines Account")]
-    InvalidSpotLinesAccount,
-
-    #[error(code = 113, msg = "Invalid Spot Maps Account")]
-    InvalidSpotMapsAccount,
-
-    #[error(code = 114, msg = "Invalid Spot Client Infos Account")]
-    InvalidSpotClientInfosAccount,
-
-    #[error(code = 115, msg = "Invalid Spot Client Infos2 Account")]
-    InvalidSpotClientInfos2Account,
-
-    #[error(code = 116, msg = "Invalid Spot Client Accounts Account")]
-    InvalidSpotClientAccountsAccount,
-
-    #[error(code = 117, msg = "Invalid Candles Account")]
-    InvalidCandlesAccount,
-
-    #[error(code = 120, msg = "Invalid Tokens Account")]
-    InvalidTokensAccount,
-
-    #[error(code = 121, msg = "Invalid Base Tokens Account")]
-    InvalidBaseTokensAccount,
-
-    #[error(code = 142, msg = "Invalid PDF Account")]
-    InvalidPdfAccount,
-
-    #[error(code = 122, msg = "Invalid Token Program ID")]
-    InvalidTokenProgramId,
-
-    #[error(code = 123, msg = "Invalid Token 2022 Program ID")]
-    InvalidToken2022ProgramId,
-
-    #[error(code = 124, msg = "Invalid Mint Address")]
-    InvalidMintAccount,
-
-    #[error(code = 125, msg = "Invalid Token Address")]
-    InvalidTokenAddress,
-
-    #[error(code = 126, msg = "Invalid Token Program Address")]
-    InvalidTokenProgramAddress,
-
-    #[error(code = 127, msg = "Invalid LUT Program ID")]
-    InvalidLutProgramId,
-
-    #[error(code = 128, msg = "Invalid LUT Account")]
-    InvalidLutAccount,
-
-    #[error(code = 129, msg = "Invalid System Program ID")]
-    InvalidSystemProgramId,
-
-    #[error(code = 130, msg = "Invalid Quantity")]
-    InvalidQuantity,
-
-    #[error(code = 131, msg = "Invalid Price")]
-    InvalidPrice,
-
-    #[error(code = 132, msg = "Insufficient Funds")]
+    #[error(code = 129, msg = "Invalid System program ID")]
+    InvalidSystemProgramId { actual: Pubkey },
+    #[error(
+        code = 130,
+        msg = "Invalid quantity value {value}, acceptable range: {min_value}..{max_value}"
+    )]
+    InvalidQuantity {
+        value: i64,
+        min_value: i64,
+        max_value: i64,
+    },
+    #[error(
+        code = 131,
+        msg = "Invalid price value {price}, acceptable range: {min_price}..{max_price}"
+    )]
+    InvalidPrice {
+        price: i64,
+        min_price: i64,
+        max_price: i64,
+    },
+    #[error(code = 132, msg = "Insufficient funds")]
     InsufficientFunds,
 
-    #[error(code = 135, msg = "Instrument Is Not Active")]
-    InstrIsNotActive,
-
-    #[error(code = 136, msg = "Too Much Lines")]
-    TooMuchLines,
-
-    #[error(code = 137, msg = "Allocator Failed")]
+    #[error(
+        code = 136,
+        msg = "Too many lines on {side} side provided value is {amount}"
+    )]
+    TooManyLines { side: OrderSide, amount: u32 },
+    #[error(code = 137, msg = "Allocator failed")]
     AllocatorFailed,
 
-    #[error(code = 138, msg = "You Try To Trade With Yourself")]
-    CrossOrder,
+    #[error(code = 137, msg = "Order allocator failed, side: {side}")]
+    OrderAllocatorFailed { side: OrderSide },
+    #[error(
+        code = 138,
+        msg = "Attempted to trade with yourself, order id: {order_id}"
+    )]
+    CrossOrder { order_id: i64, qty: i64, sum: i64 },
 
-    #[error(code = 139, msg = "Matching Engine Failed")]
+    #[error(code = 139, msg = "Engine matching failed")]
     MatchingEngineFailed,
 
-    #[error(code = 140, msg = "Pool Trade Failed")]
-    PoolTradeFailed,
+    #[error(code = 141, msg = "Invalid PDA for {account_type}")]
+    InvalidPDA {
+        expected_address: Pubkey,
+        actual_address: Pubkey,
+        account_type: AccountType,
+    },
 
-    #[error(code = 141, msg = "Invalid PDA")]
-    InvalidPDA,
+    #[error(
+        code = 144,
+        msg = "Invalid new {account_type} account. Owner has to be SystemProgram"
+    )]
+    InvalidNewAccount {
+        address: Pubkey,
+        owner: Pubkey,
+        account_type: AccountType,
+    },
+    #[error(
+        code = 143,
+        msg = "Invalid program {account_type} account. Owner have to be {program_id_address}"
+    )]
+    InvalidProgramAccount {
+        address: Pubkey,
+        owner: Pubkey,
+        program_id_address: Pubkey,
+        account_type: AccountType,
+    },
+    #[error(code = 146, msg = "Invalid Holder Admin account")]
+    InvalidHolderAdminAccount { actual_address: Pubkey },
+    #[error(code = 147, msg = "Invalid Admin account")]
+    InvalidAdminAccount { expected: Pubkey, actual: Pubkey },
+    #[error(
+        code = 148,
+        msg = "Invalid new Operator account, operator with this address already exist"
+    )]
+    InvalidNewOperatorAccount { address: Pubkey },
+    #[error(
+        code = 150,
+        msg = "Invalid Operator account, operator with this address does not exist"
+    )]
+    InvalidOperatorAccount { address: Pubkey },
+    #[error(code = 151, msg = "Invalid token id {id}")]
+    InvalidTokenId { id: u32 },
+    #[error(
+        code = 151,
+        msg = "Unexpected token id, expected {expected} != actual {actual}"
+    )]
+    UnexpectedTokenId { expected: u32, actual: u32 },
+    #[error(code = 212, msg = "Token with id {id} was not found")]
+    TokenWasNotFound {
+        id: u32,
+        community_state_address: Pubkey,
+    },
+    #[error(
+        code = 155,
+        msg = "Invalid program's token account for {token_id} token id"
+    )]
+    InvalidProgramsTokenAccount {
+        token_id: u32,
+        expected_address: Pubkey,
+        actual_address: Pubkey,
+    },
+    #[error(code = 166, msg = "Invalid instrument id {id}")]
+    InvalidInstrId { id: u32 },
 
-    #[error(code = 143, msg = "Invalid New Program Account")]
-    InvalidNewProgramAccount,
+    #[error(
+        code = 166,
+        msg = "Invalid instrument id in {account_type:?} account, expected {expected} != actual {actual}"
+    )]
+    UnexpectedInstrumentId {
+        expected: u32,
+        actual: u32,
+        address: Pubkey,
+        account_type: AccountType,
+    },
+    #[error(
+        code = 175,
+        msg = "Order node on the side {side} with id {id} was not found"
+    )]
+    NodeWasNotFound { id: i64, side: OrderSide },
 
-    #[error(code = 144, msg = "Invalid New Account")]
-    InvalidNewAccount,
+    #[error(
+        code = 175,
+        msg = "Order on the side {side} with link {link} was not found"
+    )]
+    OrderWasNotFound { link: u32, side: OrderSide },
 
-    #[error(code = 145, msg = "Invalid Holder Account")]
-    InvalidHolderAccount,
-
-    #[error(code = 146, msg = "Invalid Holder Admin Account")]
-    InvalidHolderAdminAccount,
-
-    #[error(code = 147, msg = "Invalid Admin Account")]
-    InvalidAdminAccount,
-
-    #[error(code = 148, msg = "Invalid New Operator Account")]
-    InvalidNewOperatorAccount,
-
-    #[error(code = 149, msg = "Invalid New Account PDA")]
-    InvalidNewAccountPDA,
-
-    #[error(code = 150, msg = "Invalid Operator Account")]
-    InvalidOperatorAccount,
-
-    #[error(code = 151, msg = "Invalid Token ID")]
-    InvalidTokenId,
-
-    #[error(code = 152, msg = "Instrument Is Active")]
-    InstrIsActive,
-
-    #[error(code = 153, msg = "Mint Is Not Initialized")]
-    MintIsNotInitialized,
-
-    #[error(code = 154, msg = "SPL Token Account Is Not Initialized")]
-    SplTokenAccountIsNotInitialized,
-
-    #[error(code = 155, msg = "Invalid Token Account")]
-    InvalidTokenAccount,
-
-    #[error(code = 156, msg = "Pool Already Exists")]
-    PoolAlreadyExists,
-
-    #[error(code = 157, msg = "Invalid Futures Bids Tree Account")]
-    InvalidFuturesBidsTreeAccount,
-
-    #[error(code = 158, msg = "Invalid Futures Asks Tree Account")]
-    InvalidFuturesAsksTreeAccount,
-
-    #[error(code = 159, msg = "Invalid Futures Bid Orders Account")]
-    InvalidFuturesBidOrdersAccount,
-
-    #[error(code = 160, msg = "Invalid Futures Ask Orders Account")]
-    InvalidFuturesAskOrdersAccount,
-
-    #[error(code = 161, msg = "Invalid Futures Lines Account")]
-    InvalidFuturesLinesAccount,
-
-    #[error(code = 162, msg = "Invalid Futures Maps Account")]
-    InvalidFuturesMapsAccount,
-
-    #[error(code = 163, msg = "Invalid Futures Client Infos Account")]
-    InvalidFuturesClientInfosAccount,
-
-    #[error(code = 164, msg = "Invalid Futures Client Infos2 Account")]
-    InvalidFuturesClientInfos2Account,
-
-    #[error(code = 165, msg = "Invalid Futures Client Accounts Account")]
-    InvalidFuturesClientAccountsAccount,
-
-    #[error(code = 166, msg = "Invalid Instr ID")]
-    InvalidInstrId,
-
-    #[error(code = 167, msg = "Invalid Task ID")]
-    InvalidTaskId,
-
-    #[error(code = 168, msg = "Invalid Pool Instr ID")]
-    InvalidPoolInstrId,
-
-    #[error(code = 169, msg = "Max Number Of Tasks Exceeded")]
-    MaxNumberOfTasksExceeded,
-
-    #[error(code = 170, msg = "Task Is Not Started")]
-    TaskIsNotStarted,
-
-    #[error(code = 171, msg = "Task Is Already Started")]
-    InvalidTaskIsAlreadyStarted,
-
-    #[error(code = 172, msg = "Invalid Tokens Amount")]
-    InvalidTokensAmount,
-
-    #[error(code = 173, msg = "Insufficient Program Funds")]
-    InsufficientProgramFunds,
-
-    #[error(code = 174, msg = "Spot Pool Is Empty")]
-    SpotPoolIsEmpty,
-
-    #[error(code = 175, msg = "Order Not Found")]
-    OrderNotFound,
-
-    #[error(code = 176, msg = "Invalid Vanilla Trades Count")]
-    InvalidVanillaTradesCount,
-
-    #[error(code = 177, msg = "Invalid Options Amount")]
-    InvalidOptionsAmount,
-
-    #[error(code = 178, msg = "Invalid Strike ID")]
-    InvalidStrikeId,
-
-    #[error(code = 179, msg = "Max Cost Difference Exceeded")]
-    MaxCostDiffExceeded,
-
-    #[error(code = 180, msg = "Insufficient Pool Funds")]
-    InsufficientPoolFunds,
-
-    #[error(code = 181, msg = "Trading Is Not Available")]
-    TradingIsNotAvailable,
-
-    #[error(code = 182, msg = "Trading For This Strike Is Not Available")]
-    TradingForThisStrikeIsNotAvailable,
-
-    #[error(code = 183, msg = "Client Data Destruction")]
+    #[error(code = 183, msg = "Client data destruction")]
     ClientDataDestruction,
+    #[error(code = 185, msg = "Token with id {id} must be base currency")]
+    TokenMustBeBaseCrncy { id: u32, mask: u32 },
 
-    #[error(code = 184, msg = "Invalid Options Pool Mint Supply")]
-    InvalidOptionsPoolMintSupply,
+    #[error(code = 189, msg = "Impossible to upgrade instrument with id {id}")]
+    ImpossibleToUpgrade { id: u32, mask: u32 },
 
-    #[error(code = 185, msg = "Invalid Base Currency")]
-    InvalidCrncy,
-
-    #[error(code = 186, msg = "Invalid Task")]
-    InvalidTask,
-
-    #[error(code = 187, msg = "Invalid Time")]
-    InvalidTime,
-
-    #[error(code = 188, msg = "Invalid Sigma")]
-    InvalidSigma,
-
-    #[error(code = 189, msg = "Impossible To Upgrade")]
-    ImpossibleToUpgrade,
-
-    #[error(code = 190, msg = "Invalid Bid Orders Count")]
+    #[error(code = 190, msg = "Invalid Bid Orders count")]
     InvalidBidOrdersCount,
-
-    #[error(code = 191, msg = "Invalid Ask Orders Count")]
+    #[error(code = 191, msg = "Invalid Ask Orders count")]
     InvalidAskOrdersCount,
 
-    #[error(code = 192, msg = "Invalid Bid Lines Count")]
+    #[error(code = 192, msg = "Invalid Bid Lines count")]
     InvalidBidLinesCount,
 
-    #[error(code = 193, msg = "Invalid Ask Lines Count")]
+    #[error(code = 193, msg = "Invalid Ask Lines count")]
     InvalidAskLinesCount,
 
-    #[error(code = 194, msg = "Impossible To Payoff")]
-    ImpossibleToPayoff,
+    #[error(
+        code = 196,
+        msg = "Invalid associated token address for token {token_id}"
+    )]
+    InvalidAssociatedTokenAddress {
+        token_id: u32,
+        expected_address: Pubkey,
+        actual_address: Pubkey,
+    },
+    #[error(
+        code = 201,
+        msg = "Too early to distribute funds, current time is {current_time} < allowed time {limit_time}"
+    )]
+    TooEarlyToDistribFunds { limit_time: u32, current_time: u32 },
 
-    #[error(code = 195, msg = "Too Small Amount To Withdraw")]
-    TooSmallAmountToWithdraw,
+    #[error(
+        code = 203,
+        msg = "Insufficient Deriverse tokens supply, amount {amount} < min_amount {min_amount}"
+    )]
+    InsufficientDeriverseTokensSupply { amount: i64, min_amount: i64 },
 
-    #[error(code = 196, msg = "Invalid Associated Token Address")]
-    InvalidAssociatedTokenAddress,
+    #[error(code = 204, msg = "Invalid client Id in client community account")]
+    InvalidClientId {
+        address: Pubkey,
+        expected: u32,
+        actual: u32,
+    },
+    #[error(
+        code = 205,
+        msg = "Invalid voting counter, expected {expected} != actual {actual}"
+    )]
+    InvalidVotingCounter { actual: u32, expected: u32 },
 
-    #[error(code = 197, msg = "Invalid Instance ID")]
-    InvalidInstanceId,
-
-    #[error(code = 198, msg = "Collateral Reduction Unavailable")]
-    CollateralReductionUnavailable,
-
-    #[error(code = 200, msg = "Base Currency Token Not Found")]
-    BaseCrncyNotFound,
-
-    #[error(code = 201, msg = "Too Early To Distrib Funds")]
-    TooEarlyToDistribFunds,
-
-    #[error(code = 202, msg = "Insufficient Deriverse Tokens")]
-    InsufficientDeriverseTokens,
-
-    #[error(code = 203, msg = "Insufficient Deriverse Tokens Supply")]
-    InsufficientDeriverseTokensSupply,
-
-    #[error(code = 204, msg = "Invalid Client Community Account")]
-    InvalidClientCommunityAccount,
-
-    #[error(code = 205, msg = "Invalid Voting Counter")]
-    InvalidVotingCounter,
-
-    #[error(code = 206, msg = "Already Voted")]
+    #[error(code = 206, msg = "Already voted")]
     AlreadyVoted,
-
-    #[error(code = 207, msg = "Airdrop Failed")]
-    AirdropFailed,
-
-    #[error(code = 208, msg = "Invalid Deriverse Authority Account")]
-    InvalidDrvsAuthAccount,
-
-    #[error(code = 209, msg = "Invalid Community Account")]
-    InvalidCommunityAccount,
 
     #[error(code = 210, msg = "No Trade (IOC)")]
     NoTradeIOC,
 
-    #[error(code = 211, msg = "Invalid Asset Type")]
-    InvalidAssetType,
-
-    #[error(code = 212, msg = "Asset Not Found")]
-    AssetNotFound,
-
-    #[error(code = 213, msg = "Invalid Spot Account")]
-    InvalidSpotAccount,
+    #[error(code = 212, msg = "Asset {asset_type} with id {id} was not found")]
+    AssetNotFound { asset_type: u32, id: u32 },
 
     #[error(code = 214, msg = "Null Pointer")]
     NullPointer,
 
-    #[error(code = 215, msg = "Invalid Client Bids Count")]
-    InvalidClientBidsCount,
+    #[error(code = 217, msg = "Community account has to be read only")]
+    CommunityAccountHasToBeReadOnly { address: Pubkey },
 
-    #[error(code = 216, msg = "Invalid Client Asks Count")]
-    InvalidClientAsksCount,
-
-    #[error(code = 217, msg = "Community Account Has To Be Read Only")]
-    CommunityAccountHasToBeReadOnly,
-
-    #[error(code = 218, msg = "Invalid Token Type")]
+    #[error(code = 218, msg = "Invalid token type")]
     InvalidTokenType,
 
     #[error(code = 219, msg = "Null Index")]
     NullIndex,
-
-    #[error(code = 220, msg = "Invalid Futures Account")]
-    InvalidFuturesAccount,
-
-    #[error(code = 221, msg = "Client Derivative Not Found")]
-    ClientDerivativeNotFound,
-
-    #[error(code = 222, msg = "Debug Breaking Point")]
-    DebugBreakingPoint,
-
-    #[error(code = 223, msg = "Arithmetic Overflow")]
+    #[error(code = 223, msg = "Arithmetic overflow")]
     ArithmeticOverflow,
 
-    #[error(code = 224, msg = "Invalid Data Format")]
-    InvalidDataFormat,
+    #[error(code = 224, msg = "Invalid data format")]
+    InvalidClientDataFormat,
 
-    #[error(code = 225, msg = "Invalid Order ID")]
-    InvalidOrderId,
+    #[error(
+        code = 225,
+        msg = "Invalid order id {value}, acceptable range: {min_value}.."
+    )]
+    InvalidOrderId {
+        value: i64,
+        min_value: i64,
+        max_value: i64,
+    },
+    #[error(code = 226, msg = "Perp on instrument id {id} is not available")]
+    PerpIsNotAvailable { id: u32, mask: u32 },
 
-    #[error(code = 226, msg = "Perp Is Not Available")]
-    PerpIsNotAvailable,
-
-    #[error(code = 227, msg = "Invalid Perp Account")]
-    InvalidPerpAccount,
-
-    #[error(code = 228, msg = "Invalid Perp Maps Account")]
-    InvalidPerpMapsAccount,
-
-    #[error(code = 229, msg = "Impossible To Withdraw Funds During Margin Call")]
+    #[error(code = 229, msg = "Impossible to withdraw funds during margin call")]
     ImpossibleToWithdrawFundsDuringMarginCall,
 
-    #[error(code = 230, msg = "Invalid Perp Clients Count")]
-    InvalidPerpClientsCount,
+    #[error(code = 230, msg = "Perp client count can not be zero")]
+    PerpClientCountCanNotBeZero,
 
-    #[error(code = 231, msg = "Max Perp Clients Count Reached")]
-    MaxPerpClientsCountReached,
+    #[error(code = 231, msg = "Max perp clients count reached")]
+    MaxPerpClientsCountReached { value: u32, max: u32 },
 
-    #[error(code = 232, msg = "Invalid Leverage")]
-    InvalidLeverage,
-
+    #[error(
+        code = 232,
+        msg = "Invalid leverage, leverage {value} > max leverage {max} or equal to 0"
+    )]
+    InvalidLeverage { value: u32, max: u32 },
     #[error(code = 233, msg = "Invalid Socialized Loss Open Interest")]
     InvalidSocializedLossOpenInterest,
 
-    #[error(code = 234, msg = "Impossible To Close Perp Position")]
+    #[error(code = 234, msg = "Impossible to close perp position")]
     ImpossibleToClosePerpPosition,
 
-    #[error(code = 235, msg = "Too Early To Withdraw Fees")]
-    TooEarlyToWithdrawFees,
+    #[error(
+        code = 235,
+        msg = "Too early to withdraw fees, current time is {current_time} < allowed time {limit_time}"
+    )]
+    TooEarlyToWithdrawFees { limit_time: u32, current_time: u32 },
 
-    #[error(code = 236, msg = "Fees Withdrawal Is Too Large")]
-    FeesWithdrawalIsTooLarge,
+    #[error(code = 236, msg = "Fees withdrawal is too large")]
+    FeesWithdrawalIsTooLarge { value: i64 },
 
-    #[error(code = 237, msg = "Invalid Oracle Feed")]
-    InvalidOracleFeed,
+    #[error(code = 237, msg = "Invalid oracle feed")]
+    InvalidOracleFeed {
+        expected_address: Pubkey,
+        actual_address: Pubkey,
+    },
+    #[error(
+        code = 238,
+        msg = "Invalid Ref discount {discount}, expected to be in range {min}..{max}"
+    )]
+    InvalidRefDiscount { discount: f64, min: f64, max: f64 },
 
-    #[error(code = 238, msg = "Invalid Ref Program Parameters")]
-    InvalidRefProgramParameters,
+    #[error(
+        code = 238,
+        msg = "Invalid Ref ratio {ratio}, expected to be in range {min}..{max}"
+    )]
+    InvalidRefRatio { ratio: f64, min: f64, max: f64 },
 
-    #[error(code = 239, msg = "Ref Program Inactive")]
+    #[error(code = 239, msg = "Ref program is inactive")]
     RefProgramInactive,
 
-    #[error(code = 240, msg = "Invalid Ref Link ID")]
-    InvalidRefLinkId,
+    #[error(
+        code = 240,
+        msg = "Invalid ref link ID {ref_id}, acceptable ids: {first_ref_id}, {second_ref_id}"
+    )]
+    InvalidRefLinkId {
+        ref_id: u32,
+        first_ref_id: u32,
+        second_ref_id: u32,
+    },
 
-    #[error(code = 241, msg = "Ref Link Expired")]
-    RefLinkExpired,
+    #[error(
+        code = 241,
+        msg = "Ref link with id {ref_id} is expired, current time is {current_time} > expiration time {expiration_time}"
+    )]
+    RefLinkExpired {
+        ref_id: u32,
+        expiration_time: u32,
+        current_time: u32,
+    },
 
-    #[error(code = 242, msg = "Invalid Ref Address")]
-    InvalidRefAddress,
+    #[error(code = 242, msg = "Invalid referral client primary account address")]
+    InvalidRefAddress {
+        expected_address: Pubkey,
+        actual_address: Pubkey,
+    },
 
     #[error(code = 243, msg = "Operation Rejected")]
     OperationRejected,
@@ -475,53 +464,139 @@ pub enum DeriverseError {
     #[error(code = 245, msg = "Memory map deallocation error")]
     MemoryMapFreeFailed,
 
-    #[error(code = 246, msg = "Invalid Write Permission")]
-    InvalidWritePermission,
+    #[error(
+        code = 247,
+        msg = "Invalid account tag in account, expected {{*expected_account_type as u32}} != actual {actual_tag}"
+    )]
+    InvalidAccountTag {
+        expected_account_type: AccountType,
+        actual_tag: u32,
+        address: Pubkey,
+    },
+    #[error(
+        code = 249,
+        msg = "Invalid version in {account_type:?}, expected {expected} != actual {actual}"
+    )]
+    InvalidVersion {
+        address: Pubkey,
+        account_type: AccountType,
+        expected: u32,
+        actual: u32,
+    },
+    #[error(code = 250, msg = "Invalid data alignment in {address}")]
+    InvalidDataAlignment { address: Pubkey },
 
-    #[error(code = 247, msg = "Invalid Account Tag")]
-    InvalidAccountTag,
-
-    #[error(code = 248, msg = "Invalid Account Owner")]
-    InvalidAccountOwner,
-
-    #[error(code = 249, msg = "Incompatible version in the RootState")]
-    InvalidRootAccountVersion,
-
-    #[error(code = 250, msg = "Invalid data alignment")]
-    InvalidDataAlignment,
-
-    #[error(code = 251, msg = "Invalid amount of provided accounts")]
-    InvalidAccountsAmount,
-
+    #[error(
+        code = 251,
+        msg = "Invalid amount of provided accounts, expected {expected} != actual {actual}"
+    )]
+    InvalidAccountsAmount { expected: u32, actual: u32 },
     #[error(
         code = 252,
         msg = "wSOL minting at legacy solana_native address is not supported"
     )]
     LegacyNativeMintNotSupported,
 
-    #[error(code = 253, msg = "Identical tokens not allowed in trading pair")]
-    IdenticalTokensInPair,
-
-    #[error(code = 254, msg = "Failed to call invoke or invoke signed")]
-    InvokeFailed,
-
+    #[error(code = 253, msg = "Identical tokens are not allowed in trading pair")]
+    IdenticalTokensInPair { token_id: u32 },
     #[error(
         code = 255,
         msg = "wSOL minting at solana_native address is not supported"
     )]
     Token2022NativeMintNotSupported,
 
-    #[error(code = 256, msg = "Invalid Maps account address")]
-    InvalidMapsAccountAddress,
+    #[error(
+        code = 256,
+        msg = "Invalid accounts address for {account_type} account"
+    )]
+    InvalidAccountAddress {
+        expected_address: Pubkey,
+        actual_address: Pubkey,
+        account_type: AccountType,
+    },
+    #[error(code = 212, msg = "Candle with tag {tag} was not found")]
+    CandleWasNotFound { tag: u32 },
 
-    #[error(code = 257, msg = "Trade is too small")]
-    TradeIsTooSmall,
+    #[error(
+        code = 250,
+        msg = "Invalid accounts size in {account_type} account, expected {expected} < actual {actual}"
+    )]
+    InvalidAccountSize {
+        address: Pubkey,
+        account_type: AccountType,
+        expected: usize,
+        actual: usize,
+    },
+    #[error(code = 246, msg = "Failed to upgrade access manager to writable")]
+    FailedToUpgrade,
 
-    #[error(code = 258, msg = "Perp was already allocated")]
-    PerpAlreadyAllocated,
+    #[error(
+        code = 258,
+        msg = "Invalid candles amount, expected candle on index {index} exist while length is {len}"
+    )]
+    InvalidCandlesAmount { index: usize, len: usize },
 
-    #[error(code = 259, msg = "Invalid Supply")]
-    InvalidSupply,
+    #[error(code = 110, msg = "Invalid wallet address")]
+    #[serde(rename = "110")]
+    InvalidWalletAddress {
+        address: Pubkey,
+        wallet_addr: Pubkey,
+        actual: Pubkey,
+    },
+    #[error(code = 224, msg = "Invalid candles context")]
+    InvalidCandlesContext,
+
+    #[error(code = 212, msg = "Unsupported account tag {tag}")]
+    UnsupportedAccountTag { tag: u32 },
+
+    #[error(
+        code = 239,
+        msg = "Self-referral is not allowed, client can not be referral for himself"
+    )]
+    SelfRefNotAllowed { client_primary_addr: Pubkey },
+
+    #[error(code = 250, msg = "Offset {offset} is out of bound for data len {len}")]
+    OffsetOutOfBounds {
+        address: Pubkey,
+        offset: usize,
+        len: usize,
+    },
+
+    #[error(code = 155, msg = "Invalid token owner for {token_id} token")]
+    InvalidTokenOwner {
+        token_id: u32,
+        address: Pubkey,
+        expected_adderss: Pubkey,
+        actual_address: Pubkey,
+    },
+
+    #[error(code = 151, msg = "Different token ids, {id_left} != {id_right}")]
+    DifferentTokenIds { id_left: u32, id_right: u32 },
+}
+
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
+/// Enum for token version verification
+pub enum TokenProgram {
+    Original,
+    Token2022,
+}
+
+#[derive(Clone, Copy, PartialEq, Debug, Serialize, Deserialize, Eq)]
+pub enum OrderSide {
+    Bid,
+    Ask,
+}
+
+impl Display for OrderSide {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        todo!()
+    }
+}
+
+impl Display for TokenProgram {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        todo!()
+    }
 }
 
 #[cfg(test)]
@@ -535,17 +610,20 @@ mod tests {
     #[test]
     fn test_error_codes_and_display() {
         // Test simple error
-        let simple_err = DeriverseError::OperationRejected;
+        let simple_err = DeriverseErrorKind::OperationRejected;
         assert_eq!(simple_err.code(), 243);
         assert_eq!(simple_err.to_string(), "Operation Rejected");
 
         // Test error with parameters
-        let complex_err = DeriverseError::InvalidAccountsNumber {
+        let complex_err = DeriverseErrorKind::InvalidAccountsNumber {
             expected: 5,
             actual: 3,
         };
         assert_eq!(complex_err.code(), 101);
-        assert_eq!(complex_err.to_string(), "Invalid accounts number: expected 5, got 3");
+        assert_eq!(
+            complex_err.to_string(),
+            "Invalid provided accounts number: expected 5, got 3"
+        );
 
         // Test Debug implementation
         let debug_str = format!("{:?}", complex_err);
@@ -555,7 +633,10 @@ mod tests {
     #[cfg(feature = "off-chain")]
     #[test]
     fn test_solana_integration_off_chain() {
-        let err = DeriverseError::InvalidDataLength { expected: 100, actual: 50 };
+        let err = DeriverseErrorKind::InvalidDataLength {
+            expected: 100,
+            actual: 50,
+        };
         let code: u32 = err.into();
         assert_eq!(code, 102);
     }
@@ -565,10 +646,13 @@ mod tests {
     fn test_solana_integration_on_chain() {
         use solana_program::program_error::ProgramError;
 
-        let err = DeriverseError::InvalidRootAccount { account: Pubkey::new_unique() };
+        let err = DeriverseErrorKind::InvalidOperatorAccount {
+            address: Pubkey::new_unique(),
+        };
+
         let program_err: ProgramError = err.into();
         match program_err {
-            ProgramError::Custom(code) => assert_eq!(code, 103),
+            ProgramError::Custom(code) => assert_eq!(code, 150),
             _ => panic!("Expected Custom program error"),
         }
     }
@@ -576,32 +660,38 @@ mod tests {
     #[test]
     fn test_json_serialization() {
         // Test custom to_json format
-        let err = DeriverseError::InvalidDataLength { expected: 256, actual: 128 };
+        let err = DeriverseErrorKind::InvalidDataLength {
+            expected: 256,
+            actual: 128,
+        };
         let json = err.to_json();
         assert_eq!(json["code"], 102);
-        assert_eq!(json["msg"], "Invalid data length: expected 256, got 128");
+        assert_eq!(
+            json["msg"],
+            "Invalid instructions data length, expected 256 < actual 128"
+        );
         assert_eq!(json["expected"], 256);
 
         // Test Pubkey in JSON
-        let account = Pubkey::new_unique();
-        let pubkey_err = DeriverseError::InvalidRootAccount { account };
+        let address = Pubkey::new_unique();
+        let pubkey_err = DeriverseErrorKind::InvalidOperatorAccount { address };
         let pubkey_json = pubkey_err.to_json();
-        assert_eq!(pubkey_json["account"], account.to_string());
+        assert_eq!(pubkey_json["address"], address.to_string());
     }
 
     #[test]
     fn test_serde_roundtrip() {
         // Test simple error
-        let simple_err = DeriverseError::OperationRejected;
+        let simple_err = DeriverseErrorKind::OperationRejected;
         let json_str = serde_json::to_string(&simple_err).unwrap();
-        let deserialized: DeriverseError = serde_json::from_str(&json_str).unwrap();
+        let deserialized: DeriverseErrorKind = serde_json::from_str(&json_str).unwrap();
         assert_eq!(simple_err, deserialized);
 
         // Test error with Pubkey
-        let account = Pubkey::new_unique();
-        let original = DeriverseError::InvalidRootAccount { account };
+        let address = Pubkey::new_unique();
+        let original = DeriverseErrorKind::InvalidOperatorAccount { address };
         let json_str = serde_json::to_string(&original).unwrap();
-        let deserialized: DeriverseError = serde_json::from_str(&json_str).unwrap();
+        let deserialized: DeriverseErrorKind = serde_json::from_str(&json_str).unwrap();
         assert_eq!(original.code(), deserialized.code());
     }
 
@@ -612,13 +702,13 @@ mod tests {
             Err(std::io::Error::new(std::io::ErrorKind::Other, "test"))
         }
 
-        let result = failing_op().context(DeriverseError::OperationRejected);
-        assert!(matches!(result, Err(DeriverseError::OperationRejected)));
+        let result = failing_op().context(DeriverseErrorKind::OperationRejected);
+        assert!(matches!(result, Err(DeriverseErrorKind::OperationRejected)));
 
         // Test equality
-        let account = Pubkey::new_unique();
-        let err1 = DeriverseError::InvalidRootAccount { account };
-        let err2 = DeriverseError::InvalidRootAccount { account };
+        let address = Pubkey::new_unique();
+        let err1 = DeriverseErrorKind::InvalidOperatorAccount { address };
+        let err2 = DeriverseErrorKind::InvalidOperatorAccount { address };
         assert_eq!(err1, err2);
     }
 }
