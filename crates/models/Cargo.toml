@@ -1,18 +1,15 @@
 [package]
-name = "drv-errors"
+name = "models"
 version.workspace = true
 edition.workspace = true
 
-[lib]
-crate-type = ["lib"]
-
 [dependencies]
-drv-errors-derive.workspace = true
+drv-macros.workspace = true
+bytemuck = { version = "^1.23.0", features = ["derive"] }
 solana-program = {version = "=2.2.1", optional = true}
 solana-sdk = {version = "=2.2.1", optional = true}
 serde_json.workspace = true
 serde = { version = "^1.0.145", features = ["derive"] }
-models.workspace = true
 
 [lints]
 workspace = true

@@ -9,6 +9,8 @@ resolver = "2"
 [workspace.dependencies]
 drv-errors-derive = { path = "crates/errors-derive" }
 drv-errors = { path = "crates/errors" }
+models = {path = "crates/models"}
+drv-macros = {path = "crates/drv-macros"}
 
 serde_json = "1.0.145"
 
@@ -64,4 +66,3 @@ unwrap_used = "warn"
 use_self = "warn"
 useless_let_if_seq = "warn"
 zero_sized_map_values = "warn"
-

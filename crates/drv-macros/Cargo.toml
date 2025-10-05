@@ -1,0 +1,16 @@
+[package]
+name = "drv-macros"
+version.workspace = true
+edition.workspace = true
+
+[lib]
+proc-macro = true
+
+[dependencies]
+lazy_static = "1.4.0"
+proc-macro2 = "1.0"
+syn = { version = "2.0", features = ["full", "extra-traits", "parsing"] }
+quote = "1.0"
+
+[lints]
+workspace = true
