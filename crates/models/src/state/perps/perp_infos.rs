@@ -1,5 +1,11 @@
-use crate::new_types::client::ClientId;
+use crate::{constants::NULL_ORDER, new_types::client::ClientId, state::types::OrderSide};
 use bytemuck::Zeroable;
+
+use super::perp_trade_header::PERP_TRADE_ACCOUNT_HEADER_SIZE;
+
+pub fn get_perp_info<T>(data: &[u8], id: ClientId) -> *mut T {
+    data[PERP_TRADE_ACCOUNT_HEADER_SIZE + size_of::<T>() * *id as usize..].as_ptr() as *mut T
+}
 
 #[repr(C)]
 #[derive(Copy, Clone, Zeroable, Debug)]
@@ -11,6 +17,30 @@ pub struct PerpClientInfo {
 }
 
 pub const PERP_CLIENT_INFO_SIZE: usize = std::mem::size_of::<PerpClientInfo>();
+
+impl PerpClientInfo {
+    pub fn funds(&self) -> i64 {
+        self.funds
+    }
+    pub fn add_funds(&mut self, amount: i64) {
+        self.funds += amount;
+    }
+    pub fn sub_funds(&mut self, amount: i64) {
+        self.funds -= amount;
+    }
+    pub fn add_perps(&mut self, amount: i64) {
+        self.perps += amount;
+    }
+    pub fn sub_perps(&mut self, amount: i64) {
+        self.perps -= amount;
+    }
+    pub fn total_perps(&self) -> i64 {
+        self.perps + self.in_orders_perps
+    }
+    pub fn total_funds(&self) -> i64 {
+        self.funds + self.in_orders_funds
+    }
+}
 
 #[repr(C)]
 #[derive(Copy, Clone, Zeroable, Debug)]
@@ -24,6 +54,18 @@ pub struct PerpClientInfo2 {
 }
 
 pub const PERP_CLIENT_INFO2_SIZE: usize = std::mem::size_of::<PerpClientInfo2>();
+
+impl PerpClientInfo2 {
+    pub fn set_slot(&mut self, new_slot: u32, side: OrderSide) {
+        match side {
+            OrderSide::Bid => self.bid_slot = new_slot,
+            OrderSide::Ask => self.ask_slot = new_slot,
+        };
+    }
+    pub fn leverage(&self) -> i64 {
+        (self.mask & 0xFF) as i64
+    }
+}
 
 #[repr(C)]
 #[derive(Copy, Clone, Zeroable, Debug)]
@@ -60,3 +102,59 @@ pub struct PerpClientInfo5 {
 }
 
 pub const PERP_CLIENT_INFO5_SIZE: usize = std::mem::size_of::<PerpClientInfo5>();
+
+impl PerpClientInfo3 {
+    pub fn orders_entry(&self, side: OrderSide) -> u32 {
+        match side {
+            OrderSide::Bid => self.bids_entry & 0xFFFF,
+            OrderSide::Ask => self.asks_entry & 0xFFFF,
+        }
+    }
+    pub fn orders_count(&self, side: OrderSide) -> u32 {
+        match side {
+            OrderSide::Bid => self.bids_entry >> 16,
+            OrderSide::Ask => self.asks_entry >> 16,
+        }
+    }
+    pub fn orders_reset(&mut self, side: OrderSide) {
+        match side {
+            OrderSide::Bid => self.bids_entry = NULL_ORDER,
+            OrderSide::Ask => self.asks_entry = NULL_ORDER,
+        };
+    }
+    pub fn is_active(&self) -> bool {
+        self.bids_entry != NULL_ORDER || self.asks_entry != NULL_ORDER
+    }
+    pub fn set_orders_entry_with_count_incr(&mut self, new_orders_entry: u32, side: OrderSide) {
+        match side {
+            OrderSide::Bid => {
+                self.bids_entry = (self.bids_entry & 0xFFFF0000) + 0x10000 + new_orders_entry
+            }
+            OrderSide::Ask => {
+                self.asks_entry = (self.asks_entry & 0xFFFF0000) + 0x10000 + new_orders_entry
+            }
+        };
+    }
+    pub fn set_orders_entry_with_count_decr(&mut self, new_orders_entry: u32, side: OrderSide) {
+        match side {
+            OrderSide::Bid => {
+                self.bids_entry = (self.bids_entry & 0xFFFF0000) - 0x10000 + new_orders_entry
+            }
+            OrderSide::Ask => {
+                self.asks_entry = (self.asks_entry & 0xFFFF0000) - 0x10000 + new_orders_entry
+            }
+        };
+    }
+    pub fn orders_count_incr(&mut self, side: OrderSide) {
+        match side {
+            OrderSide::Bid => self.bids_entry += 0x10000,
+            OrderSide::Ask => self.asks_entry += 0x10000,
+        };
+    }
+    pub fn orders_count_decr(&mut self, side: OrderSide) {
+        match side {
+            OrderSide::Bid => self.bids_entry -= 0x10000,
+            OrderSide::Ask => self.asks_entry -= 0x10000,
+        };
+    }
+}
