@@ -20,10 +20,24 @@ impl<T, E> ResultExt<T, E> for Result<T, E> {
         self.map_err(|_| ctx)
     }
 }
+#[cfg(feature = "on-chain")]
+impl From<ProgramError> for DeriverseErrorKind {
+    fn from(e: ProgramError) -> Self {
+        DeriverseErrorKind::SystemError { error: e }
+    }
+}
 
 #[cfg(feature = "on-chain")]
 impl From<DeriverseErrorKind> for ProgramError {
     fn from(e: DeriverseErrorKind) -> Self {
+        msg!("{}", e.to_json().to_string());
+        ProgramError::Custom(e.code())
+    }
+}
+
+#[cfg(feature = "on-chain")]
+impl From<DeriverseError> for ProgramError {
+    fn from(e: DeriverseError) -> Self {
         msg!("{}", e.to_json().to_string());
         ProgramError::Custom(e.code())
     }
@@ -42,10 +56,13 @@ pub struct ErrorLocation {
     pub line: u32,
 }
 
+#[derive(Debug)]
 pub struct DeriverseError {
-    error: DeriverseErrorKind,
-    location: ErrorLocation,
+    pub error: DeriverseErrorKind,
+    pub location: ErrorLocation,
 }
+
+pub type DeriverseResult = Result<(), DeriverseError>;
 
 impl DeriverseError {
     pub fn new(error: DeriverseErrorKind, file: &'static str, line: u32) -> Self {
@@ -79,7 +96,28 @@ macro_rules! drv_err {
 #[macro_export]
 macro_rules! drv_result {
     ($error:expr) => {
-        DeriverseError::new($error, file!(), line!())
+        Err(DeriverseError::new($error, file!(), line!()))
+    };
+}
+
+#[macro_export]
+macro_rules! drv_map {
+    ($error:expr) => {
+        $error.map_err(|err| DeriverseError::new(err, file!(), line!()));
+    };
+}
+
+#[macro_export]
+macro_rules! drv_map_into {
+    ($error:expr) => {
+        $error.map_err(|err| DeriverseError::new(err.into(), file!(), line!()));
+    };
+}
+
+#[macro_export]
+macro_rules! drv_into {
+    ($error:expr) => {
+        DeriverseError::new($error.into(), file!(), line!())
     };
 }
 
@@ -110,6 +148,10 @@ fn some_test() {
 
 #[derive(Debug, DrvError, Serialize, Deserialize, PartialEq)]
 pub enum DeriverseErrorKind {
+    #[cfg(feature = "on-chain")]
+    #[error(code = 100, msg = "System error {error}")]
+    SystemError { error: ProgramError },
+
     #[error(
         code = 101,
         msg = "Invalid provided accounts number: expected {expected}, got {actual}"
@@ -157,13 +199,16 @@ pub enum DeriverseErrorKind {
         mint_address: Pubkey,
     },
     #[error(code = 127, msg = "Invalid LUT program ID")]
-    InvalidLutProgramId { actual: Pubkey },
+    InvalidLutProgramId { actual_address: Pubkey },
 
     #[error(code = 128, msg = "Invalid LUT account")]
-    InvalidLutAccount { expected: Pubkey, actual: Pubkey },
+    InvalidLutAccount {
+        expected_address: Pubkey,
+        actual_address: Pubkey,
+    },
 
     #[error(code = 129, msg = "Invalid System program ID")]
-    InvalidSystemProgramId { actual: Pubkey },
+    InvalidSystemProgramId { actual_address: Pubkey },
     #[error(
         code = 130,
         msg = "Invalid quantity value {value}, acceptable range: {min_value}..{max_value}"
@@ -233,7 +278,10 @@ pub enum DeriverseErrorKind {
     #[error(code = 146, msg = "Invalid Holder Admin account")]
     InvalidHolderAdminAccount { actual_address: Pubkey },
     #[error(code = 147, msg = "Invalid Admin account")]
-    InvalidAdminAccount { expected: Pubkey, actual: Pubkey },
+    InvalidAdminAccount {
+        expected_address: Pubkey,
+        actual_address: Pubkey,
+    },
     #[error(
         code = 148,
         msg = "Invalid new Operator account, operator with this address already exist"
@@ -562,7 +610,7 @@ pub enum DeriverseErrorKind {
         len: usize,
     },
 
-    #[error(code = 155, msg = "Invalid token owner for {token_id} token")]
+    #[error(code = 284, msg = "Invalid token owner for {token_id} token")]
     InvalidTokenOwner {
         token_id: u32,
         address: Pubkey,
@@ -570,8 +618,20 @@ pub enum DeriverseErrorKind {
         actual_address: Pubkey,
     },
 
-    #[error(code = 151, msg = "Different token ids, {id_left} != {id_right}")]
+    #[error(code = 280, msg = "Different token ids, {id_left} != {id_right}")]
     DifferentTokenIds { id_left: u32, id_right: u32 },
+
+    #[error(code = 281, msg = "Perp clients count must not be 0")]
+    InvalidPerpClientsCount,
+
+    #[error(
+        code = 282,
+        msg = "Invalid supply {supply}, supply difference to MAX SUPPLY: {supply_difference}"
+    )]
+    InvalidSupply { supply: u32, supply_difference: u32 },
+
+    #[error(code = 283, msg = "Perp was already allocated")]
+    PerpAlreadyAllocated,
 }
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
