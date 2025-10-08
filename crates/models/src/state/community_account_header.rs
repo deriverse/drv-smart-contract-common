@@ -1,3 +1,5 @@
+use std::ops::Deref;
+
 use bytemuck::{Pod, Zeroable};
 
 use super::types::Discriminator;
@@ -37,3 +39,11 @@ pub struct CommunityAccountHeader {
 }
 
 pub const COMMUNITY_ACCOUNT_HEADER_SIZE: usize = std::mem::size_of::<CommunityAccountHeader>();
+
+impl Deref for CommunityAccountHeader {
+    type Target = Discriminator;
+
+    fn deref(&self) -> &Self::Target {
+        &self.discriminator
+    }
+}

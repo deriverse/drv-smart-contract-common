@@ -169,7 +169,7 @@ pub(crate) fn new_type_inner(
             }
         }
 
-        impl std::ops::Deref for #name {
+        impl ::std::ops::Deref for #name {
             type Target = #field_type;
 
             fn deref(&self) -> &Self::Target {
