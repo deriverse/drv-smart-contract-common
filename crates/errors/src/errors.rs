@@ -1,7 +1,5 @@
-use std::fmt::Display;
-
 use drv_errors_derive::DrvError;
-use models::state::types::account_type::AccountType;
+use drv_models::state::types::{account_type::AccountType, AssetType, OrderSide, TokenProgram};
 use serde::{Deserialize, Serialize};
 #[cfg(feature = "on-chain")]
 use solana_program::{msg, program_error::ProgramError, pubkey::Pubkey};
@@ -397,7 +395,7 @@ pub enum DeriverseErrorKind {
     NoTradeIOC,
 
     #[error(code = 212, msg = "Asset {asset_type} with id {id} was not found")]
-    AssetNotFound { asset_type: u32, id: u32 },
+    AssetNotFound { asset_type: AssetType, id: u32 },
 
     #[error(code = 214, msg = "Null Pointer")]
     NullPointer,
@@ -632,31 +630,39 @@ pub enum DeriverseErrorKind {
 
     #[error(code = 283, msg = "Perp was already allocated")]
     PerpAlreadyAllocated,
-}
 
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
-/// Enum for token version verification
-pub enum TokenProgram {
-    Original,
-    Token2022,
-}
+    #[error(code = 284, msg = "Traded amount ({amount}) is too small")]
+    TradeIsTooSmall { amount: u32 },
 
-#[derive(Clone, Copy, PartialEq, Debug, Serialize, Deserialize, Eq)]
-pub enum OrderSide {
-    Bid,
-    Ask,
-}
+    #[error(code = 285, msg = "Client primary account must be some")]
+    ClientPrimaryAccountMustBeSome,
 
-impl Display for OrderSide {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        todo!()
-    }
-}
+    #[error(code = 286, msg = "Must be in Private Mode")]
+    MustBeInPrivateMode,
 
-impl Display for TokenProgram {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        todo!()
-    }
+    #[error(
+        code = 287,
+        msg = "Non admin attemp of pair with DRVS token creation from {client_address}"
+    )]
+    NonAdminDrvsInstr {
+        client_address: Pubkey,
+        asset_token_id: u32,
+        crncy_token_id: u32,
+    },
+
+    #[error(code = 288, msg = "{client_address} is not in private queue")]
+    ClientIsNotInPrivate { client_address: Pubkey },
+
+    #[error(
+        code = 289,
+        msg = "Invalid tokens decimals amount: {decs_count}, expected to be in range {min}..={max}"
+    )]
+    InvalidDecsCount {
+        decs_count: u32,
+        min: u32,
+        max: u32,
+        token_address: Pubkey,
+    },
 }
 
 #[cfg(test)]

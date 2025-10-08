@@ -25,11 +25,17 @@ impl std::fmt::Display for OrderSide {
     }
 }
 
-pub mod order_type {
-    pub const LIMIT: u8 = 0;
-    pub const MARKET: u8 = 1;
-    pub const MARGIN_CALL: u8 = 2;
-    pub const FORCED_CLOSE: u8 = 3;
+#[repr(u8)]
+#[derive(Debug, Clone, Copy, PartialEq)]
+pub enum OrderType {
+    Limit = 0,
+    Market = 1,
+    MarginCall = 2,
+    FrocedClose = 3,
+}
+
+pub mod root_mask {
+    pub const PRIVATE_MODE: u32 = 0x1;
 }
 
 pub mod instr_mask {
@@ -93,6 +99,7 @@ pub mod account_type {
     pub const PERP_LONG_PX_TREE: u32 = 48;
     pub const PERP_SHORT_PX_TREE: u32 = 49;
     pub const PERP_REBALANCE_TIME_TREE: u32 = 50;
+    pub const PRIVATE_CLIENTS: u32 = 51;
 
     #[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
     #[repr(u32)]
@@ -143,6 +150,7 @@ pub mod account_type {
         PerpLongPxTree = 48,
         PerpShortPxTree = 49,
         PerpRebalanceTimeTree = 50,
+        PrivateClients = 51,
 
         ProgramTokenAccount,
         DrvsAuthority,
@@ -231,12 +239,18 @@ pub struct BaseCrncyRecord {
 }
 
 #[repr(u32)]
-#[derive(Clone, Copy, PartialEq, std::fmt::Debug)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
 pub enum AssetType {
     Token = 0x1000000,
     SpotLp = 0x2000000,
     SpotOrders = 0x3000000,
     Perp = 0x4000000,
+}
+
+impl std::fmt::Display for AssetType {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "{:?}", self)
+    }
 }
 
 #[repr(C)]
