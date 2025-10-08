@@ -54,8 +54,6 @@ pub mod candles {
 }
 
 pub mod price_helper {
-    pub const DF: f64 = 1000000000.0;
-    pub const RDF: f64 = 0.000000001;
     pub const MINT_DECIMALS_OFFSET: usize = 44;
     pub const MIN_DECS_COUNT: u32 = 4;
     pub const MAX_DECS_COUNT: u32 = 9;
@@ -91,16 +89,17 @@ pub mod nulls {
     pub const NULL_TOKEN: u32 = 0xFFFFFFF;
 }
 pub mod memory_maps {
-    pub const MEMORY_MAP_UNITS: usize = 64 + 64 * 64;
-    pub const EXTENDED_MEMORY_MAP_UNITS: usize = 1 + 32 + 32 * 64;
+    pub const MEMORY_MAP_UNITS: usize = 1 + 64 + 64 * 64;
+    pub const EXTENDED_MEMORY_MAP_UNITS: usize = 1 + 16 + 16 * 64;
     pub const TRADE_MEMORY_MAP_UNITS: usize = 1 + 4 + 4 * 64;
     pub const SMALL_MEMORY_MAP_UNITS: usize = 1 + 64;
 }
 
 pub mod spot {
+    use super::memory_maps::TRADE_MEMORY_MAP_UNITS;
 
     pub const MAX_LINES: usize = 2048;
-    pub const MAX_ORDERS: u32 = (u16::MAX as usize - MAX_LINES) as u32;
+    pub const MAX_ORDERS: u32 = (TRADE_MEMORY_MAP_UNITS * 64 - MAX_LINES) as u32;
     pub mod memory_maps {
         use crate::state::spots::spot_account_header::SpotTradeAccountHeader;
 
@@ -118,12 +117,12 @@ pub mod spot {
     }
 }
 pub mod perp {
+    use super::memory_maps::EXTENDED_MEMORY_MAP_UNITS;
 
     pub const MAX_LINES: usize = 2048 * 4;
-    pub const MAX_ORDERS: u32 = u16::MAX as u32 * 2 - MAX_LINES as u32;
+    pub const MAX_ORDERS: u32 = (EXTENDED_MEMORY_MAP_UNITS * 64 - MAX_LINES) as u32;
 
     pub const MAX_SUPPLY: i64 = 250_000;
-    pub const MAX_PERP_CLIENTS_THRESHOLD: i64 = MAX_SUPPLY - 1000;
     pub const INIT_SEAT_PRICE: f64 = 1.0;
 
     pub const MIN_LIQUIDATION_THRESHOLD: f64 = 0.5 / MAX_PERP_LEVERAGE as f64;
@@ -222,7 +221,7 @@ pub const INSTR_ACCOUNT_INITIAL_SIZE: usize =
 
 pub mod rebates {
     pub const REBATES_RATIO: f64 = 0.125;
-    pub const DEC_30: f64 = (1i64 << 30) as f64;
+    pub const DEC_63: f64 = (1u64 << 63) as f64;
     pub const MAX_REBALANCING_CALLS: i64 = 25;
     pub const REBALANCING_DELAY: u32 = 300;
 }

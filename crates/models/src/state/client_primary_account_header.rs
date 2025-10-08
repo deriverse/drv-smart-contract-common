@@ -14,7 +14,6 @@ use super::types::Discriminator;
 pub struct ClientPrimaryAccountHeader {
     pub discriminator: Discriminator,
     pub wallet_address: Pubkey,
-    pub community_address: Pubkey,
     pub lut_address: Pubkey,
     pub ref_address: Pubkey,
     pub first_ref_link_discount: f64,
