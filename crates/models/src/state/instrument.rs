@@ -20,7 +20,13 @@ use solana_program::pubkey::Pubkey;
 ///     * `READY_TO_PERP_UPGRADE` = `0x01000000` — Indicates readiness to upgrade to a Perp.
 /// 4. **`asset_tokens`** - Amount of assets tokens
 /// 5. **`crncy_tokens`** - Amount of crncy tokens
-/// 6. **`ps`**
+/// 6. **`ps`** - Pool supply
+/// 7. **`pool_fees`** - TODO
+/// 8. **`last_px`** - The most resent **valid** price used by the system for calculations
+/// 9. **`last_close`** - The most resent price of a closed trade
+/// 10. **`alltime_trades`** - Record of ALL executed trades
+/// 11. **`prev_trades`** - Record of executed trades during prev day
+/// 12. **`day_volatility`**
 #[repr(C)]
 #[derive(Pod, Zeroable, Clone, Copy, Default)]
 pub struct InstrAccountHeader {
