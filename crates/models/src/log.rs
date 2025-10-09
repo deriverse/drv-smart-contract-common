@@ -1,11 +1,6 @@
-use bytemuck::{Pod, Zeroable};
-
-#[cfg(feature = "on-chain")]
-use solana_program::pubkey::Pubkey;
-#[cfg(not(feature = "on-chain"))]
-use solana_sdk::pubkey::Pubkey;
-
 use crate::new_types::{client::ClientId, instrument::InstrId};
+use bytemuck::{Pod, Zeroable};
+use solana_program::pubkey::Pubkey;
 
 pub mod log_type {
     pub const DEPOSIT: u8 = 1;
@@ -38,6 +33,9 @@ pub mod log_type {
     pub const PERP_CHANGE_LEVERAGE: u8 = 28;
     pub const BUY_MARKET_SEAT: u8 = 29;
     pub const SELL_MARKET_SEAT: u8 = 30;
+    pub const SWAP_ORDER: u8 = 31;
+    pub const MOVE_SPOT: u8 = 32;
+    pub const NEW_PRIVATE_CLIENT: u8 = 33;
 }
 
 #[repr(C)]
@@ -178,8 +176,8 @@ pub struct SpotlpTradeReport {
     pub tag: u8,
     pub side: u8,
     pub padding_u16: u16,
-    pub time: u32,
     pub client_id: ClientId,
+    pub time: u32,
     pub instr_id: InstrId,
     pub order_id: i64,
     pub qty: i64,
@@ -246,6 +244,49 @@ pub struct SpotPlaceOrderReport {
     pub instr_id: InstrId,
     pub time: u32,
 }
+
+#[repr(C)]
+#[derive(Copy, Clone, Zeroable, Pod, Default, Debug)]
+pub struct SwapOrderReport {
+    pub tag: u8,
+    pub side: u8,
+    pub order_type: u8,
+    pub padding_u8: u8,
+    pub padding_u32: u32,
+    pub order_id: i64,
+    pub qty: i64,
+    pub price: i64,
+    pub time: u32,
+    pub instr_id: InstrId,
+}
+
+// impl std::fmt::Display for SwapOrderReport {
+//     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+//         let side: OrderSide = ;
+//         let order_type: OrderSide = self.order_type.try_into();
+//         write!(f, "SwapOrderReport {{\n")?;
+//         write!(f, "  tag: {},\n", self.tag)?;
+//         write!(
+//             f,
+//             "  side: {},\n",
+//             side.map(|side| format!("{:?}", side))
+//                 .unwrap_or_else(|err| format!("Error while construction OrderSide {:?}", err))
+//         )?;
+//         write!(
+//             f,
+//             "  order_type: {},\n",
+//             order_type
+//                 .map(|order_type| format!("{:?}", order_type))
+//                 .unwrap_or_else(|err| format!("Error while construction OrderType {:?}", err))
+//         )?;
+//         write!(f, "  order_id: {},\n", self.order_id)?;
+//         write!(f, "  qty: {},\n", self.qty)?;
+//         write!(f, "  price: {},\n", self.price)?;
+//         write!(f, "  time: {},\n", self.time)?;
+//         write!(f, "  instr_id: {:?},\n", self.instr_id)?;
+//         write!(f, "}}")
+//     }
+// }
 
 #[repr(C)]
 #[derive(Copy, Clone, Zeroable, Pod, Default)]
@@ -415,6 +456,32 @@ pub struct SpotOrderRevokeReport {
 
 #[repr(C)]
 #[derive(Copy, Clone, Zeroable, Pod, Default)]
+pub struct MoveSpotAvailFundsReport {
+    pub tag: u8,
+    pub padding_u8: u8,
+    pub padding_u16: u16,
+    pub client_id: ClientId,
+    pub instr_id: InstrId,
+    pub time: u32,
+    pub qty: i64,
+    pub crncy: i64,
+}
+
+// impl std::fmt::Display for MoveSpotAvailFundsReport {
+//     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+//         write!(f, "MoveSpotAvailFundsReport {{\n")?;
+//         write!(f, "  tag: {},\n", self.tag)?;
+//         write!(f, "  client_Id: {}\n", self.client_id)?;
+//         write!(f, "  instr_id: {:?},\n", self.instr_id)?;
+//         write!(f, "  qty: {},\n", self.qty)?;
+//         write!(f, "  crncy: {}\n", self.crncy)?;
+//         write!(f, "  time: {},\n", self.time)?;
+//         write!(f, "}}")
+//     }
+// }
+
+#[repr(C)]
+#[derive(Copy, Clone, Zeroable, Pod, Default)]
 pub struct NewPrivateClientReport {
     pub tag: u8,
     pub padding_u8: u8,
@@ -422,20 +489,17 @@ pub struct NewPrivateClientReport {
     pub wallet: Pubkey,
     pub insert_index: u32,
     pub creation_time: u32,
-    pub exparation_time: u32,
+    pub expiration_time: u32,
 }
 
-#[repr(C)]
-#[derive(Copy, Clone, Zeroable, Pod, Default, Debug)]
-pub struct SwapOrderReport {
-    pub tag: u8,
-    pub side: u8,
-    pub order_type: u8,
-    pub padding_u8: u8,
-    pub padding_u32: u32,
-    pub order_id: i64,
-    pub qty: i64,
-    pub price: i64,
-    pub time: u32,
-    pub instr_id: InstrId,
-}
+// impl std::fmt::Display for NewPrivateClientReport {
+//     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+//         write!(f, "SwapOrderReport {{\n")?;
+//         write!(f, "  tag: {},\n", self.tag)?;
+//         write!(f, "  wallet: {}\n", self.wallet.to_string())?;
+//         write!(f, "  insert_index: {}\n", self.insert_index)?;
+//         write!(f, "  creation_time: {}\n", self.creation_time)?;
+//         write!(f, "  expiration_time: {}\n", self.expiration_time)?;
+//         write!(f, "}}")
+//     }
+// }

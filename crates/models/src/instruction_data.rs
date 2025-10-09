@@ -1,6 +1,6 @@
-use bytemuck::{Pod, Zeroable};
-
 use crate::new_types::{instrument::InstrId, version::Version};
+use bytemuck::{Pod, Zeroable};
+use solana_program::pubkey::Pubkey;
 
 #[repr(C)]
 #[derive(Clone, Copy, Pod, Zeroable)]
@@ -15,7 +15,7 @@ pub struct NewOperatorData {
 #[derive(Clone, Copy, Pod, Zeroable)]
 pub struct NewRootAccountData {
     pub tag: u8, // 2
-    pub padding_u8: u8,
+    pub private_mode: u8,
     pub padding_u16: u16,
     pub version: Version,
     pub lut_slot: u32,
@@ -185,7 +185,7 @@ pub struct WithdrawData {
 pub struct SwapData {
     pub tag: u8, //26
     pub side: u8,
-    padding_u16: u16,
+    pub padding_u16: u16,
     pub instr_id: InstrId,
     pub price: i64,
     pub amount: i64,
@@ -336,4 +336,14 @@ pub struct SellMarketSeatData {
     pub padding_u8: u8,
     pub padding_u16: u16,
     pub instr_id: InstrId,
+}
+
+#[repr(C)]
+#[derive(Clone, Copy, Pod, Zeroable)]
+pub struct NewPrivateClient {
+    pub tag: u8, // 49
+    pub padding_u8: u8,
+    pub padding_u16: u16,
+    pub wallet: Pubkey,
+    pub expiration_time: u32,
 }
