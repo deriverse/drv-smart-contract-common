@@ -1,7 +1,7 @@
 use std::fmt::Display;
 
 use drv_errors_derive::DrvError;
-use models::state::types::account_type::AccountType;
+use drv_models::state::types::account_type::AccountType;
 use serde::{Deserialize, Serialize};
 #[cfg(feature = "on-chain")]
 use solana_program::{msg, program_error::ProgramError, pubkey::Pubkey};

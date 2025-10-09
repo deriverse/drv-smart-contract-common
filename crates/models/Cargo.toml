@@ -1,5 +1,5 @@
 [package]
-name = "models"
+name = "drv-models"
 version.workspace = true
 edition.workspace = true
 
