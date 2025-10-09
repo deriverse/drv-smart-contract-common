@@ -1,5 +1,10 @@
 use bytemuck::{Pod, Zeroable};
 
+#[cfg(feature = "on-chain")]
+use solana_program::pubkey::Pubkey;
+#[cfg(not(feature = "on-chain"))]
+use solana_sdk::pubkey::Pubkey;
+
 use crate::new_types::{client::ClientId, instrument::InstrId};
 
 pub mod log_type {
@@ -406,4 +411,31 @@ pub struct SpotOrderRevokeReport {
     pub order_id: i64,
     pub qty: i64,
     pub crncy: i64,
+}
+
+#[repr(C)]
+#[derive(Copy, Clone, Zeroable, Pod, Default)]
+pub struct NewPrivateClientReport {
+    pub tag: u8,
+    pub padding_u8: u8,
+    pub padding_u16: u16,
+    pub wallet: Pubkey,
+    pub insert_index: u32,
+    pub creation_time: u32,
+    pub exparation_time: u32,
+}
+
+#[repr(C)]
+#[derive(Copy, Clone, Zeroable, Pod, Default, Debug)]
+pub struct SwapOrderReport {
+    pub tag: u8,
+    pub side: u8,
+    pub order_type: u8,
+    pub padding_u8: u8,
+    pub padding_u32: u32,
+    pub order_id: i64,
+    pub qty: i64,
+    pub price: i64,
+    pub time: u32,
+    pub instr_id: InstrId,
 }

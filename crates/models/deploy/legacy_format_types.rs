@@ -670,3 +670,11 @@ pub struct PxOrders {
     pub begin: u32,
     pub end: u32,
 }
+
+#[repr(C)]
+#[derive(Pod, Zeroable, Clone, Copy, Default, Debug)]
+pub struct PrivateClient {
+    pub creation_time: u32,
+    pub expiration_time: u32,
+    pub wallet: Pubkey,
+}

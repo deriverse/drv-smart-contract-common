@@ -405,3 +405,15 @@ pub struct SpotOrderRevokeReport {
     pub qty: i64,
     pub crncy: i64,
 }
+
+#[repr(C)]
+#[derive(Copy, Clone, Zeroable, Pod, Default)]
+pub struct NewPrivateClientReport {
+    pub tag: u8,
+    pub padding_u8: u8,
+    pub padding_u16: u16,
+    pub wallet: Pubkey,
+    pub insert_index: u32,
+    pub creation_time: u32,
+    pub exparation_time: u32,
+}

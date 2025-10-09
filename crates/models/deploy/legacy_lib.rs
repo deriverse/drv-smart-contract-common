@@ -68,6 +68,8 @@ pub fn process_instruction(
         46 => perp_statistics_reset(program_id, accounts, _instruction_data)?,
         47 => buy_market_seat(program_id, accounts, _instruction_data)?,
         48 => sell_market_seat(program_id, accounts, _instruction_data)?,
+        49 => new_private_client(program_id, accounts, _instruction_data)?,
+        50 => terminate_private_mode(program_id, accounts)?,
         _ => {}
     }
     Ok(())
