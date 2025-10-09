@@ -86,8 +86,7 @@ pub struct ClientCommunityRecord {
 pub const CLIENT_COMMUNITY_RECORD_SIZE: usize = std::mem::size_of::<ClientCommunityRecord>();
 
 #[repr(C)]
-#[derive(Copy, Clone, Zeroable, Default)]
-/// New path - src/state/client_community.rs
+#[derive(Pod, Zeroable, Clone, Copy)]
 pub struct ClientCommunityAccountHeader {
     pub tag: u32,
     pub version: u32,
@@ -257,8 +256,7 @@ pub struct CandlesAccountHeader {
 pub const CANDLES_ACCOUNT_HEADER_SIZE: usize = std::mem::size_of::<CandlesAccountHeader>();
 
 #[repr(C)]
-#[derive(Copy, Clone, Zeroable, Default)]
-/// New path - src/state/instrument.rs
+#[derive(Pod, Zeroable, Clone, Copy, Default)]
 pub struct InstrAccountHeader {
     pub tag: u32,
     pub version: u32,
@@ -398,12 +396,10 @@ pub struct InstrAccountHeader {
     pub reserved_value9: i64,
     pub reserved_value10: i64,
 }
-
 pub const INSTR_ACCOUNT_HEADER_SIZE: usize = std::mem::size_of::<InstrAccountHeader>();
 
 #[repr(C)]
-#[derive(Copy, Clone, Zeroable, Default)]
-/// New path - src/state/root.rs
+#[derive(Pod, Zeroable, Clone, Copy, Default)]
 pub struct RootState {
     pub tag: u32,
     pub version: u32,
@@ -421,6 +417,8 @@ pub struct RootState {
     pub tokens_count: u32,
     pub instr_count: u32,
     pub ref_counter: u32,
+    pub mask: u32,
+    pub reserved: u32,
 }
 
 pub const ROOT_ACCOUNT_SIZE: usize = std::mem::size_of::<RootState>();
