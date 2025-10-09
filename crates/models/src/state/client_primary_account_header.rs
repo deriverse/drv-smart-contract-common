@@ -14,6 +14,7 @@ use super::types::Discriminator;
 pub struct ClientPrimaryAccountHeader {
     pub discriminator: Discriminator,
     pub wallet_address: Pubkey,
+    pub drv_address: Pubkey,
     pub community_address: Pubkey,
     pub lut_address: Pubkey,
     pub ref_address: Pubkey,
@@ -51,11 +52,3 @@ pub struct ClientPrimaryAccountHeader {
 
 pub const CLIENT_PRIMARY_ACCOUNT_HEADER_SIZE: usize =
     std::mem::size_of::<ClientPrimaryAccountHeader>();
-
-impl ::std::ops::Deref for ClientPrimaryAccountHeader {
-    type Target = Discriminator;
-
-    fn deref(&self) -> &Self::Target {
-        &self.discriminator
-    }
-}

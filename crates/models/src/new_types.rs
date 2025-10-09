@@ -3,10 +3,9 @@ use bytemuck::{Pod, Zeroable};
 #[cfg(test)]
 mod tests {
     use bytemuck::{Pod, Zeroable};
-    use drv_macros::new_type;
 
     #[repr(transparent)]
-    #[new_type]
+    #[drv_macros::new_type]
     #[derive(Debug, Clone, Copy, PartialEq, PartialOrd, Zeroable, Pod, Default)]
     pub struct Wrapper(pub u32);
 
@@ -26,10 +25,9 @@ mod tests {
 
 pub mod version {
     use super::{Pod, Zeroable};
-    use drv_macros::new_type;
 
     #[repr(transparent)]
-    #[new_type]
+    #[drv_macros::new_type]
     #[derive(Debug, Clone, Copy, PartialEq, Zeroable, Pod, Default)]
     /// A type-safe wrapper around 'u32' that represents the version of a
     /// contract Ensures that version are handled correctly and prevents
@@ -39,10 +37,8 @@ pub mod version {
 
 pub mod tag {
     use super::{Pod, Zeroable};
-    use drv_macros::new_type;
 
     #[repr(transparent)]
-    #[new_type]
     #[derive(Debug, Clone, Copy, PartialEq, Zeroable, Pod, Default)]
     /// A type-safe wrapper around 'u32' that represents the Tag of an account
     /// Ensures that Tags are handled correctly and prevents
@@ -52,10 +48,9 @@ pub mod tag {
 
 pub mod instrument {
     use super::{Pod, Zeroable};
-    use drv_macros::new_type;
 
     #[repr(transparent)]
-    #[new_type]
+    #[drv_macros::new_type]
     #[derive(Debug, Clone, Copy, PartialEq, PartialOrd, Zeroable, Pod, Default)]
     /// A type-sfe wrapper around 'u32' that represents an id of an instrument
     /// Ensures that ids are handled correctly and prevents accidental
@@ -67,10 +62,9 @@ pub mod client {
     use std::fmt::Display;
 
     use super::{Pod, Zeroable};
-    use drv_macros::new_type;
 
     #[repr(transparent)]
-    #[new_type]
+    #[drv_macros::new_type]
     #[derive(Debug, Clone, Copy, PartialEq, PartialOrd, Zeroable, Pod, Default)]
     /// A type-safe wrapper around 'u32' that represents an id of a client
     ///
