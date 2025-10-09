@@ -23,6 +23,8 @@ pub struct RootState {
     pub tokens_count: u32,
     pub instr_count: u32,
     pub ref_counter: u32,
+    pub mask: u32,
+    pub reserved: u32,
 }
 
 impl Deref for RootState {

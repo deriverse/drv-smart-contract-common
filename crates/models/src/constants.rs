@@ -221,7 +221,7 @@ pub const INSTR_ACCOUNT_INITIAL_SIZE: usize =
 
 pub mod rebates {
     pub const REBATES_RATIO: f64 = 0.125;
-    pub const DEC_63: f64 = (1u64 << 63) as f64;
+    pub const DEC_30: f64 = (1u64 << 30) as f64;
     pub const MAX_REBALANCING_CALLS: i64 = 25;
     pub const REBALANCING_DELAY: u32 = 300;
 }
