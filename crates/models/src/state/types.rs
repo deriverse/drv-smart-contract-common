@@ -1,10 +1,9 @@
-use std::ops::Deref;
 
 use bytemuck::{Pod, Zeroable};
 use serde::{Deserialize, Serialize};
 use solana_program::pubkey::Pubkey;
 
-use crate::new_types::{client::ClientId, instrument::InstrId, tag::Tag, version::Version};
+use crate::new_types::{client::ClientId, tag::Tag, version::Version};
 
 #[derive(Clone, Copy, PartialEq, Debug, Serialize, Deserialize)]
 pub enum OrderSide {
@@ -106,7 +105,6 @@ pub mod account_type {
         Spot1MCandles = 19,
         Spot15MCandles = 20,
         SpotDayCandles = 21,
-
         ClientPrimary = 31,
         Community = 34,
         ClientCommunity = 35,
@@ -183,24 +181,6 @@ pub struct LineQuotes {
 }
 
 pub const LINE_QUOTES_SIZE: usize = std::mem::size_of::<LineQuotes>();
-
-#[repr(C)]
-#[derive(Zeroable)]
-pub struct TraceAccountHeader {
-    pub header: Discriminator,
-    pub id: InstrId,
-    pub count: u32,
-}
-
-impl Deref for TraceAccountHeader {
-    type Target = Discriminator;
-
-    fn deref(&self) -> &Self::Target {
-        &self.header
-    }
-}
-
-pub const TRACE_ACCOUNT_HEADER_SIZE: usize = std::mem::size_of::<TraceAccountHeader>();
 
 #[repr(C)]
 #[derive(Clone, Copy)]

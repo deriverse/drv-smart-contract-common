@@ -26,7 +26,6 @@ pub mod account_type {
     pub const CLIENT_COMMUNITY: u32 = 35;
     pub const CLIENT_PRIMARY: u32 = 31;
     pub const COMMUNITY: u32 = 34;
-    pub const PDF: u32 = 33;
     pub const FUTURES_ASK_ORDERS: u32 = 29;
     pub const FUTURES_ASKS_TREE: u32 = 27;
     pub const FUTURES_BID_ORDERS: u32 = 28;
@@ -39,7 +38,6 @@ pub mod account_type {
     pub const HOLDER: u32 = 1;
     pub const ROOT: u32 = 2;
     pub const INSTR: u32 = 7;
-    pub const INSTR_TRACE: u32 = 8;
     pub const SPOT_15M_CANDLES: u32 = 20;
     pub const SPOT_1M_CANDLES: u32 = 19;
     pub const SPOT_ASK_ORDERS: u32 = 17;
@@ -180,16 +178,6 @@ pub struct HolderAccountHeader {
 }
 
 pub const HOLDER_ACCOUNT_HEADER_SIZE: usize = std::mem::size_of::<HolderAccountHeader>();
-
-#[repr(C)]
-#[derive(Zeroable)]
-/// New path - src/state/pdf.rs
-pub struct PdfAccountHeader {
-    pub tag: u32,
-    pub version: u32,
-}
-
-pub const PDF_ACCOUNT_HEADER_SIZE: usize = std::mem::size_of::<PdfAccountHeader>();
 
 #[repr(C)]
 #[derive(Debug, Clone, Copy, Default)]
@@ -392,8 +380,6 @@ pub struct RootState {
     pub version: u32,
     pub operator_address: Pubkey,
     pub holder_address: Pubkey,
-    pub community_address: Pubkey,
-    pub pdf_address: Pubkey,
     pub drvs_mint_address: Pubkey,
     pub lut_address: Pubkey,
     pub ref_program_duration: u32,

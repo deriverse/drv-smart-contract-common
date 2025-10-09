@@ -11,8 +11,6 @@ pub struct RootState {
     pub discriminator: Discriminator,
     pub operator_address: Pubkey,
     pub holder_address: Pubkey,
-    pub community_address: Pubkey,
-    pub pdf_address: Pubkey,
     pub drvs_mint_address: Pubkey,
     pub lut_address: Pubkey,
     pub ref_program_duration: u32,

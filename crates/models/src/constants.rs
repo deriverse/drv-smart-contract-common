@@ -145,13 +145,6 @@ pub mod perp {
         pub const MAPS_SIZE: usize = REBALANCING_PT_OFFSET + MEMORY_MAP_UNITS * 8;
     }
 }
-pub mod pdf {
-    pub const PDF_SIGMA_WIDTH: f64 = 10.0;
-    pub const SIGMA_FACTOR: f64 = 0.845154f64;
-    pub const PDF_WIDTH: f64 = PDF_SIGMA_WIDTH / SIGMA_FACTOR;
-    pub const FRACTIONS: usize = 65;
-    pub const DF_1: f64 = 1048576f64;
-}
 
 pub mod voting {
     pub enum VoteOption {
