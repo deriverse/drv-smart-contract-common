@@ -23,3 +23,11 @@ pub struct TokenState {
 }
 
 pub const TOKEN_ACCOUNT_SIZE: usize = std::mem::size_of::<TokenState>();
+
+impl ::std::ops::Deref for TokenState {
+    type Target = Discriminator;
+
+    fn deref(&self) -> &Self::Target {
+        &self.discriminator
+    }
+}

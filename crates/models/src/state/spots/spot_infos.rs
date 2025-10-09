@@ -2,6 +2,12 @@ use bytemuck::Zeroable;
 
 use crate::new_types::client::ClientId;
 
+use super::spot_account_header::SPOT_TRADE_ACCOUNT_HEADER_SIZE;
+
+pub fn get_spot_info<T>(data: &[u8], id: ClientId) -> *mut T {
+    data[SPOT_TRADE_ACCOUNT_HEADER_SIZE + size_of::<T>() * *id as usize..].as_ptr() as *mut T
+}
+
 #[repr(C)]
 #[derive(Copy, Clone, Zeroable)]
 pub struct SpotClientInfo {

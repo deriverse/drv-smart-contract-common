@@ -52,3 +52,11 @@ pub struct ClientPrimaryAccountHeader {
 
 pub const CLIENT_PRIMARY_ACCOUNT_HEADER_SIZE: usize =
     std::mem::size_of::<ClientPrimaryAccountHeader>();
+
+impl ::std::ops::Deref for ClientPrimaryAccountHeader {
+    type Target = Discriminator;
+
+    fn deref(&self) -> &Self::Target {
+        &self.discriminator
+    }
+}

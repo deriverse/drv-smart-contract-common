@@ -39,6 +39,7 @@ pub mod tag {
     use super::{Pod, Zeroable};
 
     #[repr(transparent)]
+    #[drv_macros::new_type]
     #[derive(Debug, Clone, Copy, PartialEq, Zeroable, Pod, Default)]
     /// A type-safe wrapper around 'u32' that represents the Tag of an account
     /// Ensures that Tags are handled correctly and prevents
