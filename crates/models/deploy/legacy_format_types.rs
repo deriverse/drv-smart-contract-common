@@ -213,18 +213,6 @@ pub struct LineQuotes {
 pub const LINE_QUOTES_SIZE: usize = std::mem::size_of::<LineQuotes>();
 
 #[repr(C)]
-#[derive(Zeroable)]
-/// New path - src/state/types.rs
-pub struct TraceAccountHeader {
-    pub tag: u32,
-    pub version: u32,
-    pub id: u32,
-    pub count: u32,
-}
-
-pub const TRACE_ACCOUNT_HEADER_SIZE: usize = std::mem::size_of::<TraceAccountHeader>();
-
-#[repr(C)]
 #[derive(Clone, Copy)]
 /// New path - src/state/candle.rs
 pub struct Candle {

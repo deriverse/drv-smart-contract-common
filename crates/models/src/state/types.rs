@@ -54,24 +54,10 @@ pub mod account_type {
     pub const CLIENT_DRV: u32 = 32;
     pub const CLIENT_PRIMARY: u32 = 31;
     pub const COMMUNITY: u32 = 34;
-    /// version-2
-    pub const PDF: u32 = 33;
-    /// version-2 futures
-    pub const FUTURES_ASK_ORDERS: u32 = 29;
-    pub const FUTURES_ASKS_TREE: u32 = 27;
-    pub const FUTURES_BID_ORDERS: u32 = 28;
-    pub const FUTURES_BIDS_TREE: u32 = 26;
-    pub const FUTURES_CLIENT_ACCOUNTS: u32 = 23;
-    pub const FUTURES_CLIENT_INFOS: u32 = 24;
-    pub const FUTURES_CLIENT_INFOS2: u32 = 25;
-    pub const FUTURES_LINES: u32 = 30;
-    pub const FUTURES_MAPS: u32 = 22;
 
     pub const HOLDER: u32 = 1;
     pub const ROOT: u32 = 2;
     pub const INSTR: u32 = 7;
-    /// version-2
-    pub const INSTR_TRACE: u32 = 8;
 
     pub const SPOT_15M_CANDLES: u32 = 20;
     pub const SPOT_1M_CANDLES: u32 = 19;
@@ -108,7 +94,6 @@ pub mod account_type {
         Root = 2,
         Token = 4,
         Instr = 7,
-        InstrTrace = 8,
         SpotMaps = 10,
         SpotClientAccounts = 11,
         SpotClientInfos = 12,
@@ -121,17 +106,8 @@ pub mod account_type {
         Spot1MCandles = 19,
         Spot15MCandles = 20,
         SpotDayCandles = 21,
-        FuturesMaps = 22,
-        FuturesClientAccounts = 23,
-        FuturesClientInfos = 24,
-        FuturesClientInfos2 = 25,
-        FuturesBidsTree = 26,
-        FuturesAsksTree = 27,
-        FuturesBidOrders = 28,
-        FuturesAskOrders = 29,
-        FuturesLines = 30,
+
         ClientPrimary = 31,
-        Pdf = 33,
         Community = 34,
         ClientCommunity = 35,
         PerpAskOrders = 36,
@@ -153,8 +129,6 @@ pub mod account_type {
 
         ProgramTokenAccount,
         DrvsAuthority,
-        DrvsTokenAccount,
-        DrvsProgramAccount,
     }
 
     impl From<u32> for AccountType {
