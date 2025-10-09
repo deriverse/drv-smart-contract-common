@@ -131,7 +131,6 @@ pub mod account_type {
         FuturesAskOrders = 29,
         FuturesLines = 30,
         ClientPrimary = 31,
-        ClientDrv = 32,
         Pdf = 33,
         Community = 34,
         ClientCommunity = 35,

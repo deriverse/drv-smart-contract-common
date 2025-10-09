@@ -12,5 +12,3 @@ pub struct ClientDrvAccountHeader {
     pub slot: u32,
     pub reserved: u32,
 }
-
-pub const CLIENT_DRV_ACCOUNT_HEADER_SIZE: usize = std::mem::size_of::<ClientDrvAccountHeader>();

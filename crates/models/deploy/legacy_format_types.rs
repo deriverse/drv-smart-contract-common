@@ -24,7 +24,6 @@ pub mod instr_mask {
 
 pub mod account_type {
     pub const CLIENT_COMMUNITY: u32 = 35;
-    pub const CLIENT_DRV: u32 = 32;
     pub const CLIENT_PRIMARY: u32 = 31;
     pub const COMMUNITY: u32 = 34;
     pub const PDF: u32 = 33;
@@ -622,20 +621,6 @@ pub struct ClientPrimaryAccountHeader {
 
 pub const CLIENT_PRIMARY_ACCOUNT_HEADER_SIZE: usize =
     std::mem::size_of::<ClientPrimaryAccountHeader>();
-
-#[repr(C)]
-#[derive(Zeroable)]
-/// New path - src/state/client_drv.rs
-pub struct ClientDrvAccountHeader {
-    pub tag: u32,
-    pub version: u32,
-    pub id: u32,
-    pub count: u32,
-    pub slot: u32,
-    pub reserved: u32,
-}
-
-pub const CLIENT_DRV_ACCOUNT_HEADER_SIZE: usize = std::mem::size_of::<ClientDrvAccountHeader>();
 
 #[repr(C)]
 #[derive(Copy, Clone)]
