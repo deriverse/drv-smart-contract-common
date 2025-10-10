@@ -340,6 +340,5 @@ pub struct NewPrivateClient {
     pub tag: u8, // 49
     pub padding_u8: u8,
     pub padding_u16: u16,
-    pub wallet: Pubkey,
     pub expiration_time: u32,
 }
