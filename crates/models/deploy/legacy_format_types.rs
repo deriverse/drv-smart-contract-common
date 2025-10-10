@@ -233,7 +233,8 @@ pub const CANDLES_ACCOUNT_HEADER_SIZE: usize = std::mem::size_of::<CandlesAccoun
 #[repr(C)]
 #[derive(Pod, Zeroable, Clone, Copy, Default)]
 pub struct InstrAccountHeader {
-    pub discriminator: Discriminator,
+    pub tag: u32,
+    pub version: u32,
     pub instr_id: u32,
     pub asset_token_id: u32,
     pub crncy_token_id: u32,
@@ -557,8 +558,6 @@ pub struct ClientPrimaryAccountHeader {
     pub tag: u32,
     pub version: u32,
     pub wallet_address: Pubkey,
-    pub drv_address: Pubkey,
-    pub community_address: Pubkey,
     pub lut_address: Pubkey,
     pub ref_address: Pubkey,
     pub first_ref_link_discount: f64,

@@ -479,27 +479,3 @@ pub struct MoveSpotAvailFundsReport {
 //         write!(f, "}}")
 //     }
 // }
-
-#[repr(C)]
-#[derive(Copy, Clone, Zeroable, Pod, Default)]
-pub struct NewPrivateClientReport {
-    pub tag: u8,
-    pub padding_u8: u8,
-    pub padding_u16: u16,
-    pub wallet: Pubkey,
-    pub insert_index: u32,
-    pub creation_time: u32,
-    pub expiration_time: u32,
-}
-
-// impl std::fmt::Display for NewPrivateClientReport {
-//     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-//         write!(f, "SwapOrderReport {{\n")?;
-//         write!(f, "  tag: {},\n", self.tag)?;
-//         write!(f, "  wallet: {}\n", self.wallet.to_string())?;
-//         write!(f, "  insert_index: {}\n", self.insert_index)?;
-//         write!(f, "  creation_time: {}\n", self.creation_time)?;
-//         write!(f, "  expiration_time: {}\n", self.expiration_time)?;
-//         write!(f, "}}")
-//     }
-// }
