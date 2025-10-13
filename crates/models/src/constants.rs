@@ -231,7 +231,7 @@ pub mod private_mode {
     #[cfg(not(feature = "test-sbf"))]
     pub const MAX_PRIVATE_CLIENTS_IN_QUEUE: u32 = 512;
     #[cfg(feature = "test-sbf")]
-    pub const MAX_PRIVATE_CLIENTS_IN_QUEUE: u32 = 5;
+    pub const MAX_PRIVATE_CLIENTS_IN_QUEUE: u32 = 2;
 }
 
 #[cfg(feature = "competition")]
