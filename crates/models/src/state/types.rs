@@ -1,4 +1,3 @@
-
 use bytemuck::{Pod, Zeroable};
 use serde::{Deserialize, Serialize};
 use solana_program::pubkey::Pubkey;
@@ -46,6 +45,10 @@ pub mod instr_mask {
 }
 
 pub mod account_type {
+
+    use std::fmt::Error;
+
+    use solana_program::program_error::ProgramError;
 
     use super::*;
 
@@ -129,9 +132,48 @@ pub mod account_type {
         DrvsAuthority,
     }
 
-    impl From<u32> for AccountType {
-        fn from(value: u32) -> Self {
-            unsafe { std::mem::transmute(value) }
+    impl TryFrom<u32> for AccountType {
+        type Error = ProgramError;
+        fn try_from(value: u32) -> Result<Self, Self::Error> {
+            Ok(match value {
+                1 => Self::Holder,
+                2 => Self::Root,
+                4 => Self::Token,
+                7 => Self::Instr,
+                10 => Self::SpotMaps,
+                11 => Self::SpotClientAccounts,
+                12 => Self::SpotClientInfos,
+                13 => Self::SpotClientInfos2,
+                14 => Self::SpotBidsTree,
+                15 => Self::SpotAsksTree,
+                16 => Self::SpotBidOrders,
+                17 => Self::SpotAskOrders,
+                18 => Self::SpotLines,
+                19 => Self::Spot1MCandles,
+                20 => Self::Spot15MCandles,
+                21 => Self::SpotDayCandles,
+                31 => Self::ClientPrimary,
+                34 => Self::Community,
+                35 => Self::ClientCommunity,
+                36 => Self::PerpAskOrders,
+                37 => Self::PerpAsksTree,
+                38 => Self::PerpBidOrders,
+                39 => Self::PerpBidsTree,
+                40 => Self::PerpClientAccounts,
+                41 => Self::PerpClientInfos,
+                42 => Self::PerpClientInfos2,
+                43 => Self::PerpClientInfos3,
+                44 => Self::PerpClientInfos4,
+                45 => Self::PerpClientInfos5,
+                46 => Self::PerpLines,
+                47 => Self::PerpMaps,
+                48 => Self::PerpLongPxTree,
+                49 => Self::PerpShortPxTree,
+                50 => Self::PerpRebalanceTimeTree,
+                51 => Self::PrivateClients,
+
+                _ => return Err(ProgramError::InvalidAccountData),
+            })
         }
     }
 
