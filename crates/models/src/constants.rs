@@ -96,10 +96,8 @@ pub mod memory_maps {
 }
 
 pub mod spot {
-    use super::memory_maps::TRADE_MEMORY_MAP_UNITS;
-
     pub const MAX_LINES: usize = 2048;
-    pub const MAX_ORDERS: u32 = (TRADE_MEMORY_MAP_UNITS * 64 - MAX_LINES) as u32;
+    pub const MAX_ORDERS: u32 = (4 * 64 * 64 - MAX_LINES) as u32 - 2;
     pub mod memory_maps {
         use crate::state::spots::spot_account_header::SpotTradeAccountHeader;
 
@@ -111,16 +109,14 @@ pub mod spot {
         pub const BID_ORDERS_PT_OFFSET: usize = ASKS_TREE_PT_OFFSET + TRADE_MEMORY_MAP_UNITS * 8;
         pub const ASK_ORDERS_PT_OFFSET: usize = BID_ORDERS_PT_OFFSET + TRADE_MEMORY_MAP_UNITS * 8;
         pub const LINES_PT_OFFSET: usize = ASK_ORDERS_PT_OFFSET + TRADE_MEMORY_MAP_UNITS * 8;
-        pub const LONG_PX_TREE_PT_OFFSET: usize = LINES_PT_OFFSET + SMALL_MEMORY_MAP_UNITS * 8;
-        pub const SHORT_PX_TREE_PT_OFFSET: usize = LONG_PX_TREE_PT_OFFSET + MEMORY_MAP_UNITS * 8;
-        pub const MAPS_SIZE: usize = SHORT_PX_TREE_PT_OFFSET + MEMORY_MAP_UNITS * 8;
+
+        pub const MAPS_SIZE: usize = LINES_PT_OFFSET + MEMORY_MAP_UNITS * 8;
     }
 }
-pub mod perp {
-    use super::memory_maps::EXTENDED_MEMORY_MAP_UNITS;
 
+pub mod perp {
     pub const MAX_LINES: usize = 2048 * 4;
-    pub const MAX_ORDERS: u32 = (EXTENDED_MEMORY_MAP_UNITS * 64 - MAX_LINES) as u32;
+    pub const MAX_ORDERS: u32 = (16 * 64 * 64 - MAX_LINES) as u32 - 2;
 
     pub const MAX_SUPPLY: i64 = 250_000;
     pub const INIT_SEAT_PRICE: f64 = 1.0;
@@ -233,9 +229,9 @@ pub mod ref_constants {
 
 pub mod private_mode {
     #[cfg(not(feature = "test-sbf"))]
-    pub const MAX_PRIVATE_CLIENTS_IN_QUEUE: u32 = 128;
+    pub const MAX_PRIVATE_CLIENTS_IN_QUEUE: u32 = 512;
     #[cfg(feature = "test-sbf")]
-    pub const MAX_PRIVATE_CLIENTS_IN_QUEUE: u32 = 2;
+    pub const MAX_PRIVATE_CLIENTS_IN_QUEUE: u32 = 5;
 }
 
 #[cfg(feature = "competition")]
