@@ -132,8 +132,9 @@ pub mod perp {
             std::mem::size_of::<SpotTradeAccountHeader<0>>() + MEMORY_MAP_UNITS * 8;
         pub const ASKS_TREE_PT_OFFSET: usize = BIDS_TREE_PT_OFFSET + EXTENDED_MEMORY_MAP_UNITS * 8;
         pub const BID_ORDERS_PT_OFFSET: usize = ASKS_TREE_PT_OFFSET + EXTENDED_MEMORY_MAP_UNITS * 8;
-        pub const ASK_ORDERS_PT_OFFSET: usize = BID_ORDERS_PT_OFFSET + TRADE_MEMORY_MAP_UNITS * 8;
-        pub const LINES_PT_OFFSET: usize = ASK_ORDERS_PT_OFFSET + TRADE_MEMORY_MAP_UNITS * 8;
+        pub const ASK_ORDERS_PT_OFFSET: usize =
+            BID_ORDERS_PT_OFFSET + EXTENDED_MEMORY_MAP_UNITS * 8;
+        pub const LINES_PT_OFFSET: usize = ASK_ORDERS_PT_OFFSET + EXTENDED_MEMORY_MAP_UNITS * 8;
         pub const LONG_PX_TREE_PT_OFFSET: usize = LINES_PT_OFFSET + TRADE_MEMORY_MAP_UNITS * 8;
         pub const SHORT_PX_TREE_PT_OFFSET: usize = LONG_PX_TREE_PT_OFFSET + MEMORY_MAP_UNITS * 8;
         pub const REBALANCING_PT_OFFSET: usize = SHORT_PX_TREE_PT_OFFSET + MEMORY_MAP_UNITS * 8;
