@@ -342,3 +342,12 @@ pub struct NewPrivateClient {
     pub padding_u16: u16,
     pub expiration_time: u32,
 }
+
+#[repr(C)]
+#[derive(Clone, Copy, Pod, Zeroable)]
+pub struct PointsProgramExpiration {
+    pub tag: u8, //51
+    pub padding_u8: u8,
+    pub padding_u16: u16,
+    pub new_expiration_time: u32,
+}

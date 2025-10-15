@@ -70,6 +70,7 @@ pub fn process_instruction(
         48 => sell_market_seat(program_id, accounts, _instruction_data)?,
         49 => new_private_client(program_id, accounts, _instruction_data)?,
         50 => terminate_private_mode(program_id, accounts)?,
+        51 => change_points_program_exipratin(program_id, accounts, _instruction_data)?,
         _ => {}
     }
     Ok(())

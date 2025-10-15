@@ -22,7 +22,7 @@ pub struct RootState {
     pub instr_count: u32,
     pub ref_counter: u32,
     pub mask: u32,
-    pub reserved: u32,
+    pub points_program_expiration: u32,
 }
 
 impl Deref for RootState {
