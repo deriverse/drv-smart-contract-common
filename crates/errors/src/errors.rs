@@ -92,6 +92,13 @@ macro_rules! drv_err {
 }
 
 #[macro_export]
+macro_rules! bail {
+    ($error:expr) => {
+        return Err(DeriverseError::new($error, file!(), line!()));
+    };
+}
+
+#[macro_export]
 macro_rules! drv_result {
     ($error:expr) => {
         Err(DeriverseError::new($error, file!(), line!()))
@@ -668,6 +675,16 @@ pub enum DeriverseErrorKind {
         msg = "Clients wallet is already in private queue on index {index}"
     )]
     WalletIsInPrivateQueue { index: u32, wallet_address: Pubkey },
+
+    #[error(
+        code = 291,
+        msg = "Invalid new expiration time for {program_name}, new time {new_time} < old_time {old_time}"
+    )]
+    InvalidNewExpirationTime {
+        program_name: String,
+        new_time: u32,
+        old_time: u32,
+    },
 }
 
 #[cfg(test)]
