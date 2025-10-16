@@ -94,7 +94,7 @@ macro_rules! drv_err {
 #[macro_export]
 macro_rules! bail {
     ($error:expr) => {
-        return Err(DeriverseError::new($error, file!(), line!()));
+        return Err(DeriverseError::new($error, file!(), line!()))
     };
 }
 
@@ -102,27 +102,6 @@ macro_rules! bail {
 macro_rules! drv_result {
     ($error:expr) => {
         Err(DeriverseError::new($error, file!(), line!()))
-    };
-}
-
-#[macro_export]
-macro_rules! drv_map {
-    ($error:expr) => {
-        $error.map_err(|err| DeriverseError::new(err, file!(), line!()));
-    };
-}
-
-#[macro_export]
-macro_rules! drv_map_into {
-    ($error:expr) => {
-        $error.map_err(|err| DeriverseError::new(err.into(), file!(), line!()));
-    };
-}
-
-#[macro_export]
-macro_rules! drv_into {
-    ($error:expr) => {
-        DeriverseError::new($error.into(), file!(), line!())
     };
 }
 

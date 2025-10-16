@@ -6,7 +6,7 @@ use std::ops::Deref;
 use super::types::Discriminator;
 
 #[repr(C)]
-#[derive(Pod, Zeroable, Clone, Copy, Default)]
+#[derive(Pod, Zeroable, Clone, Copy, Default, Debug)]
 pub struct RootState {
     pub discriminator: Discriminator,
     pub operator_address: Pubkey,
