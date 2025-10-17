@@ -246,3 +246,205 @@ pub mod competition {
     pub const COMPETITION_CRNCY_ID: u32 = 1;
     pub const COMPETITION_SUM: i64 = 10_000_000_000;
 }
+
+pub mod instructions {
+    pub struct Instruction {
+        pub instruction_code: u32,
+        pub min_accounts_amount: u32,
+    }
+
+    pub const NEW_HOLDER_ACCOUNT: Instruction = Instruction {
+        instruction_code: 0,
+        min_accounts_amount: 3,
+    };
+
+    pub const NEW_OPERATOR: Instruction = Instruction {
+        instruction_code: 1,
+        min_accounts_amount: 4,
+    };
+
+    pub const NEW_ROOT_ACCOUNT: Instruction = Instruction {
+        instruction_code: 2,
+        min_accounts_amount: 12,
+    };
+
+    pub const PERP_WITHDRAW: Instruction = Instruction {
+        instruction_code: 3,
+        min_accounts_amount: 20,
+    };
+
+    pub const NEW_BASE_CRNCY: Instruction = Instruction {
+        instruction_code: 4,
+        min_accounts_amount: 8,
+    };
+
+    pub const FEES_DEPOSIT: Instruction = Instruction {
+        instruction_code: 5,
+        min_accounts_amount: 6,
+    };
+
+    pub const DEPOSIT: Instruction = Instruction {
+        instruction_code: 7,
+        min_accounts_amount: 9,
+    };
+
+    pub const WITHDRAW: Instruction = Instruction {
+        instruction_code: 8,
+        min_accounts_amount: 11,
+    };
+
+    pub const NEW_INSTRUMENT: Instruction = Instruction {
+        instruction_code: 9,
+        min_accounts_amount: 23,
+    };
+
+    pub const UPGRADE_TO_PERP: Instruction = Instruction {
+        instruction_code: 10,
+        min_accounts_amount: 21,
+    };
+
+    pub const PERP_DEPOSIT: Instruction = Instruction {
+        instruction_code: 11,
+        min_accounts_amount: 19,
+    };
+
+    pub const NEW_SPOT_ORDER: Instruction = Instruction {
+        instruction_code: 12,
+        min_accounts_amount: 18,
+    };
+
+    pub const SPOT_ORDER_CANCEL: Instruction = Instruction {
+        instruction_code: 13,
+        min_accounts_amount: 14,
+    };
+
+    pub const SPOT_LP: Instruction = Instruction {
+        instruction_code: 14,
+        min_accounts_amount: 5,
+    };
+
+    pub const SPOT_MASS_CANCEL: Instruction = Instruction {
+        instruction_code: 15,
+        min_accounts_amount: 14,
+    };
+
+    pub const NEXT_VOTING: Instruction = Instruction {
+        instruction_code: 16,
+        min_accounts_amount: 3,
+    };
+
+    pub const NEW_PERP_ORDER: Instruction = Instruction {
+        instruction_code: 19,
+        min_accounts_amount: 21,
+    };
+
+    pub const DIVIDENDS_ALLOCATION: Instruction = Instruction {
+        instruction_code: 25,
+        min_accounts_amount: 4,
+    };
+
+    pub const SWAP: Instruction = Instruction {
+        instruction_code: 26,
+        min_accounts_amount: 27,
+    };
+
+    pub const AIRDROP: Instruction = Instruction {
+        instruction_code: 27,
+        min_accounts_amount: 11,
+    };
+
+    pub const DIVIDENDS_CLAIM: Instruction = Instruction {
+        instruction_code: 28,
+        min_accounts_amount: 6,
+    };
+
+    pub const PERP_ORDER_CANCEL: Instruction = Instruction {
+        instruction_code: 30,
+        min_accounts_amount: 20,
+    };
+
+    pub const VOTING: Instruction = Instruction {
+        instruction_code: 32,
+        min_accounts_amount: 6,
+    };
+
+    pub const SPOT_QUOTES_REPLACE: Instruction = Instruction {
+        instruction_code: 34,
+        min_accounts_amount: 18,
+    };
+
+    pub const PERP_MASS_CANCEL: Instruction = Instruction {
+        instruction_code: 36,
+        min_accounts_amount: 20,
+    };
+
+    pub const PERP_CHANGE_LEVERAGE: Instruction = Instruction {
+        instruction_code: 37,
+        min_accounts_amount: 20,
+    };
+
+    pub const FEES_WITHDRAW: Instruction = Instruction {
+        instruction_code: 39,
+        min_accounts_amount: 6,
+    };
+
+    pub const SET_INSTR_ORACLE_FEED: Instruction = Instruction {
+        instruction_code: 40,
+        min_accounts_amount: 4,
+    };
+
+    pub const SET_INSTR_READY_FOR_PERP_UPGRADE: Instruction = Instruction {
+        instruction_code: 41,
+        min_accounts_amount: 3,
+    };
+
+    pub const PERP_QUOTES_REPLACE: Instruction = Instruction {
+        instruction_code: 42,
+        min_accounts_amount: 21,
+    };
+
+    pub const MOVE_SPOT_AVAIL_FUNDS: Instruction = Instruction {
+        instruction_code: 43,
+        min_accounts_amount: 6,
+    };
+
+    pub const CHANGE_REF_PROGRAM: Instruction = Instruction {
+        instruction_code: 44,
+        min_accounts_amount: 2,
+    };
+
+    pub const NEW_REF_LINK: Instruction = Instruction {
+        instruction_code: 45,
+        min_accounts_amount: 3,
+    };
+
+    pub const PERP_STATISTICS_RESET: Instruction = Instruction {
+        instruction_code: 46,
+        min_accounts_amount: 20,
+    };
+
+    pub const BUY_MARKET_SEAT: Instruction = Instruction {
+        instruction_code: 47,
+        min_accounts_amount: 19,
+    };
+
+    pub const SELL_MARKET_SEAT: Instruction = Instruction {
+        instruction_code: 48,
+        min_accounts_amount: 20,
+    };
+
+    pub const NEW_PRIVATE_CLIENT: Instruction = Instruction {
+        instruction_code: 49,
+        min_accounts_amount: 5,
+    };
+
+    pub const TERMINATE_PRIVATE_MODE: Instruction = Instruction {
+        instruction_code: 50,
+        min_accounts_amount: 3,
+    };
+
+    pub const CHANGE_POINTS_PROGRAM_EXPIRATION: Instruction = Instruction {
+        instruction_code: 51,
+        min_accounts_amount: 2,
+    };
+}
