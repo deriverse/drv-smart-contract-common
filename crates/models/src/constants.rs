@@ -248,198 +248,244 @@ pub mod competition {
 }
 
 pub mod instructions {
-    pub mod new_holder_account {
-        pub const INSTRUCTION_CODE: u8 = 0;
-        pub const MIN_ACCOUNTS_AMOUNT: usize = 3;
+    pub trait DrvInstruction {
+        const CODE: u8;
+        const MIN_ACCOUNTS: usize;
     }
 
-    pub mod new_operator {
-        pub const INSTRUCTION_CODE: u8 = 1;
-        pub const MIN_ACCOUNTS_AMOUNT: usize = 4;
+    pub struct NewHolderInstruction;
+
+    pub struct NewHolderInstruction;
+    impl DrvInstruction for NewHolderInstruction {
+        const CODE: u8 = 0;
+        const MIN_ACCOUNTS: usize = 3;
     }
 
-    pub mod new_root_account {
-        pub const INSTRUCTION_CODE: u8 = 2;
-        pub const MIN_ACCOUNTS_AMOUNT: usize = 12;
+    pub struct NewOperatorInstruction;
+    impl DrvInstruction for NewOperatorInstruction {
+        const CODE: u8 = 1;
+        const MIN_ACCOUNTS: usize = 4;
     }
 
-    pub mod perp_withdraw {
-        pub const INSTRUCTION_CODE: u8 = 3;
-        pub const MIN_ACCOUNTS_AMOUNT: usize = 20;
+    pub struct NewRootAccountInstruction;
+    impl DrvInstruction for NewRootAccountInstruction {
+        const CODE: u8 = 2;
+        const MIN_ACCOUNTS: usize = 12;
     }
 
-    pub mod new_base_crncy {
-        pub const INSTRUCTION_CODE: u8 = 4;
-        pub const MIN_ACCOUNTS_AMOUNT: usize = 8;
+    pub struct PerpWithdrawInstruction;
+    impl DrvInstruction for PerpWithdrawInstruction {
+        const CODE: u8 = 3;
+        const MIN_ACCOUNTS: usize = 20;
     }
 
-    pub mod fees_deposit {
-        pub const INSTRUCTION_CODE: u8 = 5;
-        pub const MIN_ACCOUNTS_AMOUNT: usize = 6;
+    pub struct NewBaseCrncyInstruction;
+    impl DrvInstruction for NewBaseCrncyInstruction {
+        const CODE: u8 = 4;
+        const MIN_ACCOUNTS: usize = 8;
     }
 
-    pub mod deposit {
-        pub const INSTRUCTION_CODE: u8 = 7;
-        pub const MIN_ACCOUNTS_AMOUNT: usize = 9;
+    pub struct FeesDepositInstruction;
+    impl DrvInstruction for FeesDepositInstruction {
+        const CODE: u8 = 5;
+        const MIN_ACCOUNTS: usize = 6;
     }
 
-    pub mod withdraw {
-        pub const INSTRUCTION_CODE: u8 = 8;
-        pub const MIN_ACCOUNTS_AMOUNT: usize = 11;
+    pub struct DepositInstruction;
+    impl DrvInstruction for DepositInstruction {
+        const CODE: u8 = 7;
+        const MIN_ACCOUNTS: usize = 9;
     }
 
-    pub mod new_instrument {
-        pub const INSTRUCTION_CODE: u8 = 9;
-        pub const MIN_ACCOUNTS_AMOUNT: usize = 23;
+    pub struct WithdrawInstruction;
+    impl DrvInstruction for WithdrawInstruction {
+        const CODE: u8 = 8;
+        const MIN_ACCOUNTS: usize = 11;
     }
 
-    pub mod upgrade_to_perp {
-        pub const INSTRUCTION_CODE: u8 = 10;
-        pub const MIN_ACCOUNTS_AMOUNT: usize = 21;
+    pub struct NewInstrumentInstruction;
+    impl DrvInstruction for NewInstrumentInstruction {
+        const CODE: u8 = 9;
+        const MIN_ACCOUNTS: usize = 23;
     }
 
-    pub mod perp_deposit {
-        pub const INSTRUCTION_CODE: u8 = 11;
-        pub const MIN_ACCOUNTS_AMOUNT: usize = 19;
+    pub struct UpgradeToPerpInstruction;
+    impl DrvInstruction for UpgradeToPerpInstruction {
+        const CODE: u8 = 10;
+        const MIN_ACCOUNTS: usize = 21;
     }
 
-    pub mod new_spot_order {
-        pub const INSTRUCTION_CODE: u8 = 12;
-        pub const MIN_ACCOUNTS_AMOUNT: usize = 18;
+    pub struct PerpDepositInstruction;
+    impl DrvInstruction for PerpDepositInstruction {
+        const CODE: u8 = 11;
+        const MIN_ACCOUNTS: usize = 19;
     }
 
-    pub mod spot_order_cancel {
-        pub const INSTRUCTION_CODE: u8 = 13;
-        pub const MIN_ACCOUNTS_AMOUNT: usize = 14;
+    pub struct NewSpotOrderInstruction;
+    impl DrvInstruction for NewSpotOrderInstruction {
+        const CODE: u8 = 12;
+        const MIN_ACCOUNTS: usize = 18;
     }
 
-    pub mod spot_lp {
-        pub const INSTRUCTION_CODE: u8 = 14;
-        pub const MIN_ACCOUNTS_AMOUNT: usize = 5;
+    pub struct SpotOrderCancelInstruction;
+    impl DrvInstruction for SpotOrderCancelInstruction {
+        const CODE: u8 = 13;
+        const MIN_ACCOUNTS: usize = 14;
     }
 
-    pub mod spot_mass_cancel {
-        pub const INSTRUCTION_CODE: u8 = 15;
-        pub const MIN_ACCOUNTS_AMOUNT: usize = 14;
+    pub struct SpotLpInstruction;
+    impl DrvInstruction for SpotLpInstruction {
+        const CODE: u8 = 14;
+        const MIN_ACCOUNTS: usize = 5;
     }
 
-    pub mod next_voting {
-        pub const INSTRUCTION_CODE: u8 = 16;
-        pub const MIN_ACCOUNTS_AMOUNT: usize = 3;
+    pub struct SpotMassCancelInstruction;
+    impl DrvInstruction for SpotMassCancelInstruction {
+        const CODE: u8 = 15;
+        const MIN_ACCOUNTS: usize = 14;
     }
 
-    pub mod new_perp_order {
-        pub const INSTRUCTION_CODE: u8 = 19;
-        pub const MIN_ACCOUNTS_AMOUNT: usize = 21;
+    pub struct NextVotingInstruction;
+    impl DrvInstruction for NextVotingInstruction {
+        const CODE: u8 = 16;
+        const MIN_ACCOUNTS: usize = 3;
     }
 
-    pub mod dividends_allocation {
-        pub const INSTRUCTION_CODE: u8 = 25;
-        pub const MIN_ACCOUNTS_AMOUNT: usize = 4;
+    pub struct NewPerpOrderInstruction;
+    impl DrvInstruction for NewPerpOrderInstruction {
+        const CODE: u8 = 19;
+        const MIN_ACCOUNTS: usize = 21;
     }
 
-    pub mod swap {
-        pub const INSTRUCTION_CODE: u8 = 26;
-        pub const MIN_ACCOUNTS_AMOUNT: usize = 27;
+    pub struct DividendsAllocationInstruction;
+    impl DrvInstruction for DividendsAllocationInstruction {
+        const CODE: u8 = 25;
+        const MIN_ACCOUNTS: usize = 4;
     }
 
-    pub mod airdrop {
-        pub const INSTRUCTION_CODE: u8 = 27;
-        pub const MIN_ACCOUNTS_AMOUNT: usize = 11;
+    pub struct SwapInstruction;
+    impl DrvInstruction for SwapInstruction {
+        const CODE: u8 = 26;
+        const MIN_ACCOUNTS: usize = 27;
     }
 
-    pub mod dividends_claim {
-        pub const INSTRUCTION_CODE: u8 = 28;
-        pub const MIN_ACCOUNTS_AMOUNT: usize = 6;
+    pub struct AirdropInstruction;
+    impl DrvInstruction for AirdropInstruction {
+        const CODE: u8 = 27;
+        const MIN_ACCOUNTS: usize = 11;
     }
 
-    pub mod perp_order_cancel {
-        pub const INSTRUCTION_CODE: u8 = 30;
-        pub const MIN_ACCOUNTS_AMOUNT: usize = 20;
+    pub struct DividendsClaimInstruction;
+    impl DrvInstruction for DividendsClaimInstruction {
+        const CODE: u8 = 28;
+        const MIN_ACCOUNTS: usize = 6;
     }
 
-    pub mod voting {
-        pub const INSTRUCTION_CODE: u8 = 32;
-        pub const MIN_ACCOUNTS_AMOUNT: usize = 6;
+    pub struct PerpOrderCancelInstruction;
+    impl DrvInstruction for PerpOrderCancelInstruction {
+        const CODE: u8 = 30;
+        const MIN_ACCOUNTS: usize = 20;
     }
 
-    pub mod spot_quotes_replace {
-        pub const INSTRUCTION_CODE: u8 = 34;
-        pub const MIN_ACCOUNTS_AMOUNT: usize = 18;
+    pub struct VotingInstruction;
+    impl DrvInstruction for VotingInstruction {
+        const CODE: u8 = 32;
+        const MIN_ACCOUNTS: usize = 6;
     }
 
-    pub mod perp_mass_cancel {
-        pub const INSTRUCTION_CODE: u8 = 36;
-        pub const MIN_ACCOUNTS_AMOUNT: usize = 20;
+    pub struct SpotQuotesReplaceInstruction;
+    impl DrvInstruction for SpotQuotesReplaceInstruction {
+        const CODE: u8 = 34;
+        const MIN_ACCOUNTS: usize = 18;
     }
 
-    pub mod perp_change_leverage {
-        pub const INSTRUCTION_CODE: u8 = 37;
-        pub const MIN_ACCOUNTS_AMOUNT: usize = 20;
+    pub struct PerpMassCancelInstruction;
+    impl DrvInstruction for PerpMassCancelInstruction {
+        const CODE: u8 = 36;
+        const MIN_ACCOUNTS: usize = 20;
     }
 
-    pub mod fees_withdraw {
-        pub const INSTRUCTION_CODE: u8 = 39;
-        pub const MIN_ACCOUNTS_AMOUNT: usize = 6;
+    pub struct PerpChangeLeverageInstruction;
+    impl DrvInstruction for PerpChangeLeverageInstruction {
+        const CODE: u8 = 37;
+        const MIN_ACCOUNTS: usize = 20;
     }
 
-    pub mod set_instr_oracle_feed {
-        pub const INSTRUCTION_CODE: u8 = 40;
-        pub const MIN_ACCOUNTS_AMOUNT: usize = 4;
+    pub struct FeesWithdrawInstruction;
+    impl DrvInstruction for FeesWithdrawInstruction {
+        const CODE: u8 = 39;
+        const MIN_ACCOUNTS: usize = 6;
     }
 
-    pub mod set_instr_ready_for_perp_upgrade {
-        pub const INSTRUCTION_CODE: u8 = 41;
-        pub const MIN_ACCOUNTS_AMOUNT: usize = 3;
+    pub struct SetInstrOracleFeedInstruction;
+    impl DrvInstruction for SetInstrOracleFeedInstruction {
+        const CODE: u8 = 40;
+        const MIN_ACCOUNTS: usize = 4;
     }
 
-    pub mod perp_quotes_replace {
-        pub const INSTRUCTION_CODE: u8 = 42;
-        pub const MIN_ACCOUNTS_AMOUNT: usize = 21;
+    pub struct SetInstrReadyForPerpUpgradeInstruction;
+    impl DrvInstruction for SetInstrReadyForPerpUpgradeInstruction {
+        const CODE: u8 = 41;
+        const MIN_ACCOUNTS: usize = 3;
     }
 
-    pub mod move_spot_avail_funds {
-        pub const INSTRUCTION_CODE: u8 = 43;
-        pub const MIN_ACCOUNTS_AMOUNT: usize = 6;
+    pub struct PerpQuotesReplaceInstruction;
+    impl DrvInstruction for PerpQuotesReplaceInstruction {
+        const CODE: u8 = 42;
+        const MIN_ACCOUNTS: usize = 21;
     }
 
-    pub mod change_ref_program {
-        pub const INSTRUCTION_CODE: u8 = 44;
-        pub const MIN_ACCOUNTS_AMOUNT: usize = 2;
+    pub struct MoveSpotAvailFundsInstruction;
+    impl DrvInstruction for MoveSpotAvailFundsInstruction {
+        const CODE: u8 = 43;
+        const MIN_ACCOUNTS: usize = 6;
     }
 
-    pub mod new_ref_link {
-        pub const INSTRUCTION_CODE: u8 = 45;
-        pub const MIN_ACCOUNTS_AMOUNT: usize = 3;
+    pub struct ChangeRefProgramInstruction;
+    impl DrvInstruction for ChangeRefProgramInstruction {
+        const CODE: u8 = 44;
+        const MIN_ACCOUNTS: usize = 2;
     }
 
-    pub mod perp_statistics_reset {
-        pub const INSTRUCTION_CODE: u8 = 46;
-        pub const MIN_ACCOUNTS_AMOUNT: usize = 20;
+    pub struct NewRefLinkInstruction;
+    impl DrvInstruction for NewRefLinkInstruction {
+        const CODE: u8 = 45;
+        const MIN_ACCOUNTS: usize = 3;
     }
 
-    pub mod buy_market_seat {
-        pub const INSTRUCTION_CODE: u8 = 47;
-        pub const MIN_ACCOUNTS_AMOUNT: usize = 19;
+    pub struct PerpStatisticsResetInstruction;
+    impl DrvInstruction for PerpStatisticsResetInstruction {
+        const CODE: u8 = 46;
+        const MIN_ACCOUNTS: usize = 20;
     }
 
-    pub mod sell_market_seat {
-        pub const INSTRUCTION_CODE: u8 = 48;
-        pub const MIN_ACCOUNTS_AMOUNT: usize = 20;
+    pub struct BuyMarketSeatInstruction;
+    impl DrvInstruction for BuyMarketSeatInstruction {
+        const CODE: u8 = 47;
+        const MIN_ACCOUNTS: usize = 19;
     }
 
-    pub mod new_private_client {
-        pub const INSTRUCTION_CODE: u8 = 49;
-        pub const MIN_ACCOUNTS_AMOUNT: usize = 5;
+    pub struct SellMarketSeatInstruction;
+    impl DrvInstruction for SellMarketSeatInstruction {
+        const CODE: u8 = 48;
+        const MIN_ACCOUNTS: usize = 20;
     }
 
-    pub mod terminate_private_mode {
-        pub const INSTRUCTION_CODE: u8 = 50;
-        pub const MIN_ACCOUNTS_AMOUNT: usize = 3;
+    pub struct NewPrivateClientInstruction;
+    impl DrvInstruction for NewPrivateClientInstruction {
+        const CODE: u8 = 49;
+        const MIN_ACCOUNTS: usize = 5;
     }
 
-    pub mod change_points_program_expiration {
-        pub const INSTRUCTION_CODE: u8 = 51;
-        pub const MIN_ACCOUNTS_AMOUNT: usize = 2;
+    pub struct TerminatePrivateModeInstruction;
+    impl DrvInstruction for TerminatePrivateModeInstruction {
+        const CODE: u8 = 50;
+        const MIN_ACCOUNTS: usize = 3;
+    }
+
+    pub struct ChangePointsProgramExpirationInstruction;
+    impl DrvInstruction for ChangePointsProgramExpirationInstruction {
+        const CODE: u8 = 51;
+        const MIN_ACCOUNTS: usize = 2;
     }
 }
