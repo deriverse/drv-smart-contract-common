@@ -248,203 +248,198 @@ pub mod competition {
 }
 
 pub mod instructions {
-    pub struct Instruction {
-        pub instruction_code: u8,
-        pub min_accounts_amount: usize,
+    pub mod new_holder_account {
+        pub const INSTRUCTION_CODE: u8 = 0;
+        pub const MIN_ACCOUNTS_AMOUNT: usize = 3;
     }
 
-    pub const NEW_HOLDER_ACCOUNT: Instruction = Instruction {
-        instruction_code: 0,
-        min_accounts_amount: 3,
-    };
+    pub mod new_operator {
+        pub const INSTRUCTION_CODE: u8 = 1;
+        pub const MIN_ACCOUNTS_AMOUNT: usize = 4;
+    }
 
-    pub const NEW_OPERATOR: Instruction = Instruction {
-        instruction_code: 1,
-        min_accounts_amount: 4,
-    };
+    pub mod new_root_account {
+        pub const INSTRUCTION_CODE: u8 = 2;
+        pub const MIN_ACCOUNTS_AMOUNT: usize = 12;
+    }
 
-    pub const NEW_ROOT_ACCOUNT: Instruction = Instruction {
-        instruction_code: 2,
-        min_accounts_amount: 12,
-    };
+    pub mod perp_withdraw {
+        pub const INSTRUCTION_CODE: u8 = 3;
+        pub const MIN_ACCOUNTS_AMOUNT: usize = 20;
+    }
 
-    pub const PERP_WITHDRAW: Instruction = Instruction {
-        instruction_code: 3,
-        min_accounts_amount: 20,
-    };
+    pub mod new_base_crncy {
+        pub const INSTRUCTION_CODE: u8 = 4;
+        pub const MIN_ACCOUNTS_AMOUNT: usize = 8;
+    }
 
-    pub const NEW_BASE_CRNCY: Instruction = Instruction {
-        instruction_code: 4,
-        min_accounts_amount: 8,
-    };
+    pub mod fees_deposit {
+        pub const INSTRUCTION_CODE: u8 = 5;
+        pub const MIN_ACCOUNTS_AMOUNT: usize = 6;
+    }
 
-    pub const FEES_DEPOSIT: Instruction = Instruction {
-        instruction_code: 5,
-        min_accounts_amount: 6,
-    };
+    pub mod deposit {
+        pub const INSTRUCTION_CODE: u8 = 7;
+        pub const MIN_ACCOUNTS_AMOUNT: usize = 9;
+    }
 
-    pub const DEPOSIT: Instruction = Instruction {
-        instruction_code: 7,
-        min_accounts_amount: 9,
-    };
+    pub mod withdraw {
+        pub const INSTRUCTION_CODE: u8 = 8;
+        pub const MIN_ACCOUNTS_AMOUNT: usize = 11;
+    }
 
-    pub const WITHDRAW: Instruction = Instruction {
-        instruction_code: 8,
-        min_accounts_amount: 11,
-    };
+    pub mod new_instrument {
+        pub const INSTRUCTION_CODE: u8 = 9;
+        pub const MIN_ACCOUNTS_AMOUNT: usize = 23;
+    }
 
-    pub const NEW_INSTRUMENT: Instruction = Instruction {
-        instruction_code: 9,
-        min_accounts_amount: 23,
-    };
+    pub mod upgrade_to_perp {
+        pub const INSTRUCTION_CODE: u8 = 10;
+        pub const MIN_ACCOUNTS_AMOUNT: usize = 21;
+    }
 
-    pub const UPGRADE_TO_PERP: Instruction = Instruction {
-        instruction_code: 10,
-        min_accounts_amount: 21,
-    };
+    pub mod perp_deposit {
+        pub const INSTRUCTION_CODE: u8 = 11;
+        pub const MIN_ACCOUNTS_AMOUNT: usize = 19;
+    }
 
-    pub const PERP_DEPOSIT: Instruction = Instruction {
-        instruction_code: 11,
-        min_accounts_amount: 19,
-    };
+    pub mod new_spot_order {
+        pub const INSTRUCTION_CODE: u8 = 12;
+        pub const MIN_ACCOUNTS_AMOUNT: usize = 18;
+    }
 
-    pub const NEW_SPOT_ORDER: Instruction = Instruction {
-        instruction_code: 12,
-        min_accounts_amount: 18,
-    };
+    pub mod spot_order_cancel {
+        pub const INSTRUCTION_CODE: u8 = 13;
+        pub const MIN_ACCOUNTS_AMOUNT: usize = 14;
+    }
 
-    pub const SPOT_ORDER_CANCEL: Instruction = Instruction {
-        instruction_code: 13,
-        min_accounts_amount: 14,
-    };
+    pub mod spot_lp {
+        pub const INSTRUCTION_CODE: u8 = 14;
+        pub const MIN_ACCOUNTS_AMOUNT: usize = 5;
+    }
 
-    pub const SPOT_LP: Instruction = Instruction {
-        instruction_code: 14,
-        min_accounts_amount: 5,
-    };
+    pub mod spot_mass_cancel {
+        pub const INSTRUCTION_CODE: u8 = 15;
+        pub const MIN_ACCOUNTS_AMOUNT: usize = 14;
+    }
 
-    pub const SPOT_MASS_CANCEL: Instruction = Instruction {
-        instruction_code: 15,
-        min_accounts_amount: 14,
-    };
+    pub mod next_voting {
+        pub const INSTRUCTION_CODE: u8 = 16;
+        pub const MIN_ACCOUNTS_AMOUNT: usize = 3;
+    }
 
-    pub const NEXT_VOTING: Instruction = Instruction {
-        instruction_code: 16,
-        min_accounts_amount: 3,
-    };
+    pub mod new_perp_order {
+        pub const INSTRUCTION_CODE: u8 = 19;
+        pub const MIN_ACCOUNTS_AMOUNT: usize = 21;
+    }
 
-    pub const NEW_PERP_ORDER: Instruction = Instruction {
-        instruction_code: 19,
-        min_accounts_amount: 21,
-    };
+    pub mod dividends_allocation {
+        pub const INSTRUCTION_CODE: u8 = 25;
+        pub const MIN_ACCOUNTS_AMOUNT: usize = 4;
+    }
 
-    pub const DIVIDENDS_ALLOCATION: Instruction = Instruction {
-        instruction_code: 25,
-        min_accounts_amount: 4,
-    };
+    pub mod swap {
+        pub const INSTRUCTION_CODE: u8 = 26;
+        pub const MIN_ACCOUNTS_AMOUNT: usize = 27;
+    }
 
-    pub const SWAP: Instruction = Instruction {
-        instruction_code: 26,
-        min_accounts_amount: 27,
-    };
+    pub mod airdrop {
+        pub const INSTRUCTION_CODE: u8 = 27;
+        pub const MIN_ACCOUNTS_AMOUNT: usize = 11;
+    }
 
-    pub const AIRDROP: Instruction = Instruction {
-        instruction_code: 27,
-        min_accounts_amount: 11,
-    };
+    pub mod dividends_claim {
+        pub const INSTRUCTION_CODE: u8 = 28;
+        pub const MIN_ACCOUNTS_AMOUNT: usize = 6;
+    }
 
-    pub const DIVIDENDS_CLAIM: Instruction = Instruction {
-        instruction_code: 28,
-        min_accounts_amount: 6,
-    };
+    pub mod perp_order_cancel {
+        pub const INSTRUCTION_CODE: u8 = 30;
+        pub const MIN_ACCOUNTS_AMOUNT: usize = 20;
+    }
 
-    pub const PERP_ORDER_CANCEL: Instruction = Instruction {
-        instruction_code: 30,
-        min_accounts_amount: 20,
-    };
+    pub mod voting {
+        pub const INSTRUCTION_CODE: u8 = 32;
+        pub const MIN_ACCOUNTS_AMOUNT: usize = 6;
+    }
 
-    pub const VOTING: Instruction = Instruction {
-        instruction_code: 32,
-        min_accounts_amount: 6,
-    };
+    pub mod spot_quotes_replace {
+        pub const INSTRUCTION_CODE: u8 = 34;
+        pub const MIN_ACCOUNTS_AMOUNT: usize = 18;
+    }
 
-    pub const SPOT_QUOTES_REPLACE: Instruction = Instruction {
-        instruction_code: 34,
-        min_accounts_amount: 18,
-    };
+    pub mod perp_mass_cancel {
+        pub const INSTRUCTION_CODE: u8 = 36;
+        pub const MIN_ACCOUNTS_AMOUNT: usize = 20;
+    }
 
-    pub const PERP_MASS_CANCEL: Instruction = Instruction {
-        instruction_code: 36,
-        min_accounts_amount: 20,
-    };
+    pub mod perp_change_leverage {
+        pub const INSTRUCTION_CODE: u8 = 37;
+        pub const MIN_ACCOUNTS_AMOUNT: usize = 20;
+    }
 
-    pub const PERP_CHANGE_LEVERAGE: Instruction = Instruction {
-        instruction_code: 37,
-        min_accounts_amount: 20,
-    };
+    pub mod fees_withdraw {
+        pub const INSTRUCTION_CODE: u8 = 39;
+        pub const MIN_ACCOUNTS_AMOUNT: usize = 6;
+    }
 
-    pub const FEES_WITHDRAW: Instruction = Instruction {
-        instruction_code: 39,
-        min_accounts_amount: 6,
-    };
+    pub mod set_instr_oracle_feed {
+        pub const INSTRUCTION_CODE: u8 = 40;
+        pub const MIN_ACCOUNTS_AMOUNT: usize = 4;
+    }
 
-    pub const SET_INSTR_ORACLE_FEED: Instruction = Instruction {
-        instruction_code: 40,
-        min_accounts_amount: 4,
-    };
+    pub mod set_instr_ready_for_perp_upgrade {
+        pub const INSTRUCTION_CODE: u8 = 41;
+        pub const MIN_ACCOUNTS_AMOUNT: usize = 3;
+    }
 
-    pub const SET_INSTR_READY_FOR_PERP_UPGRADE: Instruction = Instruction {
-        instruction_code: 41,
-        min_accounts_amount: 3,
-    };
+    pub mod perp_quotes_replace {
+        pub const INSTRUCTION_CODE: u8 = 42;
+        pub const MIN_ACCOUNTS_AMOUNT: usize = 21;
+    }
 
-    pub const PERP_QUOTES_REPLACE: Instruction = Instruction {
-        instruction_code: 42,
-        min_accounts_amount: 21,
-    };
+    pub mod move_spot_avail_funds {
+        pub const INSTRUCTION_CODE: u8 = 43;
+        pub const MIN_ACCOUNTS_AMOUNT: usize = 6;
+    }
 
-    pub const MOVE_SPOT_AVAIL_FUNDS: Instruction = Instruction {
-        instruction_code: 43,
-        min_accounts_amount: 6,
-    };
+    pub mod change_ref_program {
+        pub const INSTRUCTION_CODE: u8 = 44;
+        pub const MIN_ACCOUNTS_AMOUNT: usize = 2;
+    }
 
-    pub const CHANGE_REF_PROGRAM: Instruction = Instruction {
-        instruction_code: 44,
-        min_accounts_amount: 2,
-    };
+    pub mod new_ref_link {
+        pub const INSTRUCTION_CODE: u8 = 45;
+        pub const MIN_ACCOUNTS_AMOUNT: usize = 3;
+    }
 
-    pub const NEW_REF_LINK: Instruction = Instruction {
-        instruction_code: 45,
-        min_accounts_amount: 3,
-    };
+    pub mod perp_statistics_reset {
+        pub const INSTRUCTION_CODE: u8 = 46;
+        pub const MIN_ACCOUNTS_AMOUNT: usize = 20;
+    }
 
-    pub const PERP_STATISTICS_RESET: Instruction = Instruction {
-        instruction_code: 46,
-        min_accounts_amount: 20,
-    };
+    pub mod buy_market_seat {
+        pub const INSTRUCTION_CODE: u8 = 47;
+        pub const MIN_ACCOUNTS_AMOUNT: usize = 19;
+    }
 
-    pub const BUY_MARKET_SEAT: Instruction = Instruction {
-        instruction_code: 47,
-        min_accounts_amount: 19,
-    };
+    pub mod sell_market_seat {
+        pub const INSTRUCTION_CODE: u8 = 48;
+        pub const MIN_ACCOUNTS_AMOUNT: usize = 20;
+    }
 
-    pub const SELL_MARKET_SEAT: Instruction = Instruction {
-        instruction_code: 48,
-        min_accounts_amount: 20,
-    };
+    pub mod new_private_client {
+        pub const INSTRUCTION_CODE: u8 = 49;
+        pub const MIN_ACCOUNTS_AMOUNT: usize = 5;
+    }
 
-    pub const NEW_PRIVATE_CLIENT: Instruction = Instruction {
-        instruction_code: 49,
-        min_accounts_amount: 5,
-    };
+    pub mod terminate_private_mode {
+        pub const INSTRUCTION_CODE: u8 = 50;
+        pub const MIN_ACCOUNTS_AMOUNT: usize = 3;
+    }
 
-    pub const TERMINATE_PRIVATE_MODE: Instruction = Instruction {
-        instruction_code: 50,
-        min_accounts_amount: 3,
-    };
-
-    pub const CHANGE_POINTS_PROGRAM_EXPIRATION: Instruction = Instruction {
-        instruction_code: 51,
-        min_accounts_amount: 2,
-    };
+    pub mod change_points_program_expiration {
+        pub const INSTRUCTION_CODE: u8 = 51;
+        pub const MIN_ACCOUNTS_AMOUNT: usize = 2;
+    }
 }
