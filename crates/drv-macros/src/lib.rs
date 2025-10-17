@@ -1,8 +1,11 @@
 use drv_account::drv_account_inner;
 use new_type::new_type_inner;
-use syn::{parse_macro_input, Attribute, DeriveInput};
+use syn::{parse_macro_input, Attribute, DeriveInput, ItemFn};
 
 use proc_macro::TokenStream;
+
+use cu_stats::cu_stats_inner;
+mod cu_stats;
 mod drv_account;
 mod errors;
 mod new_type;
@@ -71,4 +74,16 @@ pub fn new_type(_attrs: TokenStream, input: TokenStream) -> TokenStream {
         .unwrap_or_else(|err| err.to_syn_error().to_compile_error().into());
 
     TokenStream::from(result)
+}
+
+#[proc_macro_attribute]
+/// ## Cu stats macro
+/// Macro is used for instructions spedning CU calculations
+pub fn cu_stats(
+    _attrs: proc_macro::TokenStream,
+    input: proc_macro::TokenStream,
+) -> proc_macro::TokenStream {
+    let input_fn = parse_macro_input!(input as ItemFn);
+
+    proc_macro::TokenStream::from(cu_stats_inner(input_fn))
 }
