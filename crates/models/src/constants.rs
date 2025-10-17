@@ -249,8 +249,8 @@ pub mod competition {
 
 pub mod instructions {
     pub struct Instruction {
-        pub instruction_code: u32,
-        pub min_accounts_amount: u32,
+        pub instruction_code: u8,
+        pub min_accounts_amount: usize,
     }
 
     pub const NEW_HOLDER_ACCOUNT: Instruction = Instruction {
