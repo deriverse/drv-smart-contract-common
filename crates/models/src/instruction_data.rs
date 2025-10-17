@@ -355,3 +355,22 @@ pub struct PointsProgramExpiration {
     pub padding_u16: u16,
     pub new_expiration_time: u32,
 }
+
+#[repr(C)]
+#[derive(Clone, Copy, Pod, Zeroable)]
+pub struct Voting {
+    pub tag: u8, // 16
+    pub choice: u8,
+    pub padding_u16: u16,
+    pub input_voting_counter: u32,
+}
+
+#[repr(C)]
+#[derive(Clone, Copy, Pod, Zeroable)]
+pub struct Airdrop {
+    pub tag: u8, // 27
+    pub padding_u8: u8,
+    pub padding_u16: u16,
+    pub padding_u32: u32,
+    pub ratio: f64,
+}
