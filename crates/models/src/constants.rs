@@ -254,8 +254,6 @@ pub mod instructions {
     }
 
     pub struct NewHolderInstruction;
-
-    pub struct NewHolderInstruction;
     impl DrvInstruction for NewHolderInstruction {
         const CODE: u8 = 0;
         const MIN_ACCOUNTS: usize = 3;
