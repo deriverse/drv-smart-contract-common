@@ -29,7 +29,7 @@ pub enum OrderType {
     Limit = 0,
     Market = 1,
     MarginCall = 2,
-    FrocedClose = 3,
+    ForcedClose = 3,
 }
 
 pub mod root_mask {

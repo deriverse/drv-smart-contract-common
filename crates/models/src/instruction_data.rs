@@ -1,6 +1,5 @@
 use crate::new_types::{instrument::InstrId, version::Version};
 use bytemuck::{Pod, Zeroable};
-use solana_program::pubkey::Pubkey;
 
 #[repr(C)]
 #[derive(Clone, Copy, Pod, Zeroable)]
@@ -14,8 +13,8 @@ pub struct NewOperatorData {
 #[repr(C)]
 #[derive(Clone, Copy, Pod, Zeroable)]
 pub struct NewRootAccountData {
-    pub tag: u8, // 2
-    pub private_mode: u8,
+    pub tag: u8,          // 2
+    pub private_mode: u8, // bool
     pub padding_u16: u16,
     pub version: Version,
     pub lut_slot: u32,
@@ -24,9 +23,9 @@ pub struct NewRootAccountData {
 #[repr(C)]
 #[derive(Clone, Copy, Pod, Zeroable)]
 pub struct NewSpotOrderData {
-    pub tag: u8, //12
-    pub ioc: u8,
-    pub order_type: u8,
+    pub tag: u8,        //12
+    pub ioc: u8,        // bool
+    pub order_type: u8, //
     pub side: u8,
     pub instr_id: InstrId,
     pub price: i64,
