@@ -270,15 +270,15 @@ pub struct SwapOrderReport {
 //             f,
 //             "  side: {},\n",
 //             side.map(|side| format!("{:?}", side))
-//                 .unwrap_or_else(|err| format!("Error while construction OrderSide {:?}", err))
-//         )?;
+//                 .unwrap_or_else(|err| format!("Error while construction
+// OrderSide {:?}", err))         )?;
 //         write!(
 //             f,
 //             "  order_type: {},\n",
 //             order_type
 //                 .map(|order_type| format!("{:?}", order_type))
-//                 .unwrap_or_else(|err| format!("Error while construction OrderType {:?}", err))
-//         )?;
+//                 .unwrap_or_else(|err| format!("Error while construction
+// OrderType {:?}", err))         )?;
 //         write!(f, "  order_id: {},\n", self.order_id)?;
 //         write!(f, "  qty: {},\n", self.qty)?;
 //         write!(f, "  price: {},\n", self.price)?;

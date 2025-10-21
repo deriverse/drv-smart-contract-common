@@ -249,241 +249,241 @@ pub mod competition {
 
 pub mod instructions {
     pub trait DrvInstruction {
-        const CODE: u8;
+        const INSTRUCTION_NUMBER: u8;
         const MIN_ACCOUNTS: usize;
     }
 
     pub struct NewHolderInstruction;
     impl DrvInstruction for NewHolderInstruction {
-        const CODE: u8 = 0;
+        const INSTRUCTION_NUMBER: u8 = 0;
         const MIN_ACCOUNTS: usize = 3;
     }
 
     pub struct NewOperatorInstruction;
     impl DrvInstruction for NewOperatorInstruction {
-        const CODE: u8 = 1;
+        const INSTRUCTION_NUMBER: u8 = 1;
         const MIN_ACCOUNTS: usize = 4;
     }
 
     pub struct NewRootAccountInstruction;
     impl DrvInstruction for NewRootAccountInstruction {
-        const CODE: u8 = 2;
+        const INSTRUCTION_NUMBER: u8 = 2;
         const MIN_ACCOUNTS: usize = 12;
     }
 
     pub struct PerpWithdrawInstruction;
     impl DrvInstruction for PerpWithdrawInstruction {
-        const CODE: u8 = 3;
+        const INSTRUCTION_NUMBER: u8 = 3;
         const MIN_ACCOUNTS: usize = 20;
     }
 
     pub struct NewBaseCrncyInstruction;
     impl DrvInstruction for NewBaseCrncyInstruction {
-        const CODE: u8 = 4;
+        const INSTRUCTION_NUMBER: u8 = 4;
         const MIN_ACCOUNTS: usize = 8;
     }
 
     pub struct FeesDepositInstruction;
     impl DrvInstruction for FeesDepositInstruction {
-        const CODE: u8 = 5;
+        const INSTRUCTION_NUMBER: u8 = 5;
         const MIN_ACCOUNTS: usize = 6;
     }
 
     pub struct DepositInstruction;
     impl DrvInstruction for DepositInstruction {
-        const CODE: u8 = 7;
+        const INSTRUCTION_NUMBER: u8 = 7;
         const MIN_ACCOUNTS: usize = 9;
     }
 
     pub struct WithdrawInstruction;
     impl DrvInstruction for WithdrawInstruction {
-        const CODE: u8 = 8;
+        const INSTRUCTION_NUMBER: u8 = 8;
         const MIN_ACCOUNTS: usize = 11;
     }
 
     pub struct NewInstrumentInstruction;
     impl DrvInstruction for NewInstrumentInstruction {
-        const CODE: u8 = 9;
+        const INSTRUCTION_NUMBER: u8 = 9;
         const MIN_ACCOUNTS: usize = 23;
     }
 
     pub struct UpgradeToPerpInstruction;
     impl DrvInstruction for UpgradeToPerpInstruction {
-        const CODE: u8 = 10;
+        const INSTRUCTION_NUMBER: u8 = 10;
         const MIN_ACCOUNTS: usize = 21;
     }
 
     pub struct PerpDepositInstruction;
     impl DrvInstruction for PerpDepositInstruction {
-        const CODE: u8 = 11;
+        const INSTRUCTION_NUMBER: u8 = 11;
         const MIN_ACCOUNTS: usize = 19;
     }
 
     pub struct NewSpotOrderInstruction;
     impl DrvInstruction for NewSpotOrderInstruction {
-        const CODE: u8 = 12;
+        const INSTRUCTION_NUMBER: u8 = 12;
         const MIN_ACCOUNTS: usize = 18;
     }
 
     pub struct SpotOrderCancelInstruction;
     impl DrvInstruction for SpotOrderCancelInstruction {
-        const CODE: u8 = 13;
+        const INSTRUCTION_NUMBER: u8 = 13;
         const MIN_ACCOUNTS: usize = 14;
     }
 
     pub struct SpotLpInstruction;
     impl DrvInstruction for SpotLpInstruction {
-        const CODE: u8 = 14;
+        const INSTRUCTION_NUMBER: u8 = 14;
         const MIN_ACCOUNTS: usize = 5;
     }
 
     pub struct SpotMassCancelInstruction;
     impl DrvInstruction for SpotMassCancelInstruction {
-        const CODE: u8 = 15;
+        const INSTRUCTION_NUMBER: u8 = 15;
         const MIN_ACCOUNTS: usize = 14;
     }
 
     pub struct NextVotingInstruction;
     impl DrvInstruction for NextVotingInstruction {
-        const CODE: u8 = 16;
+        const INSTRUCTION_NUMBER: u8 = 16;
         const MIN_ACCOUNTS: usize = 3;
     }
 
     pub struct NewPerpOrderInstruction;
     impl DrvInstruction for NewPerpOrderInstruction {
-        const CODE: u8 = 19;
+        const INSTRUCTION_NUMBER: u8 = 19;
         const MIN_ACCOUNTS: usize = 21;
     }
 
     pub struct DividendsAllocationInstruction;
     impl DrvInstruction for DividendsAllocationInstruction {
-        const CODE: u8 = 25;
+        const INSTRUCTION_NUMBER: u8 = 25;
         const MIN_ACCOUNTS: usize = 4;
     }
 
     pub struct SwapInstruction;
     impl DrvInstruction for SwapInstruction {
-        const CODE: u8 = 26;
+        const INSTRUCTION_NUMBER: u8 = 26;
         const MIN_ACCOUNTS: usize = 27;
     }
 
     pub struct AirdropInstruction;
     impl DrvInstruction for AirdropInstruction {
-        const CODE: u8 = 27;
+        const INSTRUCTION_NUMBER: u8 = 27;
         const MIN_ACCOUNTS: usize = 11;
     }
 
     pub struct DividendsClaimInstruction;
     impl DrvInstruction for DividendsClaimInstruction {
-        const CODE: u8 = 28;
+        const INSTRUCTION_NUMBER: u8 = 28;
         const MIN_ACCOUNTS: usize = 6;
     }
 
     pub struct PerpOrderCancelInstruction;
     impl DrvInstruction for PerpOrderCancelInstruction {
-        const CODE: u8 = 30;
+        const INSTRUCTION_NUMBER: u8 = 30;
         const MIN_ACCOUNTS: usize = 20;
     }
 
     pub struct VotingInstruction;
     impl DrvInstruction for VotingInstruction {
-        const CODE: u8 = 32;
+        const INSTRUCTION_NUMBER: u8 = 32;
         const MIN_ACCOUNTS: usize = 6;
     }
 
     pub struct SpotQuotesReplaceInstruction;
     impl DrvInstruction for SpotQuotesReplaceInstruction {
-        const CODE: u8 = 34;
+        const INSTRUCTION_NUMBER: u8 = 34;
         const MIN_ACCOUNTS: usize = 18;
     }
 
     pub struct PerpMassCancelInstruction;
     impl DrvInstruction for PerpMassCancelInstruction {
-        const CODE: u8 = 36;
+        const INSTRUCTION_NUMBER: u8 = 36;
         const MIN_ACCOUNTS: usize = 20;
     }
 
     pub struct PerpChangeLeverageInstruction;
     impl DrvInstruction for PerpChangeLeverageInstruction {
-        const CODE: u8 = 37;
+        const INSTRUCTION_NUMBER: u8 = 37;
         const MIN_ACCOUNTS: usize = 20;
     }
 
     pub struct FeesWithdrawInstruction;
     impl DrvInstruction for FeesWithdrawInstruction {
-        const CODE: u8 = 39;
+        const INSTRUCTION_NUMBER: u8 = 39;
         const MIN_ACCOUNTS: usize = 6;
     }
 
     pub struct SetInstrOracleFeedInstruction;
     impl DrvInstruction for SetInstrOracleFeedInstruction {
-        const CODE: u8 = 40;
+        const INSTRUCTION_NUMBER: u8 = 40;
         const MIN_ACCOUNTS: usize = 4;
     }
 
     pub struct SetInstrReadyForPerpUpgradeInstruction;
     impl DrvInstruction for SetInstrReadyForPerpUpgradeInstruction {
-        const CODE: u8 = 41;
+        const INSTRUCTION_NUMBER: u8 = 41;
         const MIN_ACCOUNTS: usize = 3;
     }
 
     pub struct PerpQuotesReplaceInstruction;
     impl DrvInstruction for PerpQuotesReplaceInstruction {
-        const CODE: u8 = 42;
+        const INSTRUCTION_NUMBER: u8 = 42;
         const MIN_ACCOUNTS: usize = 21;
     }
 
     pub struct MoveSpotAvailFundsInstruction;
     impl DrvInstruction for MoveSpotAvailFundsInstruction {
-        const CODE: u8 = 43;
+        const INSTRUCTION_NUMBER: u8 = 43;
         const MIN_ACCOUNTS: usize = 6;
     }
 
     pub struct ChangeRefProgramInstruction;
     impl DrvInstruction for ChangeRefProgramInstruction {
-        const CODE: u8 = 44;
+        const INSTRUCTION_NUMBER: u8 = 44;
         const MIN_ACCOUNTS: usize = 2;
     }
 
     pub struct NewRefLinkInstruction;
     impl DrvInstruction for NewRefLinkInstruction {
-        const CODE: u8 = 45;
+        const INSTRUCTION_NUMBER: u8 = 45;
         const MIN_ACCOUNTS: usize = 3;
     }
 
     pub struct PerpStatisticsResetInstruction;
     impl DrvInstruction for PerpStatisticsResetInstruction {
-        const CODE: u8 = 46;
+        const INSTRUCTION_NUMBER: u8 = 46;
         const MIN_ACCOUNTS: usize = 20;
     }
 
     pub struct BuyMarketSeatInstruction;
     impl DrvInstruction for BuyMarketSeatInstruction {
-        const CODE: u8 = 47;
+        const INSTRUCTION_NUMBER: u8 = 47;
         const MIN_ACCOUNTS: usize = 19;
     }
 
     pub struct SellMarketSeatInstruction;
     impl DrvInstruction for SellMarketSeatInstruction {
-        const CODE: u8 = 48;
+        const INSTRUCTION_NUMBER: u8 = 48;
         const MIN_ACCOUNTS: usize = 20;
     }
 
     pub struct NewPrivateClientInstruction;
     impl DrvInstruction for NewPrivateClientInstruction {
-        const CODE: u8 = 49;
+        const INSTRUCTION_NUMBER: u8 = 49;
         const MIN_ACCOUNTS: usize = 5;
     }
 
     pub struct TerminatePrivateModeInstruction;
     impl DrvInstruction for TerminatePrivateModeInstruction {
-        const CODE: u8 = 50;
+        const INSTRUCTION_NUMBER: u8 = 50;
         const MIN_ACCOUNTS: usize = 3;
     }
 
     pub struct ChangePointsProgramExpirationInstruction;
     impl DrvInstruction for ChangePointsProgramExpirationInstruction {
-        const CODE: u8 = 51;
+        const INSTRUCTION_NUMBER: u8 = 51;
         const MIN_ACCOUNTS: usize = 2;
     }
 }
