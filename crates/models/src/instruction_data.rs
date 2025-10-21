@@ -25,8 +25,8 @@ pub struct NewRootAccountData {
 pub struct NewSpotOrderData {
     pub tag: u8,        //12
     pub ioc: u8,        // bool
-    pub order_type: u8, //
-    pub side: u8,
+    pub order_type: u8, // OrderType enum
+    pub side: u8,       // OrderSide enum
     pub instr_id: InstrId,
     pub price: i64,
     pub amount: i64,
