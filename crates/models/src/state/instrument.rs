@@ -8,6 +8,19 @@ use super::types::Discriminator;
 #[cfg(feature = "on-chain")]
 use solana_program::pubkey::Pubkey;
 
+/// Instr Account Header describe the state of an Instrument
+///
+/// 1. **`asset_token_id`** - Id of asset token.
+///     Pre: asset_token_id <= root.tokens_count
+/// 2. **`crncy_token_id`** - Id of crncy token.
+///     Pre: crncy_token_id <= root.tokens_count
+/// 3. **`mask`**
+///     * `PERP` = `0x40000000` — Perp instrument flag.
+///     * `ORACLE` = `0x80000000` — Indicates Oracle usage for prev price.
+///     * `READY_TO_PERP_UPGRADE` = `0x01000000` — Indicates readiness to upgrade to a Perp.
+/// 4. **`asset_tokens`** - Amount of assets tokens
+/// 5. **`crncy_tokens`** - Amount of crncy tokens
+/// 6. **`ps`**
 #[repr(C)]
 #[derive(Pod, Zeroable, Clone, Copy, Default)]
 pub struct InstrAccountHeader {
