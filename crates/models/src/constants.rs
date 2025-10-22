@@ -199,7 +199,7 @@ pub mod pool {
     pub const SPOT_POOL_UNIT: f64 = 0.0001;
 }
 
-pub mod volatility_params {
+pub mod instr_upgrade_params {
     pub const MAX_DURATION: usize = 28;
     pub const SPREAD_THRESHOLD: f64 = 0.005;
     pub const TRADES_THRESHOLD: i64 = 100000;
