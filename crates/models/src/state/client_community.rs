@@ -36,6 +36,17 @@ pub const CLIENT_COMMUNITY_RECORD_SIZE: usize = size_of::<ClientCommunityRecord>
 
 #[repr(C)]
 #[derive(Pod, Zeroable, Clone, Copy)]
+/// Clients community account header
+///
+/// 1. **`last_voting_time`** - time record during last vote
+/// 2. **`last_voting_counter`** - record of voting counter during last vote
+/// 3. **`current_voting_counter`** - record of voting counter during last interaction with the system
+/// 4. **`current_voting_tokens`** - time record during last interaction with the system
+/// 5. **`last_voting_tokens`** - record of used voting tokens during last vote
+/// 6. **`last_choice`** - choice of last vote
+/// 7. **`drvs_tokens`** - current voting tokens
+/// 8. **`count`** - `ClientCommunityRecord` array length
+
 pub struct ClientCommunityAccountHeader {
     pub discriminator: Discriminator,
     pub id: ClientId,
