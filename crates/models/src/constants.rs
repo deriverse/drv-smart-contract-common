@@ -110,7 +110,7 @@ pub mod spot {
         pub const ASK_ORDERS_PT_OFFSET: usize = BID_ORDERS_PT_OFFSET + TRADE_MEMORY_MAP_UNITS * 8;
         pub const LINES_PT_OFFSET: usize = ASK_ORDERS_PT_OFFSET + TRADE_MEMORY_MAP_UNITS * 8;
 
-        pub const MAPS_SIZE: usize = LINES_PT_OFFSET + MEMORY_MAP_UNITS * 8;
+        pub const MAPS_SIZE: usize = LINES_PT_OFFSET + SMALL_MEMORY_MAP_UNITS * 8;
     }
 }
 
@@ -191,7 +191,6 @@ pub mod trading_limitations {
     pub const MAX_PRICE: i64 = i64::MAX >> 4;
     pub const MIN_PRICE: i64 = 1000;
     pub const SPOT_MAX_AMOUNT: i64 = i64::MAX >> 8;
-    // questianable
     pub const MARKET_DEPTH: usize = 20;
     pub const MAX_ORDER_ID: i64 = i64::MAX >> 1;
 }
@@ -214,7 +213,9 @@ pub mod rebates {
 
     pub const DEC_PRECISION: u32 = 63;
     pub const DEC_63: f64 = (1u64 << 63) as f64;
+}
 
+pub mod rebalancing {
     pub const MAX_REBALANCING_CALLS: i64 = 25;
     pub const REBALANCING_DELAY: u32 = 300;
 }
