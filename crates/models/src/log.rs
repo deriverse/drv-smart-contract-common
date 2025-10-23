@@ -1,6 +1,5 @@
 use crate::new_types::{client::ClientId, instrument::InstrId};
 use bytemuck::{Pod, Zeroable};
-use solana_program::pubkey::Pubkey;
 
 pub mod log_type {
     pub const DEPOSIT: u8 = 1;

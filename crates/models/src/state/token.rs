@@ -1,4 +1,3 @@
-use crate::new_types::instrument::InstrId;
 use bytemuck::{Pod, Zeroable};
 use solana_program::pubkey::Pubkey;
 
@@ -18,7 +17,7 @@ pub struct TokenState {
     pub program_address: Pubkey,
     pub id: u32,
     pub mask: u32,
-    pub base_instr_id: InstrId,
+    pub reserved: u32,
     pub base_crncy_index: u32,
 }
 
