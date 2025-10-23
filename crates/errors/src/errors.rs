@@ -551,7 +551,7 @@ pub enum DeriverseErrorKind {
 
     #[error(
         code = 250,
-        msg = "Invalid accounts size in {account_type} account, expected {expected} < actual {actual}"
+        msg = "Invalid accounts size in {account_type} account, actual {actual} < expected {expected}"
     )]
     InvalidAccountSize {
         address: Pubkey,
