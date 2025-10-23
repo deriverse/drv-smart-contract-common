@@ -215,6 +215,14 @@ pub const OPERATOR_SIZE: usize = std::mem::size_of::<Operator>();
 
 #[repr(C)]
 #[derive(Copy, Clone, Zeroable)]
+/// Line Quotes
+///
+/// 1. **`px`** - price
+/// 2. **`qty`** - quantity
+///
+/// # Notes
+/// - Used for readable lines records
+/// - Stored in a vec: spot_bids, spot_asks, perp_bids, perp_asks
 pub struct LineQuotes {
     pub px: i64,
     pub qty: i64,
@@ -224,6 +232,12 @@ pub const LINE_QUOTES_SIZE: usize = std::mem::size_of::<LineQuotes>();
 
 #[repr(C)]
 #[derive(Clone, Copy)]
+/// Base Crncy Record
+///
+/// 1. **`crncy_token_id`** - Token id from token state
+/// 2. **`decs_count`** - tokens decimals from token state mask
+/// 3. **`funds`** - Funds available for dividents distribution
+/// 4. **`rate`** - Current dividends rate per 1 DRVS token
 pub struct BaseCrncyRecord {
     pub crncy_token_id: u32,
     pub decs_count: u32,
@@ -248,6 +262,7 @@ impl std::fmt::Display for AssetType {
 
 #[repr(C)]
 #[derive(Zeroable)]
+// TODO
 pub struct ClientSpot {
     pub asset_id: u32,
     pub temp_client_id: ClientId,
@@ -275,6 +290,29 @@ pub struct AssetRecord {
 
 #[repr(C)]
 #[derive(Copy, Clone, Debug)]
+/// Order
+///
+/// 1. **`qty`** — The total quantity of the order.
+/// 2. **`sum`** — The total value of the order, calculated as
+///    `price * qty * (1 / instr.decimal_factor)`.
+/// 3. **`order_id`** — A unique identifier assigned to the order.
+/// 4. **`orig_client_id`** — The identifier of the client who originally created the order.
+/// 5. **`client_id`** — A temporary client identifier.
+/// 6. **`line`** — The price line to which the order belongs.
+/// 7. **`prev`** — A reference to the previous order in the price line’s linked list.
+/// 8. **`next`** — A reference to the next order in the price line’s linked list.
+/// 9. **`sref`** — The order’s index within the order memory map.
+/// 10. **`link`** — The node index of the order within the RB Tree memory map.
+/// 11. **`cl_prev`** — A reference to the previous order in the client’s linked list.
+/// 12. **`cl_next`** — A reference to the next order in the client’s linked list.
+/// 13. **`time`** — The timestamp representing when the order was created.
+///
+/// # Notes
+///
+/// - Orders are stored in a RB Tree keyed by `order_id`.
+/// - Each price line maintains its own linked list of orders.
+/// - Each client also maintains a linked list of their orders.
+/// - When an order is not present, the constant `NULL_ORDER` is used to represent a `None` value.
 pub struct Order {
     pub qty: i64,
     pub sum: i64,
@@ -282,34 +320,46 @@ pub struct Order {
     pub orig_client_id: ClientId,
     pub client_id: ClientId,
     pub line: u32,
-    // price line order chain
     pub prev: u32,
     pub next: u32,
-    // self ref
     pub sref: u32,
-    // ref to node in RBTree account
     pub link: u32,
-    // client orders chain
     pub cl_prev: u32,
     pub cl_next: u32,
-    // creation time
     pub time: u32,
 }
 
 #[repr(C)]
 #[derive(Copy, Clone, Debug)]
+/// PxOrders(Lines)
+///
+/// Each `PxOrders` structure corresponds to a specific price level and maintains
+/// references to the linked orders at that price, as well as its position within
+/// the order book structure.
+///
+/// # Fields
+///
+/// 1. **`price`** — The price level of the line.
+/// 2. **`qty`** — The total aggregated quantity of all orders at this price level.
+/// 3. **`next`** — A reference to the next price line in the order book chain.
+/// 4. **`prev`** — A reference to the previous price line in the order book chain.
+/// 5. **`sref`** — The index of this price line within the lines memory map.
+/// 6. **`link`** — A node index of corresponding node in RB Tree.
+/// 7. **`begin`** — A reference to the first order in line.
+/// 8. **`end`** — A reference to the last order in line.
+///
+/// # Notes
+///
+/// - Price lines form a doubly linked list.
+/// - Prices are aligned to SpotPrams or PerpParams list.
 pub struct PxOrders {
     pub price: i64,
     pub qty: i64,
-    // order book lines chain on each side
     pub next: u32,
     pub prev: u32,
     pub sref: u32,
-    // ref to node in RBTree on according line
     pub link: u32,
-    // ref to the first order in the line
     pub begin: u32,
-    // ref to the last order in the line
     pub end: u32,
 }
 

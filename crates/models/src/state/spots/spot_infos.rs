@@ -10,6 +10,12 @@ pub fn get_spot_info<T>(data: &[u8], id: ClientId) -> *mut T {
 
 #[repr(C)]
 #[derive(Copy, Clone, Zeroable)]
+/// Spot Client Info
+///
+///
+/// # Notes
+/// - Stored in a
+
 pub struct SpotClientInfo {
     pub client: ClientId,
     pub reserved: u32,

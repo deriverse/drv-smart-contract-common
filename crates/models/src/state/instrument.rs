@@ -26,7 +26,75 @@ use solana_program::pubkey::Pubkey;
 /// 9. **`last_close`** - The most resent price of a closed trade
 /// 10. **`alltime_trades`** - Record of ALL executed trades
 /// 11. **`prev_trades`** - Record of executed trades during prev day
-/// 12. **`day_volatility`**
+/// 12. **`day_volatility`** - Price volatitliy. Calculated by sqrt(variance)
+/// 13. **`perp_last_px`** - The most resent price. `perp_underlying_px` is used for calculations
+/// 14. **`perp_last_close`** - The most resent price for closed trade
+/// 15. **`perp_alltime_trades`** - Amount of trades made on perp from taker side
+/// 16. **`perp_prev_day_trades`** - Amounts of trades made on perp during prev day
+/// 17. **`perp_open_init`** - Open interest. Total amount of open positions on perp
+/// 18. **`maps_address`** - Address of maps account. Account store spot related memory maps, specifically in constants::spot
+/// 19. **`perp_maps_address`** - Address of perp maps account. Account store perp related memory maps, specifically in constants::perp
+/// 20. **`lut_address`** - Address of LUT, which contains accounts for Spot Context and candles accounts
+/// 21. **`feed_id`** - Address of the oracle account for the current instrument, used to fetch the latest valid price.
+/// 22. **`drv_count`** - TODO
+/// 23. **`asset_token_decs_count`** - Decimals of asset token. [MIN_DECS_COUNT..=MAX_DECS_COUNT]
+/// 24. **`crncy_token_decs_count`** - Decimals of crncy token. [MIN_DECS_COUNT..=MAX_DECS_COUNT]
+/// 25. **`slot`** - Last record of InstrAccountHeader writable assess for spot
+/// 26. **`creator`** - Record of instrument creator(can be any client)
+/// 27. **`last_time`** - TODO
+/// 28. **`distrib_time`** - Time record of last dividents distribution
+/// 29. **`base_crncy_index`** - Index of cnrcy record in Vec<BaseCrncyRecord> in CommunityState
+/// 30. **`instance_counter`** - TODO
+/// 31. **`variance_counter`** - Amount of times variance was recalculated
+/// 32. **`bids_tree_nodes_count`** - TODO
+/// 33. **`bids_tree_lines_entry`** - Pointer on root node in bids lines RB Tree which stored in bids_tree_acc on spot
+/// 34. **`bids_tree_orders_entry`** - Pointer on root node in bids orders RB Tree which stored in bids_tree_acc on spot
+/// 35. **`asks_tree_nodes_count`** - TODO
+/// 36. **`asks_tree_lines_entry`** - Pointer on root node in asks lines RB Tree which stored in asks_tree_acc on spot
+/// 37. **`asks_tree_orders_entry`** - Pointer on root node in asks orders RB Tree which stored in asks_tree_acc on spot
+/// 38. **`bid_lines_begin`** - Head of bid lines linked list on spot
+/// 39. **`bid_lines_end`** - TODO
+/// 40. **`bid_lines_count`** - Total amount of bid lines on spot
+/// 41. **`ask_lines_begin`** - Head of ask lines linked list on spot
+/// 42. **`ask_lines_end`** - TODO
+/// 43. **`asl_lines_count`** - Total amount of ask lines on spot
+/// 44. **`bid_orders_count`** - Total amount of bid orders on spot
+/// 45. **`ask_orders_count`** - Total amount of ask orders on spot
+/// 46. **`fixing_time`** - Time record of last price fix (variance update)
+/// 47. **`fixing_crncy_tokens`** - Amount of crncy tokens exchange since last price fixing(variance update)
+/// 48. **`fixing_asset_tokens`** - Amount of asset tokens exchange since last price fixing(variance update)
+/// 49. **`counter`** - Total orders counter etc. order id record
+/// 50. **`protocol_fees`** - Fees collected by protocol
+/// 51. **`hits_counter`** - Amount of executed trades, used for candles buffers update
+/// 52. **`last_asset_tokens`** - Amount of asset_tokens traded during last trade
+/// 53. **`last_crny_tokens`** - Amount of crncy_tokens traded during last trade
+/// 54. **`perp_underlying_px`** - Current price, used in calculations. Derived either from last_px either from oracle
+/// 55. **`best_bid`** - Current best line price on bid side
+/// 56. **`best_ask`** - Current best line price on ask side
+/// 57. **`fixing_price`** - Price during last price fisxing(variance update)
+/// 58. **`variance`**
+/// 59. **`avg_spread`** - Record of average spread
+/// 60. **`last_spread`** - The most resent spread calculation etc. 1 - best_bid / best_ask
+/// 61. **`last_spread_time`** - Time record of the last spread calculation
+/// 62. **`total_spread_period`** - Duration during which avg_spread has been calculated
+/// 63. **`day_asset_tokens`** - Assets tokens traded during the day period
+/// 64. **`day_cnry_tokens`** - Crncy tokens traded during the day period
+/// 65. **`day_low`** - Lowest price during the day period
+/// 66. **`day_high`** - Highest price during the day period
+/// 67. **`prev_day_asset_tokens`** - Assets tokens traded during previous day period
+/// 68. **`prev_day_cnry_tokens`** - Crncy tokens traded during previous day period
+/// 69. **`alltime_asset_tokens`** - Total amount of assets tokens traded
+/// 70. **`alltime_crncy_tokens`** - Total amount of crncy tokens traded
+/// 71. **`day_trades`** - Amount of trades executed during current day period
+/// 72. **`lp_day_trades`** - TODO
+/// 73. **`lp_prev_day_trades`** - TODO
+/// 74. **`creation_time`** - Time of new instrument instruction execution
+/// 75. **`dec_factor`** - Decimal factor for an instrument. Used to convert betweena assets and crncy
+/// 76. **`perp_clients_count`** - Amount of reserved seats on perp
+/// 77. **`perp_slot`** - Last record of InstrAccountHeader writable assess for perp
+/// 78. **`perp_time`** - Last time record of manipulation with perp
+/// 79. **`perp_funding_rate_slot`** - TODO
+/// 80. **`perp_funding_rate_time`** - Record of last funding rate recalculation
 #[repr(C)]
 #[derive(Pod, Zeroable, Clone, Copy, Default)]
 pub struct InstrAccountHeader {
@@ -110,6 +178,7 @@ pub struct InstrAccountHeader {
     pub perp_clients_count: u32,
     pub perp_slot: u32,
     pub perp_time: u32,
+
     pub perp_funding_rate_slot: u32,
     pub perp_funding_rate_time: u32,
     pub perp_long_px_tree_nodes_count: u32,
