@@ -20,7 +20,6 @@ use crate::new_types::client::ClientId;
 ///
 /// # Notes
 /// - `ClientCommunityRecord` is stored in a Vec. For each different **`crncy_token_id`**
-
 pub struct ClientCommunityRecord {
     pub dividends_rate: f64,
     pub dividends_value: i64,
@@ -46,7 +45,6 @@ pub const CLIENT_COMMUNITY_RECORD_SIZE: usize = size_of::<ClientCommunityRecord>
 /// 6. **`last_choice`** - choice of last vote
 /// 7. **`drvs_tokens`** - current voting tokens
 /// 8. **`count`** - `ClientCommunityRecord` array length
-
 pub struct ClientCommunityAccountHeader {
     pub discriminator: Discriminator,
     pub id: ClientId,
