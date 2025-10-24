@@ -66,11 +66,11 @@ use solana_program::pubkey::Pubkey;
 /// 49. **`counter`** - Total orders counter etc. order id record
 /// 50. **`protocol_fees`** - Fees collected by protocol
 /// 51. **`hits_counter`** - Amount of executed trades, used for candles buffers update
-/// 52. **`last_asset_tokens`** - Amount of asset_tokens traded during last trade
-/// 53. **`last_crny_tokens`** - Amount of crncy_tokens traded during last trade
+/// 52. **`last_asset_tokens`** - Amount of asset_tokens traded during last trade on spot
+/// 53. **`last_crny_tokens`** - Amount of crncy_tokens traded during last trade on spot
 /// 54. **`perp_underlying_px`** - Current price, used in calculations. Derived either from last_px either from oracle
-/// 55. **`best_bid`** - Current best line price on bid side
-/// 56. **`best_ask`** - Current best line price on ask side
+/// 55. **`best_bid`** - Current best line price on bid side on spot
+/// 56. **`best_ask`** - Current best line price on ask side on spot
 /// 57. **`fixing_price`** - Price during last price fisxing(variance update)
 /// 58. **`variance`**
 /// 59. **`avg_spread`** - Record of average spread
@@ -95,6 +95,51 @@ use solana_program::pubkey::Pubkey;
 /// 78. **`perp_time`** - Last time record of manipulation with perp
 /// 79. **`perp_funding_rate_slot`** - TODO
 /// 80. **`perp_funding_rate_time`** - Record of last funding rate recalculation
+/// 81. **`perp_long_px_tree_nodes_count`** - TODO
+/// 82. **`perp_long_px_tree_entry`** - Pointer on root node in long px RB Tree which is stored in long_px_tree_acc on perp
+/// 83. **`perp_short_px_tree_nodes_count`** - TODO
+/// 84. **`perp_short_px_tree_entry`** - Pointer on root node in short px RB Tree which is stored in short_px_tree_acc on perp
+/// 85. **`perp_rebalance_time_tree_nodes_count`** - TODO
+/// 86. **`perp_rebalance_time_tree_entry`** - Pointer on root node in short px RB Tree which is stored in rebalance_time_tree_acc on perp
+/// 87. **`perp_bids_tree_nodes_count`** - TODO
+/// 88. **`perp_bids_tree_lines_entry`** - Pointer on root node in bids lines RB Tree which stored in bids_tree_acc on perp
+/// 89. **`perp_bids_tree_orders_entry`** - Pointer on root node in bids orders RB Tree which stored in bids_tree_acc on perp
+/// 90. **`perp_asks_tree_nodes_count`** - TODO
+/// 91. **`perp_asks_tree_lines_entry`** - Pointer on root node in asks lines RB Tree which stored in asks_tree_acc on perp
+/// 92. **`perp_asks_tree_orders_entry`** - Pointer on root node in asks orders RB Tree which stored in asks_tree_acc on perp
+/// 93. **`perp_bid_lines_begin`** - Head of bid lines linked list on perp
+/// 94. **`perp_bid_lines_end`** - TODO
+/// 95. **`perp_bid_lines_count`** - Total amount of bid lines on perp
+/// 96. **`perp_ask_lines_begin`** - Head of ask lines linked list on perp
+/// 97. **`perp_ask_lines_end`** - TODO
+/// 98. **`perp_ask_lines_count`** - Total amount of ask lines on perp
+/// 99. **`perp_bid_orders_count`** - Total amount of bid orders on perp
+/// 100. **`perp_ask_orders_count`** - Total amount of ask orders on perp
+/// 101. **`perp_day_trades`** - Amount of trades executed during current day period
+/// 102. **`perp_spot_price_for_withdrowal`** - Valid record of price before margin call, used during funds calculation
+/// 103. **`perp_soc_loss_long_rate`** - Current social loss long rate
+/// 104. **`perp_soc_loss_short_rate`** - Current social loss short rate
+/// 105. **`perp_price_delta`** - Price delta between spot market price and perp underlying price. Used during funding payments calculations
+/// 106. **`perp_funding_rate`** - Current funding rate
+/// 107. **`perp_funding_funds`** - Total amount of funds paid and received by clients during funding payments
+/// 108. **`perp_soc_loss_funds`** - Total amount of funds paid and received by clients during socialized losses
+/// 109. **`perp_insurance_fund`** - Amount of funds stored in protocols insurance funds
+/// 110. **`perp_last_asset_tokens`** - Amount of asset_tokens traded during last trade on perp
+/// 111. **`perp_last_crny_tokens`** - Amount of crncy_tokens traded during last trade on perp
+/// 112. **`perp_best_bid`** - Current best line price on bid side on perp
+/// 113. **`perp_best_ask`** - Current best line price on ask side on perp
+/// 114. **`perp_day_asset_tokens`** - Assets tokens traded during the day period on perp
+/// 115. **`perp_day_cnry_tokens`** - Crncy tokens traded during the day period on perp
+/// 116. **`perp_day_low`** - Lowest price during the day period on perp
+/// 117. **`perp_day_high`** - Highest price during the day period on perp
+/// 118. **`perp_prev_day_asset_tokens`** - Assets tokens traded during previous day period on perp
+/// 119. **`perp_prev_day_cnry_tokens`** - Crncy tokens traded during previous day period on perp
+/// 120. **`perp_alltime_asset_tokens`** - Total amount of assets tokens traded on perp
+/// 121. **`perp_alltime_crncy_tokens`** - Total amount of crncy tokens traded on perp
+/// 122. **`max_leverage`** - Dynamic value of currently max leverage, based on market volatility. max_leverage <= MAX_PERP_LEVERAGE
+/// 123. **`liquidation_threshold`** - Threshold for liquidation process, based on makret volaitlity. liquidation_threshold <= MIN_LIQUIDATION_THRESHOLD
+/// 124. **`seats_reserve`** - Current amount of funds spent on seats purchasing
+
 #[repr(C)]
 #[derive(Pod, Zeroable, Clone, Copy, Default)]
 pub struct InstrAccountHeader {
@@ -178,7 +223,6 @@ pub struct InstrAccountHeader {
     pub perp_clients_count: u32,
     pub perp_slot: u32,
     pub perp_time: u32,
-
     pub perp_funding_rate_slot: u32,
     pub perp_funding_rate_time: u32,
     pub perp_long_px_tree_nodes_count: u32,
@@ -225,6 +269,7 @@ pub struct InstrAccountHeader {
     pub max_leverage: f64,
     pub liquidation_threshold: f64,
     pub seats_reserve: i64,
+
     pub reserved_value1: i64,
     pub reserved_value2: i64,
     pub reserved_value3: i64,
