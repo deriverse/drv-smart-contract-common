@@ -658,6 +658,9 @@ pub enum DeriverseErrorKind {
         new_time: u32,
         old_time: u32,
     },
+
+    #[error(code = 292, msg = "Airdrop failed, because clients points amount is 0")]
+    AirdropFailed { address: Pubkey },
 }
 
 #[cfg(test)]
