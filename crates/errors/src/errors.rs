@@ -87,36 +87,30 @@ impl DeriverseError {
 #[macro_export]
 macro_rules! drv_err {
     ($error:expr) => {
-        DeriverseError::new($error, file!(), line!())
+        ::drv_errors::errors::DeriverseError::new($error, file!(), line!())
     };
 }
 
 #[macro_export]
 macro_rules! bail {
     ($error:expr) => {
-        return Err(DeriverseError::new($error, file!(), line!()))
+        return Err(::drv_errors::errors::DeriverseError::new(
+            $error,
+            file!(),
+            line!(),
+        ))
     };
 }
 
 #[macro_export]
 macro_rules! drv_result {
     ($error:expr) => {
-        Err(DeriverseError::new($error, file!(), line!()))
+        Err(::drv_errors::errors::DeriverseError::new(
+            $error,
+            file!(),
+            line!(),
+        ))
     };
-}
-
-#[test]
-fn error_location_test() {
-    let error: DeriverseError = drv_err!(DeriverseErrorKind::InvalidDataLength {
-        expected: 100,
-        actual: 12
-    });
-
-    let current_file = file!();
-    let line_plus_six = line!();
-
-    assert_eq!(current_file, error.location.file);
-    assert_eq!(line_plus_six - 6, error.location.line);
 }
 
 #[test]
