@@ -113,21 +113,6 @@ macro_rules! drv_result {
     };
 }
 
-#[macro_export]
-macro_rules! next_account_info {
-    ($iter:expr) => {
-        $iter.next().ok_or_else(|| {
-            ::drv_errors::errors::DeriverseError::new(
-                ::drv_errors::errors::DeriverseErrorKind::from(
-                    ::solana_program::program_error::ProgramError::NotEnoughAccountKeys,
-                ),
-                file!(),
-                line!(),
-            )
-        })
-    };
-}
-
 #[test]
 fn some_test() {
     let error = DeriverseErrorKind::InvalidMintAccount {
