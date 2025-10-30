@@ -15,7 +15,6 @@ pub enum TokenType {
 /// 2. **`mask`**
 ///     - Token decimals = 0xFF
 ///     - Base crncy flag = 0x40000000
-/// 3. **`base_instr_id`** - TODO deprecated
 /// 4. **`base_crncy_index`** - Index of BaseCrncyRecord in CommunityState
 
 #[repr(C)]

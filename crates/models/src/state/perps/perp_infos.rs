@@ -89,8 +89,8 @@ pub const PERP_CLIENT_INFO3_SIZE: usize = std::mem::size_of::<PerpClientInfo3>()
 ///
 /// 1. **`last_soc_loss_rate`** - Last social loss rate according to clients position
 /// 2. **`last_soc_loss_perps`** - Total amount of perps during last soc lost update
-/// 3. **`soc_loss_funds`** - TODO
-/// 4. **`loss_coverage`** - TODO
+/// 3. **`soc_loss_funds`** - Amount of funds compensated by soc loss compensation procedure
+/// 4. **`loss_coverage`** - Amount of funds compensated in total
 pub struct PerpClientInfo4 {
     pub last_soc_loss_rate: f64,
     pub last_soc_loss_perps: i64,

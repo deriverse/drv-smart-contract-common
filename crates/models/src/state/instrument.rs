@@ -21,7 +21,7 @@ use solana_program::pubkey::Pubkey;
 /// 4. **`asset_tokens`** - Amount of assets tokens
 /// 5. **`crncy_tokens`** - Amount of crncy tokens
 /// 6. **`ps`** - Pool supply
-/// 7. **`pool_fees`** - TODO
+/// 7. **`pool_fees`** - Pool fees
 /// 8. **`last_px`** - The most resent **valid** price used by the system for calculations
 /// 9. **`last_close`** - The most resent price of a closed trade
 /// 10. **`alltime_trades`** - Record of ALL executed trades
@@ -34,14 +34,14 @@ use solana_program::pubkey::Pubkey;
 /// 17. **`perp_open_init`** - Open interest. Total amount of open positions on perp
 /// 18. **`maps_address`** - Address of maps account. Account store spot related memory maps, specifically in constants::spot
 /// 19. **`perp_maps_address`** - Address of perp maps account. Account store perp related memory maps, specifically in constants::perp
-/// 20. **`lut_address`** - Address of LUT, which contains accounts for Spot Context and candles accounts
+/// 20. **`lut_address`** - Address of LUT, which contains accounts asosiated with spot/perp engines
 /// 21. **`feed_id`** - Address of the oracle account for the current instrument, used to fetch the latest valid price.
 /// 22. **`drv_count`** - TODO
 /// 23. **`asset_token_decs_count`** - Decimals of asset token. [MIN_DECS_COUNT..=MAX_DECS_COUNT]
 /// 24. **`crncy_token_decs_count`** - Decimals of crncy token. [MIN_DECS_COUNT..=MAX_DECS_COUNT]
 /// 25. **`slot`** - Last record of InstrAccountHeader writable assess for spot
 /// 26. **`creator`** - Record of instrument creator(can be any client)
-/// 27. **`last_time`** - TODO
+/// 27. **`last_time`** - Last time record of token statistic savings
 /// 28. **`distrib_time`** - Time record of last dividents distribution
 /// 29. **`base_crncy_index`** - Index of cnrcy record in Vec<BaseCrncyRecord> in CommunityState
 /// 30. **`instance_counter`** - TODO
