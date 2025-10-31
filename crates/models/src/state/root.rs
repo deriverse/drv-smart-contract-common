@@ -13,6 +13,7 @@ pub struct RootState {
     pub holder_address: Pubkey,
     pub drvs_mint_address: Pubkey,
     pub lut_address: Pubkey,
+    pub airdrop_authority_address: Pubkey,
     pub ref_program_duration: u32,
     pub ref_link_duration: u32,
     pub ref_discount: f64,
