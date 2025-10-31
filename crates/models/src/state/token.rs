@@ -16,7 +16,6 @@ pub enum TokenType {
 ///     - Token decimals = 0xFF
 ///     - Base crncy flag = 0x40000000
 /// 4. **`base_crncy_index`** - Index of BaseCrncyRecord in CommunityState
-
 #[repr(C)]
 #[derive(Pod, Zeroable, Clone, Copy, Default)]
 pub struct TokenState {

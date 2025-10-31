@@ -261,25 +261,6 @@ impl std::fmt::Display for AssetType {
 }
 
 #[repr(C)]
-#[derive(Zeroable)]
-// TODO
-pub struct ClientSpot {
-    pub asset_id: u32,
-    pub temp_client_id: ClientId,
-    pub slot: u32,
-    pub padding: u32,
-}
-
-#[repr(C)]
-#[derive(Zeroable)]
-pub struct ClientPerp {
-    pub asset_id: u32,
-    pub temp_client_id: ClientId,
-    pub slot: u32,
-    pub padding: u32,
-}
-
-#[repr(C)]
 #[derive(Copy, Clone, Zeroable)]
 pub struct AssetRecord {
     pub asset_id: u32,

@@ -67,14 +67,13 @@ impl PerpClientInfo2 {
 /// Perp Client Info 3
 ///
 /// 1. **`client`** - Original client id
-/// 2. **`priority_node`** - TODO
 /// 3. **`bids_entry`** - Stores clients bids orders linked list head in last 4 bits and linked list length in first 4 bits
 /// 4. **`ask_entry`** - Stores clients asks orders linked list head in last 4 bits and linked list length in first 4 bits
 /// 5. **`fee`** - Statistic of all amount of fees paid to the protocol
 /// 6. **`rebates`** - Statisit of rebates received from protocol
 pub struct PerpClientInfo3 {
     pub client: ClientId,
-    pub priority_node: u32,
+    pub reserved: u32,
     pub bids_entry: u32,
     pub asks_entry: u32,
     pub fees: i64,

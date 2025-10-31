@@ -31,12 +31,12 @@ use solana_program::pubkey::Pubkey;
 /// 14. **`perp_last_close`** - The most resent price for closed trade
 /// 15. **`perp_alltime_trades`** - Amount of trades made on perp from taker side
 /// 16. **`perp_prev_day_trades`** - Amounts of trades made on perp during prev day
-/// 17. **`perp_open_init`** - Open interest. Total amount of open positions on perp
+/// 17. **`perp_open_int`** - Open interest. Total amount of open positions on perp
 /// 18. **`maps_address`** - Address of maps account. Account store spot related memory maps, specifically in constants::spot
 /// 19. **`perp_maps_address`** - Address of perp maps account. Account store perp related memory maps, specifically in constants::perp
 /// 20. **`lut_address`** - Address of LUT, which contains accounts asosiated with spot/perp engines
 /// 21. **`feed_id`** - Address of the oracle account for the current instrument, used to fetch the latest valid price.
-/// 22. **`drv_count`** - TODO
+/// 22. **`drv_count`** - v2
 /// 23. **`asset_token_decs_count`** - Decimals of asset token. [MIN_DECS_COUNT..=MAX_DECS_COUNT]
 /// 24. **`crncy_token_decs_count`** - Decimals of crncy token. [MIN_DECS_COUNT..=MAX_DECS_COUNT]
 /// 25. **`slot`** - Last record of InstrAccountHeader writable assess for spot
@@ -44,19 +44,19 @@ use solana_program::pubkey::Pubkey;
 /// 27. **`last_time`** - Last time record of token statistic savings
 /// 28. **`distrib_time`** - Time record of last dividents distribution
 /// 29. **`base_crncy_index`** - Index of cnrcy record in Vec<BaseCrncyRecord> in CommunityState
-/// 30. **`instance_counter`** - TODO
+/// 30. **`instance_counter`** - v2
 /// 31. **`variance_counter`** - Amount of times variance was recalculated
-/// 32. **`bids_tree_nodes_count`** - TODO
+/// 32. **`bids_tree_nodes_count`** - reserved
 /// 33. **`bids_tree_lines_entry`** - Pointer on root node in bids lines RB Tree which stored in bids_tree_acc on spot
 /// 34. **`bids_tree_orders_entry`** - Pointer on root node in bids orders RB Tree which stored in bids_tree_acc on spot
-/// 35. **`asks_tree_nodes_count`** - TODO
+/// 35. **`asks_tree_nodes_count`** - reserved
 /// 36. **`asks_tree_lines_entry`** - Pointer on root node in asks lines RB Tree which stored in asks_tree_acc on spot
 /// 37. **`asks_tree_orders_entry`** - Pointer on root node in asks orders RB Tree which stored in asks_tree_acc on spot
 /// 38. **`bid_lines_begin`** - Head of bid lines linked list on spot
-/// 39. **`bid_lines_end`** - TODO
+/// 39. **`bid_lines_end`** -reserved
 /// 40. **`bid_lines_count`** - Total amount of bid lines on spot
 /// 41. **`ask_lines_begin`** - Head of ask lines linked list on spot
-/// 42. **`ask_lines_end`** - TODO
+/// 42. **`ask_lines_end`** - reserved
 /// 43. **`asl_lines_count`** - Total amount of ask lines on spot
 /// 44. **`bid_orders_count`** - Total amount of bid orders on spot
 /// 45. **`ask_orders_count`** - Total amount of ask orders on spot
@@ -86,32 +86,32 @@ use solana_program::pubkey::Pubkey;
 /// 69. **`alltime_asset_tokens`** - Total amount of assets tokens traded
 /// 70. **`alltime_crncy_tokens`** - Total amount of crncy tokens traded
 /// 71. **`day_trades`** - Amount of trades executed during current day period
-/// 72. **`lp_day_trades`** - TODO
-/// 73. **`lp_prev_day_trades`** - TODO
+/// 72. **`lp_day_trades`** - Amount of trades on lp during day paeriod
+/// 73. **`lp_prev_day_trades`** - Amount of trades on lp during previous day paeriod
 /// 74. **`creation_time`** - Time of new instrument instruction execution
 /// 75. **`dec_factor`** - Decimal factor for an instrument. Used to convert betweena assets and crncy
 /// 76. **`perp_clients_count`** - Amount of reserved seats on perp
 /// 77. **`perp_slot`** - Last record of InstrAccountHeader writable assess for perp
 /// 78. **`perp_time`** - Last time record of manipulation with perp
-/// 79. **`perp_funding_rate_slot`** - TODO
+/// 79. **`perp_funding_rate_slot`** - reserved
 /// 80. **`perp_funding_rate_time`** - Record of last funding rate recalculation
-/// 81. **`perp_long_px_tree_nodes_count`** - TODO
+/// 81. **`perp_long_px_tree_nodes_count`** - reserved
 /// 82. **`perp_long_px_tree_entry`** - Pointer on root node in long px RB Tree which is stored in long_px_tree_acc on perp
-/// 83. **`perp_short_px_tree_nodes_count`** - TODO
+/// 83. **`perp_short_px_tree_nodes_count`** - reserved
 /// 84. **`perp_short_px_tree_entry`** - Pointer on root node in short px RB Tree which is stored in short_px_tree_acc on perp
-/// 85. **`perp_rebalance_time_tree_nodes_count`** - TODO
+/// 85. **`perp_rebalance_time_tree_nodes_count`** - reserved
 /// 86. **`perp_rebalance_time_tree_entry`** - Pointer on root node in short px RB Tree which is stored in rebalance_time_tree_acc on perp
-/// 87. **`perp_bids_tree_nodes_count`** - TODO
+/// 87. **`perp_bids_tree_nodes_count`** - reserved
 /// 88. **`perp_bids_tree_lines_entry`** - Pointer on root node in bids lines RB Tree which stored in bids_tree_acc on perp
 /// 89. **`perp_bids_tree_orders_entry`** - Pointer on root node in bids orders RB Tree which stored in bids_tree_acc on perp
-/// 90. **`perp_asks_tree_nodes_count`** - TODO
+/// 90. **`perp_asks_tree_nodes_count`** - reserved
 /// 91. **`perp_asks_tree_lines_entry`** - Pointer on root node in asks lines RB Tree which stored in asks_tree_acc on perp
 /// 92. **`perp_asks_tree_orders_entry`** - Pointer on root node in asks orders RB Tree which stored in asks_tree_acc on perp
 /// 93. **`perp_bid_lines_begin`** - Head of bid lines linked list on perp
-/// 94. **`perp_bid_lines_end`** - TODO
+/// 94. **`perp_bid_lines_end`** - reserved
 /// 95. **`perp_bid_lines_count`** - Total amount of bid lines on perp
 /// 96. **`perp_ask_lines_begin`** - Head of ask lines linked list on perp
-/// 97. **`perp_ask_lines_end`** - TODO
+/// 97. **`perp_ask_lines_end`** - reserved
 /// 98. **`perp_ask_lines_count`** - Total amount of ask lines on perp
 /// 99. **`perp_bid_orders_count`** - Total amount of bid orders on perp
 /// 100. **`perp_ask_orders_count`** - Total amount of ask orders on perp
