@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [unreleased]
 
+## Added
+- Invalid variance error
 
 ## Changed
 - Changed start fee rate for both spot/perp in voting constants (topic `Fee Rate`)
