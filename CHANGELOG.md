@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [unreleased]
 
+## [v2.3] - 2025-11-05
+
 ## Added
 - Rust docs for models
 - Rust docs for instruction data
