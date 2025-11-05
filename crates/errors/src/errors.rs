@@ -658,6 +658,12 @@ pub enum DeriverseErrorKind {
         new_time: u32,
         old_time: u32,
     },
+
+    #[error(
+        code = 292,
+        msg = "Provided variance is too small, variance {variance} < min {min_variance}"
+    )]
+    InvalidVariance { variance: f64, min_variance: f64 },
 }
 
 #[cfg(test)]

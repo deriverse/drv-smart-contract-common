@@ -78,6 +78,7 @@ pub mod time {
 
 pub const DF: f64 = 1000000000.0;
 pub const RDF: f64 = 0.000000001;
+pub const MIN_VARIANCE: f64 = 0.0001;
 
 pub mod nulls {
     pub const NULL_NODE: u32 = 0xFFFFFFFF;
