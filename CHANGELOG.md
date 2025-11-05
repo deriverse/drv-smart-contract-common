@@ -7,7 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [unreleased]
 
+## [v2.4] - 2025-11-05
+
 ## Added
+- Reserved fields for future protected mode implementation in `ClientPrimaryAccountHeadert`
 - Invalid variance error
 
 ## Changed
@@ -18,4 +21,3 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## Added
 - Rust docs for models
 - Rust docs for instruction data
-

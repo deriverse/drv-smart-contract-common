@@ -11,28 +11,31 @@ use super::types::Discriminator;
 ///
 /// 1. **`lut_address`**
 /// 2. **`ref_address`** - Current address of referee
-/// 3. **`first_ref_link_discount`** - Discount of first referer link
-/// 4. **`second_ref_link_discount`** - Discount of second referer link
-/// 5. **`first_ref_link_ratio`** - Ratio of first referral link
-/// 6. **`second_ref_link_ratio`** - Ration of second referral link
-/// 7. **`ref_program_discount`** - Discount of currently applied referral link
-/// 8. **`ref_program_ratio`** - Ratio of currently applied referral link
-/// 9. **`mask`** - Progress trakcer which grant points for hitting trading milestones on the pltaform etc. spot_trades, lp_trades, perp_trades
-/// 10. **`id`** - Original client id
-/// 11. **`ref_client_id`** - Origincal client id of current referee
-/// 12. **`ref_counter`** - Amount of referees
-/// 13. **`first_ref_link_id`** - First link id
-/// 14. **`second_ref_link_id`** - Second link id
-/// 15. **`first_ref_link_expiration`** - Expiration of first ref link in unix_timestamp
-/// 16. **`second_ref_link_expiration`** - Expiration of second ref link in unix_timestamp
-/// 17. **`ref_program_expiration`** - Expiration of referral program in unixt_timestamp
-/// 18. **`spot_trades`** - Amount of trades made on spot as a taker
-/// 19. **`perp_trades`** - Amount of trades made on perp as a taker
-/// 20. **`lp_trades`** - Amount of trades made in lp
-/// 21. **`points`** - Amount of points for Points Program
-/// 22. **`slot`** - Record last **writable** manipulation with ClientPrimaryAccountHeader
-/// 23. **`assets_count`** - Length of assets record array
-
+/// 3. **`pm_wallet_address`** - Reserved for protected mode
+/// 4. **`pm_instr_0 - pm_instr_7`** - Reserved for protected mode
+/// 5. **`pm_withdraw_token_id`** - Reserved for protected mode
+/// 6. **`pm_wallet_address`** - Reserved for protected mode
+/// 7. **`first_ref_link_discount`** - Discount of first referer link
+/// 8. **`second_ref_link_discount`** - Discount of second referer link
+/// 9. **`first_ref_link_ratio`** - Ratio of first referral link
+/// 10. **`second_ref_link_ratio`** - Ration of second referral link
+/// 11. **`ref_program_discount`** - Discount of currently applied referral link
+/// 12. **`ref_program_ratio`** - Ratio of currently applied referral link
+/// 13. **`mask`** - Progress trakcer which grant points for hitting trading milestones on the pltaform etc. spot_trades, lp_trades, perp_trades
+/// 14. **`id`** - Original client id
+/// 15. **`ref_client_id`** - Origincal client id of current referee
+/// 16. **`ref_counter`** - Amount of referees
+/// 17. **`first_ref_link_id`** - First link id
+/// 18. **`second_ref_link_id`** - Second link id
+/// 19. **`first_ref_link_expiration`** - Expiration of first ref link in unix_timestamp
+/// 20. **`second_ref_link_expiration`** - Expiration of second ref link in unix_timestamp
+/// 21. **`ref_program_expiration`** - Expiration of referral program in unixt_timestamp
+/// 22. **`spot_trades`** - Amount of trades made on spot as a taker
+/// 23. **`perp_trades`** - Amount of trades made on perp as a taker
+/// 24. **`lp_trades`** - Amount of trades made in lp
+/// 25. **`points`** - Amount of points for Points Program
+/// 26. **`slot`** - Record last **writable** manipulation with ClientPrimaryAccountHeader
+/// 27. **`assets_count`** - Length of assets record array
 #[repr(C)]
 #[derive(Pod, Zeroable, Clone, Copy)]
 pub struct ClientPrimaryAccountHeader {
@@ -40,6 +43,18 @@ pub struct ClientPrimaryAccountHeader {
     pub wallet_address: Pubkey,
     pub lut_address: Pubkey,
     pub ref_address: Pubkey,
+    pub pm_wallet_address: Pubkey,
+    pub pm_instr_0: u32,
+    pub pm_instr_1: u32,
+    pub pm_instr_2: u32,
+    pub pm_instr_3: u32,
+    pub pm_instr_4: u32,
+    pub pm_instr_5: u32,
+    pub pm_instr_6: u32,
+    pub pm_instr_7: u32,
+    pub pm_withdraw_token_id: u32,
+    pub pm_reserved: u32,
+    pub pm_withdraw_amount: i64,
     pub first_ref_link_discount: f64,
     pub second_ref_link_discount: f64,
     pub first_ref_link_ratio: f64,
