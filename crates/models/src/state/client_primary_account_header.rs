@@ -5,10 +5,34 @@ use crate::new_types::client::ClientId;
 #[cfg(feature = "on-chain")]
 use solana_program::pubkey::Pubkey;
 
-// #[cfg(not(feature = "on-chain"))]
-// compile_error!("TODO")
-
 use super::types::Discriminator;
+
+/// Client Primary Account Header
+///
+/// 1. **`lut_address`**
+/// 2. **`ref_address`** - Current address of referee
+/// 3. **`first_ref_link_discount`** - Discount of first referer link
+/// 4. **`second_ref_link_discount`** - Discount of second referer link
+/// 5. **`first_ref_link_ratio`** - Ratio of first referral link
+/// 6. **`second_ref_link_ratio`** - Ration of second referral link
+/// 7. **`ref_program_discount`** - Discount of currently applied referral link
+/// 8. **`ref_program_ratio`** - Ratio of currently applied referral link
+/// 9. **`mask`** - Progress trakcer which grant points for hitting trading milestones on the pltaform etc. spot_trades, lp_trades, perp_trades
+/// 10. **`id`** - Original client id
+/// 11. **`ref_client_id`** - Origincal client id of current referee
+/// 12. **`ref_counter`** - Amount of referees
+/// 13. **`first_ref_link_id`** - First link id
+/// 14. **`second_ref_link_id`** - Second link id
+/// 15. **`first_ref_link_expiration`** - Expiration of first ref link in unix_timestamp
+/// 16. **`second_ref_link_expiration`** - Expiration of second ref link in unix_timestamp
+/// 17. **`ref_program_expiration`** - Expiration of referral program in unixt_timestamp
+/// 18. **`spot_trades`** - Amount of trades made on spot as a taker
+/// 19. **`perp_trades`** - Amount of trades made on perp as a taker
+/// 20. **`lp_trades`** - Amount of trades made in lp
+/// 21. **`points`** - Amount of points for Points Program
+/// 22. **`slot`** - Record last **writable** manipulation with ClientPrimaryAccountHeader
+/// 23. **`assets_count`** - Length of assets record array
+
 #[repr(C)]
 #[derive(Pod, Zeroable, Clone, Copy)]
 pub struct ClientPrimaryAccountHeader {

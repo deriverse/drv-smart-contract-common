@@ -9,6 +9,13 @@ pub enum TokenType {
     None,
 }
 
+/// Token State
+///
+/// 1. **`id`** - Unique id for token. DRVS token always has id = 0
+/// 2. **`mask`**
+///     - Token decimals = 0xFF
+///     - Base crncy flag = 0x40000000
+/// 4. **`base_crncy_index`** - Index of BaseCrncyRecord in CommunityState
 #[repr(C)]
 #[derive(Pod, Zeroable, Clone, Copy, Default)]
 pub struct TokenState {

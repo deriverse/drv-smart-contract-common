@@ -5,6 +5,25 @@ use std::ops::Deref;
 
 use super::types::Discriminator;
 
+/// Root State
+///
+/// 1. **`operator_address`**
+/// 2. **`holder_address`**
+/// 3. **`drvs_mint_address`** - LUT address with root related accounts
+/// 4. **`ref_program_duration`** - Duration of refereal program
+/// 5. **`ref_link_duration`** - Duration of each ref link
+/// 6. **`ref_discount`** - Discount for ref program
+/// 7. **`ref_ratio`** - Ratio for ref program
+/// 8. **`clients_count`** - Total clients amount registered on the platform
+/// 9. **`tokens_count`** - Total tokens amount created on the platform
+/// 10. **`instr_count`** - Total amount of instrument created on the platform
+/// 11. **`ref_counter`** - Amount of new ref links created
+/// 12. **`mask`**
+///     - *PRIVATE_MODE* = 0x1 - Private mode flag
+/// 13. **`points_program_expiration`** - Points program expiration time
+///
+/// # Notes
+/// - Ref stats can be adjust with change_ref_program instruction
 #[repr(C)]
 #[derive(Pod, Zeroable, Clone, Copy, Default, Debug)]
 pub struct RootState {

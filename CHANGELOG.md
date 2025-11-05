@@ -1,0 +1,17 @@
+# Changelog
+
+All notable changes to this project will be documented in this file.
+
+The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
+and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+
+## [unreleased]
+
+## [v2.3] - 2025-11-05
+
+## Added
+- Rust docs for models
+- Rust docs for instruction data
+
+## Changed
+- Changed start fee rate for both spot/perp in voting constants (topic `Fee Rate`)
