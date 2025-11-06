@@ -22,7 +22,7 @@ impl MacroError {
 impl Display for MacroError {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
-            MacroError::IncorrectInputType(msg, _) => write!(f, "Incorect intput type: {}", msg),
+            MacroError::IncorrectInputType(msg, _) => write!(f, "Incorrect input type: {}", msg),
             MacroError::IncorrectMacroUsage(msg, _) => write!(f, "Incorrect macro usage: {}", msg),
             MacroError::UnnamedField(_) => {
                 write!(f, "Unnamed field detected, when only named are expected")
@@ -42,7 +42,7 @@ impl Into<SynError> for MacroError {
     fn into(self) -> SynError {
         match self {
             MacroError::IncorrectInputType(msg, span) => {
-                SynError::new(span, format!("Incorect input type: {}", msg))
+                SynError::new(span, format!("Incorrect input type: {}", msg))
             }
             MacroError::IncorrectMacroUsage(msg, span) => {
                 SynError::new(span, format!("Incorrect macros usage: {}", msg))

@@ -592,7 +592,7 @@ pub enum DeriverseErrorKind {
     InvalidTokenOwner {
         token_id: u32,
         address: Pubkey,
-        expected_adderss: Pubkey,
+        expected_address: Pubkey,
         actual_address: Pubkey,
     },
 
