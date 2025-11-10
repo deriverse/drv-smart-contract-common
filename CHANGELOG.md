@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [unreleased]
 
+## Added
+- `WALLET_RESERVE_LAMPORTS` constant
+
 ## [v2.5] - 2025-11-06
 
 ## Fix
