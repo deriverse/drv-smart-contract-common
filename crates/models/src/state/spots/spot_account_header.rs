@@ -3,6 +3,7 @@ use bytemuck::{Pod, Zeroable};
 use drv_macros::pod_wrapper;
 
 use crate::state::types::Discriminator;
+use std::mem::size_of;
 
 #[pod_wrapper]
 #[repr(C)]
@@ -15,4 +16,4 @@ pub struct SpotTradeAccountHeader<const TAG: u32> {
     pub crncy_token_id: u32,
 }
 
-pub const SPOT_TRADE_ACCOUNT_HEADER_SIZE: usize = std::mem::size_of::<SpotTradeAccountHeader<0>>();
+pub const SPOT_TRADE_ACCOUNT_HEADER_SIZE: usize = size_of::<SpotTradeAccountHeader<0>>();

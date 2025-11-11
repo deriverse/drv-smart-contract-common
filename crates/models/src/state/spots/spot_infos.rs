@@ -2,6 +2,7 @@
 ///! - Store information about clients state on spot
 ///! - Each info record is stored in an array in different accounts at temp_client_id index and managed by memory map from maps_acc
 use bytemuck::Zeroable;
+use std::mem::size_of;
 
 use crate::new_types::client::ClientId;
 
@@ -29,7 +30,7 @@ pub struct SpotClientInfo {
     pub avail_crncy_tokens: i64,
 }
 
-pub const SPOT_CLIENT_INFO_SIZE: usize = std::mem::size_of::<SpotClientInfo>();
+pub const SPOT_CLIENT_INFO_SIZE: usize = size_of::<SpotClientInfo>();
 
 #[repr(C)]
 #[derive(Copy, Clone, Zeroable)]
@@ -48,4 +49,4 @@ pub struct SpotClientInfo2 {
     pub reserved: i64,
 }
 
-pub const SPOT_CLIENT_INFO2_SIZE: usize = std::mem::size_of::<SpotClientInfo2>();
+pub const SPOT_CLIENT_INFO2_SIZE: usize = size_of::<SpotClientInfo2>();
