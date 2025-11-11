@@ -284,7 +284,7 @@ pub mod instructions {
     pub struct NewBaseCrncyInstruction;
     impl DrvInstruction for NewBaseCrncyInstruction {
         const INSTRUCTION_NUMBER: u8 = 4;
-        const MIN_ACCOUNTS: usize = 8;
+        const MIN_ACCOUNTS: usize = 9;
     }
 
     pub struct FeesDepositInstruction;
