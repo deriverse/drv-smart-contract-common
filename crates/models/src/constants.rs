@@ -80,6 +80,8 @@ pub const DF: f64 = 1000000000.0;
 pub const RDF: f64 = 0.000000001;
 pub const MIN_VARIANCE: f64 = 0.0001;
 
+pub const WALLET_RESERVE_LAMPORTS: u64 = 10_000_000;
+
 pub mod nulls {
     pub const NULL_NODE: u32 = 0xFFFFFFFF;
     pub const NULL_ORDER: u32 = 0xFFFF;
