@@ -4,6 +4,8 @@
 use crate::{new_types::client::ClientId, state::types::OrderSide};
 use bytemuck::Zeroable;
 
+use std::mem::size_of;
+
 use super::perp_trade_header::PERP_TRADE_ACCOUNT_HEADER_SIZE;
 
 pub fn get_perp_info<T>(data: &[u8], id: ClientId) -> *mut T {
@@ -25,7 +27,7 @@ pub struct PerpClientInfo {
     pub in_orders_perps: i64,
 }
 
-pub const PERP_CLIENT_INFO_SIZE: usize = std::mem::size_of::<PerpClientInfo>();
+pub const PERP_CLIENT_INFO_SIZE: usize = size_of::<PerpClientInfo>();
 
 #[repr(C)]
 #[derive(Copy, Clone, Zeroable, Debug)]
@@ -48,7 +50,7 @@ pub struct PerpClientInfo2 {
     pub mask: u32,
 }
 
-pub const PERP_CLIENT_INFO2_SIZE: usize = std::mem::size_of::<PerpClientInfo2>();
+pub const PERP_CLIENT_INFO2_SIZE: usize = size_of::<PerpClientInfo2>();
 
 impl PerpClientInfo2 {
     pub fn set_slot(&mut self, new_slot: u32, side: OrderSide) {
@@ -80,7 +82,7 @@ pub struct PerpClientInfo3 {
     pub rebates: i64,
 }
 
-pub const PERP_CLIENT_INFO3_SIZE: usize = std::mem::size_of::<PerpClientInfo3>();
+pub const PERP_CLIENT_INFO3_SIZE: usize = size_of::<PerpClientInfo3>();
 
 #[repr(C)]
 #[derive(Copy, Clone, Zeroable, Debug)]
@@ -97,7 +99,7 @@ pub struct PerpClientInfo4 {
     pub loss_coverage: i64,
 }
 
-pub const PERP_CLIENT_INFO4_SIZE: usize = std::mem::size_of::<PerpClientInfo4>();
+pub const PERP_CLIENT_INFO4_SIZE: usize = size_of::<PerpClientInfo4>();
 
 #[repr(C)]
 #[derive(Copy, Clone, Zeroable, Debug)]
@@ -115,4 +117,4 @@ pub struct PerpClientInfo5 {
     pub funding_node: u32,
 }
 
-pub const PERP_CLIENT_INFO5_SIZE: usize = std::mem::size_of::<PerpClientInfo5>();
+pub const PERP_CLIENT_INFO5_SIZE: usize = size_of::<PerpClientInfo5>();
