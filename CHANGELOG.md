@@ -7,10 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [unreleased]
 
+## [v2.6] - 2025-11-11
+
 ## Added
 - `WALLET_RESERVE_LAMPORTS` constant
 
 ## Fix
+- incorrect imports of `std::mem::size_of`
 - Invalid min input accounts amount in `NewBaseCrncyInstruction`
 
 ## [v2.5] - 2025-11-06
