@@ -260,34 +260,6 @@ pub struct SwapOrderReport {
     pub instr_id: u32,
 }
 
-// impl std::fmt::Display for SwapOrderReport {
-//     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-//         let side: OrderSide = ;
-//         let order_type: OrderSide = self.order_type.try_into();
-//         write!(f, "SwapOrderReport {{\n")?;
-//         write!(f, "  tag: {},\n", self.tag)?;
-//         write!(
-//             f,
-//             "  side: {},\n",
-//             side.map(|side| format!("{:?}", side))
-//                 .unwrap_or_else(|err| format!("Error while construction OrderSide {:?}", err))
-//         )?;
-//         write!(
-//             f,
-//             "  order_type: {},\n",
-//             order_type
-//                 .map(|order_type| format!("{:?}", order_type))
-//                 .unwrap_or_else(|err| format!("Error while construction OrderType {:?}", err))
-//         )?;
-//         write!(f, "  order_id: {},\n", self.order_id)?;
-//         write!(f, "  qty: {},\n", self.qty)?;
-//         write!(f, "  price: {},\n", self.price)?;
-//         write!(f, "  time: {},\n", self.time)?;
-//         write!(f, "  instr_id: {:?},\n", self.instr_id)?;
-//         write!(f, "}}")
-//     }
-// }
-
 #[repr(C)]
 #[derive(Copy, Clone, Zeroable, Pod, Default)]
 pub struct PerpPlaceMassCancelReport {
@@ -466,16 +438,3 @@ pub struct MoveSpotAvailFundsReport {
     pub qty: i64,
     pub crncy: i64,
 }
-
-// impl std::fmt::Display for MoveSpotAvailFundsReport {
-//     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-//         write!(f, "MoveSpotAvailFundsReport {{\n")?;
-//         write!(f, "  tag: {},\n", self.tag)?;
-//         write!(f, "  client_Id: {}\n", self.client_id)?;
-//         write!(f, "  instr_id: {:?},\n", self.instr_id)?;
-//         write!(f, "  qty: {},\n", self.qty)?;
-//         write!(f, "  crncy: {}\n", self.crncy)?;
-//         write!(f, "  time: {},\n", self.time)?;
-//         write!(f, "}}")
-//     }
-// }
