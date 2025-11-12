@@ -73,9 +73,9 @@ pub struct ClientCommunityRecord {
     pub dividends_rate: f64,
     pub dividends_value: i64,
     pub fees_prepayment: i64,
-    pub fees_ratio: f64,   // 1-fees_discount
-    pub ref_rewards: i64,  // received
-    pub ref_payments: i64, // paid
+    pub fees_ratio: f64,
+    pub ref_rewards: i64,
+    pub ref_payments: i64,
     pub last_fees_prepayment_time: u32,
     pub crncy_token_id: u32,
 }
@@ -99,7 +99,6 @@ pub struct ClientCommunityAccountHeader {
     pub count: u32,
     pub reserved: u32,
 }
-
 pub const CLIENT_COMMUNITY_ACCOUNT_HEADER_SIZE: usize =
     std::mem::size_of::<ClientCommunityAccountHeader>();
 
@@ -147,7 +146,7 @@ pub const COMMUNITY_ACCOUNT_HEADER_SIZE: usize = std::mem::size_of::<CommunityAc
 pub struct SpotTradeAccountHeader {
     pub tag: u32,
     pub version: u32,
-    pub id: u32,
+    pub instr_id: u32,
     pub slot: u32,
     pub asset_token_id: u32,
     pub crncy_token_id: u32,
@@ -407,7 +406,7 @@ pub struct TokenState {
     pub program_address: Pubkey,
     pub id: u32,
     pub mask: u32,
-    pub base_instr_id: u32,
+    pub reserved: u32,
     pub base_crncy_index: u32,
 }
 
@@ -517,7 +516,7 @@ pub const PERP_CLIENT_INFO2_SIZE: usize = std::mem::size_of::<PerpClientInfo2>()
 /// New path - src/state/perps/porp_infos.rs
 pub struct PerpClientInfo3 {
     pub client: u32,
-    pub priority_node: u32,
+    pub reserved: u32,
     pub bids_entry: u32,
     pub asks_entry: u32,
     pub fees: i64,
@@ -560,6 +559,18 @@ pub struct ClientPrimaryAccountHeader {
     pub wallet_address: Pubkey,
     pub lut_address: Pubkey,
     pub ref_address: Pubkey,
+    pub pm_wallet_address: Pubkey,
+    pub pm_instr_0: u32,
+    pub pm_instr_1: u32,
+    pub pm_instr_2: u32,
+    pub pm_instr_3: u32,
+    pub pm_instr_4: u32,
+    pub pm_instr_5: u32,
+    pub pm_instr_6: u32,
+    pub pm_instr_7: u32,
+    pub pm_withdraw_token_id: u32,
+    pub pm_reserved: u32,
+    pub pm_withdraw_amount: i64,
     pub first_ref_link_discount: f64,
     pub second_ref_link_discount: f64,
     pub first_ref_link_ratio: f64,
@@ -625,6 +636,13 @@ pub struct PxOrders {
     pub link: u32,
     pub begin: u32,
     pub end: u32,
+}
+
+#[repr(C)]
+#[derive(Pod, Zeroable, Clone, Copy, Default, Debug)]
+pub struct PrivateClientHeader {
+    pub tag: u32,
+    pub version: u32,
 }
 
 #[repr(C)]

@@ -5,6 +5,7 @@ pub mod community_account_header;
 pub mod holder;
 pub mod instrument;
 pub mod perps;
+pub mod private_mode;
 pub mod root;
 pub mod spots;
 pub mod token;
