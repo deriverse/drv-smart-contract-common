@@ -667,6 +667,9 @@ pub enum DeriverseErrorKind {
 
     #[error(code = 293, msg = "Airdrop amount must be > 0")]
     InivalidAirdrop { wallet_address: Pubkey, ratio: f64 },
+
+    #[error(code = 294, msg = "Airdrop authority wasnt initlised correctly")]
+    InvalidAirdropAuthority { root_address: Pubkey },
 }
 
 #[cfg(test)]
