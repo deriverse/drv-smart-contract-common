@@ -1,6 +1,7 @@
 use drv_errors_derive::DrvError;
 use drv_models::state::types::{account_type::AccountType, AssetType, OrderSide, TokenProgram};
 use serde::{Deserialize, Serialize};
+use solana_program::pubkey::PubkeyError;
 #[cfg(feature = "on-chain")]
 use solana_program::{msg, program_error::ProgramError, pubkey::Pubkey};
 #[cfg(feature = "off-chain")]
@@ -670,6 +671,12 @@ pub enum DeriverseErrorKind {
 
     #[error(code = 294, msg = "Airdrop authority wasnt initlised correctly")]
     InvalidAirdropAuthority { root_address: Pubkey },
+
+    #[error(
+        code = 295,
+        msg = "Invalid Spl Token Program Id, expected: {expected}, actual: {actual}"
+    )]
+    InvalidSplTokenProgramId { expected: Pubkey, actual: Pubkey },
 }
 
 #[cfg(test)]
