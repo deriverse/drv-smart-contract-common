@@ -10,6 +10,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## Added
 - min voting quorum
 
+## Changed
+- Field `side` from `SwapData` to `input_crncy`
+- Naming of `private_mode` (`pm`) to `vault_mode` (`vm`)
+
 ## [v2.8] - 2025-11-12
 
 ## Added

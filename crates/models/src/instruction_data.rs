@@ -362,13 +362,13 @@ pub struct WithdrawData {
 /// **Tag:** `26`
 ///
 /// ### Fields
-/// - `order_side`: OrderSide - swap side (Bid/Ask)
+/// - `input_crncy`: u8 - Flag if 0 sell `crnct` else sell `asset`
 /// - `instr_id` - Instr pair id
 /// - `price` - Limit price for a swap
 /// - `amount` - Swaps qty in base crncy
 pub struct SwapData {
     pub tag: u8,
-    pub side: u8,
+    pub input_crncy: u8,
     pub padding_u16: u16,
     pub instr_id: InstrId,
     pub price: i64,

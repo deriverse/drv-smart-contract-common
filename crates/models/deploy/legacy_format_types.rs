@@ -552,26 +552,25 @@ pub struct PerpClientInfo5 {
 pub const PERP_CLIENT_INFO5_SIZE: usize = std::mem::size_of::<PerpClientInfo5>();
 
 #[repr(C)]
-#[derive(Copy, Clone, Zeroable, Default)]
-/// New path - src/state/client_primary_account_header.rs
+#[derive(Pod, Zeroable, Clone, Copy)]
 pub struct ClientPrimaryAccountHeader {
     pub tag: u32,
     pub version: u32,
     pub wallet_address: Pubkey,
     pub lut_address: Pubkey,
     pub ref_address: Pubkey,
-    pub pm_wallet_address: Pubkey,
-    pub pm_instr_0: u32,
-    pub pm_instr_1: u32,
-    pub pm_instr_2: u32,
-    pub pm_instr_3: u32,
-    pub pm_instr_4: u32,
-    pub pm_instr_5: u32,
-    pub pm_instr_6: u32,
-    pub pm_instr_7: u32,
-    pub pm_withdraw_token_id: u32,
-    pub pm_reserved: u32,
-    pub pm_withdraw_amount: i64,
+    pub vm_wallet_address: Pubkey,
+    pub vm_instr_0: u32,
+    pub vm_instr_1: u32,
+    pub vm_instr_2: u32,
+    pub vm_instr_3: u32,
+    pub vm_instr_4: u32,
+    pub vm_instr_5: u32,
+    pub vm_instr_6: u32,
+    pub vm_instr_7: u32,
+    pub vm_withdraw_token_id: u32,
+    pub vm_mask: u32,
+    pub vm_withdraw_amount: i64,
     pub first_ref_link_discount: f64,
     pub second_ref_link_discount: f64,
     pub first_ref_link_ratio: f64,
