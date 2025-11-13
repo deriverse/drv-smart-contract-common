@@ -490,4 +490,11 @@ pub mod instructions {
         const INSTRUCTION_NUMBER: u8 = 51;
         const MIN_ACCOUNTS: usize = 2;
     }
+
+    pub struct ChangeAirdropAuthority;
+    impl DrvInstruction for ChangeAirdropAuthority {
+        const INSTRUCTION_NUMBER: u8 = 52;
+
+        const MIN_ACCOUNTS: usize = 2;
+    }
 }
