@@ -158,6 +158,8 @@ pub mod voting {
         pub const DECREMENT: u8 = 0;
     }
 
+    pub const MIN_VOTING_QUORUM: i64 = 5;
+
     /// Topic 1 - Fee rate
     pub const MIN_FEE_RATE: u32 = 4;
     pub const FEE_RATE_STEP: f64 = 0.000025;
