@@ -10,17 +10,18 @@ use super::types::Discriminator;
 /// 1. **`operator_address`**
 /// 2. **`holder_address`**
 /// 3. **`drvs_mint_address`** - LUT address with root related accounts
-/// 4. **`ref_program_duration`** - Duration of refereal program
-/// 5. **`ref_link_duration`** - Duration of each ref link
-/// 6. **`ref_discount`** - Discount for ref program
-/// 7. **`ref_ratio`** - Ratio for ref program
-/// 8. **`clients_count`** - Total clients amount registered on the platform
-/// 9. **`tokens_count`** - Total tokens amount created on the platform
-/// 10. **`instr_count`** - Total amount of instrument created on the platform
-/// 11. **`ref_counter`** - Amount of new ref links created
-/// 12. **`mask`**
+/// 4. **`airdrop_authority`** - sysatems airdrop authority
+/// 5. **`ref_program_duration`** - Duration of refereal program
+/// 6. **`ref_link_duration`** - Duration of each ref link
+/// 7. **`ref_discount`** - Discount for ref program
+/// 8. **`ref_ratio`** - Ratio for ref program
+/// 9. **`clients_count`** - Total clients amount registered on the platform
+/// 10. **`tokens_count`** - Total tokens amount created on the platform
+/// 11. **`instr_count`** - Total amount of instrument created on the platform
+/// 12. **`ref_counter`** - Amount of new ref links created
+/// 13. **`mask`**
 ///     - *PRIVATE_MODE* = 0x1 - Private mode flag
-/// 13. **`points_program_expiration`** - Points program expiration time
+/// 14. **`points_program_expiration`** - Points program expiration time
 ///
 /// # Notes
 /// - Ref stats can be adjust with change_ref_program instruction
@@ -32,6 +33,7 @@ pub struct RootState {
     pub holder_address: Pubkey,
     pub drvs_mint_address: Pubkey,
     pub lut_address: Pubkey,
+    pub airdrop_authority_address: Pubkey,
     pub ref_program_duration: u32,
     pub ref_link_duration: u32,
     pub ref_discount: f64,

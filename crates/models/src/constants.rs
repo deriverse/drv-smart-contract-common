@@ -374,7 +374,7 @@ pub mod instructions {
     pub struct AirdropInstruction;
     impl DrvInstruction for AirdropInstruction {
         const INSTRUCTION_NUMBER: u8 = 27;
-        const MIN_ACCOUNTS: usize = 11;
+        const MIN_ACCOUNTS: usize = 12;
     }
 
     pub struct DividendsClaimInstruction;
@@ -489,5 +489,12 @@ pub mod instructions {
     impl DrvInstruction for ChangePointsProgramExpirationInstruction {
         const INSTRUCTION_NUMBER: u8 = 51;
         const MIN_ACCOUNTS: usize = 2;
+    }
+
+    pub struct ChangeAirdropAuthority;
+    impl DrvInstruction for ChangeAirdropAuthority {
+        const INSTRUCTION_NUMBER: u8 = 52;
+
+        const MIN_ACCOUNTS: usize = 3;
     }
 }
