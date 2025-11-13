@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [unreleased]
 
+## Added
+- min voting quorum
+
 ## [v2.8] - 2025-11-12
 
 ## Added
