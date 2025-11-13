@@ -495,6 +495,6 @@ pub mod instructions {
     impl DrvInstruction for ChangeAirdropAuthority {
         const INSTRUCTION_NUMBER: u8 = 52;
 
-        const MIN_ACCOUNTS: usize = 2;
+        const MIN_ACCOUNTS: usize = 3;
     }
 }
