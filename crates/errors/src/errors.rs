@@ -676,6 +676,12 @@ pub enum DeriverseErrorKind {
         msg = "Invalid Spl Token Program Id, expected: {expected}, actual: {actual}"
     )]
     InvalidSplTokenProgramId { expected: Pubkey, actual: Pubkey },
+
+    #[error(
+        code = 295,
+        msg = "Failed to swap with give price {price} on side {side}"
+    )]
+    FailedToSwap { price: i64, side: OrderSide },
 }
 
 #[cfg(test)]
