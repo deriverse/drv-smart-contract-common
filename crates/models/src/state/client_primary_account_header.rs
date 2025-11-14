@@ -13,10 +13,10 @@ use solana_sdk::pubkey::Pubkey;
 ///
 /// 1. **`lut_address`**
 /// 2. **`ref_address`** - Current address of referee
-/// 3. **`vm_wallet_address`** - Reserved for protected mode
-/// 4. **`vm_instr_0 - vm_instr_7`** - Reserved for protected mode
-/// 5. **`vm_withdraw_token_id`** - Reserved for protected mode
-/// 6. **`vm_wallet_address`** - Reserved for protected mode
+/// 3. **`vm_wallet_address`** - Reserved for vault mode
+/// 4. **`vm_instr[8]`** - Reserved for vault mode
+/// 5. **`vm_withdraw_token_id`** - Reserved for vault mode
+/// 6. **`vm_wallet_address`** - Reserved for vault mode
 /// 7. **`first_ref_link_discount`** - Discount of first referer link
 /// 8. **`second_ref_link_discount`** - Discount of second referer link
 /// 9. **`first_ref_link_ratio`** - Ratio of first referral link
