@@ -1,11 +1,3 @@
-/// name
-///
-/// **Used in:** `instruction_name` instruction
-/// **Tag:** `tag_number`
-///
-/// ### Fields
-/// - `field_name` -
-
 #[repr(C)]
 #[derive(Clone, Copy, Pod, Zeroable)]
 /// New Operator Data

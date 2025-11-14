@@ -7,6 +7,8 @@ use super::types::Discriminator;
 
 #[cfg(feature = "on-chain")]
 use solana_program::pubkey::Pubkey;
+#[cfg(feature = "off-chain")]
+use solana_sdk::pubkey::Pubkey;
 
 /// Instr Account Header describe the state of an Instrument
 ///

@@ -6,6 +6,8 @@ use crate::new_types::client::ClientId;
 use solana_program::pubkey::Pubkey;
 
 use super::types::Discriminator;
+#[cfg(feature = "off-chain")]
+use solana_sdk::pubkey::Pubkey;
 
 /// Client Primary Account Header
 ///
@@ -44,14 +46,7 @@ pub struct ClientPrimaryAccountHeader {
     pub lut_address: Pubkey,
     pub ref_address: Pubkey,
     pub vm_wallet_address: Pubkey,
-    pub vm_instr_0: u32,
-    pub vm_instr_1: u32,
-    pub vm_instr_2: u32,
-    pub vm_instr_3: u32,
-    pub vm_instr_4: u32,
-    pub vm_instr_5: u32,
-    pub vm_instr_6: u32,
-    pub vm_instr_7: u32,
+    pub vm_instrs: [u32; 8],
     pub vm_withdraw_token_id: u32,
     pub vm_mask: u32,
     pub vm_withdraw_amount: i64,
