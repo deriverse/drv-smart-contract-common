@@ -362,7 +362,7 @@ pub struct WithdrawData {
 /// **Tag:** `26`
 ///
 /// ### Fields
-/// - `input_crncy`: u8 - Flag if 0 sell `crnct` else sell `asset`
+/// - `input_crncy`: u8 - Flag if 0 sell `crncy` else sell `asset`
 /// - `instr_id` - Instr pair id
 /// - `price` - Limit price for a swap
 /// - `amount` - Swaps qty in base crncy
