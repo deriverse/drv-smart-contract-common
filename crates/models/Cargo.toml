@@ -17,6 +17,6 @@ workspace = true
 [features]
 test-sbf = []
 competition = []
-default = ["off-chain"]
+default = ["on-chain"]
 on-chain = ["solana-program"]
 off-chain = ["solana-sdk"]
