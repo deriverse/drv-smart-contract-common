@@ -1,7 +1,6 @@
 use drv_errors_derive::DrvError;
 use drv_models::state::types::{account_type::AccountType, AssetType, OrderSide, TokenProgram};
 use serde::{Deserialize, Serialize};
-use solana_program::pubkey::PubkeyError;
 #[cfg(feature = "on-chain")]
 use solana_program::{msg, program_error::ProgramError, pubkey::Pubkey};
 #[cfg(feature = "off-chain")]
@@ -677,6 +676,12 @@ pub enum DeriverseErrorKind {
         msg = "Invalid Spl Token Program Id, expected: {expected}, actual: {actual}"
     )]
     InvalidSplTokenProgramId { expected: Pubkey, actual: Pubkey },
+
+    #[error(
+        code = 295,
+        msg = "Failed to swap with give price {price} on side {side}"
+    )]
+    FailedToSwap { price: i64, side: OrderSide },
 }
 
 #[cfg(test)]

@@ -1,6 +1,9 @@
 use bytemuck::{Pod, Zeroable};
 use serde::{Deserialize, Serialize};
+#[cfg(feature = "on-chain")]
 use solana_program::pubkey::Pubkey;
+#[cfg(feature = "off-chain")]
+use solana_sdk::pubkey::Pubkey;
 
 use crate::new_types::{client::ClientId, tag::Tag, version::Version};
 
@@ -46,7 +49,10 @@ pub mod instr_mask {
 
 pub mod account_type {
 
+    #[cfg(feature = "on-chain")]
     use solana_program::program_error::ProgramError;
+    #[cfg(feature = "off-chain")]
+    use solana_sdk::program_error::ProgramError;
 
     use super::*;
 

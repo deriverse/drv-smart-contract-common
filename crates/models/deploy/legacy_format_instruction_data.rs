@@ -1,11 +1,3 @@
-/// name
-///
-/// **Used in:** `instruction_name` instruction
-/// **Tag:** `tag_number`
-///
-/// ### Fields
-/// - `field_name` -
-
 #[repr(C)]
 #[derive(Clone, Copy, Pod, Zeroable)]
 /// New Operator Data
@@ -352,20 +344,9 @@ pub struct WithdrawData {
 
 #[repr(C)]
 #[derive(Clone, Copy, Pod, Zeroable)]
-/// New Swap Data
-///
-/// **Used in:** `swap` instruction
-///
-/// **Tag:** `26`
-///
-/// ### Fields
-/// - `order_side`: OrderSide - swap side (Bid/Ask)
-/// - `instr_id` - Instr pair id
-/// - `price` - Limit price for a swap
-/// - `amount` - Swaps qty in base crncy
 pub struct SwapData {
     pub tag: u8,
-    pub side: u8,
+    pub input_crncy: u8,
     pub padding_u16: u16,
     pub instr_id: u32,
     pub price: i64,

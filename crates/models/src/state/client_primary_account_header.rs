@@ -6,15 +6,17 @@ use crate::new_types::client::ClientId;
 use solana_program::pubkey::Pubkey;
 
 use super::types::Discriminator;
+#[cfg(feature = "off-chain")]
+use solana_sdk::pubkey::Pubkey;
 
 /// Client Primary Account Header
 ///
 /// 1. **`lut_address`**
 /// 2. **`ref_address`** - Current address of referee
-/// 3. **`pm_wallet_address`** - Reserved for protected mode
-/// 4. **`pm_instr_0 - pm_instr_7`** - Reserved for protected mode
-/// 5. **`pm_withdraw_token_id`** - Reserved for protected mode
-/// 6. **`pm_wallet_address`** - Reserved for protected mode
+/// 3. **`vm_wallet_address`** - Reserved for vault mode
+/// 4. **`vm_instr[8]`** - Reserved for vault mode
+/// 5. **`vm_withdraw_token_id`** - Reserved for vault mode
+/// 6. **`vm_wallet_address`** - Reserved for vault mode
 /// 7. **`first_ref_link_discount`** - Discount of first referer link
 /// 8. **`second_ref_link_discount`** - Discount of second referer link
 /// 9. **`first_ref_link_ratio`** - Ratio of first referral link
@@ -43,18 +45,11 @@ pub struct ClientPrimaryAccountHeader {
     pub wallet_address: Pubkey,
     pub lut_address: Pubkey,
     pub ref_address: Pubkey,
-    pub pm_wallet_address: Pubkey,
-    pub pm_instr_0: u32,
-    pub pm_instr_1: u32,
-    pub pm_instr_2: u32,
-    pub pm_instr_3: u32,
-    pub pm_instr_4: u32,
-    pub pm_instr_5: u32,
-    pub pm_instr_6: u32,
-    pub pm_instr_7: u32,
-    pub pm_withdraw_token_id: u32,
-    pub pm_reserved: u32,
-    pub pm_withdraw_amount: i64,
+    pub vm_wallet_address: Pubkey,
+    pub vm_instrs: [u32; 8],
+    pub vm_withdraw_token_id: u32,
+    pub vm_mask: u32,
+    pub vm_withdraw_amount: i64,
     pub first_ref_link_discount: f64,
     pub second_ref_link_discount: f64,
     pub first_ref_link_ratio: f64,
