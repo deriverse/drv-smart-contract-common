@@ -37,7 +37,6 @@ use solana_sdk::pubkey::Pubkey;
 /// 18. **`maps_address`** - Address of maps account. Account store spot related memory maps, specifically in constants::spot
 /// 19. **`perp_maps_address`** - Address of perp maps account. Account store perp related memory maps, specifically in constants::perp
 /// 20. **`lut_address`** - Address of LUT, which contains accounts asosiated with spot/perp engines
-/// 21. **`feed_id`** - Address of the oracle account for the current instrument, used to fetch the latest valid price.
 /// 22. **`drv_count`** - v2
 /// 23. **`asset_token_decs_count`** - Decimals of asset token. [MIN_DECS_COUNT..=MAX_DECS_COUNT]
 /// 24. **`crncy_token_decs_count`** - Decimals of crncy token. [MIN_DECS_COUNT..=MAX_DECS_COUNT]
@@ -89,6 +88,11 @@ use solana_sdk::pubkey::Pubkey;
 /// 70. **`alltime_crncy_tokens`** - Total amount of crncy tokens traded
 /// 71. **`day_trades`** - Amount of trades executed during current day period
 /// 72. **`lp_day_trades`** - Amount of trades on lp during day paeriod
+/// 73. **`lp_alltime_fees`** - All time fees record from lp
+/// 74. **`lp_day_fees`** - Record of fees collected from lp during last day period
+/// 75. **`lp_prev_day_fees`** - Reocrd of fees collected during last
+/// 76. **`lp_time`** - reserved
+/// 77. **`fees_time`** - reserved
 /// 73. **`lp_prev_day_trades`** - Amount of trades on lp during previous day paeriod
 /// 74. **`creation_time`** - Time of new instrument instruction execution
 /// 75. **`dec_factor`** - Decimal factor for an instrument. Used to convert betweena assets and crncy
@@ -141,7 +145,6 @@ use solana_sdk::pubkey::Pubkey;
 /// 122. **`max_leverage`** - Dynamic value of currently max leverage, based on market volatility. max_leverage <= MAX_PERP_LEVERAGE
 /// 123. **`liquidation_threshold`** - Threshold for liquidation process, based on makret volaitlity. liquidation_threshold <= MIN_LIQUIDATION_THRESHOLD
 /// 124. **`seats_reserve`** - Current amount of funds spent on seats purchasing
-
 #[repr(C)]
 #[derive(Pod, Zeroable, Clone, Copy, Default)]
 pub struct InstrAccountHeader {
@@ -167,7 +170,6 @@ pub struct InstrAccountHeader {
     pub maps_address: Pubkey,
     pub perp_maps_address: Pubkey,
     pub lut_address: Pubkey,
-    pub feed_id: Pubkey,
     pub drv_count: u32,
     pub asset_token_decs_count: u32,
     pub crncy_token_decs_count: u32,
@@ -219,7 +221,12 @@ pub struct InstrAccountHeader {
     pub alltime_crncy_tokens: f64,
     pub day_trades: u32,
     pub lp_day_trades: u32,
+    pub lp_alltime_fees: f64,
+    pub lp_day_fees: i64,
+    pub lp_prev_day_fees: i64,
     pub lp_prev_day_trades: u32,
+    pub lp_time: u32,
+    pub fees_time: u32,
     pub creation_time: u32,
     pub dec_factor: i64,
     pub perp_clients_count: u32,

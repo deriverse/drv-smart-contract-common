@@ -7,14 +7,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [unreleased]
 
-## [v2.9] - 2025-11-13
+## [v2.9] - 2025-11-18
 
 ## Added
 - min voting quorum
+- `lp_time`, `fees_time`, `lp_day_fees`, `lp_prev_day_fees`, `lp_alltime_fees`
 
 ## Changed
 - Field `side` from `SwapData` to `input_crncy`
 - Naming of `private_mode` (`pm`) to `vault_mode` (`vm`)
+
+## Removed 
+- `feed_id` field from `InstrAccountHeader`
 
 ## [v2.8] - 2025-11-12
 
