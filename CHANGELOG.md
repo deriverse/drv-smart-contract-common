@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [unreleased]
 
+## Changed 
+- Removed oracle
+
+## Added
+- `upper/lower_slippage_bound` for `BuyMarketSeat` and `SellMarketSeat` instruction data
+
 ## [v2.9] - 2025-11-18
 
 ## Added
