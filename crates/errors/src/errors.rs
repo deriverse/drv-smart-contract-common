@@ -1,5 +1,7 @@
 use drv_errors_derive::DrvError;
-use drv_models::state::types::{account_type::AccountType, AssetType, OrderSide, TokenProgram};
+use drv_models::state::types::{
+    account_type::AccountType, AssetType, MarketSeatOrderType, OrderSide, TokenProgram,
+};
 use serde::{Deserialize, Serialize};
 #[cfg(feature = "on-chain")]
 use solana_program::{msg, program_error::ProgramError, pubkey::Pubkey};
@@ -682,8 +684,17 @@ pub enum DeriverseErrorKind {
         msg = "Failed to swap with give price {price} on side {side}"
     )]
     FailedToSwap { price: i64, side: OrderSide },
-}
 
+    #[error(
+        code = 296,
+        msg = "Slippage bounds exceeded during {order_type} order. Price: {price}, Bounds type: {bound_price}"
+    )]
+    SlippageExceeded {
+        price: u32,
+        bound_price: u32,
+        order_type: MarketSeatOrderType,
+    },
+}
 #[cfg(test)]
 mod tests {
     use super::*;

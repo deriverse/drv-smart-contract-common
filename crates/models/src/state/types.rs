@@ -26,6 +26,25 @@ impl std::fmt::Display for OrderSide {
     }
 }
 
+#[derive(Clone, Copy, PartialEq, Debug, Serialize, Deserialize)]
+pub enum MarketSeatOrderType {
+    Buy,
+    Sell,
+}
+
+impl std::fmt::Display for MarketSeatOrderType {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(
+            f,
+            "{}",
+            match self {
+                MarketSeatOrderType::Buy => "Buy",
+                MarketSeatOrderType::Sell => "Sell",
+            }
+        )
+    }
+}
+
 #[repr(u8)]
 #[derive(Debug, Clone, Copy, PartialEq)]
 pub enum OrderType {
