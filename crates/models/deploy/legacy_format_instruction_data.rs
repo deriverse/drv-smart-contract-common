@@ -563,38 +563,24 @@ pub struct ChangeRefProgramData {
 
 #[repr(C)]
 #[derive(Clone, Copy, Pod, Zeroable)]
-/// Buy Market Seat Data
-///
-/// **Used in:** `buy_market_seat` instruction
-///
-/// **Tag:** `47`
-///
-/// ### Fields
-/// - `instr_id` - Instr pair id
-/// - `amount` - Deposit amount in base crncy
 pub struct BuyMarketSeatData {
     pub tag: u8, //47
     pub padding_u8: u8,
     pub padding_u16: u16,
+    pub padding_u32: u32,
     pub instr_id: u32,
+    pub upper_slippage_bound: u32,
     pub amount: i64,
 }
 
 #[repr(C)]
 #[derive(Clone, Copy, Pod, Zeroable)]
-/// Sell Market Seat Data
-///
-/// **Used in:** `sell_market_seat` instruction
-///
-/// **Tag:** `48`
-///
-/// ### Fields
-/// - `instr_id` - Instr pair id
 pub struct SellMarketSeatData {
     pub tag: u8,
     pub padding_u8: u8,
     pub padding_u16: u16,
     pub instr_id: u32,
+    pub lower_slippage_bound: u32,
 }
 
 #[repr(C)]
