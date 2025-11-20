@@ -694,6 +694,12 @@ pub enum DeriverseErrorKind {
         bound_price: u32,
         order_type: MarketSeatOrderType,
     },
+
+    #[error(
+        code = 297,
+        msg = "Token with id {token_id} can't be a base crncy. Reason: {reason}"
+    )]
+    InvalidBaseCrncy { token_id: u32, reason: String },
 }
 #[cfg(test)]
 mod tests {
