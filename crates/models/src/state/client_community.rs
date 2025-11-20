@@ -6,7 +6,7 @@ use super::types::Discriminator;
 use crate::new_types::client::ClientId;
 
 #[repr(C)]
-#[derive(Copy, Clone, Zeroable)]
+#[derive(Pod, Zeroable, Clone, Copy)]
 /// Clients community information records for a specific currency.
 ///
 /// 1. **`dividends_rate`** - Dividents rate per 1 DRVS token
