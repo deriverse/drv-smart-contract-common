@@ -388,6 +388,7 @@ pub struct RootState {
     pub drvs_mint_address: Pubkey,
     pub lut_address: Pubkey,
     pub airdrop_authority_address: Pubkey,
+    pub private_mode_authority_address: Pubkey,
     pub ref_program_duration: u32,
     pub ref_link_duration: u32,
     pub ref_discount: f64,
@@ -426,6 +427,7 @@ pub struct BaseCrncyRecord {
     pub decs_count: u32,
     pub funds: i64,
     pub rate: f64,
+    pub denominator: f64,
 }
 
 pub mod asset_type {
