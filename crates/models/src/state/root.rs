@@ -13,18 +13,19 @@ use super::types::Discriminator;
 /// 1. **`operator_address`**
 /// 2. **`holder_address`**
 /// 3. **`drvs_mint_address`** - LUT address with root related accounts
-/// 4. **`airdrop_authority`** - sysatems airdrop authority
-/// 5. **`ref_program_duration`** - Duration of refereal program
-/// 6. **`ref_link_duration`** - Duration of each ref link
-/// 7. **`ref_discount`** - Discount for ref program
-/// 8. **`ref_ratio`** - Ratio for ref program
-/// 9. **`clients_count`** - Total clients amount registered on the platform
-/// 10. **`tokens_count`** - Total tokens amount created on the platform
-/// 11. **`instr_count`** - Total amount of instrument created on the platform
-/// 12. **`ref_counter`** - Amount of new ref links created
-/// 13. **`mask`**
+/// 4. **`airdrop_authority`** - systems airdrop authority
+/// 5. **`private_mode_authority_address`** - systems private mode authority
+/// 6. **`ref_program_duration`** - Duration of refereal program
+/// 7. **`ref_link_duration`** - Duration of each ref link
+/// 8. **`ref_discount`** - Discount for ref program
+/// 9. **`ref_ratio`** - Ratio for ref program
+/// 10. **`clients_count`** - Total clients amount registered on the platform
+/// 11. **`tokens_count`** - Total tokens amount created on the platform
+/// 12. **`instr_count`** - Total amount of instrument created on the platform
+/// 13. **`ref_counter`** - Amount of new ref links created
+/// 14. **`mask`**
 ///     - *PRIVATE_MODE* = 0x1 - Private mode flag
-/// 14. **`points_program_expiration`** - Points program expiration time
+/// 15. **`points_program_expiration`** - Points program expiration time
 ///
 /// # Notes
 /// - Ref stats can be adjust with change_ref_program instruction
@@ -37,6 +38,7 @@ pub struct RootState {
     pub drvs_mint_address: Pubkey,
     pub lut_address: Pubkey,
     pub airdrop_authority_address: Pubkey,
+    pub private_mode_authority_address: Pubkey,
     pub ref_program_duration: u32,
     pub ref_link_duration: u32,
     pub ref_discount: f64,

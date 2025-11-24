@@ -7,10 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [unreleased]
 
+## [v2.10] - 2025-11-24
+
 ## Changed 
 - Removed oracle
 
 ## Added
+- `private_mode_authority` in `RootState`
+- `denominator` field in `BaseCrncyRecord`
 - Error message `Invalid Base Cnrcy`
 - `upper/lower_slippage_bound` for `BuyMarketSeat` and `SellMarketSeat` instruction data
 

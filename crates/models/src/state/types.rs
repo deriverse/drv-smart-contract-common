@@ -263,11 +263,13 @@ pub const LINE_QUOTES_SIZE: usize = std::mem::size_of::<LineQuotes>();
 /// 2. **`decs_count`** - tokens decimals from token state mask
 /// 3. **`funds`** - Funds available for dividents distribution
 /// 4. **`rate`** - Current dividends rate per 1 DRVS token
+/// 5. **`denominator`** - Denominator of base crncy for fees prepayment calculations, aligned by operator admin
 pub struct BaseCrncyRecord {
     pub crncy_token_id: u32,
     pub decs_count: u32,
     pub funds: i64,
     pub rate: f64,
+    pub denominator: f64,
 }
 
 #[repr(u32)]
