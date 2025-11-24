@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [unreleased]
 
-## [v2.9] - 2025-11-24
+## [v2.10] - 2025-11-24
 
 ## Changed 
 - Removed oracle
