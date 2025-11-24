@@ -256,7 +256,7 @@ pub struct LineQuotes {
 pub const LINE_QUOTES_SIZE: usize = std::mem::size_of::<LineQuotes>();
 
 #[repr(C)]
-#[derive(Clone, Copy)]
+#[derive(Clone, Copy, Zeroable, Pod)]
 /// Base Crncy Record
 ///
 /// 1. **`crncy_token_id`** - Token id from token state
@@ -286,7 +286,7 @@ impl std::fmt::Display for AssetType {
 }
 
 #[repr(C)]
-#[derive(Copy, Clone, Zeroable)]
+#[derive(Copy, Clone, Zeroable, Pod)]
 pub struct AssetRecord {
     pub asset_id: u32,
     // client

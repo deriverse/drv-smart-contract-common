@@ -67,7 +67,7 @@ pub mod account_type {
 }
 
 #[repr(C)]
-#[derive(Copy, Clone, Zeroable)]
+#[derive(Pod, Zeroable, Clone, Copy)]
 /// New path - src/state/client_community.rs
 pub struct ClientCommunityRecord {
     pub dividends_rate: f64,
