@@ -670,8 +670,14 @@ pub enum DeriverseErrorKind {
     #[error(code = 293, msg = "Airdrop amount must be > 0")]
     InivalidAirdrop { wallet_address: Pubkey, ratio: f64 },
 
-    #[error(code = 294, msg = "Airdrop authority wasn't initialised correctly")]
-    InvalidAirdropAuthority { root_address: Pubkey },
+    #[error(
+        code = 294,
+        msg = "Airdrop authority wasn't initialised correctly. Expected {expected_address} != Actual {actual_address}"
+    )]
+    InvalidAirdropAuthority {
+        expected_address: Pubkey,
+        actual_address: Pubkey,
+    },
 
     #[error(
         code = 295,
@@ -703,9 +709,12 @@ pub enum DeriverseErrorKind {
 
     #[error(
         code = 298,
-        msg = "Private mode authority wasn't initialised correctly"
+        msg = "Private mode authority wasn't initialised correctly. Expected {expected_address} != Actual {actual_address}"
     )]
-    InvalidPrivateModeAuthority { root_address: Pubkey },
+    InvalidPrivateModeAuthority {
+        expected_address: Pubkey,
+        actual_address: Pubkey,
+    },
 }
 #[cfg(test)]
 mod tests {
