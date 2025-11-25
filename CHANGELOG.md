@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [unreleased]
 
 ## Added
+- `MaxClientsOrderLimitReached` error
 - `MAX_CLIENT_SIDE_ORDERS_COUNT` constants (temporary solution)
 - Error messages for private mode authority validations
 - `InstructionData` constant for `changePrivateModeAuthority` instruction
