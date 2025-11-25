@@ -499,4 +499,10 @@ pub mod instructions {
 
         const MIN_ACCOUNTS: usize = 3;
     }
+
+    pub struct ChangePrivateModeAuthority;
+    impl DrvInstruction for ChangePrivateModeAuthority {
+        const INSTRUCTION_NUMBER: u8 = 53;
+        const MIN_ACCOUNTS: usize = 3;
+    }
 }

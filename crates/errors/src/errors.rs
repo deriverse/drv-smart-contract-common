@@ -670,8 +670,14 @@ pub enum DeriverseErrorKind {
     #[error(code = 293, msg = "Airdrop amount must be > 0")]
     InivalidAirdrop { wallet_address: Pubkey, ratio: f64 },
 
-    #[error(code = 294, msg = "Airdrop authority wasnt initlised correctly")]
-    InvalidAirdropAuthority { root_address: Pubkey },
+    #[error(
+        code = 294,
+        msg = "Airdrop authority wasn't initialised correctly. Expected {expected_address} != Actual {actual_address}"
+    )]
+    InvalidAirdropAuthority {
+        expected_address: Pubkey,
+        actual_address: Pubkey,
+    },
 
     #[error(
         code = 295,
@@ -700,6 +706,15 @@ pub enum DeriverseErrorKind {
         msg = "Token with id {token_id} can't be a base crncy. Reason: {reason}"
     )]
     InvalidBaseCrncy { token_id: u32, reason: String },
+
+    #[error(
+        code = 298,
+        msg = "Private mode authority wasn't initialised correctly. Expected {expected_address} != Actual {actual_address}"
+    )]
+    InvalidPrivateModeAuthority {
+        expected_address: Pubkey,
+        actual_address: Pubkey,
+    },
 }
 #[cfg(test)]
 mod tests {
