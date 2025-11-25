@@ -715,6 +715,15 @@ pub enum DeriverseErrorKind {
         expected_address: Pubkey,
         actual_address: Pubkey,
     },
+
+    #[error {
+        code = 299,
+        msg = "Max clients orders limit reached. For current client on {side} side max orders amount is {max_clients_orders}"
+    }]
+    MaxClientsOrderLimitReached {
+        side: OrderSide,
+        max_clients_orders: u32,
+    },
 }
 #[cfg(test)]
 mod tests {

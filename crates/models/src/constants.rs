@@ -101,6 +101,7 @@ pub mod memory_maps {
 pub mod spot {
     pub const MAX_LINES: usize = 2048;
     pub const MAX_ORDERS: u32 = (4 * 64 * 64 - MAX_LINES) as u32 - 2;
+    pub const MAX_CLIENT_SIDE_ORDERS_COUNT: u32 = 32;
     pub mod memory_maps {
         use crate::state::spots::spot_account_header::SpotTradeAccountHeader;
 
