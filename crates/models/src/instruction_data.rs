@@ -185,12 +185,14 @@ pub struct SpotMassCancelData {
 /// - `side`: OrderSide - Orders side (Bid/Ask)
 /// - `instr_id` - Instr pair id
 /// - `amount` - Orders qty in base crncy
+/// - `critical_price` - Price used for slippage calculations
 pub struct SpotLpData {
     pub tag: u8,
     pub side: u8,
     pub padding_u16: u16,
     pub instr_id: InstrId,
     pub amount: i64,
+    pub critical_price: f64,
 }
 
 #[repr(C)]
