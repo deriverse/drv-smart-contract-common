@@ -729,7 +729,7 @@ pub enum DeriverseErrorKind {
         code = 296,
         msg = "Slippage bounds exceeded during {order_side} order. Price: {price}, Bounds type: {bound_price}"
     )]
-    SeatSlippageExceeded {
+    SlippageExceeded {
         price: u32,
         bound_price: u32,
         order_side: OrderSide,
