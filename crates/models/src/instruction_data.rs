@@ -192,7 +192,7 @@ pub struct SpotLpData {
     pub padding_u16: u16,
     pub instr_id: InstrId,
     pub amount: i64,
-    pub critical_price: f64,
+    pub critical_price: i64,
 }
 
 #[repr(C)]
