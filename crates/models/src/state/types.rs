@@ -288,7 +288,7 @@ impl std::fmt::Display for AssetType {
 }
 
 #[repr(C)]
-#[derive(Copy, Clone, Zeroable, Pod)]
+#[derive(Copy, Clone, Zeroable, Pod, Debug)]
 pub struct AssetRecord {
     pub asset_id: u32,
     // client
