@@ -695,7 +695,7 @@ pub enum DeriverseErrorKind {
         code = 296,
         msg = "Slippage bounds exceeded during {order_type} order. Price: {price}, Bounds type: {bound_price}"
     )]
-    SlippageExceeded {
+    MarketSeatSlippageExceeded {
         price: u32,
         bound_price: u32,
         order_type: MarketSeatOrderType,
@@ -723,6 +723,16 @@ pub enum DeriverseErrorKind {
     MaxClientsOrderLimitReached {
         side: OrderSide,
         max_clients_orders: u32,
+    },
+
+    #[error(
+        code = 296,
+        msg = "Slippage bounds exceeded during {order_side} order. Price: {price}, Bounds type: {bound_price}"
+    )]
+    SlippageExceeded {
+        price: i64,
+        bound_price: i64,
+        order_side: OrderSide,
     },
 }
 #[cfg(test)]
