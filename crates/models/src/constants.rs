@@ -511,4 +511,10 @@ pub mod instructions {
         const INSTRUCTION_NUMBER: u8 = 54;
         const MIN_ACCOUNTS: usize = 5;
     }
+    pub struct CloseAccount;
+    impl DrvInstruction for CloseAccount {
+        const INSTRUCTION_NUMBER: u8 = 55;
+
+        const MIN_ACCOUNTS: usize = 2;
+    }
 }
