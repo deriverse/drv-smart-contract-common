@@ -399,6 +399,7 @@ pub struct RootState {
     pub ref_counter: u32,
     pub mask: u32,
     pub points_program_expiration: u32,
+    pub purchasing_perp_seat_fee: f64,
 }
 
 pub const ROOT_ACCOUNT_SIZE: usize = std::mem::size_of::<RootState>();
