@@ -506,4 +506,9 @@ pub mod instructions {
         const INSTRUCTION_NUMBER: u8 = 53;
         const MIN_ACCOUNTS: usize = 3;
     }
+    pub struct WithdrawSPLTokens;
+    impl DrvInstruction for WithdrawSPLTokens {
+        const INSTRUCTION_NUMBER: u8 = 54;
+        const MIN_ACCOUNTS: usize = 5;
+    }
 }
