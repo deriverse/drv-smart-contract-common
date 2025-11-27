@@ -173,6 +173,7 @@ pub struct SpotMassCancelData {
     pub instr_id: InstrId,
 }
 
+// TODO update models
 #[repr(C)]
 #[derive(Clone, Copy, Pod, Zeroable)]
 /// Spot LP Data
@@ -185,14 +186,14 @@ pub struct SpotMassCancelData {
 /// - `side`: OrderSide - Orders side (Bid/Ask)
 /// - `instr_id` - Instr pair id
 /// - `amount` - Orders qty in lp tokens
-/// - `critical_price` - Price used for slippage calculations
+/// - `edge_price` - Price used for slippage calculations
 pub struct SpotLpData {
     pub tag: u8,
     pub side: u8,
     pub padding_u16: u16,
     pub instr_id: InstrId,
     pub amount: i64,
-    pub critical_price: i64,
+    pub edge_price: i64,
 }
 
 #[repr(C)]
