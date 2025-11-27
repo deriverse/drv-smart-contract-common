@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [unreleased]
 
+## [v2.11] - 2025-11-27
+
 ## Added
 - `purchasing_perp_seat_fee` field in `RootState`. Fee will be seted by operator admin in case of exsessive manipulations
 - `spot_filled_orders` and `perp_filled_orders` in `ClientPrimaryAccountHeader`
