@@ -173,7 +173,6 @@ pub struct SpotMassCancelData {
     pub instr_id: InstrId,
 }
 
-// TODO update models
 #[repr(C)]
 #[derive(Clone, Copy, Pod, Zeroable)]
 /// Spot LP Data

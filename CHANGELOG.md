@@ -8,7 +8,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [unreleased]
 
 ## Added
-- `critical_price` field in `SpotLpData` instruction data
+- Error message for incorrect slippage
+- `edge_price` field in `SpotLpData` instruction data
 - `MaxClientsOrderLimitReached` error
 - `MAX_CLIENT_SIDE_ORDERS_COUNT` constants (temporary solution)
 - Error messages for private mode authority validations
