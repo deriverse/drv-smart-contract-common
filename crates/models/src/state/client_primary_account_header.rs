@@ -72,6 +72,8 @@ pub struct ClientPrimaryAccountHeader {
     pub points: u32,
     pub slot: u32,
     pub assets_count: u32,
+    pub spot_filled_orders: u32,
+    pub perp_filled_orders: u32,
     pub reserved_value1: i64,
     pub reserved_value2: i64,
     pub reserved_value3: i64,

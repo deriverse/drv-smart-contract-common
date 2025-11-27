@@ -26,6 +26,7 @@ use super::types::Discriminator;
 /// 14. **`mask`**
 ///     - *PRIVATE_MODE* = 0x1 - Private mode flag
 /// 15. **`points_program_expiration`** - Points program expiration time
+/// 16. **`purchasing_perp_seat_fee`** - Fee for purchasing an new market seat, 0 by default
 ///
 /// # Notes
 /// - Ref stats can be adjust with change_ref_program instruction
@@ -49,6 +50,7 @@ pub struct RootState {
     pub ref_counter: u32,
     pub mask: u32,
     pub points_program_expiration: u32,
+    pub purchasing_perp_seat_fee: f64,
 }
 
 impl Deref for RootState {

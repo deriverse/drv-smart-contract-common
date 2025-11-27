@@ -264,12 +264,18 @@ pub const LINE_QUOTES_SIZE: usize = std::mem::size_of::<LineQuotes>();
 /// 3. **`funds`** - Funds available for dividents distribution
 /// 4. **`rate`** - Current dividends rate per 1 DRVS token
 /// 5. **`denominator`** - Denominator of base crncy for fees prepayment calculations, aligned by operator admin
+/// 6. **`locked_drvs_amount`** - Locked amount of base crncy in DRVS/BaseCrncy pool
+/// 7. **`locked_drvs_dividends_value`** - Amount of dividents ready to claim from locked base crncy in DRVS/BaseCrncy pool
+/// 8. **`mask`**
 pub struct BaseCrncyRecord {
     pub crncy_token_id: u32,
     pub decs_count: u32,
     pub funds: i64,
     pub rate: f64,
     pub denominator: f64,
+    pub locked_drvs_amount: i64,
+    pub locked_drvs_dividends_value: i64,
+    pub mask: i64,
 }
 
 #[repr(u32)]

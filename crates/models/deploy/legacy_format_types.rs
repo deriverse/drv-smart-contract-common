@@ -399,6 +399,7 @@ pub struct RootState {
     pub ref_counter: u32,
     pub mask: u32,
     pub points_program_expiration: u32,
+    pub purchasing_perp_seat_fee: f64,
 }
 
 pub const ROOT_ACCOUNT_SIZE: usize = std::mem::size_of::<RootState>();
@@ -428,6 +429,9 @@ pub struct BaseCrncyRecord {
     pub funds: i64,
     pub rate: f64,
     pub denominator: f64,
+    pub locked_drvs_amount: i64,
+    pub locked_drvs_dividends_value: i64,
+    pub mask: i64,
 }
 
 pub mod asset_type {
@@ -600,6 +604,8 @@ pub struct ClientPrimaryAccountHeader {
     pub points: u32,
     pub slot: u32,
     pub assets_count: u32,
+    pub spot_filled_orders: u32,
+    pub perp_filled_orders: u32,
     pub reserved_value1: i64,
     pub reserved_value2: i64,
     pub reserved_value3: i64,
