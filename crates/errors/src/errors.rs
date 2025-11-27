@@ -726,7 +726,7 @@ pub enum DeriverseErrorKind {
     },
 
     #[error(
-        code = 296,
+        code = 300,
         msg = "Slippage bounds exceeded during {order_side} order. Price: {price}, Bounds type: {bound_price}"
     )]
     SlippageExceeded {
@@ -736,7 +736,7 @@ pub enum DeriverseErrorKind {
     },
 
     #[error(
-        code = 297,
+        code = 301,
         msg = "Insuffecient LP tokens balance. Tokens after operation {final_tokens} < min amount {min_amount}"
     )]
     InsuffecientLpTokensBalance {
@@ -747,7 +747,7 @@ pub enum DeriverseErrorKind {
     },
 
     #[error(
-        code = 298,
+        code = 302,
         msg = "Insuffecient pool supply. Pool supply after operation {final_ps} < min amount {min_amount}"
     )]
     InsuffecientPoolSupply {
@@ -758,7 +758,7 @@ pub enum DeriverseErrorKind {
     },
 
     #[error(
-        code = 299,
+        code = 303,
         msg = "System fault. In case of empty pool users lp balance must be 0"
     )]
     SystemPoolFault { ps: i64, lp_tokens: i64 },
