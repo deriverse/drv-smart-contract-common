@@ -734,6 +734,34 @@ pub enum DeriverseErrorKind {
         bound_price: i64,
         order_side: OrderSide,
     },
+
+    #[error(
+        code = 297,
+        msg = "Insuffecient LP tokens balance. Tokens after operation {final_tokens} < min amount {min_amount}"
+    )]
+    InsuffecientLpTokensBalance {
+        lp_tokens: i64,
+        operation_amount: i64,
+        final_tokens: i64,
+        min_amount: i64,
+    },
+
+    #[error(
+        code = 298,
+        msg = "Insuffecient pool supply. Pool supply after operation {final_ps} < min amount {min_amount}"
+    )]
+    InsuffecientPoolSupply {
+        ps: i64,
+        operation_amount: i64,
+        final_ps: i64,
+        min_amount: i64,
+    },
+
+    #[error(
+        code = 299,
+        msg = "System fault. In case of empty pool users lp balance must be 0"
+    )]
+    SystemPoolFault { ps: i64, lp_tokens: i64 },
 }
 #[cfg(test)]
 mod tests {

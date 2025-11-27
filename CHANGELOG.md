@@ -8,6 +8,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [unreleased]
 
 ## Added
+- `locked_drvs_amount`, `locked_drvs_dividends_value`, `mask` fields in `BaseCrncyRecord` for dividends from pool issue solving
+- Error messages for `spot_lp`
 - Error message for incorrect slippage
 - `edge_price` field in `SpotLpData` instruction data
 - `MaxClientsOrderLimitReached` error

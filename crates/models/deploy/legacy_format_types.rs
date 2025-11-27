@@ -428,6 +428,9 @@ pub struct BaseCrncyRecord {
     pub funds: i64,
     pub rate: f64,
     pub denominator: f64,
+    pub locked_drvs_amount: i64,
+    pub locked_drvs_dividends_value: i64,
+    pub mask: i64,
 }
 
 pub mod asset_type {
