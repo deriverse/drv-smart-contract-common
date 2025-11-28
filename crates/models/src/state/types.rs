@@ -281,10 +281,10 @@ pub struct BaseCrncyRecord {
 #[repr(u32)]
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
 pub enum AssetType {
-    Token = 0x1000000,
-    SpotLp = 0x2000000,
-    SpotOrders = 0x3000000,
-    Perp = 0x4000000,
+    Token = 0x10000000,
+    SpotLp = 0x20000000,
+    SpotOrders = 0x30000000,
+    Perp = 0x40000000,
 }
 
 impl std::fmt::Display for AssetType {
