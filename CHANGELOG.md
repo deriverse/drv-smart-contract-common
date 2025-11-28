@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [unreleased]
 
+## [v2.12] - 2025-11-28
+
 ## Added
 - `MAX_INSTR_COUNT` constants 
 - fees statistic records in `InstrAccountHeader`
