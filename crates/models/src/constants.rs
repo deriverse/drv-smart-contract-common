@@ -214,7 +214,7 @@ pub mod instr_upgrade_params {
 pub const INSTR_ACCOUNT_INITIAL_SIZE: usize =
     INSTR_ACCOUNT_HEADER_SIZE + 4 * LINE_QUOTES_SIZE * MARKET_DEPTH;
 
-const MAX_INSTR_COUNT: u32 = 0x10000000;
+pub const MAX_INSTR_COUNT: u32 = 0x10000000;
 
 pub mod rebates {
     pub const REBATES_RATIO: f64 = 0.125;
