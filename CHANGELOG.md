@@ -14,6 +14,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## Changed
 - increased `AssetTypes` literals, so for `SpotOrder` and `Perp` new max instr count can fit
 
+## Removed 
+- `SetOracleFeed` instruction data
+
 ## [v2.11] - 2025-11-27
 
 ## Added

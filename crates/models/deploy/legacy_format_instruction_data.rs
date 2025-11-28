@@ -467,23 +467,6 @@ pub struct UpgradeToPerpData {
 
 #[repr(C)]
 #[derive(Clone, Copy, Pod, Zeroable)]
-/// Set Instrument Oracel Feed Data
-///
-/// **Used in:** `set_instr_oracle_feed` instruction
-///
-/// **Tag:** `40`
-///
-/// ### Fields
-/// - `instr_id` - Instrument pair id
-pub struct SetInstrOracleFeedData {
-    pub tag: u8, // 40
-    pub padding_u8: u8,
-    pub padding_u16: u16,
-    pub instr_id: u32,
-}
-
-#[repr(C)]
-#[derive(Clone, Copy, Pod, Zeroable)]
 /// Set Instrument Ready For Perp Upgrade Data
 ///
 /// **Used in:** `set_instr_ready_for_perp_upgrade` instruction
