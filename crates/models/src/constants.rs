@@ -229,9 +229,6 @@ pub mod rebalancing {
 }
 
 pub mod margin_call {
-    pub const MARGIN_CALL_LEVEL: i64 = 32;
-    pub const LONG_MARGIN_CALL_RATIO: f64 = 1.0 + 1.0 / MARGIN_CALL_LEVEL as f64;
-    pub const SHORT_MARGIN_CALL_RATIO: f64 = 1.0 - 1.0 / MARGIN_CALL_LEVEL as f64;
     pub const MAX_MARGIN_CALL_TRADES: i64 = 10;
 }
 
@@ -422,12 +419,6 @@ pub mod instructions {
     impl DrvInstruction for FeesWithdrawInstruction {
         const INSTRUCTION_NUMBER: u8 = 39;
         const MIN_ACCOUNTS: usize = 6;
-    }
-
-    pub struct SetInstrOracleFeedInstruction;
-    impl DrvInstruction for SetInstrOracleFeedInstruction {
-        const INSTRUCTION_NUMBER: u8 = 40;
-        const MIN_ACCOUNTS: usize = 4;
     }
 
     pub struct SetInstrReadyForPerpUpgradeInstruction;
