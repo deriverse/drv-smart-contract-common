@@ -8,7 +8,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [unreleased]
 
 ## Added
+- `MAX_INSTR_COUNT` constants 
 - fees statistic records in `InstrAccountHeader`
+
+## Changed
+- increased `AssetTypes` literals, so for `SpotOrder` and `Perp` new max instr count can fit
 
 ## [v2.11] - 2025-11-27
 

@@ -762,6 +762,12 @@ pub enum DeriverseErrorKind {
         msg = "System fault. In case of empty pool users lp balance must be 0"
     )]
     SystemPoolFault { ps: i64, lp_tokens: i64 },
+
+    #[error(
+        code = 304,
+        msg = "Max instruments limit on the platform reached: {max_instr_amount}"
+    )]
+    MaxInstrumentLimitReached { max_instr_amount: u32 },
 }
 #[cfg(test)]
 mod tests {
