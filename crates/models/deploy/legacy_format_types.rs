@@ -234,7 +234,7 @@ pub const CANDLES_ACCOUNT_HEADER_SIZE: usize = std::mem::size_of::<CandlesAccoun
 pub struct InstrAccountHeader {
     pub tag: u32,
     pub version: u32,
-    pub instr_id: InstrId,
+    pub instr_id: u32,
     pub asset_token_id: u32,
     pub crncy_token_id: u32,
     pub mask: u32,
