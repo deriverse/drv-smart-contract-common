@@ -126,6 +126,7 @@ pub mod perp {
     pub const INIT_SEAT_PRICE: f64 = 1.0;
 
     pub const MIN_LIQUIDATION_THRESHOLD: f64 = 0.5 / MAX_PERP_LEVERAGE as f64;
+    // change to 20
     pub const MAX_PERP_LEVERAGE: u8 = 15;
 
     pub mod memory_maps {
@@ -224,7 +225,9 @@ pub mod rebates {
 }
 
 pub mod rebalancing {
+    // reduce to 10
     pub const MAX_REBALANCING_CALLS: i64 = 25;
+    // change to 900
     pub const REBALANCING_DELAY: u32 = 300;
 }
 
