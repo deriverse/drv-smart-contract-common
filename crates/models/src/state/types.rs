@@ -1,3 +1,5 @@
+use std::path::Display;
+
 use bytemuck::{Pod, Zeroable};
 use serde::{Deserialize, Serialize};
 #[cfg(feature = "on-chain")]
@@ -46,12 +48,25 @@ impl std::fmt::Display for MarketSeatOrderType {
 }
 
 #[repr(u8)]
-#[derive(Debug, Clone, Copy, PartialEq)]
+#[derive(Debug, Clone, Copy, PartialEq, Serialize, Deserialize)]
 pub enum OrderType {
     Limit = 0,
     Market = 1,
     MarginCall = 2,
-    ForcedClose = 3,
+}
+
+impl std::fmt::Display for OrderType {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(
+            f,
+            "{}",
+            match self {
+                Self::Limit => "Limit",
+                Self::Market => "Market",
+                Self::MarginCall => "Margin Call",
+            }
+        )
+    }
 }
 
 pub mod root_mask {
