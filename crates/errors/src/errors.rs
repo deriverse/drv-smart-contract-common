@@ -769,10 +769,10 @@ pub enum DeriverseErrorKind {
     )]
     MaxInstrumentLimitReached { max_instr_amount: u32 },
 
-    #[error(code = 305, msg = "Invalid order type for ")]
+    #[error(code = 305, msg = "Invalid order type {order_type}")]
     InvalidOrderType {
         order_type: OrderType,
-        operation: String,
+        order_type_raw: u8,
     },
 }
 #[cfg(test)]
