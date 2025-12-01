@@ -1,6 +1,6 @@
 use drv_errors_derive::DrvError;
 use drv_models::state::types::{
-    account_type::AccountType, AssetType, MarketSeatOrderType, OrderSide, TokenProgram,
+    account_type::AccountType, AssetType, MarketSeatOrderType, OrderSide, OrderType, TokenProgram,
 };
 use serde::{Deserialize, Serialize};
 #[cfg(feature = "on-chain")]
@@ -768,6 +768,12 @@ pub enum DeriverseErrorKind {
         msg = "Max instruments limit on the platform reached: {max_instr_amount}"
     )]
     MaxInstrumentLimitReached { max_instr_amount: u32 },
+
+    #[error(code = 305, msg = "Invalid order type for ")]
+    InvalidOrderType {
+        order_type: OrderType,
+        operation: String,
+    },
 }
 #[cfg(test)]
 mod tests {
