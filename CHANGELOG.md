@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [unreleased]
 
+## Added
+- `perp_short_spot_price_for_withdrowal` and `perp_long_spot_price_for_withdrowal` prices before margin call which are used during avail funds calculations
+
 ## [v2.12] - 2025-11-28
 
 ## Added
