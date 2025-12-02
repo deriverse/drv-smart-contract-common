@@ -122,29 +122,31 @@ use solana_sdk::pubkey::Pubkey;
 /// 99. **`perp_bid_orders_count`** - Total amount of bid orders on perp
 /// 100. **`perp_ask_orders_count`** - Total amount of ask orders on perp
 /// 101. **`perp_day_trades`** - Amount of trades executed during current day period
-/// 102. **`perp_spot_price_for_withdrowal`** - Valid record of price before margin call, used during funds calculation
-/// 103. **`perp_soc_loss_long_rate`** - Current social loss long rate
-/// 104. **`perp_soc_loss_short_rate`** - Current social loss short rate
-/// 105. **`perp_price_delta`** - Price delta between spot market price and perp underlying price. Used during funding payments calculations
-/// 106. **`perp_funding_rate`** - Current funding rate
-/// 107. **`perp_funding_funds`** - Total amount of funds paid and received by clients during funding payments
-/// 108. **`perp_soc_loss_funds`** - Total amount of funds paid and received by clients during socialized losses
-/// 109. **`perp_insurance_fund`** - Amount of funds stored in protocols insurance funds
-/// 110. **`perp_last_asset_tokens`** - Amount of asset_tokens traded during last trade on perp
-/// 111. **`perp_last_crny_tokens`** - Amount of crncy_tokens traded during last trade on perp
-/// 112. **`perp_best_bid`** - Current best line price on bid side on perp
-/// 113. **`perp_best_ask`** - Current best line price on ask side on perp
+/// 102. **`perp_long_spot_price_for_withdrowal`** - Record of price before long margin call
+/// 103. **`perp_short_spot_price_for_withdrowal`** - Record of price before short margin call
+/// 104. **`perp_spot_price_for_withdrowal`** - Valid record of price before margin call, used during funds calculation
+/// 105. **`perp_soc_loss_long_rate`** - Current social loss long rate
+/// 106. **`perp_soc_loss_short_rate`** - Current social loss short rate
+/// 107. **`perp_price_delta`** - Price delta between spot market price and perp underlying price. Used during funding payments calculations
+/// 108. **`perp_funding_rate`** - Current funding rate
+/// 109. **`perp_funding_funds`** - Total amount of funds paid and received by clients during funding payments
+/// 110. **`perp_soc_loss_funds`** - Total amount of funds paid and received by clients during socialized losses
+/// 111. **`perp_insurance_fund`** - Amount of funds stored in protocols insurance funds
+/// 112. **`perp_last_asset_tokens`** - Amount of asset_tokens traded during last trade on perp
+/// 113. **`perp_last_crny_tokens`** - Amount of crncy_tokens traded during last trade on perp
+/// 114. **`perp_best_bid`** - Current best line price on bid side on perp
+/// 115. **`perp_best_ask`** - Current best line price on ask side on perp
 /// 114. **`perp_day_asset_tokens`** - Assets tokens traded during the day period on perp
-/// 115. **`perp_day_cnry_tokens`** - Crncy tokens traded during the day period on perp
-/// 116. **`perp_day_low`** - Lowest price during the day period on perp
-/// 117. **`perp_day_high`** - Highest price during the day period on perp
-/// 118. **`perp_prev_day_asset_tokens`** - Assets tokens traded during previous day period on perp
-/// 119. **`perp_prev_day_cnry_tokens`** - Crncy tokens traded during previous day period on perp
-/// 120. **`perp_alltime_asset_tokens`** - Total amount of assets tokens traded on perp
-/// 121. **`perp_alltime_crncy_tokens`** - Total amount of crncy tokens traded on perp
-/// 122. **`max_leverage`** - Dynamic value of currently max leverage, based on market volatility. max_leverage <= MAX_PERP_LEVERAGE
-/// 123. **`liquidation_threshold`** - Threshold for liquidation process, based on makret volaitlity. liquidation_threshold <= MIN_LIQUIDATION_THRESHOLD
-/// 124. **`seats_reserve`** - Current amount of funds spent on seats purchasing
+/// 117. **`perp_day_cnry_tokens`** - Crncy tokens traded during the day period on perp
+/// 118. **`perp_day_low`** - Lowest price during the day period on perp
+/// 119. **`perp_day_high`** - Highest price during the day period on perp
+/// 120. **`perp_prev_day_asset_tokens`** - Assets tokens traded during previous day period on perp
+/// 121. **`perp_prev_day_cnry_tokens`** - Crncy tokens traded during previous day period on perp
+/// 122. **`perp_alltime_asset_tokens`** - Total amount of assets tokens traded on perp
+/// 123. **`perp_alltime_crncy_tokens`** - Total amount of crncy tokens traded on perp
+/// 124. **`max_leverage`** - Dynamic value of currently max leverage, based on market volatility. max_leverage <= MAX_PERP_LEVERAGE
+/// 125. **`liquidation_threshold`** - Threshold for liquidation process, based on makret volaitlity. liquidation_threshold <= MIN_LIQUIDATION_THRESHOLD
+/// 126. **`seats_reserve`** - Current amount of funds spent on seats purchasing
 #[repr(C)]
 #[derive(Pod, Zeroable, Clone, Copy, Default)]
 pub struct InstrAccountHeader {
@@ -258,7 +260,8 @@ pub struct InstrAccountHeader {
     pub perp_bid_orders_count: u32,
     pub perp_ask_orders_count: u32,
     pub perp_day_trades: u32,
-    pub perp_spot_price_for_withdrowal: i64,
+    pub perp_long_spot_price_for_withdrowal: i64,
+    pub perp_short_spot_price_for_withdrowal: i64,
     pub perp_soc_loss_long_rate: f64,
     pub perp_soc_loss_short_rate: f64,
     pub perp_price_delta: f64,
