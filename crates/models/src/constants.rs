@@ -168,10 +168,11 @@ pub mod voting {
     pub const MIN_VOTING_QUORUM: i64 = 5;
 
     /// Topic 1 - Fee rate
-    pub const MIN_FEE_RATE: u32 = 4;
-    pub const FEE_RATE_STEP: f64 = 0.000025;
-    pub const START_SPOT_FEE_RATE: u32 = 16;
-    pub const START_PERP_FEE_RATE: u32 = 16;
+    pub const MIN_FEE_RATE: u32 = 10;
+    pub const MAX_FEE_RATE: u32 = 30;
+    pub const FEE_RATE_STEP: f64 = 0.0005;
+    pub const START_SPOT_FEE_RATE: u32 = 20;
+    pub const START_PERP_FEE_RATE: u32 = 20;
 
     /// Topic 2 - Pool ratio
     pub const MIN_POOL_RATIO: u32 = 4;
@@ -181,8 +182,9 @@ pub mod voting {
     pub const START_PERP_POOL_RATIO: u32 = 10;
 
     /// Topic 3 - Margin call penalty rate
-    pub const MIN_MARGIN_CALL_PENALTY_RATE: u32 = 5;
-    pub const MARGIN_CALL_PENALTY_RATE_STEP: f64 = 0.001;
+    pub const MIN_MARGIN_CALL_PENALTY_RATE: u32 = 4;
+    pub const MAX_MARGIN_CALL_PENALTY_RATE: u32 = 20;
+    pub const MARGIN_CALL_PENALTY_RATE_STEP: f64 = 0.025;
     pub const START_MARGIN_CALL_PENALTY_RATE: u32 = 10;
 
     /// Topic 4 - Fee prepayment for max discount
