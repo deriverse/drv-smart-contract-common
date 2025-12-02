@@ -76,9 +76,14 @@ pub mod time {
     pub const FEES_PREPAYMENT_LOCKUP_PERIOD: u32 = 91 * DAY;
 }
 
+pub mod volatility {
+    pub const MIN_VARIANCE: f64 = 0.0001;
+    pub const INIT_VARIANCE: f64 = 0.01f64;
+    pub const INIT_DAY_VOLATILITY: f64 = 0.1f64;
+}
+
 pub const DF: f64 = 1000000000.0;
 pub const RDF: f64 = 0.000000001;
-pub const MIN_VARIANCE: f64 = 0.0001;
 
 pub const WALLET_RESERVE_LAMPORTS: u64 = 10_000_000;
 
