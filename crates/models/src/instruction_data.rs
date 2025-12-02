@@ -498,13 +498,12 @@ pub struct UpgradeToPerpData {
 ///
 /// ### Fields
 /// - `instr_id` - Instrument pair id
-/// - `variance` - Current price variance of given instrument
+
 pub struct SetInstrReadyForPerpUpgradeData {
     pub tag: u8, // 41
     pub padding_u8: u8,
     pub padding_u16: u16,
     pub instr_id: InstrId,
-    pub variance: f64,
 }
 
 #[repr(C)]
@@ -641,4 +640,21 @@ pub struct PointsProgramExpiration {
     pub padding_u8: u8,
     pub padding_u16: u16,
     pub new_expiration_time: u32,
+}
+
+#[repr(C)]
+#[derive(Clone, Copy, Pod, Zeroable)]
+/// Set Variance Data
+///
+/// **Tag** `54`
+///
+/// ## Fields
+/// - `variance` - Current price variance of given instrument
+
+pub struct SetVarianceData {
+    pub tag: u8,
+    pub padding_u8: u8,
+    pub padding_u16: u16,
+    pub instr_id: InstrId,
+    pub variance: f64,
 }
