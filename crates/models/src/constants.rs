@@ -509,4 +509,16 @@ pub mod instructions {
         const INSTRUCTION_NUMBER: u8 = 53;
         const MIN_ACCOUNTS: usize = 3;
     }
+
+    pub struct SetVariance;
+    impl DrvInstruction for SetVariance {
+        const INSTRUCTION_NUMBER: u8 = 54;
+        const MIN_ACCOUNTS: usize = 3;
+    }
+
+    pub struct VotingReset;
+    impl DrvInstruction for VotingReset {
+        const INSTRUCTION_NUMBER: u8 = 55;
+        const MIN_ACCOUNTS: usize = 3;
+    }
 }

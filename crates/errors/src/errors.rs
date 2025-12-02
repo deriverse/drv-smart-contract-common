@@ -663,9 +663,13 @@ pub enum DeriverseErrorKind {
 
     #[error(
         code = 292,
-        msg = "Provided variance is too small, variance {variance} < min {min_variance}"
+        msg = "Provided variance is invalid, variance {variance} must be in {min_variance}..{max_variance}"
     )]
-    InvalidVariance { variance: f64, min_variance: f64 },
+    InvalidVariance {
+        variance: f64,
+        min_variance: f64,
+        max_variance: f64,
+    },
 
     #[error(code = 293, msg = "Airdrop amount must be > 0")]
     InivalidAirdrop { wallet_address: Pubkey, ratio: f64 },
