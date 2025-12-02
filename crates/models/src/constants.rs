@@ -180,7 +180,6 @@ pub mod voting {
     pub const MAX_POOL_RATIO: u32 = 36;
     pub const POOL_RATIO_STEP: f64 = 0.025;
     pub const START_SPOT_POOL_RATIO: u32 = 10;
-    pub const START_PERP_POOL_RATIO: u32 = 10;
 
     /// Topic 3 - Margin call penalty rate
     pub const MIN_MARGIN_CALL_PENALTY_RATE: u32 = 4;
