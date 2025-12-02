@@ -78,6 +78,7 @@ pub mod time {
 
 pub mod volatility {
     pub const MIN_VARIANCE: f64 = 0.0001;
+    pub const MAX_VARIANCE: f64 = 0.25;
     pub const INIT_VARIANCE: f64 = 0.01f64;
     pub const INIT_DAY_VOLATILITY: f64 = 0.1f64;
 }
