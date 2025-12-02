@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [unreleased]
 
+## [v2.13] - 2025-12-02
+
 ## Added
 - `set_variance` `voting_reset` constants for instructions
 - `INIT_VARIANCE`, `INIT_DAY_VOLATILITY` constants for new volatility/varaince calculations
