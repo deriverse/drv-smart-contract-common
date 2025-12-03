@@ -666,7 +666,7 @@ pub struct SetVarianceData {
 /// ## Fields
 /// - `base_crncy_id` - Base crncy id which denominator is being changed
 /// - `denominator` - New denominator
-pub struct ChangeDenominator {
+pub struct ChangeDenominatorData {
     pub tag: u8,
     pub padding_u8: u8,
     pub padding_u16: u16,
