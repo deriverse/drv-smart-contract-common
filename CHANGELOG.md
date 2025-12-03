@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [unreleased]
 
+## [v2.14] - 2025-12-03
+
 ## Added 
 - `MIN_AMOUNT_FOR_DIVIDENDS_ALLOCATION` constant
 - `pepr_last_trade_asset/crncy_tokens` and `last_trade_asset/crncy_tokens` statistic for last trade record
