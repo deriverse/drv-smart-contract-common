@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [unreleased]
 
+## Removed
+- `READY_TO_DRV_UPGRADE` flag
+
 ## [v2.13] - 2025-12-02
 
 ## Added
