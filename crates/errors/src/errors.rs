@@ -774,6 +774,15 @@ pub enum DeriverseErrorKind {
         denominator: f64,
         base_crncy_id: u32,
     },
+
+    #[error(
+        code = 307,
+        msg = "Invalid base crncy id {base_crncy_id} was not found"
+    )]
+    InvalidDenominator {
+        denominator: f64,
+        base_crncy_id: u32,
+    },
 }
 #[cfg(test)]
 mod tests {
