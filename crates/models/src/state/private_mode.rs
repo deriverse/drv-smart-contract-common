@@ -23,6 +23,6 @@ pub struct PrivateClient {
 
 impl PrivateClient {
     pub fn is_vacant(&self, current_time: u32) -> bool {
-        self.creation_time == 0 || current_time > self.expiration_time
+        self.creation_time == 0 || current_time >= self.expiration_time
     }
 }
