@@ -578,14 +578,13 @@ pub struct ChangeRefProgramData {
 /// ### Fields
 /// - `instr_id` - Instr pair id
 /// - `amount` - Deposit amount in base crncy
-/// - `upper_slippage_bound` - Upper slippage bound for market seat purchase
+/// - `edge_price` - Upper slippage bound for market seat purchase
 pub struct BuyMarketSeatData {
     pub tag: u8, //47
     pub padding_u8: u8,
     pub padding_u16: u16,
-    pub padding_u32: u32,
     pub instr_id: InstrId,
-    pub upper_slippage_bound: u32,
+    pub edge_price: i64,
     pub amount: i64,
 }
 
@@ -599,13 +598,13 @@ pub struct BuyMarketSeatData {
 ///
 /// ### Fields
 /// - `instr_id` - Instr pair id
-/// - `lower_slippage_bound` - Lower slippage bound for market seat purchase
+/// - `edge_price` - Lower slippage bound for market seat purchase
 pub struct SellMarketSeatData {
     pub tag: u8,
     pub padding_u8: u8,
     pub padding_u16: u16,
     pub instr_id: InstrId,
-    pub lower_slippage_bound: u32,
+    pub edge_pirce: i64,
 }
 
 #[repr(C)]

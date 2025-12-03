@@ -551,9 +551,8 @@ pub struct BuyMarketSeatData {
     pub tag: u8, //47
     pub padding_u8: u8,
     pub padding_u16: u16,
-    pub padding_u32: u32,
     pub instr_id: u32,
-    pub upper_slippage_bound: u32,
+    pub edge_price: i64,
     pub amount: i64,
 }
 
@@ -564,7 +563,7 @@ pub struct SellMarketSeatData {
     pub padding_u8: u8,
     pub padding_u16: u16,
     pub instr_id: u32,
-    pub lower_slippage_bound: u32,
+    pub edge_price: i64,
 }
 
 #[repr(C)]
