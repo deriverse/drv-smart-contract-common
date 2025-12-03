@@ -1,5 +1,3 @@
-use std::path::Display;
-
 use bytemuck::{Pod, Zeroable};
 use serde::{Deserialize, Serialize};
 #[cfg(feature = "on-chain")]
@@ -164,7 +162,6 @@ pub mod account_type {
         PerpShortPxTree = 49,
         PerpRebalanceTimeTree = 50,
         PrivateClients = 51,
-
         ProgramTokenAccount,
         DrvsAuthority,
     }

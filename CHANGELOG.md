@@ -14,6 +14,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## Removed
 - `READY_TO_DRV_UPGRADE` flag
 
+## Fixed
+- `lower_slippage_bound` and `upper_slippage_bound` to `i64`
+
+## Changed
+- `lower_slippage_bound` and `upper_slippage_bound` naming to `edge_price`
+
 ## [v2.13] - 2025-12-02
 
 ## Added
