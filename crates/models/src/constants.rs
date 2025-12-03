@@ -523,4 +523,10 @@ pub mod instructions {
         const INSTRUCTION_NUMBER: u8 = 55;
         const MIN_ACCOUNTS: usize = 3;
     }
+
+    pub struct ChangeDenominator;
+    impl DrvInstruction for ChangeDenominator {
+        const INSTRUCTION_NUMBER: u8 = 56;
+        const MIN_ACCOUNTS: usize = 3;
+    }
 }

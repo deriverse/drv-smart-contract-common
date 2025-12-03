@@ -649,11 +649,27 @@ pub struct PointsProgramExpiration {
 ///
 /// ## Fields
 /// - `variance` - Current price variance of given instrument
-
 pub struct SetVarianceData {
     pub tag: u8,
     pub padding_u8: u8,
     pub padding_u16: u16,
     pub instr_id: InstrId,
     pub variance: f64,
+}
+
+#[repr(C)]
+#[derive(Clone, Copy, Pod, Zeroable)]
+/// Change Denominator
+///
+/// **Tag** `56`
+///
+/// ## Fields
+/// - `base_crncy_id` - Base crncy id which denominator is being changed
+/// - `denominator` - New denominator
+pub struct ChangeDenominator {
+    pub tag: u8,
+    pub padding_u8: u8,
+    pub padding_u16: u16,
+    pub base_crncy_id: u32,
+    pub denominator: f64,
 }
