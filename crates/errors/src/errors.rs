@@ -696,16 +696,6 @@ pub enum DeriverseErrorKind {
     FailedToSwap { price: i64, side: OrderSide },
 
     #[error(
-        code = 296,
-        msg = "Slippage bounds exceeded during {order_type} order. Price: {price}, Bounds type: {bound_price}"
-    )]
-    MarketSeatSlippageExceeded {
-        price: u32,
-        bound_price: u32,
-        order_type: MarketSeatOrderType,
-    },
-
-    #[error(
         code = 297,
         msg = "Token with id {token_id} can't be a base crncy. Reason: {reason}"
     )]
