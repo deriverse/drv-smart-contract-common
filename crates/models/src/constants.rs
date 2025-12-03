@@ -88,6 +88,8 @@ pub const RDF: f64 = 0.000000001;
 
 pub const WALLET_RESERVE_LAMPORTS: u64 = 10_000_000;
 
+pub const MIN_AMOUNT_FOR_DIVIDENDS_ALLOCATION: i64 = 10;
+
 pub mod nulls {
     pub const NULL_NODE: u32 = 0xFFFFFFFF;
     pub const NULL_ORDER: u32 = 0xFFFF;
