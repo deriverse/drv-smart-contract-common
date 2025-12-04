@@ -93,6 +93,8 @@ pub const MIN_AMOUNT_FOR_DIVIDENDS_ALLOCATION: i64 = 10;
 pub const MAX_DENOMINATOR: f64 = 10_000.0;
 pub const MIN_DENOMINATOR: f64 = 0.001;
 
+pub const EMA_PERIOD: f64 = 60f64;
+
 pub mod nulls {
     pub const NULL_NODE: u32 = 0xFFFFFFFF;
     pub const NULL_ORDER: u32 = 0xFFFF;
