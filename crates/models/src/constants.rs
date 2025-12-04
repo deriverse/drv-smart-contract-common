@@ -534,4 +534,10 @@ pub mod instructions {
         const INSTRUCTION_NUMBER: u8 = 56;
         const MIN_ACCOUNTS: usize = 3;
     }
+    pub struct PerpClientsProcessingInstruction;
+    impl DrvInstruction for PerpClientsProcessingInstruction {
+        const INSTRUCTION_NUMBER: u8 = 57;
+
+        const MIN_ACCOUNTS: usize = 19;
+    }
 }

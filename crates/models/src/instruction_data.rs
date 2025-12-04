@@ -678,7 +678,7 @@ pub struct ChangeDenominatorData {
 #[derive(Clone, Copy, Pod, Zeroable)]
 /// New Base Crncy
 ///
-/// **Tag** `57`
+/// **Tag** `4`
 ///
 /// ## Fields
 /// - `denominator` - New denominator
@@ -688,4 +688,19 @@ pub struct NewBaseCrncyData {
     pub padding_u16: u16,
     pub padding_u32: u32,
     pub denominator: f64,
+}
+
+#[repr(C)]
+#[derive(Clone, Copy, Pod, Zeroable)]
+/// Perp Clients Processing Data
+///
+/// **Tag** `57`
+///
+/// ## Fields
+/// - `instr_id` - Instruments Id
+pub struct PerpClientsProcessingData {
+    pub tag: u8,
+    pub padding_u8: u8,
+    pub padding_u16: u16,
+    pub instr_id: InstrId,
 }
