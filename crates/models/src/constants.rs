@@ -132,12 +132,13 @@ pub mod spot {
 }
 
 pub mod perp {
+
     pub const MAX_LINES: usize = 2048 * 4;
     pub const MAX_ORDERS: u32 = (16 * 64 * 64 - MAX_LINES) as u32 - 2;
 
-    pub const MAX_SUPPLY: i64 = 250_000;
+    pub const MAX_SUPPLY: i64 = 270_000;
     pub const INIT_SEAT_PRICE: f64 = 1.0;
-    pub const MAX_PERP_CLIENTS: u32 = 246_500;
+    pub const MAX_PERP_CLIENTS: u32 = 262_143;
 
     pub const MIN_LIQUIDATION_THRESHOLD: f64 = 0.5 / MAX_PERP_LEVERAGE as f64;
     // change to 20
