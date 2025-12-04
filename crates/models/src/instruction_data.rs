@@ -678,7 +678,7 @@ pub struct ChangeDenominatorData {
 #[derive(Clone, Copy, Pod, Zeroable)]
 /// New Base Crncy
 ///
-/// **Tag** `57`
+/// **Tag** `4`
 ///
 /// ## Fields
 /// - `denominator` - New denominator
@@ -694,7 +694,7 @@ pub struct NewBaseCrncyData {
 #[derive(Clone, Copy, Pod, Zeroable)]
 /// Perp Clients Processing Data
 ///
-/// **Tag** `58`
+/// **Tag** `57`
 ///
 /// ## Fields
 /// - `instr_id` - Instruments Id
