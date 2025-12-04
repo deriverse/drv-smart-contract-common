@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [unreleased]
 
 ## Added 
+- `NewBaseCrncyData` instruction data
 - `CommunityAccount` to `perp_upgrade`
 - Fields in `InstrAccountHeader`: `init_seat_price` and `ema_px`
 - `MIN_AMOUNT_FOR_DIVIDENDS_ALLOCATION` constant

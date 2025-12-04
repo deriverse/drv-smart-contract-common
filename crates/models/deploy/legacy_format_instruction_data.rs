@@ -599,3 +599,27 @@ pub struct PointsProgramExpiration {
     pub padding_u16: u16,
     pub new_expiration_time: u32,
 }
+
+pub struct SetVarianceData {
+    pub tag: u8,
+    pub padding_u8: u8,
+    pub padding_u16: u16,
+    pub instr_id: InstrId,
+    pub variance: f64,
+}
+
+pub struct ChangeDenominatorData {
+    pub tag: u8,
+    pub padding_u8: u8,
+    pub padding_u16: u16,
+    pub base_crncy_id: u32,
+    pub denominator: f64,
+}
+
+pub struct NewBaseCrncyData {
+    pub tag: u8,
+    pub padding_u8: u8,
+    pub padding_u16: u16,
+    pub padding_u32: u32,
+    pub denominator: f64,
+}
