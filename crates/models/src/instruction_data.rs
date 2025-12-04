@@ -673,3 +673,19 @@ pub struct ChangeDenominatorData {
     pub base_crncy_id: u32,
     pub denominator: f64,
 }
+
+#[repr(C)]
+#[derive(Clone, Copy, Pod, Zeroable)]
+/// New Base Crncy
+///
+/// **Tag** `57`
+///
+/// ## Fields
+/// - `denominator` - New denominator
+pub struct NewBaseCrncyData {
+    pub tag: u8,
+    pub padding_u8: u8,
+    pub padding_u16: u16,
+    pub padding_u32: u32,
+    pub denominator: f64,
+}
