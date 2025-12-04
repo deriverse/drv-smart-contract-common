@@ -135,7 +135,7 @@ pub mod perp {
     pub const MAX_LINES: usize = 2048 * 4;
     pub const MAX_ORDERS: u32 = (16 * 64 * 64 - MAX_LINES) as u32 - 2;
 
-    pub const MAX_SUPPLY: i64 = 250_000;
+    pub const MAX_SUPPLY: i64 = 246_500;
     pub const INIT_SEAT_PRICE: f64 = 1.0;
     pub const MAX_PERP_CLIENTS: i64 = 246_500;
 
