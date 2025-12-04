@@ -779,7 +779,7 @@ pub enum DeriverseErrorKind {
         code = 307,
         msg = "Invalid base crncy id {base_crncy_id} was not found"
     )]
-    InvalidDenominator {
+    InvalidBaseCrncyId {
         denominator: f64,
         base_crncy_id: u32,
     },
