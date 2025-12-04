@@ -770,10 +770,7 @@ pub enum DeriverseErrorKind {
     },
 
     #[error(code = 306, msg = "Invalid denominator {denominator}, must be > 0")]
-    InvalidDenominator {
-        denominator: f64,
-        base_crncy_id: u32,
-    },
+    InvalidDenominator { denominator: f64 },
 
     #[error(
         code = 307,
