@@ -1,6 +1,6 @@
 use drv_errors_derive::DrvError;
 use drv_models::state::types::{
-    account_type::AccountType, AssetType, MarketSeatOrderType, OrderSide, OrderType, TokenProgram,
+    account_type::AccountType, AssetType, OrderSide, OrderType, TokenProgram,
 };
 use serde::{Deserialize, Serialize};
 #[cfg(feature = "on-chain")]

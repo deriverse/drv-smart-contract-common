@@ -542,4 +542,10 @@ pub mod instructions {
 
         const MIN_ACCOUNTS: usize = 19;
     }
+
+    pub struct SetSeatPurchuasingFeeRate;
+    impl DrvInstruction for SetSeatPurchuasingFeeRate {
+        const INSTRUCTION_NUMBER: u8 = 58;
+        const MIN_ACCOUNTS: usize = 2;
+    }
 }
