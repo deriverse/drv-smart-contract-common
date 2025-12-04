@@ -308,9 +308,3 @@ impl Deref for InstrAccountHeader {
 }
 
 pub const INSTR_ACCOUNT_HEADER_SIZE: usize = std::mem::size_of::<InstrAccountHeader>();
-
-impl InstrAccountHeader {
-    pub fn perp_active(&self) -> bool {
-        self.mask & 0x40000000 != 0
-    }
-}

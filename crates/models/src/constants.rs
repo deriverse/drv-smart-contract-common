@@ -538,6 +538,6 @@ pub mod instructions {
     impl DrvInstruction for PerpClientsProcessingInstruction {
         const INSTRUCTION_NUMBER: u8 = 57;
 
-        const MIN_ACCOUNTS: usize = 4;
+        const MIN_ACCOUNTS: usize = 19;
     }
 }
