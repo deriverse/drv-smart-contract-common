@@ -289,8 +289,6 @@ pub struct BaseCrncyRecord {
     pub mask: i64,
 }
 
-// change base crncy denominator base_crncy_id + new denominator must be > 0
-
 #[repr(u32)]
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
 pub enum AssetType {
