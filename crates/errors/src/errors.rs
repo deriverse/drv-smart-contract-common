@@ -768,6 +768,15 @@ pub enum DeriverseErrorKind {
         order_type: OrderType,
         order_type_raw: u8,
     },
+
+    #[error(code = 306, msg = "Invalid denominator {denominator}, must be > 0")]
+    InvalidDenominator { denominator: f64 },
+
+    #[error(
+        code = 307,
+        msg = "Invalid base crncy id {base_crncy_id} was not found"
+    )]
+    InvalidBaseCrncyId { base_crncy_id: u32 },
 }
 #[cfg(test)]
 mod tests {

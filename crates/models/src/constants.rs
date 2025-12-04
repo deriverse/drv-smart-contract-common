@@ -90,6 +90,9 @@ pub const WALLET_RESERVE_LAMPORTS: u64 = 10_000_000;
 
 pub const MIN_AMOUNT_FOR_DIVIDENDS_ALLOCATION: i64 = 10;
 
+pub const MAX_DENOMINATOR: f64 = 10_000.0;
+pub const MIN_DENOMINATOR: f64 = 0.001;
+
 pub mod nulls {
     pub const NULL_NODE: u32 = 0xFFFFFFFF;
     pub const NULL_ORDER: u32 = 0xFFFF;
@@ -328,7 +331,7 @@ pub mod instructions {
     pub struct UpgradeToPerpInstruction;
     impl DrvInstruction for UpgradeToPerpInstruction {
         const INSTRUCTION_NUMBER: u8 = 10;
-        const MIN_ACCOUNTS: usize = 21;
+        const MIN_ACCOUNTS: usize = 22;
     }
 
     pub struct PerpDepositInstruction;
@@ -521,6 +524,12 @@ pub mod instructions {
     pub struct VotingReset;
     impl DrvInstruction for VotingReset {
         const INSTRUCTION_NUMBER: u8 = 55;
+        const MIN_ACCOUNTS: usize = 3;
+    }
+
+    pub struct ChangeDenominator;
+    impl DrvInstruction for ChangeDenominator {
+        const INSTRUCTION_NUMBER: u8 = 56;
         const MIN_ACCOUNTS: usize = 3;
     }
 }
