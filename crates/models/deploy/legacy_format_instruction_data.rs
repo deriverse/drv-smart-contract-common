@@ -624,7 +624,7 @@ pub struct NewBaseCrncyData {
     pub denominator: f64,
 }
 
-pub struct PerpClientProcessingData {
+pub struct PerpClientsProcessingData {
     pub tag: u8,
     pub padding_u8: u8,
     pub padding_u16: u16,

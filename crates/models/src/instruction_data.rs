@@ -692,13 +692,13 @@ pub struct NewBaseCrncyData {
 
 #[repr(C)]
 #[derive(Clone, Copy, Pod, Zeroable)]
-/// Perp Client Processing Data
+/// Perp Clients Processing Data
 ///
 /// **Tag** `58`
 ///
 /// ## Fields
 /// - `instr_id` - Instruments Id
-pub struct PerpClientProcessingData {
+pub struct PerpClientsProcessingData {
     pub tag: u8,
     pub padding_u8: u8,
     pub padding_u16: u16,
