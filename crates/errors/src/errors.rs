@@ -779,7 +779,7 @@ pub enum DeriverseErrorKind {
     InvalidBaseCrncyId { base_crncy_id: u32 },
 
     #[error(code = 308, msg = "Invalid fee rate, {fee_rate} < 0")]
-    InvalidFeeRateValue { fee_rate: f64 },
+    InvalidFeeValue { fee_rate: f64 },
 }
 #[cfg(test)]
 mod tests {
