@@ -707,13 +707,13 @@ pub struct PerpClientsProcessingData {
 
 #[repr(C)]
 #[derive(Clone, Copy, Pod, Zeroable)]
-/// Set Seat Purchuasing Fee
+/// Set Seat purchasing Fee
 ///
 /// **Tag** `58`
 ///
 /// ## Fields
 /// - `fee` - seat fee, aligned by admin
-pub struct SetSeatPurchuasingFeeData {
+pub struct SetSeatpurchasingFeeData {
     pub tag: u8,
     pub padding_u8: u8,
     pub padding_u16: u16,
