@@ -713,7 +713,7 @@ pub struct PerpClientsProcessingData {
 ///
 /// ## Fields
 /// - `fee_rate` - New fee rate
-pub struct SetSeatPurchuasingFeeRate {
+pub struct SetSeatPurchuasingFeeRateData {
     pub tag: u8,
     pub padding_u8: u8,
     pub padding_u16: u16,
