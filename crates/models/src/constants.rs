@@ -90,8 +90,8 @@ pub const WALLET_RESERVE_LAMPORTS: u64 = 10_000_000;
 
 pub const MIN_AMOUNT_FOR_DIVIDENDS_ALLOCATION: i64 = 10;
 
-pub const MAX_DENOMINATOR: f64 = 10_000.0;
-pub const MIN_DENOMINATOR: f64 = 0.001;
+pub const MAX_DENOMINATOR: f64 = 500.0;
+pub const MIN_DENOMINATOR: f64 = 0.01;
 
 pub const EMA_PERIOD: f64 = 60f64;
 
@@ -135,7 +135,7 @@ pub mod perp {
     pub const MAX_LINES: usize = 2048 * 4;
     pub const MAX_ORDERS: u32 = (16 * 64 * 64 - MAX_LINES) as u32 - 2;
 
-    pub const MAX_SUPPLY: i64 = 250_000;
+    pub const MAX_SUPPLY: i64 = 246_500;
     pub const INIT_SEAT_PRICE: f64 = 1.0;
 
     pub const MIN_LIQUIDATION_THRESHOLD: f64 = 0.5 / MAX_PERP_LEVERAGE as f64;
