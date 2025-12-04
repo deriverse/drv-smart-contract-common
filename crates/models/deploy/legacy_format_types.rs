@@ -370,7 +370,6 @@ pub struct InstrAccountHeader {
     pub max_leverage: f64,
     pub liquidation_threshold: f64,
     pub seats_reserve: i64,
-    pub init_seat_price: f64,
     pub ema_px: f64,
     pub reserved_value1: i64,
     pub reserved_value2: i64,
