@@ -18,6 +18,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `pepr_last_trade_asset/crncy_tokens` and `last_trade_asset/crncy_tokens` statistic for last trade record
 
 ## Removed
+- `init_seat_price` fields, return to `INIT_SEAT_PRICE` constant
 - `READY_TO_DRV_UPGRADE` flag
 
 ## Fixed
