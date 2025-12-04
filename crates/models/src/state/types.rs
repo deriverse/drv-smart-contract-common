@@ -72,9 +72,7 @@ pub mod root_mask {
 }
 
 pub mod instr_mask {
-    pub const DRV: u32 = 0x10000000;
-    pub const PERP: u32 = 0x40000000;
-    pub const ORACLE: u32 = 0x80000000;
+    pub const PERP_ACTIVE: u32 = 0x40000000;
     pub const READY_TO_PERP_UPGRADE: u32 = 0x1000000;
 }
 

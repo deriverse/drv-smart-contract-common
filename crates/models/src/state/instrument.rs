@@ -18,7 +18,6 @@ use solana_sdk::pubkey::Pubkey;
 ///     Pre: crncy_token_id <= root.tokens_count
 /// 3. **`mask`**
 ///     * `PERP` = `0x40000000` — Perp instrument flag.
-///     * `ORACLE` = `0x80000000` — Indicates Oracle usage for prev price.
 ///     * `READY_TO_PERP_UPGRADE` = `0x01000000` — Indicates readiness to upgrade to a Perp.
 /// 4. **`asset_tokens`** - Amount of assets tokens
 /// 5. **`crncy_tokens`** - Amount of crncy tokens
@@ -309,3 +308,9 @@ impl Deref for InstrAccountHeader {
 }
 
 pub const INSTR_ACCOUNT_HEADER_SIZE: usize = std::mem::size_of::<InstrAccountHeader>();
+
+impl InstrAccountHeader {
+    pub fn perp_active(&self) -> bool {
+        self.mask & 0x40000000 != 0
+    }
+}
