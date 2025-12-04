@@ -704,3 +704,19 @@ pub struct PerpClientsProcessingData {
     pub padding_u16: u16,
     pub instr_id: InstrId,
 }
+
+#[repr(C)]
+#[derive(Clone, Copy, Pod, Zeroable)]
+/// Set Seat purchasing Fee
+///
+/// **Tag** `58`
+///
+/// ## Fields
+/// - `fee` - seat fee, aligned by admin
+pub struct SetSeatpurchasingFeeData {
+    pub tag: u8,
+    pub padding_u8: u8,
+    pub padding_u16: u16,
+    pub padding_u32: u32,
+    pub fee: f64,
+}

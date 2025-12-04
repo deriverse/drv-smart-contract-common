@@ -1,6 +1,6 @@
 use drv_errors_derive::DrvError;
 use drv_models::state::types::{
-    account_type::AccountType, AssetType, MarketSeatOrderType, OrderSide, OrderType, TokenProgram,
+    account_type::AccountType, AssetType, OrderSide, OrderType, TokenProgram,
 };
 use serde::{Deserialize, Serialize};
 #[cfg(feature = "on-chain")]
@@ -777,6 +777,9 @@ pub enum DeriverseErrorKind {
         msg = "Invalid base crncy id {base_crncy_id} was not found"
     )]
     InvalidBaseCrncyId { base_crncy_id: u32 },
+
+    #[error(code = 308, msg = "Invalid fee rate, {fee_rate} < 0")]
+    InvalidFeeValue { fee_rate: f64 },
 }
 #[cfg(test)]
 mod tests {

@@ -630,3 +630,11 @@ pub struct PerpClientsProcessingData {
     pub padding_u16: u16,
     pub instr_id: u32,
 }
+
+pub struct SetSeatpurchasingFeeData {
+    pub tag: u8,
+    pub padding_u8: u8,
+    pub padding_u16: u16,
+    pub padding_u32: u32,
+    pub fee: f64,
+}
