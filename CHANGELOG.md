@@ -8,6 +8,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [unreleased]
 
 ## Added 
+- `CommunityAccount` to `perp_upgrade`
+- Fields in `InstrAccountHeader`: `init_seat_price` and `ema_px`
 - `MIN_AMOUNT_FOR_DIVIDENDS_ALLOCATION` constant
 - `pepr_last_trade_asset/crncy_tokens` and `last_trade_asset/crncy_tokens` statistic for last trade record
 

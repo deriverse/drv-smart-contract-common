@@ -328,7 +328,7 @@ pub mod instructions {
     pub struct UpgradeToPerpInstruction;
     impl DrvInstruction for UpgradeToPerpInstruction {
         const INSTRUCTION_NUMBER: u8 = 10;
-        const MIN_ACCOUNTS: usize = 21;
+        const MIN_ACCOUNTS: usize = 22;
     }
 
     pub struct PerpDepositInstruction;
