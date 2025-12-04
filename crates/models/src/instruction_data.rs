@@ -712,11 +712,11 @@ pub struct PerpClientsProcessingData {
 /// **Tag** `58`
 ///
 /// ## Fields
-/// - `fee_rate` - New fee rate
+/// - `fee` - seat fee, aligned by admin
 pub struct SetSeatPurchuasingFeeData {
     pub tag: u8,
     pub padding_u8: u8,
     pub padding_u16: u16,
     pub padding_u32: u32,
-    pub fee_rate: f64,
+    pub fee: f64,
 }

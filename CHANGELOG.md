@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [v2.14] - 2025-12-03
 
 ## Added 
+- `SeatPurchasingFeeInstruction` - for fee alignment 
 - `MAX_DENOMINATOR` constants 
 - `NewBaseCrncyData` instruction data
 - `CommunityAccount` to `perp_upgrade`
