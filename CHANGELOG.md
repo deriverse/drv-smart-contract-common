@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [unreleased]
 
+## Changed
+- Refactored `InstrAccountHeader` fields ordering 
+
 ## Removed 
 - `day_fees`, `prev_day_fees`, `alltime_fees`
 
