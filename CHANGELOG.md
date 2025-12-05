@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [unreleased]
 
+## Removed 
+- `day_fees`, `prev_day_fees`, `alltime_fees`
+
+## Fixed
+- `pepr...` typo
+
 ## [v2.15] - 2025-12-03
 
 ## Added 
