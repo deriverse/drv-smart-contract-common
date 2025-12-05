@@ -389,7 +389,7 @@ pub mod instructions {
     pub struct SwapInstruction;
     impl DrvInstruction for SwapInstruction {
         const INSTRUCTION_NUMBER: u8 = 26;
-        const MIN_ACCOUNTS: usize = 27;
+        const MIN_ACCOUNTS: usize = 28;
     }
 
     pub struct AirdropInstruction;
