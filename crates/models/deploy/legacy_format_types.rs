@@ -355,7 +355,7 @@ pub struct InstrAccountHeader {
     pub perp_funding_funds: i64,
     pub perp_soc_loss_funds: i64,
     pub perp_insurance_fund: i64,
-    pub pepr_last_trade_asset_tokens: i64,
+    pub perp_last_trade_asset_tokens: i64,
     pub perp_last_trade_crncy_tokens: i64,
     pub perp_best_bid: i64,
     pub perp_best_ask: i64,
