@@ -161,7 +161,6 @@ pub struct InstrAccountHeader {
     // Spot page (Instrument Selector)
     pub last_px: i64,
     pub last_close: i64,
-    pub max_leverage: f64,
     pub best_bid: i64,
     pub best_ask: i64,
 
@@ -170,6 +169,7 @@ pub struct InstrAccountHeader {
     pub perp_last_close: i64,
     pub perp_open_int: i64,
     pub variance: f64,
+    pub max_leverage: f64,
     pub prev_day_trades: i64,
     pub perp_insurance_fund: i64,
     pub perp_price_delta: f64,
