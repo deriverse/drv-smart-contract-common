@@ -353,8 +353,8 @@ pub struct PerpWithdrawData {
 /// - `amount` - Amount of tokens to withdraw
 pub struct WithdrawData {
     pub tag: u8,
-    padding_u8: u8,
-    padding_u16: u16,
+    pub padding_u8: u8,
+    pub padding_u16: u16,
     pub token_id: u32,
     pub amount: i64,
 }
