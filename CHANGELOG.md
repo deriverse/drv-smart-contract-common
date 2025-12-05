@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [unreleased]
 
+## [v2.17] - 2025-12-05
+
 ## Added
 - `edge_price` in `NewSpot/PerpOrderData`
 
