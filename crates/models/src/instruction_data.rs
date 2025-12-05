@@ -61,6 +61,7 @@ pub struct NewRootAccountData {
 /// - `instr_id` - Instr pair id
 /// - `price` - Price for **Limit** order
 /// - `amount` - Orders qty in base crncy
+/// - `edge_price` - Price used for slippage calculations
 pub struct NewSpotOrderData {
     pub tag: u8,
     pub ioc: u8,
@@ -69,6 +70,7 @@ pub struct NewSpotOrderData {
     pub instr_id: InstrId,
     pub price: i64,
     pub amount: i64,
+    pub edge_price: i64,
 }
 
 #[repr(C)]
@@ -87,6 +89,7 @@ pub struct NewSpotOrderData {
 /// - `instr_id` - Instr pair id
 /// - `price` - Price for **Limit** order
 /// - `amount` - Orders qty in base crncy
+/// - `edge_price` - Price used for slippage calculations
 pub struct NewPerpOrderData {
     pub tag: u8, //19
     pub ioc: u8,
@@ -99,6 +102,7 @@ pub struct NewPerpOrderData {
     pub instr_id: InstrId,
     pub price: i64,
     pub amount: i64,
+    pub edge_price: i64,
 }
 
 #[repr(C)]
