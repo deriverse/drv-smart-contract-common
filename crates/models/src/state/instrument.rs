@@ -231,7 +231,6 @@ pub struct InstrAccountHeader {
     pub lp_time: u32,
     pub fees_time: u32,
     pub creation_time: u32,
-    pub alltime_fees: f64,
     pub dec_factor: i64,
     pub perp_clients_count: u32,
     pub perp_slot: u32,
