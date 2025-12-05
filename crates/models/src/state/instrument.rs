@@ -202,7 +202,7 @@ pub struct InstrAccountHeader {
     pub perp_day_crncy_tokens: i64,
     pub perp_alltime_trades: i64,
     pub perp_prev_day_trades: i64,
-    pub pepr_last_trade_asset_tokens: i64,
+    pub perp_last_trade_asset_tokens: i64,
     pub perp_last_trade_crncy_tokens: i64,
     pub alltime_trades: i64,
 
@@ -290,7 +290,6 @@ pub struct InstrAccountHeader {
     pub perp_funding_rate: f64,
     pub perp_funding_funds: i64,
     pub perp_soc_loss_funds: i64,
-    pub perp_last_trade_asset_tokens: i64,
     pub perp_prev_day_asset_tokens: i64,
     pub perp_prev_day_crncy_tokens: i64,
     pub perp_alltime_asset_tokens: f64,
