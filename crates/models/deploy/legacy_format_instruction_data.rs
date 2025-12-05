@@ -385,7 +385,7 @@ pub struct SpotQuotesReplaceData {
 
 #[repr(C)]
 #[derive(Clone, Copy, Pod, Zeroable)]
-/// Pepr Quotes Replace Data
+/// Perp Quotes Replace Data
 ///
 /// **Used in:** `perp_quotes_replace` instruction
 ///

@@ -7,16 +7,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [unreleased]
 
+## Removed 
+- `day_fees`, `prev_day_fees`, `alltime_fees`
+
+## Fixed
+- `pepr...` typo
+
 ## [v2.15] - 2025-12-03
 
 ## Added 
 - `SeatPurchasingFeeInstruction` - for fee alignment 
 - `MAX_DENOMINATOR` constants 
 - `NewBaseCrncyData` instruction data
-- `CommunityAccount` to `perp_upgrade`
 - Fields in `InstrAccountHeader`: `init_seat_price` and `ema_px`
 - `MIN_AMOUNT_FOR_DIVIDENDS_ALLOCATION` constant
-- `pepr_last_trade_asset/crncy_tokens` and `last_trade_asset/crncy_tokens` statistic for last trade record
+- `perp_last_trade_asset/crncy_tokens` and `last_trade_asset/crncy_tokens` statistic for last trade record
 
 ## Removed
 - `init_seat_price` fields, return to `INIT_SEAT_PRICE` constant
