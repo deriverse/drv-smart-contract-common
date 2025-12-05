@@ -58,6 +58,7 @@ pub struct NewSpotOrderData {
     pub instr_id: u32,
     pub price: i64,
     pub amount: i64,
+    pub edge_price: i64,
 }
 
 #[repr(C)]
@@ -88,6 +89,7 @@ pub struct NewPerpOrderData {
     pub instr_id: u32,
     pub price: i64,
     pub amount: i64,
+    pub edge_price: i64,
 }
 
 #[repr(C)]
