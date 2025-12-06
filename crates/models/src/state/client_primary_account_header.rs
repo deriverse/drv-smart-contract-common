@@ -23,7 +23,10 @@ use solana_sdk::pubkey::Pubkey;
 /// 10. **`second_ref_link_ratio`** - Ration of second referral link
 /// 11. **`ref_program_discount`** - Discount of currently applied referral link
 /// 12. **`ref_program_ratio`** - Ratio of currently applied referral link
-/// 13. **`mask`** - Progress trakcer which grant points for hitting trading milestones on the pltaform etc. spot_trades, lp_trades, perp_trades
+/// 13. **`mask`**
+///     - Progress trakcer which grant points for hitting trading milestones on the pltaform etc. spot_trades, lp_trades, perp_trades
+///     - 0x70000000000000 - New liquidation event
+///     - 0x100000000000000 - Airdrop available
 /// 14. **`id`** - Original client id
 /// 15. **`ref_client_id`** - Origincal client id of current referee
 /// 16. **`ref_counter`** - Amount of referees

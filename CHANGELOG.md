@@ -14,6 +14,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `InvalidChoice` error message
 - `garbage_collector` instruction data + constant
 
+## Changed
+- `mask` field in `ClientPrimaryAccountHeader`
+- `mask` field in `PerpClientInfo2`
+
 ## [v2.17] - 2025-12-05
 
 ## Added

@@ -41,6 +41,7 @@ pub const PERP_CLIENT_INFO_SIZE: usize = size_of::<PerpClientInfo>();
 /// 6. **`mask`**
 ///     - MSB (most significant bit) - Position side, long(0) or short (1)
 ///     - 0xFF - Current clients leverage
+///     - 0x40000000
 pub struct PerpClientInfo2 {
     pub cost: i64,
     pub result: i64,
