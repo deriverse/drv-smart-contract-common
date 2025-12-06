@@ -479,7 +479,7 @@ pub struct AssetRecord {
 /// New path - src/state/spots/spot_infos.rs
 pub struct SpotClientInfo {
     pub client: u32,
-    pub reserved: u32,
+    pub filled_orders: u32,
     pub bids_entry: u32,
     pub asks_entry: u32,
     pub avail_asset_tokens: i64,
@@ -532,7 +532,7 @@ pub const PERP_CLIENT_INFO2_SIZE: usize = std::mem::size_of::<PerpClientInfo2>()
 /// New path - src/state/perps/porp_infos.rs
 pub struct PerpClientInfo3 {
     pub client: u32,
-    pub reserved: u32,
+    pub filled_orders: u32,
     pub bids_entry: u32,
     pub asks_entry: u32,
     pub fees: i64,
