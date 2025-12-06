@@ -640,3 +640,17 @@ pub struct SetSeatpurchasingFeeData {
     pub padding_u32: u32,
     pub fee: f64,
 }
+
+pub struct ChangeVotingData {
+    pub tag: u8,
+    pub new_choice: u8,
+    pub padding_u16: u16,
+    pub voting_counter: u32,
+}
+
+pub struct GarbageCollectorData {
+    pub tag: u8,
+    pub padding_u8: u8,
+    pub padding_u16: u16,
+    pub instr_id: u32,
+}

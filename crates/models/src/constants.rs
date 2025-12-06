@@ -548,4 +548,17 @@ pub mod instructions {
         const INSTRUCTION_NUMBER: u8 = 58;
         const MIN_ACCOUNTS: usize = 2;
     }
+
+    pub struct ChangeVotingInstruction;
+    impl DrvInstruction for ChangeVotingInstruction {
+        const INSTRUCTION_NUMBER: u8 = 59;
+        const MIN_ACCOUNTS: usize = 6;
+    }
+
+    pub struct GarbageCollectorInstruction;
+    impl DrvInstruction for GarbageCollectorInstruction {
+        const INSTRUCTION_NUMBER: u8 = 60;
+
+        const MIN_ACCOUNTS: usize = 6;
+    }
 }
