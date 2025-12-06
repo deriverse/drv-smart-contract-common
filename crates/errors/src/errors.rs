@@ -1,3 +1,5 @@
+use std::error;
+
 use drv_errors_derive::DrvError;
 use drv_models::state::types::{
     account_type::AccountType, AssetType, OrderSide, OrderType, TokenProgram,
@@ -780,6 +782,12 @@ pub enum DeriverseErrorKind {
 
     #[error(code = 308, msg = "Invalid fee rate, {fee_rate} < 0")]
     InvalidFeeValue { fee_rate: f64 },
+
+    #[error(code = 309, msg = "No vote was found to change")]
+    NoVoteToChange { voting_counter: u32 },
+
+    #[error(code = 310, msg = "Invalid voting choice {choice}")]
+    InvalidVotingChoice { voting_counter: u32, choice: u8 },
 }
 #[cfg(test)]
 mod tests {
