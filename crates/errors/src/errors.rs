@@ -794,6 +794,9 @@ pub enum DeriverseErrorKind {
 
     #[error(code = 312, msg = "Invalid ref id value: {ref_id}")]
     InvalidRefIdValue { ref_id: u32 },
+
+    #[error(code = 313, msg = "Attempted to create a referral on itself")]
+    SelfRefLink,
 }
 #[cfg(test)]
 mod tests {
