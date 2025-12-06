@@ -736,7 +736,7 @@ pub struct SetSeatpurchasingFeeData {
 /// ### Fields
 /// - `new_choice`: VoteOption - Voting choice
 /// - `voting_counter` - Current voting counter
-pub struct ChangeVoteData {
+pub struct ChangeVotingData {
     pub tag: u8,
     pub new_choice: u8,
     pub padding_u16: u16,

@@ -549,8 +549,8 @@ pub mod instructions {
         const MIN_ACCOUNTS: usize = 2;
     }
 
-    pub struct ChangeVoteInstruction;
-    impl DrvInstruction for ChangeVoteInstruction {
+    pub struct ChangeVotingInstruction;
+    impl DrvInstruction for ChangeVotingInstruction {
         const INSTRUCTION_NUMBER: u8 = 59;
         const MIN_ACCOUNTS: usize = 6;
     }
