@@ -802,7 +802,7 @@ pub enum DeriverseErrorKind {
         code = 314,
         msg = "Client {wallet_address} already has a registered account"
     )]
-    AttemptedToAddExistingClient,
+    AttemptedToAddExistingClient { wallet_address: Pubkey },
 }
 #[cfg(test)]
 mod tests {
