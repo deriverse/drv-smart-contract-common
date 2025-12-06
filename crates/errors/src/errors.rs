@@ -791,6 +791,9 @@ pub enum DeriverseErrorKind {
 
     #[error(code = 311, msg = "Referral id already assigned {ref_id}")]
     ReferralIdAlreadyAssigned { ref_id: u32 },
+
+    #[error(code = 312, msg = "Invalid ref id value: {}")]
+    InvalidRefIdValue { ref_id: u32 },
 }
 #[cfg(test)]
 mod tests {
