@@ -742,3 +742,18 @@ pub struct ChangeVoteData {
     pub padding_u16: u16,
     pub voting_counter: u32,
 }
+
+#[repr(C)]
+#[derive(Clone, Copy, Pod, Zeroable)]
+/// Garbage Collector Data
+///
+/// **Tag:** `60`
+///
+/// ### Fields
+/// - `instr_id` - Instrument Id
+pub struct GarbageCollectorData {
+    pub tag: u8,
+    pub padding_u8: u8,
+    pub padding_u16: u16,
+    pub instr_id: InstrId,
+}
