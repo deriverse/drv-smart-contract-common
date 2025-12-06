@@ -766,7 +766,7 @@ pub struct GarbageCollectorData {
 ///
 /// ### FIelds
 /// - `ref_id` - New referral id
-pub struct SetRefIdData {
+pub struct ActivateClientRefProgramData {
     pub tag: u8,
     pub padding_u8: u8,
     pub padding_u16: u16,
