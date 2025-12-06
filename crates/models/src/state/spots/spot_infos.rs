@@ -17,13 +17,14 @@ pub fn get_spot_info<T>(data: &[u8], id: ClientId) -> *mut T {
 /// Spot Client Info
 ///
 /// 1. **`client`** - Original client id
+/// 2. **`filled_orders`** - Fully filled orders count
 /// 2. **`bids_entry`** - Stores clients bids orders linked list head in last 4 bits and linked list length in first 4 bits
 /// 3. **`ask_entry`** - Stores clients asks orders linked list head in last 4 bits and linked list length in first 4 bits
 /// 4. **`avail_asset_tokens`** - Total avail asset tokens to withdraw
 /// 5. **`avail_crncy_tokens`** - Total avail crncy tokens to withdraw
 pub struct SpotClientInfo {
     pub client: ClientId,
-    pub reserved: u32,
+    pub filled_orders: u32,
     pub bids_entry: u32,
     pub asks_entry: u32,
     pub avail_asset_tokens: i64,
