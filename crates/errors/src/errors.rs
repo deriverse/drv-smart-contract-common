@@ -788,6 +788,9 @@ pub enum DeriverseErrorKind {
 
     #[error(code = 310, msg = "Invalid voting choice {choice}")]
     InvalidVotingChoice { voting_counter: u32, choice: u8 },
+
+    #[error(code = 311, msg = "Referral id already assigned {ref_id}")]
+    ReferralIdAlreadyAssigned { ref_id: u32 },
 }
 #[cfg(test)]
 mod tests {

@@ -561,4 +561,11 @@ pub mod instructions {
 
         const MIN_ACCOUNTS: usize = 6;
     }
+
+    pub struct SetRefId;
+    impl DrvInstruction for SetRefId {
+        const INSTRUCTION_NUMBER: u8 = 61;
+
+        const MIN_ACCOUNTS: usize = 4;
+    }
 }
