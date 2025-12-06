@@ -491,7 +491,7 @@ pub mod instructions {
     pub struct NewPrivateClientInstruction;
     impl DrvInstruction for NewPrivateClientInstruction {
         const INSTRUCTION_NUMBER: u8 = 49;
-        const MIN_ACCOUNTS: usize = 5;
+        const MIN_ACCOUNTS: usize = 6;
     }
 
     pub struct TerminatePrivateModeInstruction;
