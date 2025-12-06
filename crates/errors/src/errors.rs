@@ -797,6 +797,12 @@ pub enum DeriverseErrorKind {
 
     #[error(code = 313, msg = "Attempted to create a referral on itself")]
     SelfRefLink,
+
+    #[error(
+        code = 314,
+        msg = "Client {wallet_address} already has a registered account"
+    )]
+    AttemptedToAddExistingClient,
 }
 #[cfg(test)]
 mod tests {
