@@ -654,3 +654,10 @@ pub struct GarbageCollectorData {
     pub padding_u16: u16,
     pub instr_id: u32,
 }
+
+pub struct ActivateClientRefProgramData {
+    pub tag: u8,
+    pub padding_u8: u8,
+    pub padding_u16: u16,
+    pub ref_id: u32,
+}

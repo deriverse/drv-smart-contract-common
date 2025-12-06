@@ -757,3 +757,18 @@ pub struct GarbageCollectorData {
     pub padding_u16: u16,
     pub instr_id: InstrId,
 }
+
+#[repr(C)]
+#[derive(Clone, Copy, Pod, Zeroable)]
+/// Set Ref Id Data
+///
+/// **Tag** `61`
+///
+/// ### FIelds
+/// - `ref_id` - New referral id
+pub struct ActivateClientRefProgramData {
+    pub tag: u8,
+    pub padding_u8: u8,
+    pub padding_u16: u16,
+    pub ref_id: u32,
+}

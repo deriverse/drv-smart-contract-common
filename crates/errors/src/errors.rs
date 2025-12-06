@@ -788,6 +788,15 @@ pub enum DeriverseErrorKind {
 
     #[error(code = 310, msg = "Invalid voting choice {choice}")]
     InvalidVotingChoice { voting_counter: u32, choice: u8 },
+
+    #[error(code = 311, msg = "Referral id already assigned {ref_id}")]
+    ReferralIdAlreadyAssigned { ref_id: u32 },
+
+    #[error(code = 312, msg = "Invalid ref id value: {ref_id}")]
+    InvalidRefIdValue { ref_id: u32 },
+
+    #[error(code = 313, msg = "Attempted to create a referral on itself")]
+    SelfRefLink,
 }
 #[cfg(test)]
 mod tests {
