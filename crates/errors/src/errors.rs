@@ -570,8 +570,8 @@ pub enum DeriverseErrorKind {
     #[serde(rename = "110")]
     InvalidWalletAddress {
         address: Pubkey,
-        wallet_addr: Pubkey,
-        actual: Pubkey,
+        wallet_address: Pubkey,
+        actual_address: Pubkey,
     },
     #[error(code = 224, msg = "Invalid candles context")]
     InvalidCandlesContext,
@@ -797,6 +797,12 @@ pub enum DeriverseErrorKind {
 
     #[error(code = 313, msg = "Attempted to create a referral on itself")]
     SelfRefLink,
+
+    #[error(
+        code = 314,
+        msg = "Client {wallet_address} already has a registered account"
+    )]
+    AttemptedToAddExistingClient { wallet_address: Pubkey },
 }
 #[cfg(test)]
 mod tests {
@@ -805,6 +811,17 @@ mod tests {
     use solana_program::pubkey::Pubkey;
     #[cfg(feature = "off-chain")]
     use solana_sdk::pubkey::Pubkey;
+
+    #[test]
+    fn test_wallet_address() {
+        let error = DeriverseErrorKind::InvalidWalletAddress {
+            address: Pubkey::new_unique(),
+            wallet_address: Pubkey::new_unique(),
+            actual_address: Pubkey::new_unique(),
+        };
+
+        println!("{}", error.to_json());
+    }
 
     #[test]
     fn test_error_codes_and_display() {

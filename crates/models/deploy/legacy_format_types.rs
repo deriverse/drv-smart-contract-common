@@ -439,10 +439,10 @@ pub struct BaseCrncyRecord {
 }
 
 pub mod asset_type {
-    pub const TOKEN: u32 = 0x1000000;
-    pub const SPOT_LP: u32 = 0x2000000;
-    pub const SPOT_ORDERS: u32 = 0x3000000;
-    pub const PERP: u32 = 0x4000000;
+    pub const TOKEN: u32 = 0x10000000;
+    pub const SPOT_LP: u32 = 0x20000000;
+    pub const SPOT_ORDERS: u32 = 0x30000000;
+    pub const PERP: u32 = 0x40000000;
 }
 
 #[repr(C)]
