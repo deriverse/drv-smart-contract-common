@@ -55,7 +55,7 @@ pub struct NewRootAccountData {
 /// **Tag:** `12`
 ///
 /// ### Fields
-/// - `ioc`: bool - Use immediate or candel mode
+/// - `ioc`: bool - Use immediate or cancel mode
 /// - `order_type`: OrderType - new order type
 /// - `order_side`: OrderSide - new order side (Bid/Ask)
 /// - `instr_id` - Instr pair id
