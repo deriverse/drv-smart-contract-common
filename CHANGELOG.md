@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [unreleased]
 
+## [v2.18] - 2025-12-08
+
 ## Added 
 - `filled_orders` statistic fields for `Spot` and `Perp`
 - `activate_client_ref_program` instruction data + constants
