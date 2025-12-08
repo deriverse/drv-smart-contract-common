@@ -543,8 +543,8 @@ pub mod instructions {
         const MIN_ACCOUNTS: usize = 19;
     }
 
-    pub struct SetSeatpurchasingFee;
-    impl DrvInstruction for SetSeatpurchasingFee {
+    pub struct SetSeatPurchasingFee;
+    impl DrvInstruction for SetSeatPurchasingFee {
         const INSTRUCTION_NUMBER: u8 = 58;
         const MIN_ACCOUNTS: usize = 2;
     }
