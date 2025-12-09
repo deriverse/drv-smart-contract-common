@@ -353,7 +353,7 @@ pub struct Order {
 }
 
 #[repr(C)]
-#[derive(Copy, Clone, Debug)]
+#[derive(Pod, Zeroable, Copy, Clone, Debug)]
 /// PxOrders(Lines)
 ///
 /// Each `PxOrders` structure corresponds to a specific price level and maintains
