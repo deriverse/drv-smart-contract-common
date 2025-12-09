@@ -799,6 +799,9 @@ pub enum DeriverseErrorKind {
         msg = "Client {wallet_address} already has a registered account"
     )]
     AttemptedToAddExistingClient { wallet_address: Pubkey },
+
+    #[error(code = 315, msg = "Invalid edge price {price}")]
+    InvalidEdgePrice { price: i64 },
 }
 #[cfg(test)]
 mod tests {
