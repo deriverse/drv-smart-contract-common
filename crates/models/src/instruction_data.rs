@@ -610,7 +610,7 @@ pub struct SellMarketSeatData {
     pub padding_u8: u8,
     pub padding_u16: u16,
     pub instr_id: InstrId,
-    pub edge_pirce: i64,
+    pub edge_price: i64,
 }
 
 #[repr(C)]
