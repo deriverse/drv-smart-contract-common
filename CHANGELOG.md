@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [unreleased]
 
+## Changed
+- Instead of `edge_price` added slippage window of `min_price` and `max_price` for `SpotLpData`
+
 ## [v2.18] - 2025-12-08
 
 ## Added 

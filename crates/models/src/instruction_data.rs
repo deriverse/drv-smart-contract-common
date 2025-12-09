@@ -189,14 +189,16 @@ pub struct SpotMassCancelData {
 /// - `side`: OrderSide - Orders side (Bid/Ask)
 /// - `instr_id` - Instr pair id
 /// - `amount` - Orders qty in lp tokens
-/// - `edge_price` - Price used for slippage calculations
+/// - `min_price` - Price used min slippage bound calculations
+/// - `max_price` - Price used max slippage bound calculations
 pub struct SpotLpData {
     pub tag: u8,
     pub side: u8,
     pub padding_u16: u16,
     pub instr_id: InstrId,
     pub amount: i64,
-    pub edge_price: i64,
+    pub min_price: i64,
+    pub max_price: i64,
 }
 
 #[repr(C)]
@@ -608,7 +610,7 @@ pub struct SellMarketSeatData {
     pub padding_u8: u8,
     pub padding_u16: u16,
     pub instr_id: InstrId,
-    pub edge_pirce: i64,
+    pub edge_price: i64,
 }
 
 #[repr(C)]

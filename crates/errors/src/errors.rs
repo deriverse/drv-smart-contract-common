@@ -723,13 +723,9 @@ pub enum DeriverseErrorKind {
 
     #[error(
         code = 300,
-        msg = "Slippage bounds exceeded during {order_side} order. Price: {price}, Bounds type: {bound_price}"
+        msg = "Slippage bounds exceeded. Price: {price}, Bounds type: {bound_price}"
     )]
-    SlippageExceeded {
-        price: i64,
-        bound_price: i64,
-        order_side: OrderSide,
-    },
+    SlippageExceeded { price: i64, bound_price: i64 },
 
     #[error(
         code = 301,
@@ -803,6 +799,9 @@ pub enum DeriverseErrorKind {
         msg = "Client {wallet_address} already has a registered account"
     )]
     AttemptedToAddExistingClient { wallet_address: Pubkey },
+
+    #[error(code = 315, msg = "Invalid edge price {price}")]
+    InvalidEdgePrice { price: i64 },
 }
 #[cfg(test)]
 mod tests {
