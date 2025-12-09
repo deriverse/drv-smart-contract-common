@@ -209,6 +209,8 @@ pub struct InstrAccountHeader {
     pub day_volatility: f64,
     pub maps_address: Pubkey,
     pub perp_maps_address: Pubkey,
+    pub asset_mint: Pubkey,
+    pub crncy_mint: Pubkey,
     pub lut_address: Pubkey,
     pub drv_count: u32,
     pub slot: u32,
