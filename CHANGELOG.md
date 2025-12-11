@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [unreleased]
 
+## Fixed
+- Fixed legacy instruction data records
+
 ## [v2.19] - 2025-12-10
 
 ## Changed
