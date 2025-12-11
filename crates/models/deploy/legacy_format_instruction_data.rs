@@ -12,7 +12,7 @@ pub struct NewOperatorData {
     pub tag: u8,
     pub padding_u8: u8,
     pub padding_u16: u16,
-    pub version: Version,
+    pub version: u32,
 }
 
 #[repr(C)]
@@ -31,7 +31,7 @@ pub struct NewRootAccountData {
     pub tag: u8,
     pub private_mode: u8,
     pub padding_u16: u16,
-    pub version: Version,
+    pub version: u32,
     pub lut_slot: u32,
 }
 
@@ -180,7 +180,7 @@ pub struct SpotLpData {
     pub tag: u8,
     pub side: u8,
     pub padding_u16: u16,
-    pub instr_id: InstrId,
+    pub instr_id: u32,
     pub amount: i64,
     pub min_price: i64,
     pub max_price: i64,
@@ -607,7 +607,7 @@ pub struct SetVarianceData {
     pub tag: u8,
     pub padding_u8: u8,
     pub padding_u16: u16,
-    pub instr_id: InstrId,
+    pub instr_id: u32,
     pub variance: f64,
 }
 
