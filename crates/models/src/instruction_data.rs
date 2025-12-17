@@ -783,7 +783,7 @@ pub struct ActivateClientRefProgramData {
 ///
 /// ### FIelds
 /// - `instr_id` - instrument id
-pub struct CleanCandles {
+pub struct CleanCandlesData {
     pub tag: u8,
     pub padding_u8: u8,
     pub padding_u16: u16,
