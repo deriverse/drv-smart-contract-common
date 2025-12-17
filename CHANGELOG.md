@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [unreleased]
 
+## Added 
+- `Partial Eq` implementation for models
+
 ## Fixed
 - Fixed legacy instruction data records
 
