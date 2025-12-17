@@ -147,7 +147,7 @@ use solana_sdk::pubkey::Pubkey;
 /// 125. **`liquidation_threshold`** - Threshold for liquidation process, based on makret volaitlity. liquidation_threshold <= MIN_LIQUIDATION_THRESHOLD
 /// 126. **`seats_reserve`** - Current amount of funds spent on seats purchasing
 #[repr(C)]
-#[derive(Pod, Zeroable, Clone, Copy, Default)]
+#[derive(Pod, Zeroable, Clone, Copy, Default, PartialEq, Debug)]
 pub struct InstrAccountHeader {
     // Basic information about the instrument
     pub discriminator: Discriminator,

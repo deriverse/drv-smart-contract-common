@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [unreleased]
 
+## [v2.20] - 2025-12-17
+
+## Added 
+- `Partial Eq`, `PartialEq`, `Pod`, `Zeroable` implementation for models
+
 ## Fixed
 - Fixed legacy instruction data records
 

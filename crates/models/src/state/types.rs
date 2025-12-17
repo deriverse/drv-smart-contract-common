@@ -223,7 +223,7 @@ pub mod account_type {
 }
 
 #[repr(C)]
-#[derive(Copy, Clone, Default, Debug, Zeroable, Pod)]
+#[derive(Copy, Clone, Default, Debug, Zeroable, Pod, PartialEq)]
 /// Discriminator is a unique identifier of every account in the system.
 /// Should be stored in the first 8 bytes of accounts data.
 pub struct Discriminator {
@@ -353,7 +353,7 @@ pub struct Order {
 }
 
 #[repr(C)]
-#[derive(Copy, Clone, Debug)]
+#[derive(Copy, Clone, Debug, PartialEq, Pod, Zeroable)]
 /// PxOrders(Lines)
 ///
 /// Each `PxOrders` structure corresponds to a specific price level and maintains
