@@ -568,4 +568,11 @@ pub mod instructions {
 
         const MIN_ACCOUNTS: usize = 4;
     }
+
+    pub struct CleanCandlesInstruction;
+    impl DrvInstruction for CleanCandlesInstruction {
+        const INSTRUCTION_NUMBER: u8 = 62;
+
+        const MIN_ACCOUNTS: usize = 7;
+    }
 }
