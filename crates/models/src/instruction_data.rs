@@ -82,7 +82,7 @@ pub struct NewSpotOrderData {
 /// **Tag:** `19`
 ///
 /// ### Fields
-/// - `ioc`: bool - Use immediate or candel mode
+/// - `ioc`: bool - Use immediate or cancel mode
 /// - `leverage` - New leverage value, if is 0 change to max possible
 /// - `order_type`: OrderType - new order type
 /// - `order_side`: OrderSide - new order side (Bid/Ask)
