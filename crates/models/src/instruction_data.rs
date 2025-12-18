@@ -504,7 +504,6 @@ pub struct UpgradeToPerpData {
 ///
 /// ### Fields
 /// - `instr_id` - Instrument pair id
-
 pub struct SetInstrReadyForPerpUpgradeData {
     pub tag: u8, // 41
     pub padding_u8: u8,
