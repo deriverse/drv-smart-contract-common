@@ -777,7 +777,7 @@ pub struct ActivateClientRefProgramData {
 
 #[repr(C)]
 #[derive(Clone, Copy, Pod, Zeroable)]
-/// Set Ref Id Data
+/// Clean Candles Data
 ///
 /// **Tag** `62`
 ///
