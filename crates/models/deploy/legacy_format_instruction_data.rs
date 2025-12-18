@@ -484,7 +484,6 @@ pub struct SetInstrReadyForPerpUpgradeData {
     pub padding_u8: u8,
     pub padding_u16: u16,
     pub instr_id: u32,
-    pub variance: f64,
 }
 
 #[repr(C)]
@@ -669,5 +668,5 @@ pub struct CleanCandlesData {
     pub tag: u8, // 62
     pub padding_u8: u8,
     pub padding_u16: u16,
-    pub instr_id: InstrId,
+    pub instr_id: u32,
 }

@@ -446,7 +446,7 @@ pub struct ChangePointsRecord {
     pub tag: u8,
     pub padding_u8: u8,
     pub padding_u16: u16,
-    pub client_id: ClientId,
+    pub client_id: u32,
     pub points: u32,
     pub time: u32,
 }

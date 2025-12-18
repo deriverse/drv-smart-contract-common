@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [unreleased]
 
+## [v2.21] - 2025-12-18
+
+## Fixed
+- `SetInstrReadyForPerpUpgrade` instruction data layout in legacy models
+
 ## Added
 - `ChangedPoints` log message
 - Clean candles instruction related data
