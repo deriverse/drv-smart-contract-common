@@ -662,3 +662,12 @@ pub struct ActivateClientRefProgramData {
     pub padding_u16: u16,
     pub ref_id: u32,
 }
+
+#[repr(C)]
+#[derive(Clone, Copy, Pod, Zeroable)]
+pub struct CleanCandlesData {
+    pub tag: u8, // 62
+    pub padding_u8: u8,
+    pub padding_u16: u16,
+    pub instr_id: InstrId,
+}
