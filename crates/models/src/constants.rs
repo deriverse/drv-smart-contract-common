@@ -573,6 +573,6 @@ pub mod instructions {
     impl DrvInstruction for CleanCandlesInstruction {
         const INSTRUCTION_NUMBER: u8 = 62;
 
-        const MIN_ACCOUNTS: usize = 7;
+        const MIN_ACCOUNTS: usize = 6;
     }
 }
