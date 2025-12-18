@@ -35,6 +35,7 @@ pub mod log_type {
     pub const SWAP_ORDER: u8 = 31;
     pub const MOVE_SPOT: u8 = 32;
     pub const NEW_PRIVATE_CLIENT: u8 = 33;
+    pub const CHANGED_POINTS: u8 = 34;
 }
 
 #[repr(C)]
@@ -466,15 +467,13 @@ pub struct MoveSpotAvailFundsReport {
     pub crncy: i64,
 }
 
-// impl std::fmt::Display for MoveSpotAvailFundsReport {
-//     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-//         write!(f, "MoveSpotAvailFundsReport {{\n")?;
-//         write!(f, "  tag: {},\n", self.tag)?;
-//         write!(f, "  client_Id: {}\n", self.client_id)?;
-//         write!(f, "  instr_id: {:?},\n", self.instr_id)?;
-//         write!(f, "  qty: {},\n", self.qty)?;
-//         write!(f, "  crncy: {}\n", self.crncy)?;
-//         write!(f, "  time: {},\n", self.time)?;
-//         write!(f, "}}")
-//     }
-// }
+#[repr(C)]
+#[derive(Copy, Clone, Zeroable, Pod, Default)]
+pub struct ChangePointsRecord {
+    pub tag: u8,
+    pub padding_u8: u8,
+    pub padding_u16: u16,
+    pub client_id: ClientId,
+    pub points: u32,
+    pub time: u32,
+}
