@@ -82,7 +82,7 @@ pub struct NewSpotOrderData {
 /// **Tag:** `19`
 ///
 /// ### Fields
-/// - `ioc`: bool - Use immediate or candel mode
+/// - `ioc`: bool - Use immediate or cancel mode
 /// - `leverage` - New leverage value, if is 0 change to max possible
 /// - `order_type`: OrderType - new order type
 /// - `order_side`: OrderSide - new order side (Bid/Ask)
@@ -773,4 +773,19 @@ pub struct ActivateClientRefProgramData {
     pub padding_u8: u8,
     pub padding_u16: u16,
     pub ref_id: u32,
+}
+
+#[repr(C)]
+#[derive(Clone, Copy, Pod, Zeroable)]
+/// Clean Candles Data
+///
+/// **Tag** `62`
+///
+/// ### FIelds
+/// - `instr_id` - instrument id
+pub struct CleanCandlesData {
+    pub tag: u8,
+    pub padding_u8: u8,
+    pub padding_u16: u16,
+    pub instr_id: InstrId,
 }
