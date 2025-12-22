@@ -401,3 +401,9 @@ impl std::fmt::Display for TokenProgram {
         }
     }
 }
+
+pub mod vm_status {
+    pub const ACTIVE: u32 = 0x80000000;
+    pub const CHANGE: u32 = 0x40000000;
+    pub const WITHDRAW: u32 = 0x40000000;
+}
