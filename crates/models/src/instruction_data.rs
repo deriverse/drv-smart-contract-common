@@ -1,4 +1,7 @@
-use crate::new_types::{instrument::InstrId, version::Version};
+use crate::{
+    new_types::{instrument::InstrId, version::Version},
+    state::types::vm_status::VmMask,
+};
 use bytemuck::{Pod, Zeroable};
 
 /// name
@@ -805,6 +808,6 @@ pub struct VmChangeWhitelistData {
     pub tag: u8,
     pub padding_u8: u8,
     pub padding_u16: u16,
-    pub mask: u32,
+    pub mask: VmMask,
     pub whitelist: [u32; 8],
 }

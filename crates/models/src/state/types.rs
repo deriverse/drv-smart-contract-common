@@ -403,6 +403,8 @@ impl std::fmt::Display for TokenProgram {
 }
 
 pub mod vm_status {
+    use bytemuck::{Pod, Zeroable};
+
     #[repr(u32)]
     pub enum VmFlag {
         Activate = 0x80000000,
@@ -410,7 +412,8 @@ pub mod vm_status {
         Withdraw = 0x20000000,
     }
 
-    #[derive(Clone)]
+    #[derive(Clone, Copy, Pod, Zeroable)]
+    #[repr(transparent)]
     pub struct VmMask(u32);
 
     impl VmMask {
