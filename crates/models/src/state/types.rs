@@ -493,6 +493,10 @@ pub mod vm_status {
             self.0 &= !(Self::SLOT_MASK << shift);
             self.0 |= (flags.0 as u32) << shift;
         }
+
+        pub fn reset_slots(&mut self) {
+            self.0 &= 0xFF000000
+        }
     }
 
     impl IntoIterator for VmMask {
