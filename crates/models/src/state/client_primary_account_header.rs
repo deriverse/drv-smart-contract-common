@@ -1,6 +1,6 @@
 use bytemuck::{Pod, Zeroable};
 
-use crate::new_types::client::ClientId;
+use crate::{new_types::client::ClientId, state::types::vm_status::VmMask};
 
 #[cfg(feature = "on-chain")]
 use solana_program::pubkey::Pubkey;
@@ -51,7 +51,7 @@ pub struct ClientPrimaryAccountHeader {
     pub vm_wallet_address: Pubkey,
     pub vm_instrs: [u32; 8],
     pub vm_withdraw_token_id: u32,
-    pub vm_mask: u32,
+    pub vm_mask: VmMask,
     pub vm_withdraw_amount: i64,
     pub first_ref_link_discount: f64,
     pub second_ref_link_discount: f64,
