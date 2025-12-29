@@ -358,5 +358,5 @@ impl DrvInstruction for VmInitWithdrawFinalize {
 pub struct VmChangeWhitelist;
 impl DrvInstruction for VmChangeWhitelist {
     const INSTRUCTION_NUMBER: u8 = 72;
-    const MIN_ACCOUNTS: usize = 4;
+    const MIN_ACCOUNTS: usize = 3;
 }

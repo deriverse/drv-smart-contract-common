@@ -404,8 +404,10 @@ impl std::fmt::Display for TokenProgram {
 
 pub mod vm_status {
     use bytemuck::{Pod, Zeroable};
+    use serde::{Deserialize, Serialize};
 
     #[repr(u32)]
+    #[derive(Debug, Serialize, Deserialize, PartialEq, Eq)]
     pub enum VmFlag {
         Activate = 0x80000000,
         Change = 0x40000000,
