@@ -812,6 +812,13 @@ pub enum DeriverseErrorKind {
         expected: bool,
         actual: bool,
     },
+
+    #[error(code = 317, msg = "Invalid vm wallet address")]
+    InvalidVmWalletAddress {
+        address: Pubkey,
+        actual_address: Pubkey,
+        vm_wallet_address: Pubkey,
+    },
 }
 #[cfg(test)]
 mod tests {
