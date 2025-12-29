@@ -2,7 +2,7 @@ use std::error;
 
 use drv_errors_derive::DrvError;
 use drv_models::state::types::{
-    account_type::AccountType, AssetType, OrderSide, OrderType, TokenProgram,
+    account_type::AccountType, vm_status::VmFlag, AssetType, OrderSide, OrderType, TokenProgram,
 };
 use serde::{Deserialize, Serialize};
 #[cfg(feature = "on-chain")]
@@ -802,6 +802,16 @@ pub enum DeriverseErrorKind {
 
     #[error(code = 315, msg = "Invalid edge price {price}")]
     InvalidEdgePrice { price: i64 },
+
+    #[error(
+        code = 316,
+        msg = "Incorrect Vm Mode status flag {flag:?}. Expected to be {expected}, actual {actual}"
+    )]
+    IncorrectVmModeStatus {
+        flag: VmFlag,
+        expected: bool,
+        actual: bool,
+    },
 }
 #[cfg(test)]
 mod tests {
