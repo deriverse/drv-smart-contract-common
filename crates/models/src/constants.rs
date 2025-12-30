@@ -205,7 +205,7 @@ pub mod voting {
     pub const MIN_MAX_DISCOUNT_RATE: u32 = 10;
     pub const MAX_MAX_DISCOUNT_RATE: u32 = 30;
     pub const MAX_DISCOUNT_STEP: f64 = 0.025;
-    pub const START_MAX_DISCOUNT: u32 = 30;
+    pub const START_MAX_DISCOUNT: u32 = 20;
 }
 
 pub mod trading_limitations {
