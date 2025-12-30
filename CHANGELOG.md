@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [unreleased]
 
+## [v2.22] - 2025-12-29
+
+## Changed
+
+- `START_MAX_DISCOUNT` to 20 (50% discount)
+
 ## [v2.21] - 2025-12-18
 
 ## Fixed
