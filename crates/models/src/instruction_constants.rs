@@ -310,31 +310,31 @@ impl DrvInstruction for VmInitActivate {
 pub struct VmInitActivateCancel;
 impl DrvInstruction for VmInitActivateCancel {
     const INSTRUCTION_NUMBER: u8 = 64;
-    const MIN_ACCOUNTS: usize = 4;
+    const MIN_ACCOUNTS: usize = 3;
 }
 
 pub struct VmFinalizeActivate;
 impl DrvInstruction for VmFinalizeActivate {
     const INSTRUCTION_NUMBER: u8 = 65;
-    const MIN_ACCOUNTS: usize = 4;
+    const MIN_ACCOUNTS: usize = 3;
 }
 
 pub struct VmInitDeactivate;
 impl DrvInstruction for VmInitDeactivate {
     const INSTRUCTION_NUMBER: u8 = 66;
-    const MIN_ACCOUNTS: usize = 4;
+    const MIN_ACCOUNTS: usize = 3;
 }
 
 pub struct VmInitDeactivateCancel;
 impl DrvInstruction for VmInitDeactivateCancel {
     const INSTRUCTION_NUMBER: u8 = 67;
-    const MIN_ACCOUNTS: usize = 4;
+    const MIN_ACCOUNTS: usize = 3;
 }
 
 pub struct VmFinalizeDeactivate;
 impl DrvInstruction for VmFinalizeDeactivate {
     const INSTRUCTION_NUMBER: u8 = 68;
-    const MIN_ACCOUNTS: usize = 4;
+    const MIN_ACCOUNTS: usize = 3;
 }
 
 pub struct VmInitWithdraw;
@@ -352,7 +352,7 @@ impl DrvInstruction for VmInitWithdrawCancel {
 pub struct VmInitWithdrawFinalize;
 impl DrvInstruction for VmInitWithdrawFinalize {
     const INSTRUCTION_NUMBER: u8 = 71;
-    const MIN_ACCOUNTS: usize = 4;
+    const MIN_ACCOUNTS: usize = 11;
 }
 
 pub struct VmChangeWhitelist;
