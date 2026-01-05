@@ -304,7 +304,7 @@ impl DrvInstruction for CleanCandlesInstruction {
 pub struct VmInitActivate;
 impl DrvInstruction for VmInitActivate {
     const INSTRUCTION_NUMBER: u8 = 63;
-    const MIN_ACCOUNTS: usize = 5;
+    const MIN_ACCOUNTS: usize = 4;
 }
 
 pub struct VmInitActivateCancel;
