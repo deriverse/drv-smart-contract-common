@@ -426,7 +426,7 @@ pub mod vm_status {
             self.0 |= flag as u32
         }
         pub fn clear_flag(&mut self, flag: VmFlag) {
-            self.0 &= flag as u32
+            self.0 &= !(flag as u32)
         }
     }
 
