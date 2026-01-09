@@ -1,8 +1,12 @@
 use std::error;
 
 use drv_errors_derive::DrvError;
-use drv_models::state::types::{
-    account_type::AccountType, vm_status::VmFlag, AssetType, OrderSide, OrderType, TokenProgram,
+use drv_models::{
+    constants::TradingSection,
+    new_types::instrument::InstrId,
+    state::types::{
+        account_type::AccountType, vm_status::VmFlag, AssetType, OrderSide, OrderType, TokenProgram,
+    },
 };
 use serde::{Deserialize, Serialize};
 #[cfg(feature = "on-chain")]
@@ -818,6 +822,15 @@ pub enum DeriverseErrorKind {
         address: Pubkey,
         actual_address: Pubkey,
         vm_wallet_address: Pubkey,
+    },
+
+    #[error(
+        code = 318,
+        msg = "No permission for insturment {instr_id} and trading section {trading_section}"
+    )]
+    InstrumentPermissionDenied {
+        instr_id: u32,
+        trading_section: TradingSection,
     },
 }
 #[cfg(test)]

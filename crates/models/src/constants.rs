@@ -1,5 +1,6 @@
 use std::ops::Deref;
 
+use serde::{Deserialize, Serialize};
 use trading_limitations::MARKET_DEPTH;
 
 use crate::state::{
@@ -273,9 +274,19 @@ pub mod competition {
 }
 
 #[repr(u8)]
-#[derive(Debug, Clone, Copy)]
+#[derive(Debug, Clone, Copy, Serialize, Deserialize, PartialEq)]
 pub enum TradingSection {
     Spot = 0,
     Perp = 1,
     Options = 2,
+}
+
+impl std::fmt::Display for TradingSection {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            TradingSection::Spot => write!(f, "Spot"),
+            TradingSection::Perp => write!(f, "Perp"),
+            TradingSection::Options => write!(f, "Options"),
+        }
+    }
 }
