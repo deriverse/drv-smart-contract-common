@@ -406,6 +406,8 @@ pub mod vm_status {
     use bytemuck::{Pod, Zeroable};
     use serde::{Deserialize, Serialize};
 
+    use crate::constants::TradingSection;
+
     #[repr(u32)]
     #[derive(Debug, Serialize, Deserialize, PartialEq, Eq)]
     pub enum VmFlag {
@@ -434,10 +436,20 @@ pub mod vm_status {
     pub struct SlotFlags(u8);
 
     #[repr(u8)]
-    enum SlotFlag {
+    pub enum SlotFlag {
         Spot = 0b001,
         Perp = 0b010,
         Option = 0b100,
+    }
+
+    impl From<TradingSection> for SlotFlag {
+        #[inline(always)]
+        /// Safety: Bit is guaranteed to be in {1, 2, 4}
+        fn from(section: TradingSection) -> Self {
+            let bit = 1u8 << (section as u8);
+
+            unsafe { core::mem::transmute::<u8, SlotFlag>(bit) }
+        }
     }
 
     impl SlotFlags {
