@@ -451,6 +451,10 @@ pub mod vm_status {
             self.0 & SlotFlag::Option as u8 != 0
         }
 
+        pub fn get_slot_flag(&self, flag: SlotFlag) -> bool {
+            self.0 & flag as u8 != 0
+        }
+
         pub fn new(spot: bool, perp: bool, option: bool) -> Self {
             let mut v = 0;
             if spot {
