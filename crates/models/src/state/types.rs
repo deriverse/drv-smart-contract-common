@@ -432,7 +432,7 @@ pub mod vm_status {
         }
     }
 
-    #[derive(Clone, Copy, Debug)]
+    #[derive(Clone, Copy, Debug, PartialEq, Eq)]
     pub struct SlotFlags(u8);
 
     #[repr(u8)]
