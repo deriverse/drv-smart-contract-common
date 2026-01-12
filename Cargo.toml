@@ -1,5 +1,5 @@
 [workspace.package]
-version = "0.2.22"
+version = "0.2.23"
 edition = "2021"
 
 [workspace]
@@ -12,7 +12,7 @@ drv-errors = { path = "crates/errors" }
 drv-models = { path = "crates/models" }
 drv-macros = { path = "crates/drv-macros" }
 
-serde_json = "1.0.145"
+serde_json = "1.0.148"
 
 [workspace.lints.rust]
 unreachable_pub = "warn"

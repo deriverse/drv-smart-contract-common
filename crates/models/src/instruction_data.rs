@@ -1,4 +1,7 @@
-use crate::new_types::{instrument::InstrId, version::Version};
+use crate::{
+    new_types::{instrument::InstrId, version::Version},
+    state::types::vm_status::VmMask,
+};
 use bytemuck::{Pod, Zeroable};
 
 /// name
@@ -787,4 +790,24 @@ pub struct CleanCandlesData {
     pub padding_u8: u8,
     pub padding_u16: u16,
     pub instr_id: InstrId,
+}
+
+#[repr(C)]
+#[derive(Clone, Copy, Pod, Zeroable)]
+pub struct VmInitWithdrawData {
+    pub tag: u8,
+    pub padding_u8: u8,
+    pub padding_u16: u16,
+    pub token_id: u32,
+    pub amount: i64,
+}
+
+#[repr(C)]
+#[derive(Clone, Copy, Pod, Zeroable)]
+pub struct VmChangeWhitelistData {
+    pub tag: u8,
+    pub padding_u8: u8,
+    pub padding_u16: u16,
+    pub mask: VmMask,
+    pub whitelist: [u32; 8],
 }

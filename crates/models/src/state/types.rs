@@ -401,3 +401,194 @@ impl std::fmt::Display for TokenProgram {
         }
     }
 }
+
+pub mod vm_status {
+    use bytemuck::{Pod, Zeroable};
+    use serde::{Deserialize, Serialize};
+
+    use crate::constants::TradingSection;
+
+    #[repr(u32)]
+    #[derive(Debug, Serialize, Deserialize, PartialEq, Eq)]
+    pub enum VmFlag {
+        Activate = 0x80000000,
+        Change = 0x40000000,
+        Withdraw = 0x20000000,
+    }
+
+    #[derive(Clone, Copy, Pod, Zeroable)]
+    #[repr(transparent)]
+    pub struct VmMask(u32);
+
+    impl VmMask {
+        pub fn get_flag(&self, flag: VmFlag) -> bool {
+            self.0 & flag as u32 != 0
+        }
+        pub fn set_flag(&mut self, flag: VmFlag) {
+            self.0 |= flag as u32
+        }
+        pub fn clear_flag(&mut self, flag: VmFlag) {
+            self.0 &= !(flag as u32)
+        }
+    }
+
+    #[derive(Clone, Copy, Debug, PartialEq, Eq)]
+    pub struct SlotFlags(u8);
+
+    #[repr(u8)]
+    pub enum SlotFlag {
+        Spot = 0b001,
+        Perp = 0b010,
+        Option = 0b100,
+    }
+
+    impl From<TradingSection> for SlotFlag {
+        #[inline(always)]
+        /// Safety: Bit is guaranteed to be in {1, 2, 4}
+        fn from(section: TradingSection) -> Self {
+            let bit = 1u8 << (section as u8);
+
+            unsafe { core::mem::transmute::<u8, SlotFlag>(bit) }
+        }
+    }
+
+    impl SlotFlags {
+        pub fn spot(&self) -> bool {
+            self.0 & SlotFlag::Spot as u8 != 0
+        }
+        pub fn perp(&self) -> bool {
+            self.0 & SlotFlag::Perp as u8 != 0
+        }
+        pub fn option(&self) -> bool {
+            self.0 & SlotFlag::Option as u8 != 0
+        }
+
+        pub fn get_slot_flag(&self, flag: SlotFlag) -> bool {
+            self.0 & flag as u8 != 0
+        }
+
+        pub fn new(spot: bool, perp: bool, option: bool) -> Self {
+            let mut v = 0;
+            if spot {
+                v |= SlotFlag::Spot as u8
+            }
+            if perp {
+                v |= SlotFlag::Perp as u8
+            }
+            if option {
+                v |= SlotFlag::Option as u8
+            }
+            Self(v)
+        }
+
+        pub fn none() -> Self {
+            SlotFlags(0b000)
+        }
+
+        pub fn all() -> Self {
+            SlotFlags(0b111)
+        }
+    }
+
+    impl VmMask {
+        const SLOT_BITS: u32 = 3;
+        const SLOT_MASK: u32 = 0b111;
+
+        fn slot_shift(index: usize) -> u32 {
+            // TODO remove
+            assert!(index < 8);
+            (index as u32) * Self::SLOT_BITS
+        }
+
+        pub fn slot(&self, index: usize) -> SlotFlags {
+            let shift = Self::slot_shift(index);
+            let v = ((self.0 >> shift) & Self::SLOT_MASK) as u8;
+            SlotFlags(v)
+        }
+
+        pub fn set_slot(&mut self, index: usize, flags: SlotFlags) {
+            let shift = Self::slot_shift(index);
+            self.0 &= !(Self::SLOT_MASK << shift);
+            self.0 |= (flags.0 as u32) << shift;
+        }
+
+        pub fn reset_slots(&mut self) {
+            self.0 &= 0xFF000000
+        }
+    }
+
+    impl IntoIterator for VmMask {
+        type Item = SlotFlags;
+
+        type IntoIter = VmMaskIter;
+
+        fn into_iter(self) -> Self::IntoIter {
+            VmMaskIter {
+                mask: self,
+                index: 0,
+            }
+        }
+    }
+
+    pub struct VmMaskIter {
+        pub mask: VmMask,
+        pub index: usize,
+    }
+
+    impl Iterator for VmMaskIter {
+        type Item = SlotFlags;
+
+        fn next(&mut self) -> Option<Self::Item> {
+            if self.index >= 8 {
+                return None;
+            }
+
+            let idx = self.index;
+            self.index += 1;
+
+            Some(self.mask.slot(idx))
+        }
+    }
+
+    impl<'a> From<&'a [SlotFlags; 8]> for VmMask {
+        fn from(value: &'a [SlotFlags; 8]) -> Self {
+            let mut mask = VmMask(0);
+
+            value.into_iter().zip(0..8).for_each(|(flags, index)| {
+                mask.set_slot(index, *flags);
+            });
+
+            mask
+        }
+    }
+
+    #[test]
+    fn test_mask_iterator() {
+        let flags = &[
+            SlotFlags::none(),
+            SlotFlags::all(),
+            SlotFlags::none(),
+            SlotFlags::all(),
+            SlotFlags::none(),
+            SlotFlags::new(true, false, false),
+            SlotFlags::new(false, true, false),
+            SlotFlags::new(false, false, true),
+        ];
+
+        let mask: VmMask = flags.into();
+
+        let (size, spot) = mask.clone().into_iter().fold(
+            (0_usize, 0_usize),
+            |(counter, spot_counter), slot_flags| {
+                if slot_flags.spot() {
+                    (counter + 1, spot_counter + 1)
+                } else {
+                    (counter + 1, spot_counter)
+                }
+            },
+        );
+
+        assert_eq!(spot, 3, "Incorrect spot amount");
+        assert_eq!(size, 8, "Incorrect spot amount");
+    }
+}
