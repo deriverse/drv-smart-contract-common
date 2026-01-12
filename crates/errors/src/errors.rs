@@ -826,11 +826,20 @@ pub enum DeriverseErrorKind {
 
     #[error(
         code = 318,
-        msg = "No permission for insturment {instr_id} and trading section {trading_section}"
+        msg = "No permission for instrument {instr_id} and trading section {trading_section}"
     )]
     InstrumentPermissionDenied {
         instr_id: u32,
         trading_section: TradingSection,
+    },
+
+    #[error(
+        code = 319,
+        msg = "Instruction {name}:{instruction_number} is restricted during vm mode"
+    )]
+    RestrictedInstructionDuringVmMode {
+        name: String,
+        instruction_number: u32,
     },
 }
 #[cfg(test)]
