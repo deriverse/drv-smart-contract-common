@@ -670,3 +670,23 @@ pub struct CleanCandlesData {
     pub padding_u16: u16,
     pub instr_id: u32,
 }
+
+#[repr(C)]
+#[derive(Clone, Copy, Pod, Zeroable)]
+pub struct VmInitWithdrawData {
+    pub tag: u8,
+    pub padding_u8: u8,
+    pub padding_u16: u16,
+    pub token_id: u32,
+    pub amount: i64,
+}
+
+#[repr(C)]
+#[derive(Clone, Copy, Pod, Zeroable)]
+pub struct VmChangeWhitelistData {
+    pub tag: u8,
+    pub padding_u8: u8,
+    pub padding_u16: u16,
+    pub mask: u32,
+    pub whitelist: [u32; 8],
+}
