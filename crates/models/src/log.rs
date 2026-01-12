@@ -36,6 +36,7 @@ pub mod log_type {
     pub const MOVE_SPOT: u8 = 32;
     pub const NEW_PRIVATE_CLIENT: u8 = 33;
     pub const CHANGED_POINTS: u8 = 34;
+    pub const VM_WITHDRAW: u8 = 35;
 }
 
 #[repr(C)]
@@ -476,4 +477,15 @@ pub struct ChangePointsRecord {
     pub client_id: ClientId,
     pub points: u32,
     pub time: u32,
+}
+
+#[repr(C)]
+#[derive(Copy, Clone, Zeroable, Pod, Default)]
+pub struct VmWithdrawRecord {
+    pub tag: u8,
+    pub padding_u8: u8,
+    pub padding_u16: u16,
+    pub main_wallet_id: ClientId,
+    pub token_id: u32,
+    pub amount: u32,
 }
