@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [unreleased]
 
+## [v2.24] - 2026-01-12
+
+## Added
+- Added new vm mode errors
+
 ## [v2.23] - 2026-01-12
 
 ## Changed
