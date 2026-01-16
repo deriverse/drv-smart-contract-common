@@ -411,7 +411,7 @@ pub mod vm_status {
     #[repr(u32)]
     #[derive(Debug, Serialize, Deserialize, PartialEq, Eq)]
     pub enum VmFlag {
-        Activate = 0x80000000,
+        Active = 0x80000000,
         Change = 0x40000000,
         Withdraw = 0x20000000,
     }

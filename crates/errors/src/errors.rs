@@ -13,7 +13,6 @@ use serde::{Deserialize, Serialize};
 use solana_program::{msg, program_error::ProgramError, pubkey::Pubkey};
 #[cfg(feature = "off-chain")]
 use solana_sdk::pubkey::Pubkey;
-
 #[cfg(not(any(feature = "on-chain", feature = "off-chain")))]
 compile_error!("Either 'on-chain' or 'off-chain' feature must be enabled");
 

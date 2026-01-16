@@ -358,7 +358,7 @@ pub struct PerpWithdrawData {
 /// - `amount` - Amount of tokens to withdraw
 pub struct WithdrawData {
     pub tag: u8,
-    pub padding_u8: u8,
+    pub padding_u8: u8, // <- bump
     pub padding_u16: u16,
     pub token_id: u32,
     pub amount: i64,
@@ -404,7 +404,7 @@ pub struct SwapData {
 /// - `old_ask_order_id` - Old Asko order id
 pub struct SpotQuotesReplaceData {
     pub tag: u8,
-    padding_u8: u8,
+    padding_u8: u8, // <- rename to bump for bots
     padding_u16: u16,
     pub instr_id: InstrId,
     pub new_bid_price: i64,
