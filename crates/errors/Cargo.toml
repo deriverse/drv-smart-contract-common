@@ -18,6 +18,6 @@ drv-models.workspace = true
 workspace = true
 
 [features]
-default = ["on-chain"]
+default = ["off-chain"]
 on-chain = ["solana-program"]
 off-chain = ["solana-sdk"]
