@@ -4,14 +4,6 @@ use crate::{
 };
 use bytemuck::{Pod, Zeroable};
 
-/// name
-///
-/// **Used in:** `instruction_name` instruction
-/// **Tag:** `tag_number`
-///
-/// ### Fields
-/// - `field_name` -
-
 #[repr(C)]
 #[derive(Clone, Copy, Pod, Zeroable)]
 /// New Operator Data
@@ -384,6 +376,9 @@ pub struct SwapData {
     pub instr_id: InstrId,
     pub price: i64,
     pub amount: i64,
+    // pub min_amount_out: i64 - 0 by default. Check final tokens amount
+    // pub swap_ref_id: u32
+    // Additional keys (swap_ref_id != 0): Cliet Primary + Client Community
 }
 
 #[repr(C)]
