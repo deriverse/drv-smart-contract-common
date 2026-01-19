@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [unreleased]
 
+## [v2.25] - 2026-01-19
+
+## Added 
+- `VmWithdrawReport` log
+
+## Changed 
+- `MAX_PERP_LEVERAGE` increased to 20
+
 ## [v2.24] - 2026-01-12
 
 ## Added

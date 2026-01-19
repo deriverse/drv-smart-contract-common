@@ -142,8 +142,7 @@ pub mod perp {
     pub const MAX_PERP_CLIENTS: u32 = 262_143;
 
     pub const MIN_LIQUIDATION_THRESHOLD: f64 = 0.5 / MAX_PERP_LEVERAGE as f64;
-    // change to 20
-    pub const MAX_PERP_LEVERAGE: u8 = 15;
+    pub const MAX_PERP_LEVERAGE: u8 = 20;
 
     pub mod memory_maps {
         use super::super::memory_maps::*;
