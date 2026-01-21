@@ -376,8 +376,9 @@ pub struct SwapData {
     pub instr_id: InstrId,
     pub price: i64,
     pub amount: i64,
+    pub ref_fee_rate: f64,
     // pub min_amount_out: i64 - 0 by default. Check final tokens amount
-    // pub swap_ref_id: u32
+    // pub fee_ref_fee_rate: f64 if more then MAX_FEE_RATE -
     // Additional keys (swap_ref_id != 0): Cliet Primary + Client Community
 }
 
