@@ -36,6 +36,7 @@ pub mod log_type {
     pub const MOVE_SPOT: u8 = 32;
     pub const NEW_PRIVATE_CLIENT: u8 = 33;
     pub const CHANGED_POINTS: u8 = 34;
+    pub const SWAP_FEES: u8 = 35;
 }
 
 #[repr(C)]
@@ -259,7 +260,7 @@ pub struct SpotPlaceOrderReport {
 
 #[repr(C)]
 #[derive(Copy, Clone, Zeroable, Pod, Default, Debug)]
-pub struct SwapOrderReport {
+pub struct PlaceSwapOrderReport {
     pub tag: u8,
     pub side: u8,
     pub order_type: u8,
@@ -270,6 +271,7 @@ pub struct SwapOrderReport {
     pub price: i64,
     pub time: u32,
     pub instr_id: InstrId,
+    pub swap_ref_rate: f64,
 }
 
 // impl std::fmt::Display for SwapOrderReport {
@@ -488,4 +490,14 @@ pub struct ChangePointsRecord {
     pub client_id: ClientId,
     pub points: u32,
     pub time: u32,
+}
+
+#[repr(C)]
+#[derive(Copy, Clone, Zeroable, Pod, Default)]
+pub struct SwapRefFeesReport {
+    pub tag: u8,
+    pub padding_u8: u8,
+    pub padding_u16: u16,
+    pub padding_u32: u32,
+    pub fees: i64,
 }
