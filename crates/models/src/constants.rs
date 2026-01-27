@@ -96,6 +96,8 @@ pub const MIN_DENOMINATOR: f64 = 0.01;
 
 pub const EMA_PERIOD: f64 = 60f64;
 
+pub const MAX_SWAP_FEE_RATE: f64 = 0.0002;
+
 pub mod nulls {
     pub const NULL_NODE: u32 = 0xFFFFFFFF;
     pub const NULL_ORDER: u32 = 0xFFFF;
@@ -241,10 +243,8 @@ pub mod rebates {
 }
 
 pub mod rebalancing {
-    // reduce to 10
-    pub const MAX_REBALANCING_CALLS: i64 = 25;
-    // change to 900
-    pub const REBALANCING_DELAY: u32 = 300;
+    pub const MAX_REBALANCING_CALLS: i64 = 10;
+    pub const REBALANCING_DELAY: u32 = 900;
 }
 
 pub mod margin_call {

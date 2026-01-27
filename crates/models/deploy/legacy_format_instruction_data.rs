@@ -355,6 +355,8 @@ pub struct SwapData {
     pub instr_id: u32,
     pub price: i64,
     pub amount: i64,
+    pub ref_fee_rate: f64,
+    pub min_amount_out: i64,
 }
 
 #[repr(C)]

@@ -59,7 +59,7 @@ pub struct ClientPrimaryAccountHeader {
     pub second_ref_link_ratio: f64,
     pub ref_program_discount: f64,
     pub ref_program_ratio: f64,
-    pub swap_ref_fee: i64, // swap_ref_fee <- assigned by admin(set swap ref fee). 0 <= field <= 0.001. Increase base final fee_rate on swap_ref_fee
+    pub reserved: i64,
     pub mask: i64,
     pub id: ClientId,
     pub ref_client_id: ClientId,
