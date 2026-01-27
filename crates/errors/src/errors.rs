@@ -840,6 +840,12 @@ pub enum DeriverseErrorKind {
         name: String,
         instruction_number: u32,
     },
+
+    #[error(
+        code = 320,
+        msg = "Invalid min out amount: required min out amount {min_amount}, final out amount {amount}"
+    )]
+    InvalidMinOutAmount { min_amount: i64, amount: i64 },
 }
 #[cfg(test)]
 mod tests {
