@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [unreleased]
 
-## [v2.25] - 2026-01-27
+## [v2.26] - 2026-01-27
 
 ## Changed
 - `SwapData` - added `min_out_amount` field and `ref_fee_rate` field
