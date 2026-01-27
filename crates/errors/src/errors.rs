@@ -728,7 +728,7 @@ pub enum DeriverseErrorKind {
         code = 300,
         msg = "Slippage bounds exceeded. Price: {price}, Bounds type: {bound_price}"
     )]
-    SlippageExceeded { price: i64, bound_price: i64 },
+    PriceSlippageExceeded { price: i64, bound_price: i64 },
 
     #[error(
         code = 301,
@@ -843,9 +843,9 @@ pub enum DeriverseErrorKind {
 
     #[error(
         code = 320,
-        msg = "Invalid min out amount: required min out amount {min_amount}, final out amount {amount}"
+        msg = "Slippage bounds exceeded. Out amount: {amount}, Bounds amount: {bound_amount}"
     )]
-    InvalidMinOutAmount { min_amount: i64, amount: i64 },
+    OutAmountSlippageExceeded { bound_amount: i64, amount: i64 },
 }
 #[cfg(test)]
 mod tests {

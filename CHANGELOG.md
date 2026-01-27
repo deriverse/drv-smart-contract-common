@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [unreleased]
 
+## [v2.27] - 2026-01-27
+
+## Changed
+- Renamed `InvalidOutAmount` error to `OutAmountSlippageExceeded`
+
 ## [v2.26] - 2026-01-27
 
 ## Changed
