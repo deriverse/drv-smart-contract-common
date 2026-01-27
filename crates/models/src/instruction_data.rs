@@ -369,6 +369,8 @@ pub struct WithdrawData {
 /// - `instr_id` - Instr pair id
 /// - `price` - Limit price for a swap
 /// - `amount` - Swaps qty in base crncy
+/// - `ref_fee_rate` - Referral fee for swap orders, 0 by default
+/// - `min_amount_out` - Min amount threshold for trade result, 0 by default
 pub struct SwapData {
     pub tag: u8,
     pub input_crncy: u8,
@@ -377,9 +379,7 @@ pub struct SwapData {
     pub price: i64,
     pub amount: i64,
     pub ref_fee_rate: f64,
-    pub min_amount_out: i64, // - 0 by default. Check final tokens amount
-                             // pub fee_ref_fee_rate: f64 if more then MAX_FEE_RATE -
-                             // Additional keys (swap_ref_id != 0): Cliet Primary + Client Community
+    pub min_amount_out: i64,
 }
 
 #[repr(C)]
