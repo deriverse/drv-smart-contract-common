@@ -39,15 +39,15 @@ pub mod log_type {
     pub const CHANGED_POINTS: u8 = 34;
     pub const SWAP_FEES: u8 = 35;
     pub const VM_INIT_ACTIVATE: u8 = 36;
-    pub const VM_INIT_ACTIVATE_CANCEL: u8 = 38;
-    pub const VM_FINALIZE_ACTIVATE: u8 = 39;
-    pub const VM_INIT_DEACTIVATE: u8 = 40;
-    pub const VM_INIT_DEACTIVATE_CANCEL: u8 = 41;
-    pub const VM_FINALIZE_DEACTIVATE: u8 = 42;
-    pub const VM_CHANGE_LIST: u8 = 43;
-    pub const VM_INIT_WITHDRAW: u8 = 44;
-    pub const VM_INIT_WITHDRAW_CANCEL: u8 = 45;
-    pub const VM_INIT_WITHDRAW_FINALIZE: u8 = 46;
+    pub const VM_INIT_ACTIVATE_CANCEL: u8 = 37;
+    pub const VM_FINALIZE_ACTIVATE: u8 = 38;
+    pub const VM_INIT_DEACTIVATE: u8 = 39;
+    pub const VM_INIT_DEACTIVATE_CANCEL: u8 = 40;
+    pub const VM_FINALIZE_DEACTIVATE: u8 = 41;
+    pub const VM_CHANGE_LIST: u8 = 42;
+    pub const VM_INIT_WITHDRAW: u8 = 43;
+    pub const VM_INIT_WITHDRAW_CANCEL: u8 = 44;
+    pub const VM_INIT_WITHDRAW_FINALIZE: u8 = 45;
 }
 
 #[repr(C)]
