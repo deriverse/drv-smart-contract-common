@@ -474,3 +474,226 @@ pub struct SwapRefFeesReport {
     pub padding_u32: u32,
     pub fees: i64,
 }
+
+#[repc(C)]
+#[derive(Copy, Clone, Zeroable, Pod, Default)]
+pub struct VmInitActivateReport {
+    pub tag: u8,
+    pub padding_u8: u8,
+    pub padding_u16: u16,
+    pub client_id: u32,
+    pub time: u32,
+}
+
+#[repc(C)]
+#[derive(Copy, Clone, Zeroable, Pod, Default)]
+pub struct VmInitActivateCancelReport {
+    pub tag: u8,
+    pub padding_u8: u8,
+    pub padding_u16: u16,
+    pub client_id: u32,
+    pub time: u32,
+}
+
+#[repc(C)]
+#[derive(Copy, Clone, Zeroable, Pod, Default)]
+pub struct VmFinalizeActivateReport {
+    pub tag: u8,
+    pub padding_u8: u8,
+    pub padding_u16: u16,
+    pub client_id: u32,
+    pub time: u32,
+}
+
+#[repc(C)]
+#[derive(Copy, Clone, Zeroable, Pod, Default)]
+pub struct VmInitDeactivateReport {
+    pub tag: u8,
+    pub padding_u8: u8,
+    pub padding_u16: u16,
+    pub client_id: u32,
+    pub time: u32,
+}
+
+#[repc(C)]
+#[derive(Copy, Clone, Zeroable, Pod, Default)]
+pub struct VmInitDeactivateCancelReport {
+    pub tag: u8,
+    pub padding_u8: u8,
+    pub padding_u16: u16,
+    pub client_id: u32,
+    pub time: u32,
+}
+
+#[repc(C)]
+#[derive(Copy, Clone, Zeroable, Pod, Default)]
+pub struct VmFinalizeDeactivateReport {
+    pub tag: u8,
+    pub padding_u8: u8,
+    pub padding_u16: u16,
+    pub client_id: u32,
+    pub time: u32,
+}
+
+#[repr(C)]
+#[derive(Copy, Clone, Zeroable, Pod, Default)]
+pub struct VmChangeListReport {
+    pub tag: u8,
+    pub padding_u8: u8,
+    pub padding_u16: u16,
+    pub client_id: u32,
+    pub time: u32,
+}
+
+#[repr(C)]
+#[derive(Copy, Clone, Zeroable, Pod, Default)]
+pub struct VmInitWithdrawReport {
+    pub tag: u8,
+    pub padding_u8: u8,
+    pub padding_u16: u16,
+    pub client_id: u32,
+    pub token_id: u32,
+    pub time: u32,
+    pub amount: i64,
+}
+
+#[repr(C)]
+#[derive(Copy, Clone, Zeroable, Pod, Default)]
+pub struct VmInitWithdrawReport {
+    pub tag: u8,
+    pub padding_u8: u8,
+    pub padding_u16: u16,
+    pub client_id: u32,
+    pub token_id: u32,
+    pub time: u32,
+    pub amount: i64,
+}
+
+#[repr(C)]
+#[derive(Copy, Clone, Zeroable, Pod, Default)]
+pub struct VmInitWithdrawCancelReport {
+    pub tag: u8,
+    pub padding_u8: u8,
+    pub padding_u16: u16,
+    pub client_id: u32,
+    pub token_id: u32,
+    pub time: u32,
+}
+
+#[repr(C)]
+#[derive(Copy, Clone, Zeroable, Pod, Default)]
+pub struct VmInitWithdrawFinalizeReport {
+    pub tag: u8,
+    pub padding_u8: u8,
+    pub padding_u16: u16,
+    pub client_id: u32,
+    pub token_id: u32,
+    pub time: u32,
+    pub amount: i64,
+}
+
+#[repr(C)]
+#[derive(Copy, Clone, Zeroable, Pod, Default)]
+pub struct VmInitActivateReport {
+    pub tag: u8,
+    pub padding_u8: u8,
+    pub padding_u16: u16,
+    pub client_id: u32,
+    pub time: u32,
+    pub padding: u32,
+}
+
+#[repr(C)]
+#[derive(Copy, Clone, Zeroable, Pod, Default)]
+pub struct VmInitActivateCancelReport {
+    pub tag: u8,
+    pub padding_u8: u8,
+    pub padding_u16: u16,
+    pub client_id: u32,
+    pub time: u32,
+}
+
+#[repr(C)]
+#[derive(Copy, Clone, Zeroable, Pod, Default)]
+pub struct VmFinalizeActivateReport {
+    pub tag: u8,
+    pub padding_u8: u8,
+    pub padding_u16: u16,
+    pub client_id: u32,
+    pub time: u32,
+}
+
+#[repr(C)]
+#[derive(Copy, Clone, Zeroable, Pod, Default)]
+pub struct VmInitDeactivateReport {
+    pub tag: u8,
+    pub padding_u8: u8,
+    pub padding_u16: u16,
+    pub client_id: u32,
+    pub time: u32,
+}
+
+#[repr(C)]
+#[derive(Copy, Clone, Zeroable, Pod, Default)]
+pub struct VmInitDeactivateCancelReport {
+    pub tag: u8,
+    pub padding_u8: u8,
+    pub padding_u16: u16,
+    pub client_id: u32,
+    pub time: u32,
+}
+
+#[repr(C)]
+#[derive(Copy, Clone, Zeroable, Pod, Default)]
+pub struct VmFinalizeDeactivateReport {
+    pub tag: u8,
+    pub padding_u8: u8,
+    pub padding_u16: u16,
+    pub client_id: u32,
+    pub time: u32,
+}
+
+#[repr(C)]
+#[derive(Copy, Clone, Zeroable, Pod, Default)]
+pub struct VmChangeListReport {
+    pub tag: u8,
+    pub padding_u8: u8,
+    pub padding_u16: u16,
+    pub client_id: u32,
+    pub time: u32,
+}
+
+#[repr(C)]
+#[derive(Copy, Clone, Zeroable, Pod, Default)]
+pub struct VmInitWithdrawReport {
+    pub tag: u8,
+    pub padding_u8: u8,
+    pub padding_u16: u16,
+    pub client_id: u32,
+    pub token_id: u32,
+    pub time: u32,
+    pub amount: i64,
+}
+
+#[repr(C)]
+#[derive(Copy, Clone, Zeroable, Pod, Default)]
+pub struct VmInitWithdrawCancelReport {
+    pub tag: u8,
+    pub padding_u8: u8,
+    pub padding_u16: u16,
+    pub client_id: u32,
+    pub token_id: u32,
+    pub time: u32,
+}
+
+#[repr(C)]
+#[derive(Copy, Clone, Zeroable, Pod, Default)]
+pub struct VmInitWithdrawFinalizeReport {
+    pub tag: u8,
+    pub padding_u8: u8,
+    pub padding_u16: u16,
+    pub client_id: u32,
+    pub token_id: u32,
+    pub time: u32,
+    pub amount: i64,
+}
