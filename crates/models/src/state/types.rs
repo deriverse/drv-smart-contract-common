@@ -592,3 +592,15 @@ pub mod vm_status {
         assert_eq!(size, 8, "Incorrect spot amount");
     }
 }
+
+pub mod quote_replace_orders {
+    use super::*;
+
+    #[repr(C)]
+    #[derive(Clone, Copy, Debug, Zeroable, Pod)]
+    pub struct QuoteReplaceOrder {
+        pub new_price: i64,
+        pub new_qty: i64,
+        pub old_id: i64,
+    }
+}
