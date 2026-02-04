@@ -1,6 +1,6 @@
 use crate::{
     new_types::{instrument::InstrId, version::Version},
-    state::types::{vm_status::VmMask, QuoteReplaceOrder},
+    state::types::vm_status::VmMask,
 };
 use bytemuck::{Pod, Zeroable};
 
