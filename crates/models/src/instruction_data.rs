@@ -401,7 +401,7 @@ pub struct SwapData {
 pub struct SpotQuotesReplaceData {
     pub tag: u8,
     padding_u8: u8, // <- rename to bump for bots
-    mask: QuoteMask,
+    pub mask: QuoteMask,
     pub instr_id: InstrId,
 }
 
