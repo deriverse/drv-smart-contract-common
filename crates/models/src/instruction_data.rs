@@ -1,6 +1,6 @@
 use crate::{
     new_types::{instrument::InstrId, version::Version},
-    state::types::vm_status::VmMask,
+    state::types::{quote_status::QuoteMask, vm_status::VmMask},
 };
 use bytemuck::{Pod, Zeroable};
 
@@ -400,16 +400,9 @@ pub struct SwapData {
 /// - `old_ask_order_id` - Old Asko order id
 pub struct SpotQuotesReplaceData {
     pub tag: u8,
-    padding_u8: u8,   // <- rename to bump for bots
-    padding_u16: u16, // <- first 4 bits - orders count max(12), ask/bid mask for each order
+    padding_u8: u8, // <- rename to bump for bots
+    mask: QuoteMask,
     pub instr_id: InstrId,
-    // pub orders: [QuoteReplaceOrder; 12],
-    pub new_bid_price: i64,
-    pub new_bid_qty: i64,
-    pub old_bid_order_id: i64,
-    pub new_ask_price: i64,
-    pub new_ask_qty: i64,
-    pub old_ask_order_id: i64,
 }
 
 #[repr(C)]
