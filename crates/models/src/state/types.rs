@@ -598,7 +598,7 @@ pub mod quote_status {
 
     #[repr(C)]
     #[derive(Clone, Copy, Debug, Zeroable, Pod)]
-    pub struct QuoteReplaceOrder {
+    pub struct QuoteOrder {
         pub new_price: i64,
         pub new_qty: i64,
         pub old_id: i64,
