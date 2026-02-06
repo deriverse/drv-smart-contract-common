@@ -847,7 +847,7 @@ pub enum DeriverseErrorKind {
     )]
     OutAmountSlippageExceeded { bound_amount: i64, amount: i64 },
 
-    #[error(code = 321, msg = "Cannot assign Vm Authority to to self")]
+    #[error(code = 321, msg = "Cannot assign Vm Authority to self")]
     InvalidVmAuthorityAssignment,
 
     #[error(code = 322, msg = "Allocation is forbidden")]

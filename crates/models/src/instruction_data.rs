@@ -423,15 +423,9 @@ pub struct SpotQuotesReplaceData {
 /// - `old_ask_order_id` - Old Asko order id
 pub struct PerpQuotesReplaceData {
     pub tag: u8,
-    padding_u8: u8,
-    padding_u16: u16,
+    padding_u8: u8, // <- rename to bump for bots
+    pub mask: QuoteMask,
     pub instr_id: InstrId,
-    pub new_bid_price: i64,
-    pub new_bid_qty: i64,
-    pub old_bid_order_id: i64,
-    pub new_ask_price: i64,
-    pub new_ask_qty: i64,
-    pub old_ask_order_id: i64,
 }
 
 #[repr(C)]
