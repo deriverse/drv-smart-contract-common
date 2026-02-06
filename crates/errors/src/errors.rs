@@ -846,6 +846,9 @@ pub enum DeriverseErrorKind {
         msg = "Slippage bounds exceeded. Out amount: {amount}, Bounds amount: {bound_amount}"
     )]
     OutAmountSlippageExceeded { bound_amount: i64, amount: i64 },
+
+    #[error(code = 321, msg = "Cannot assign Vm Authority to to self")]
+    InvalidVmAuthorityAssignment,
 }
 #[cfg(test)]
 mod tests {
