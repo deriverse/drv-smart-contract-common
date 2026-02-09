@@ -849,6 +849,9 @@ pub enum DeriverseErrorKind {
 
     #[error(code = 321, msg = "Cannot assign Vm Authority to to self")]
     InvalidVmAuthorityAssignment,
+
+    #[error(code = 322, msg = "Allocation is forbidden")]
+    AllocationIsForbidden,
 }
 #[cfg(test)]
 mod tests {
