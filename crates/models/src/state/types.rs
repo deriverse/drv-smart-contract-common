@@ -312,7 +312,7 @@ pub struct AssetRecord {
 }
 
 #[repr(C)]
-#[derive(Copy, Clone, Debug)]
+#[derive(Copy, Clone, Debug, PartialEq, Pod, Zeroable)]
 /// Order
 ///
 /// 1. **`qty`** — The total quantity of the order.
