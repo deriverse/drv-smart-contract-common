@@ -364,5 +364,5 @@ impl DrvInstruction for VmChangeWhitelist {
 pub struct ExtendCandles;
 impl DrvInstruction for ExtendCandles {
     const INSTRUCTION_NUMBER: u8 = 73;
-    const MIN_ACCOUNTS: usize = 3;
+    const MIN_ACCOUNTS: usize = 4;
 }
