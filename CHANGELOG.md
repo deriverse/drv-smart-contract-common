@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [unreleased]
 
+## [v2.30] - 2026-02-12
+
+## Added 
+- `Extend Candles` instruction
+- Changed `swap` min accounts
+
+
 ## [v2.29] - 2026-02-06
 
 ## Added

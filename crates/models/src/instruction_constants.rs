@@ -114,7 +114,7 @@ impl DrvInstruction for DividendsAllocationInstruction {
 pub struct SwapInstruction;
 impl DrvInstruction for SwapInstruction {
     const INSTRUCTION_NUMBER: u8 = 26;
-    const MIN_ACCOUNTS: usize = 28;
+    const MIN_ACCOUNTS: usize = 21;
 }
 
 pub struct AirdropInstruction;
@@ -359,4 +359,10 @@ pub struct VmChangeWhitelist;
 impl DrvInstruction for VmChangeWhitelist {
     const INSTRUCTION_NUMBER: u8 = 72;
     const MIN_ACCOUNTS: usize = 3;
+}
+
+pub struct ExtendCandles;
+impl DrvInstruction for ExtendCandles {
+    const INSTRUCTION_NUMBER: u8 = 73;
+    const MIN_ACCOUNTS: usize = 4;
 }

@@ -37,9 +37,10 @@ pub struct Candle {
 }
 pub const CANDLE_SIZE: usize = size_of::<Candle>();
 
+#[derive(Debug, PartialEq)]
 #[pod_wrapper]
 #[repr(C)]
-#[derive(Pod, Zeroable, Clone, Copy, Debug)]
+#[derive(Pod, Zeroable, Clone, Copy, Debug, PartialEq)]
 /// Describe the state of candles buffer based on candles tag and instrument.
 ///
 /// 4. **`count`** - amount of allocated candles in the buffer. count < CANDLE.capacity
