@@ -360,3 +360,9 @@ impl DrvInstruction for VmChangeWhitelist {
     const INSTRUCTION_NUMBER: u8 = 72;
     const MIN_ACCOUNTS: usize = 3;
 }
+
+pub struct ExtendCandles;
+impl DrvInstruction for ExtendCandles {
+    const INSTRUCTION_NUMBER: u8 = 73;
+    const MIN_ACCOUNTS: usize = 3;
+}
