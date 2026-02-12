@@ -807,12 +807,3 @@ pub struct VmChangeWhitelistData {
     pub mask: VmMask,
     pub whitelist: [u32; 8],
 }
-
-#[repr(C)]
-#[derive(Clone, Copy, Pod, Zeroable)]
-pub struct ExtendCandles {
-    pub tag: u8,
-    pub padding_u8: u8,
-    pub padding_u16: u16,
-    pub instr_id: InstrId,
-}
