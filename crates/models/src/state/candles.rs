@@ -37,6 +37,7 @@ pub struct Candle {
 }
 pub const CANDLE_SIZE: usize = size_of::<Candle>();
 
+#[derive(Debug, PartialEq)]
 #[pod_wrapper]
 #[repr(C)]
 #[derive(Pod, Zeroable, Clone, Copy, Debug, PartialEq)]
