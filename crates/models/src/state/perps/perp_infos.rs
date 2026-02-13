@@ -2,7 +2,7 @@
 ///! - Store information about clients state on perp
 ///! - Each info record is stored in an array in different accounts at temp_client_id index and managed by memory map from maps_acc
 use crate::{new_types::client::ClientId, state::types::OrderSide};
-use bytemuck::Zeroable;
+use bytemuck::{Pod, Zeroable};
 
 use std::mem::size_of;
 
@@ -13,7 +13,7 @@ pub fn get_perp_info<T>(data: &[u8], id: ClientId) -> *mut T {
 }
 
 #[repr(C)]
-#[derive(Copy, Clone, Zeroable, Debug)]
+#[derive(Copy, Clone, Pod, Zeroable, Debug)]
 /// Perp Client Info
 ///
 /// 1. **`funds`** - Client available funds in base crncy
@@ -30,7 +30,7 @@ pub struct PerpClientInfo {
 pub const PERP_CLIENT_INFO_SIZE: usize = size_of::<PerpClientInfo>();
 
 #[repr(C)]
-#[derive(Copy, Clone, Zeroable, Debug)]
+#[derive(Copy, Clone, Pod, Zeroable, Debug)]
 /// Perp Client Info 2
 ///
 /// 1. **`cost`** - Amount of funds in base crncy spent or received for the open position
@@ -66,7 +66,7 @@ impl PerpClientInfo2 {
 }
 
 #[repr(C)]
-#[derive(Copy, Clone, Zeroable, Debug)]
+#[derive(Copy, Clone, Pod, Zeroable, Debug)]
 /// Perp Client Info 3
 ///
 /// 1. **`client`** - Original client id
@@ -87,7 +87,7 @@ pub struct PerpClientInfo3 {
 pub const PERP_CLIENT_INFO3_SIZE: usize = size_of::<PerpClientInfo3>();
 
 #[repr(C)]
-#[derive(Copy, Clone, Zeroable, Debug)]
+#[derive(Copy, Clone, Pod, Zeroable, Debug)]
 /// Perp Client Info 4
 ///
 /// 1. **`last_soc_loss_rate`** - Last social loss rate according to clients position
@@ -104,7 +104,7 @@ pub struct PerpClientInfo4 {
 pub const PERP_CLIENT_INFO4_SIZE: usize = size_of::<PerpClientInfo4>();
 
 #[repr(C)]
-#[derive(Copy, Clone, Zeroable, Debug)]
+#[derive(Copy, Clone, Pod, Zeroable, Debug)]
 /// Perp Client Info 5
 ///
 /// 1. **`funding_funds`** - Statistic over received funding funds from protocol

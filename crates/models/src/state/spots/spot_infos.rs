@@ -1,7 +1,7 @@
 ///! # Spot client infos module
 ///! - Store information about clients state on spot
 ///! - Each info record is stored in an array in different accounts at temp_client_id index and managed by memory map from maps_acc
-use bytemuck::Zeroable;
+use bytemuck::{Pod, Zeroable};
 use std::mem::size_of;
 
 use crate::new_types::client::ClientId;
@@ -13,7 +13,7 @@ pub fn get_spot_info<T>(data: &[u8], id: ClientId) -> *mut T {
 }
 
 #[repr(C)]
-#[derive(Copy, Clone, Zeroable)]
+#[derive(Copy, Clone, Pod, Zeroable, Debug)]
 /// Spot Client Info
 ///
 /// 1. **`client`** - Original client id
@@ -34,7 +34,7 @@ pub struct SpotClientInfo {
 pub const SPOT_CLIENT_INFO_SIZE: usize = size_of::<SpotClientInfo>();
 
 #[repr(C)]
-#[derive(Copy, Clone, Zeroable)]
+#[derive(Copy, Clone, Pod, Zeroable, Debug)]
 
 /// Spo Client Info 2
 ///
