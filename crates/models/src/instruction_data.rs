@@ -400,7 +400,7 @@ pub struct SwapData {
 /// - `old_ask_order_id` - Old Asko order id
 pub struct SpotQuotesReplaceData {
     pub tag: u8,
-    padding_u8: u8, // <- rename to bump for bots
+    pub padding_u8: u8, // <- rename to bump for bots
     pub mask: QuoteMask,
     pub instr_id: InstrId,
 }
