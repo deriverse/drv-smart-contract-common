@@ -858,6 +858,15 @@ pub enum DeriverseErrorKind {
         msg = "Quotes params crossed, min ask price: {min_ask}, max bid price {max_bid}"
     )]
     CrossQuotesParams { min_ask: i64, max_bid: i64 },
+
+    #[error(
+        code = 324,
+        msg = "Invalid quote orders amount mask amount: {mask_amount}, orders amount: {orders_amount}"
+    )]
+    InvalidQuoteOrdersAmount {
+        mask_amount: u32,
+        orders_amount: u32,
+    },
 }
 #[cfg(test)]
 mod tests {
