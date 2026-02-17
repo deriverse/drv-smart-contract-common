@@ -7,8 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [unreleased]
 
+## [v2.31] - 2026-02-12
+
 ## Added
 - `Pod` implementation for `ClientInfos`
+- `QuoteMask` for managing multiple quote orders
+
+## Changed
+- `QuoteReplace` instruction data
 
 ## [v2.30] - 2026-02-12
 
