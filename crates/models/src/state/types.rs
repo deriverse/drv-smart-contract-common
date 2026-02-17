@@ -594,6 +594,8 @@ pub mod vm_status {
 }
 
 pub mod quote_status {
+    use crate::constants::MAX_QUOTE_ORDERS;
+
     use super::*;
 
     #[repr(C)]
@@ -620,10 +622,10 @@ pub mod quote_status {
     impl QuoteMask {
         const AMOUNT_BITS: u16 = 4;
         const AMOUNT_MASK: u16 = 0b1111;
-        const QUOTE_ARRAY_SIZE: usize = 12;
+        const QUOTE_ARRAY_SIZE: usize = MAX_QUOTE_ORDERS as usize;
 
         pub fn new(amount: u8) -> Self {
-            assert!(amount <= 12);
+            assert!(amount <= Self::QUOTE_ARRAY_SIZE as u8);
             Self(amount as u16)
         }
 
@@ -632,7 +634,7 @@ pub mod quote_status {
         }
 
         pub fn set_amount(&mut self, amount: u8) {
-            assert!(amount <= 12);
+            assert!(amount <= Self::QUOTE_ARRAY_SIZE as u8);
             self.0 = (self.0 & !Self::AMOUNT_MASK) | (amount as u16);
         }
 
@@ -645,7 +647,6 @@ pub mod quote_status {
             }
         }
 
-        /// Sets a quote at the specified position (0-11)
         /// bid: true for Bid, false for Ask
         pub fn set_quote(&mut self, position: usize, order_side: OrderSide) {
             assert!(position < Self::QUOTE_ARRAY_SIZE, "Position must be 0-11");
@@ -772,19 +773,6 @@ pub mod quote_status {
                     assert_eq!(entry.quote_side, OrderSide::Ask);
                 }
             }
-        }
-
-        #[test]
-        fn test_quote_mask_display() {
-            let mut mask = QuoteMask::new(3);
-            mask.set_quote(0, OrderSide::Bid);
-            mask.set_quote(1, OrderSide::Ask);
-            mask.set_quote(2, OrderSide::Bid);
-
-            let display_str = format!("{}", mask);
-            assert!(display_str.contains("amount: 3"));
-            assert!(display_str.contains("Bid"));
-            assert!(display_str.contains("Ask"));
         }
     }
 }

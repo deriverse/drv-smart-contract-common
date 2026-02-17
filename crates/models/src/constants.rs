@@ -98,6 +98,8 @@ pub const EMA_PERIOD: f64 = 60f64;
 
 pub const MAX_SWAP_FEE_RATE: f64 = 0.0002;
 
+pub const MAX_QUOTE_ORDERS: u8 = 12;
+
 pub mod nulls {
     pub const NULL_NODE: u32 = 0xFFFFFFFF;
     pub const NULL_ORDER: u32 = 0xFFFF;
