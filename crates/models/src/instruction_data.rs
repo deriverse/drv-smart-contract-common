@@ -391,13 +391,8 @@ pub struct SwapData {
 /// **Tag:** `34`
 ///
 /// ### Fields
+/// - `mask` - Multiple quotes order manager
 /// - `instr_id` - Instr pair id
-/// - `new_bid_price` - Limit price for a swap on Bid
-/// - `new_bid_qty` - New Bid order qty
-/// - `old_bid_order_id` - Old Bid order id
-/// - `new_ask_price` - Limit price for a swap on Ask
-/// - `new_ask_qty` - New Ask order qty
-/// - `old_ask_order_id` - Old Asko order id
 pub struct SpotQuotesReplaceData {
     pub tag: u8,
     pub padding_u8: u8, // <- rename to bump for bots
@@ -414,13 +409,8 @@ pub struct SpotQuotesReplaceData {
 /// **Tag:** `42`
 ///
 /// ### Fields
+/// - `mask` - Multiple quotes order manager
 /// - `instr_id` - Instr pair id
-/// - `new_bid_price` - Limit price for a swap on Bid
-/// - `new_bid_qty` - New Bid order qty
-/// - `old_bid_order_id` - Old Bid order id
-/// - `new_ask_price` - Limit price for a swap on Ask
-/// - `new_ask_qty` - New Ask order qty
-/// - `old_ask_order_id` - Old Asko order id
 pub struct PerpQuotesReplaceData {
     pub tag: u8,
     padding_u8: u8, // <- rename to bump for bots
