@@ -852,6 +852,12 @@ pub enum DeriverseErrorKind {
 
     #[error(code = 322, msg = "Allocation is forbidden")]
     AllocationIsForbidden,
+
+    #[error(
+        code = 323,
+        msg = "Quotes params crossed, min ask price: {min_ask}, max bid price {max_bid}"
+    )]
+    CrossQuotesParams { min_ask: i64, max_bid: i64 },
 }
 #[cfg(test)]
 mod tests {
