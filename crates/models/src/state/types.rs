@@ -7,7 +7,7 @@ use solana_sdk::pubkey::Pubkey;
 
 use crate::new_types::{client::ClientId, tag::Tag, version::Version};
 
-#[derive(Clone, Copy, PartialEq, Debug, Serialize, Deserialize)]
+#[derive(Clone, Copy, PartialEq, Eq, Debug, Serialize, Deserialize)]
 pub enum OrderSide {
     Bid,
     Ask,
@@ -590,5 +590,189 @@ pub mod vm_status {
 
         assert_eq!(spot, 3, "Incorrect spot amount");
         assert_eq!(size, 8, "Incorrect spot amount");
+    }
+}
+
+pub mod quote_status {
+    use crate::constants::MAX_QUOTE_ORDERS;
+
+    use super::*;
+
+    #[repr(C)]
+    #[derive(Clone, Copy, Debug, Zeroable, Pod)]
+    pub struct QuoteOrder {
+        pub new_price: i64,
+        pub new_qty: i64,
+        pub old_id: i64,
+    }
+
+    /// A mask that stores quote information in a u16:
+    /// - First 4 bits (0-3): amount field (0-15)
+    /// - Next 12 bits (4-15): array of booleans where bid = 1 and ask = 0
+    #[derive(Clone, Copy, Pod, Zeroable, Debug, PartialEq, Eq)]
+    #[repr(transparent)]
+    pub struct QuoteMask(pub u16);
+
+    #[derive(Clone, Copy, Debug, PartialEq, Eq)]
+    pub struct QuoteEntry {
+        pub position: usize,
+        pub quote_side: OrderSide,
+    }
+
+    impl QuoteMask {
+        const AMOUNT_BITS: u16 = 4;
+        const AMOUNT_MASK: u16 = 0b1111;
+        const QUOTE_ARRAY_SIZE: usize = MAX_QUOTE_ORDERS as usize;
+
+        pub fn new(amount: u8) -> Self {
+            assert!(amount <= Self::QUOTE_ARRAY_SIZE as u8);
+            Self(amount as u16)
+        }
+
+        pub fn amount(&self) -> u8 {
+            (self.0 & Self::AMOUNT_MASK) as u8
+        }
+
+        pub fn set_amount(&mut self, amount: u8) {
+            assert!(amount <= Self::QUOTE_ARRAY_SIZE as u8);
+            self.0 = (self.0 & !Self::AMOUNT_MASK) | (amount as u16);
+        }
+
+        pub fn quote_side(&self, position: usize) -> OrderSide {
+            let bit_position = Self::AMOUNT_BITS + position as u16;
+            if (self.0 >> bit_position) & 1 != 0 {
+                OrderSide::Bid
+            } else {
+                OrderSide::Ask
+            }
+        }
+
+        /// bid: true for Bid, false for Ask
+        pub fn set_quote(&mut self, position: usize, order_side: OrderSide) {
+            assert!(position < Self::QUOTE_ARRAY_SIZE, "Position must be 0-11");
+            let bit_position = Self::AMOUNT_BITS + position as u16;
+
+            match order_side {
+                OrderSide::Bid => self.0 |= 1 << bit_position,
+                OrderSide::Ask => self.0 &= !(1 << bit_position),
+            }
+        }
+
+        pub fn clear_quotes(&mut self) {
+            self.0 &= Self::AMOUNT_MASK;
+        }
+    }
+
+    impl IntoIterator for QuoteMask {
+        type Item = QuoteEntry;
+        type IntoIter = QuoteMaskIter;
+
+        fn into_iter(self) -> Self::IntoIter {
+            QuoteMaskIter {
+                mask: self,
+                len: self.amount() as usize,
+                position: 0,
+            }
+        }
+    }
+
+    pub struct QuoteMaskIter {
+        mask: QuoteMask,
+        len: usize,
+        position: usize,
+    }
+
+    impl Iterator for QuoteMaskIter {
+        type Item = QuoteEntry;
+
+        fn next(&mut self) -> Option<Self::Item> {
+            if self.position >= self.len {
+                return None;
+            }
+
+            let current_position = self.position;
+            self.position += 1;
+
+            Some(QuoteEntry {
+                position: current_position,
+                quote_side: self.mask.quote_side(current_position),
+            })
+        }
+    }
+
+    impl std::fmt::Display for QuoteMask {
+        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+            write!(f, "QuoteMask(amount: {}, quotes: [", self.amount())?;
+            for (i, entry) in self.into_iter().enumerate() {
+                if i > 0 {
+                    write!(f, ", ")?;
+                }
+                write!(f, "{}", entry.quote_side)?;
+            }
+            write!(f, "])")
+        }
+    }
+
+    #[cfg(test)]
+    mod tests {
+        use super::*;
+
+        #[test]
+        fn test_quote_mask_amount() {
+            let mut mask = QuoteMask::new(5);
+            assert_eq!(mask.amount(), 5);
+
+            mask.set_amount(12);
+            assert_eq!(mask.amount(), 12);
+        }
+
+        #[test]
+        fn test_quote_mask_quotes() {
+            let mut mask = QuoteMask::new(3);
+
+            for i in 0..mask.amount() as usize {
+                assert_eq!(mask.quote_side(i), OrderSide::Ask);
+            }
+
+            mask.set_quote(0, OrderSide::Bid);
+            mask.set_quote(5, OrderSide::Bid);
+            mask.set_quote(11, OrderSide::Bid);
+
+            assert_eq!(mask.quote_side(0), OrderSide::Bid);
+            assert_eq!(mask.quote_side(5), OrderSide::Bid);
+            assert_eq!(mask.quote_side(11), OrderSide::Bid);
+
+            assert_eq!(mask.quote_side(1), OrderSide::Ask);
+            assert_eq!(mask.quote_side(6), OrderSide::Ask);
+            assert_eq!(mask.quote_side(1), OrderSide::Ask);
+        }
+
+        #[test]
+        fn test_quote_mask_iterator() {
+            let mut mask = QuoteMask::new(7);
+
+            for i in 0..mask.amount() as usize {
+                mask.set_quote(
+                    i,
+                    if i % 2 == 0 {
+                        OrderSide::Bid
+                    } else {
+                        OrderSide::Ask
+                    },
+                );
+            }
+
+            let entries: Vec<QuoteEntry> = mask.into_iter().collect();
+            assert_eq!(entries.len(), 7);
+
+            for (i, entry) in entries.iter().enumerate() {
+                assert_eq!(entry.position, i);
+                if i % 2 == 0 {
+                    assert_eq!(entry.quote_side, OrderSide::Bid);
+                } else {
+                    assert_eq!(entry.quote_side, OrderSide::Ask);
+                }
+            }
+        }
     }
 }

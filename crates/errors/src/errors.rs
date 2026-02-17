@@ -847,11 +847,26 @@ pub enum DeriverseErrorKind {
     )]
     OutAmountSlippageExceeded { bound_amount: i64, amount: i64 },
 
-    #[error(code = 321, msg = "Cannot assign Vm Authority to to self")]
+    #[error(code = 321, msg = "Cannot assign Vm Authority to self")]
     InvalidVmAuthorityAssignment,
 
     #[error(code = 322, msg = "Allocation is forbidden")]
     AllocationIsForbidden,
+
+    #[error(
+        code = 323,
+        msg = "Quotes params crossed, min ask price: {min_ask}, max bid price {max_bid}"
+    )]
+    CrossQuotesParams { min_ask: i64, max_bid: i64 },
+
+    #[error(
+        code = 324,
+        msg = "Invalid quote orders amount mask amount: {mask_amount}, orders amount: {orders_amount}"
+    )]
+    InvalidQuoteOrdersAmount {
+        mask_amount: u32,
+        orders_amount: u32,
+    },
 }
 #[cfg(test)]
 mod tests {

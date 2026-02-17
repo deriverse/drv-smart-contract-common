@@ -1,6 +1,6 @@
 use crate::{
     new_types::{instrument::InstrId, version::Version},
-    state::types::vm_status::VmMask,
+    state::types::{quote_status::QuoteMask, vm_status::VmMask},
 };
 use bytemuck::{Pod, Zeroable};
 
@@ -391,24 +391,13 @@ pub struct SwapData {
 /// **Tag:** `34`
 ///
 /// ### Fields
+/// - `mask` - Multiple quotes order manager
 /// - `instr_id` - Instr pair id
-/// - `new_bid_price` - Limit price for a swap on Bid
-/// - `new_bid_qty` - New Bid order qty
-/// - `old_bid_order_id` - Old Bid order id
-/// - `new_ask_price` - Limit price for a swap on Ask
-/// - `new_ask_qty` - New Ask order qty
-/// - `old_ask_order_id` - Old Asko order id
 pub struct SpotQuotesReplaceData {
     pub tag: u8,
-    padding_u8: u8, // <- rename to bump for bots
-    padding_u16: u16,
+    pub padding_u8: u8, // <- rename to bump for bots
+    pub mask: QuoteMask,
     pub instr_id: InstrId,
-    pub new_bid_price: i64,
-    pub new_bid_qty: i64,
-    pub old_bid_order_id: i64,
-    pub new_ask_price: i64,
-    pub new_ask_qty: i64,
-    pub old_ask_order_id: i64,
 }
 
 #[repr(C)]
@@ -420,24 +409,13 @@ pub struct SpotQuotesReplaceData {
 /// **Tag:** `42`
 ///
 /// ### Fields
+/// - `mask` - Multiple quotes order manager
 /// - `instr_id` - Instr pair id
-/// - `new_bid_price` - Limit price for a swap on Bid
-/// - `new_bid_qty` - New Bid order qty
-/// - `old_bid_order_id` - Old Bid order id
-/// - `new_ask_price` - Limit price for a swap on Ask
-/// - `new_ask_qty` - New Ask order qty
-/// - `old_ask_order_id` - Old Asko order id
 pub struct PerpQuotesReplaceData {
     pub tag: u8,
-    padding_u8: u8,
-    padding_u16: u16,
+    padding_u8: u8, // <- rename to bump for bots
+    pub mask: QuoteMask,
     pub instr_id: InstrId,
-    pub new_bid_price: i64,
-    pub new_bid_qty: i64,
-    pub old_bid_order_id: i64,
-    pub new_ask_price: i64,
-    pub new_ask_qty: i64,
-    pub old_ask_order_id: i64,
 }
 
 #[repr(C)]
