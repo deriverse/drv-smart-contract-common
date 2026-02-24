@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [unreleased]
 
+## Changed
+- For `QuoteMask` changed `bid` side to 0
+
 ## [v2.31] - 2026-02-12
 
 ## Added
