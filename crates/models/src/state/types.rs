@@ -85,6 +85,7 @@ pub mod instr_mask {
         SimilarAssets = 0x4,
         UsdStablecoin = 0x8,
         Forex = 0x10,
+        Suspended = 0x20,
     }
 
     #[derive(Clone, Copy, Pod, Zeroable, Debug, Default, PartialEq, Eq)]
