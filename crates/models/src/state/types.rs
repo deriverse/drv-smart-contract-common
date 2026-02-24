@@ -72,8 +72,36 @@ pub mod root_mask {
 }
 
 pub mod instr_mask {
-    pub const PERP_ACTIVE: u32 = 0x40000000;
-    pub const READY_TO_PERP_UPGRADE: u32 = 0x1000000;
+    use bytemuck::{Pod, Zeroable};
+    use serde::{Deserialize, Serialize};
+
+    #[repr(u32)]
+    #[derive(Debug, Serialize, Deserialize, PartialEq, Eq, Clone, Copy)]
+    pub enum InstrFlag {
+        PerpActive = 0x40000000,
+        ReadyToPerpUpgrade = 0x01000000,
+        ZeroFees = 0x1,
+        FixedFees = 0x2,
+        SimilarAssets = 0x4,
+        UsdStablecoin = 0x8,
+        Forex = 0x10,
+    }
+
+    #[derive(Clone, Copy, Pod, Zeroable, Debug, Default, PartialEq, Eq)]
+    #[repr(transparent)]
+    pub struct InstrMask(pub u32);
+
+    impl InstrMask {
+        pub fn get_flag(&self, flag: InstrFlag) -> bool {
+            self.0 & flag as u32 != 0
+        }
+        pub fn set_flag(&mut self, flag: InstrFlag) {
+            self.0 |= flag as u32
+        }
+        pub fn clear_flag(&mut self, flag: InstrFlag) {
+            self.0 &= !(flag as u32)
+        }
+    }
 }
 
 pub mod account_type {
