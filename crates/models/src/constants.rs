@@ -136,6 +136,26 @@ pub mod spot {
     }
 }
 
+pub mod extended_spot {
+    pub const MAX_LINES: usize = 2048 * 4;
+    pub const MAX_ORDERS: u32 = (16 * 64 * 64 - MAX_LINES) as u32 - 2;
+
+    pub mod memory_maps {
+        use super::super::memory_maps::*;
+        use crate::state::spots::spot_account_header::SpotTradeAccountHeader;
+
+        pub const BIDS_TREE_PT_OFFSET: usize =
+            std::mem::size_of::<SpotTradeAccountHeader<0>>() + MEMORY_MAP_UNITS * 8;
+        pub const ASKS_TREE_PT_OFFSET: usize = BIDS_TREE_PT_OFFSET + EXTENDED_MEMORY_MAP_UNITS * 8;
+        pub const BID_ORDERS_PT_OFFSET: usize = ASKS_TREE_PT_OFFSET + EXTENDED_MEMORY_MAP_UNITS * 8;
+        pub const ASK_ORDERS_PT_OFFSET: usize =
+            BID_ORDERS_PT_OFFSET + EXTENDED_MEMORY_MAP_UNITS * 8;
+        pub const LINES_PT_OFFSET: usize = ASK_ORDERS_PT_OFFSET + EXTENDED_MEMORY_MAP_UNITS * 8;
+
+        pub const MAPS_SIZE: usize = LINES_PT_OFFSET + TRADE_MEMORY_MAP_UNITS * 8;
+    }
+}
+
 pub mod perp {
 
     pub const MAX_LINES: usize = 2048 * 4;
