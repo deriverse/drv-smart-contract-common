@@ -213,7 +213,7 @@ pub struct NewInstrumentData {
     pub similar_assets: u8,
     pub padding_u16: u16,
     pub padding_u32: u32,
-    pub crncy_token_id: u32,
+    pub base_token_id: u32,
     pub lut_slot: u32,
     pub price: i64,
 }
