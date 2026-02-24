@@ -146,7 +146,7 @@ pub mod spot {
         pub(crate) const MAPS_SIZE: usize = LINES_PT_OFFSET + SMALL_MEMORY_MAP_UNITS * 8;
     }
 
-    pub const STANDARD_SPOT_CONFIG: SpotConfig = SpotConfig {
+    pub static STANDARD_SPOT_CONFIG: SpotConfig = SpotConfig {
         max_lines: MAX_LINES,
         max_orders: MAX_ORDERS,
         bids_tree_pt_offset: BIDS_TREE_PT_OFFSET,
@@ -199,7 +199,7 @@ pub mod extended_spot {
         pub(crate) const MAPS_SIZE: usize = LINES_PT_OFFSET + TRADE_MEMORY_MAP_UNITS * 8;
     }
 
-    pub const EXTENDED_SPOT_CONFIG: SpotConfig = SpotConfig {
+    pub static EXTENDED_SPOT_CONFIG: SpotConfig = SpotConfig {
         max_lines: MAX_LINES,
         max_orders: MAX_ORDERS,
         bids_tree_pt_offset: BIDS_TREE_PT_OFFSET,
