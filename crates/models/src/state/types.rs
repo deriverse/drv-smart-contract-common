@@ -89,23 +89,56 @@ pub mod instr_mask {
         Suspended = 0x20,
     }
 
+    pub trait SimpleInstrMask {
+        fn get_flag(&self, flag: InstrFlag) -> bool;
+        fn set_flag(&mut self, flag: InstrFlag);
+        fn clear_flag(&mut self, flag: InstrFlag);
+    }
+
     #[derive(Clone, Copy, Pod, Zeroable, Debug, Default, PartialEq, Eq)]
     #[repr(transparent)]
     pub struct InstrMask(pub u32);
 
     impl InstrMask {
-        pub fn get_flag(&self, flag: InstrFlag) -> bool {
-            self.0 & flag as u32 != 0
-        }
-        pub fn set_flag(&mut self, flag: InstrFlag) {
-            self.0 |= flag as u32
-        }
-        pub fn clear_flag(&mut self, flag: InstrFlag) {
-            self.0 &= !(flag as u32)
-        }
-
         pub fn merge(&mut self, input: InstrInputMask) {
             self.0 |= input.0 as u32;
+        }
+    }
+
+    impl SimpleInstrMask for InstrMask {
+        fn get_flag(&self, flag: InstrFlag) -> bool {
+            self.0 & flag as u32 != 0
+        }
+        fn set_flag(&mut self, flag: InstrFlag) {
+            self.0 |= flag as u32
+        }
+        fn clear_flag(&mut self, flag: InstrFlag) {
+            self.0 &= !(flag as u32)
+        }
+    }
+
+    #[derive(Clone, Copy, Pod, Zeroable, Debug, Default, PartialEq, Eq)]
+    #[repr(transparent)]
+    pub struct InstrInputMask(pub u8);
+
+    impl SimpleInstrMask for InstrInputMask {
+        fn get_flag(&self, flag: InstrFlag) -> bool {
+            if flag as u32 > u8::MAX as u32 {
+                return false;
+            }
+            self.0 & flag as u8 != 0
+        }
+        fn set_flag(&mut self, flag: InstrFlag) {
+            if flag as u32 > u8::MAX as u32 {
+                return;
+            }
+            self.0 |= flag as u8
+        }
+        fn clear_flag(&mut self, flag: InstrFlag) {
+            if flag as u32 > u8::MAX as u32 {
+                return;
+            }
+            self.0 &= !(flag as u8)
         }
     }
 
@@ -124,31 +157,6 @@ pub mod instr_mask {
         assert!(instr_mask.get_flag(InstrFlag::Forex));
         assert!(instr_mask.get_flag(InstrFlag::ReadyToPerpUpgrade));
         assert!(instr_mask.get_flag(InstrFlag::SimilarAssets));
-    }
-
-    #[derive(Clone, Copy, Pod, Zeroable, Debug, Default, PartialEq, Eq)]
-    #[repr(transparent)]
-    pub struct InstrInputMask(pub u8);
-
-    impl InstrInputMask {
-        pub fn get_flag(&self, flag: InstrFlag) -> bool {
-            if flag as u32 > u8::MAX as u32 {
-                return false;
-            }
-            self.0 & flag as u8 != 0
-        }
-        pub fn set_flag(&mut self, flag: InstrFlag) {
-            if flag as u32 > u8::MAX as u32 {
-                return;
-            }
-            self.0 |= flag as u8
-        }
-        pub fn clear_flag(&mut self, flag: InstrFlag) {
-            if flag as u32 > u8::MAX as u32 {
-                return;
-            }
-            self.0 &= !(flag as u8)
-        }
     }
 }
 
