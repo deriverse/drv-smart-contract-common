@@ -75,6 +75,7 @@ pub mod instr_mask {
     use bytemuck::{Pod, Zeroable};
     use serde::{Deserialize, Serialize};
 
+    /// todo work on different instr flags
     #[repr(u32)]
     #[derive(Debug, Serialize, Deserialize, PartialEq, Eq, Clone, Copy)]
     pub enum InstrFlag {
@@ -101,6 +102,31 @@ pub mod instr_mask {
         }
         pub fn clear_flag(&mut self, flag: InstrFlag) {
             self.0 &= !(flag as u32)
+        }
+    }
+
+    #[derive(Clone, Copy, Pod, Zeroable, Debug, Default, PartialEq, Eq)]
+    #[repr(transparent)]
+    pub struct InstrInputMask(pub u8);
+
+    impl InstrInputMask {
+        pub fn get_flag(&self, flag: InstrFlag) -> bool {
+            if flag as u32 > u8::MAX as u32 {
+                return false;
+            }
+            self.0 & flag as u8 != 0
+        }
+        pub fn set_flag(&mut self, flag: InstrFlag) {
+            if flag as u32 > u8::MAX as u32 {
+                return;
+            }
+            self.0 |= flag as u8
+        }
+        pub fn clear_flag(&mut self, flag: InstrFlag) {
+            if flag as u32 > u8::MAX as u32 {
+                return;
+            }
+            self.0 &= !(flag as u8)
         }
     }
 }

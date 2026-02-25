@@ -210,12 +210,13 @@ pub struct SpotLpData {
 /// - `price` - Base price for an instrument
 pub struct NewInstrumentData {
     pub tag: u8,
-    pub similar_assets: u8,
+    pub mask: u8,
     pub padding_u16: u16,
     pub padding_u32: u32,
     pub base_token_id: u32,
     pub lut_slot: u32,
     pub price: i64,
+    pub min_qty: i64,
 }
 
 #[repr(C)]
