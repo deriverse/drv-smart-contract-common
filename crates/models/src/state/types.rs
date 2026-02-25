@@ -103,6 +103,27 @@ pub mod instr_mask {
         pub fn clear_flag(&mut self, flag: InstrFlag) {
             self.0 &= !(flag as u32)
         }
+
+        pub fn merge(&mut self, input: InstrInputMask) {
+            self.0 |= input.0 as u32;
+        }
+    }
+
+    #[test]
+    fn merge_test() {
+        let mut instr_mask = InstrMask(0);
+        instr_mask.set_flag(InstrFlag::ReadyToPerpUpgrade);
+
+        let mut input_instr_mask = InstrInputMask(0);
+
+        input_instr_mask.set_flag(InstrFlag::SimilarAssets);
+        input_instr_mask.set_flag(InstrFlag::Forex);
+
+        instr_mask.merge(input_instr_mask);
+
+        assert!(instr_mask.get_flag(InstrFlag::Forex));
+        assert!(instr_mask.get_flag(InstrFlag::ReadyToPerpUpgrade));
+        assert!(instr_mask.get_flag(InstrFlag::SimilarAssets));
     }
 
     #[derive(Clone, Copy, Pod, Zeroable, Debug, Default, PartialEq, Eq)]
