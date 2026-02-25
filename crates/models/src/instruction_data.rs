@@ -1,6 +1,6 @@
 use crate::{
     new_types::{instrument::InstrId, version::Version},
-    state::types::{quote_status::QuoteMask, vm_status::VmMask},
+    state::types::{instr_mask::InstrInputMask, quote_status::QuoteMask, vm_status::VmMask},
 };
 use bytemuck::{Pod, Zeroable};
 
@@ -210,7 +210,7 @@ pub struct SpotLpData {
 /// - `price` - Base price for an instrument
 pub struct NewInstrumentData {
     pub tag: u8,
-    pub mask: u8,
+    pub mask: InstrInputMask,
     pub padding_u16: u16,
     pub padding_u32: u32,
     pub base_token_id: u32,
