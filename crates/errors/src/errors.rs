@@ -5,7 +5,8 @@ use drv_models::{
     constants::TradingSection,
     new_types::instrument::InstrId,
     state::types::{
-        account_type::AccountType, vm_status::VmFlag, AssetType, OrderSide, OrderType, TokenProgram,
+        account_type::AccountType, instr_mask::InstrFlag, vm_status::VmFlag, AssetType, OrderSide,
+        OrderType, TokenProgram,
     },
 };
 use serde::{Deserialize, Serialize};
@@ -866,6 +867,15 @@ pub enum DeriverseErrorKind {
     InvalidQuoteOrdersAmount {
         mask_amount: u32,
         orders_amount: u32,
+    },
+
+    #[error(
+        code = 325,
+        msg = "Can not set instr flag {flag} without {required_flag} flag up"
+    )]
+    CanNotSetInstrFlag {
+        flag: InstrFlag,
+        required_flag: InstrFlag,
     },
 }
 #[cfg(test)]
