@@ -877,6 +877,9 @@ pub enum DeriverseErrorKind {
         flag: InstrFlag,
         required_flag: InstrFlag,
     },
+
+    #[error(code = 326, msg = "Invalid operation for similar assets market")]
+    InvalidOperationSimilarAssets,
 }
 #[cfg(test)]
 mod tests {
