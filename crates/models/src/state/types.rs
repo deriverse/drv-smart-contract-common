@@ -89,6 +89,12 @@ pub mod instr_mask {
         Suspended = 0x20,
     }
 
+    impl std::fmt::Display for InstrFlag {
+        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+            write!(f, "{:?}", self)
+        }
+    }
+
     pub trait SimpleInstrMask {
         fn get_flag(&self, flag: InstrFlag) -> bool;
         fn set_flag(&mut self, flag: InstrFlag);
