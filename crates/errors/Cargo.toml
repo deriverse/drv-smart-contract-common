@@ -8,16 +8,12 @@ crate-type = ["lib"]
 
 [dependencies]
 drv-errors-derive.workspace = true
-solana-program = { version = "3.0.0", optional = true }
-solana-sdk = { version = "3.0.0", optional = true }
-serde_json.workspace = true
-serde = { version = "^1.0.145", features = ["derive"] }
 drv-models.workspace = true
+serde = { version = "^1.0.145", features = ["derive"] }
+serde_json.workspace = true
+solana-msg = "3.0.0"
+solana-program-error = { version = "3.0.0", features = ["serde"] }
+solana-pubkey = { version = "3.0.0", features = ["bytemuck", "serde"] }
 
 [lints]
 workspace = true
-
-[features]
-default = ["on-chain"]
-on-chain = ["solana-program"]
-off-chain = ["solana-sdk"]
