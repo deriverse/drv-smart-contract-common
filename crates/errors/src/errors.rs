@@ -1,5 +1,3 @@
-use std::error;
-
 use drv_errors_derive::DrvError;
 use drv_models::{
     constants::TradingSection,
@@ -9,12 +7,9 @@ use drv_models::{
     },
 };
 use serde::{Deserialize, Serialize};
-#[cfg(feature = "on-chain")]
-use solana_program::{msg, program_error::ProgramError, pubkey::Pubkey};
-#[cfg(feature = "off-chain")]
-use solana_sdk::pubkey::Pubkey;
-#[cfg(not(any(feature = "on-chain", feature = "off-chain")))]
-compile_error!("Either 'on-chain' or 'off-chain' feature must be enabled");
+use solana_msg::msg;
+use solana_program_error::ProgramError;
+use solana_pubkey::Pubkey;
 
 pub trait ResultExt<T, E> {
     fn context<C>(self, ctx: C) -> Result<T, C>;
@@ -25,14 +20,13 @@ impl<T, E> ResultExt<T, E> for Result<T, E> {
         self.map_err(|_| ctx)
     }
 }
-#[cfg(feature = "on-chain")]
+
 impl From<ProgramError> for DeriverseErrorKind {
     fn from(e: ProgramError) -> Self {
         DeriverseErrorKind::SystemError { error: e }
     }
 }
 
-#[cfg(feature = "on-chain")]
 impl From<DeriverseErrorKind> for ProgramError {
     fn from(e: DeriverseErrorKind) -> Self {
         msg!("{}", e.to_json().to_string());
@@ -40,7 +34,6 @@ impl From<DeriverseErrorKind> for ProgramError {
     }
 }
 
-#[cfg(feature = "on-chain")]
 impl From<DeriverseError> for ProgramError {
     fn from(e: DeriverseError) -> Self {
         msg!("{}", e.to_json().to_string());
@@ -48,7 +41,6 @@ impl From<DeriverseError> for ProgramError {
     }
 }
 
-#[cfg(feature = "off-chain")]
 impl From<DeriverseError> for u32 {
     fn from(e: DeriverseError) -> Self {
         e.code()
@@ -133,7 +125,6 @@ fn some_test() {
 
 #[derive(Debug, DrvError, Serialize, Deserialize, PartialEq)]
 pub enum DeriverseErrorKind {
-    #[cfg(feature = "on-chain")]
     #[error(code = 100, msg = "System error {error}")]
     SystemError { error: ProgramError },
 
@@ -871,10 +862,7 @@ pub enum DeriverseErrorKind {
 #[cfg(test)]
 mod tests {
     use super::*;
-    #[cfg(feature = "on-chain")]
-    use solana_program::pubkey::Pubkey;
-    #[cfg(feature = "off-chain")]
-    use solana_sdk::pubkey::Pubkey;
+    use solana_pubkey::Pubkey;
 
     #[test]
     fn test_wallet_address() {
@@ -910,21 +898,19 @@ mod tests {
         assert!(debug_str.contains("InvalidAccountsNumber"));
     }
 
-    #[cfg(feature = "off-chain")]
     #[test]
     fn test_solana_integration_off_chain() {
         let err = DeriverseErrorKind::InvalidDataLength {
             expected: 100,
             actual: 50,
         };
-        let code: u32 = err.into();
+        let code: u32 = err.code();
         assert_eq!(code, 102);
     }
 
-    #[cfg(feature = "on-chain")]
     #[test]
     fn test_solana_integration_on_chain() {
-        use solana_program::program_error::ProgramError;
+        use solana_program_error::ProgramError;
 
         let err = DeriverseErrorKind::InvalidOperatorAccount {
             address: Pubkey::new_unique(),

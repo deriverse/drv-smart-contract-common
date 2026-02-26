@@ -1,8 +1,5 @@
 use bytemuck::{Pod, Zeroable};
-#[cfg(feature = "on-chain")]
-use solana_program::pubkey::Pubkey;
-#[cfg(feature = "off-chain")]
-use solana_sdk::pubkey::Pubkey;
+use solana_pubkey::Pubkey;
 
 use std::ops::Deref;
 
