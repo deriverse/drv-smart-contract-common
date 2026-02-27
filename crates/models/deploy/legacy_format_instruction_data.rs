@@ -200,12 +200,14 @@ pub struct SpotLpData {
 /// - `price` - Base price for an instrument
 pub struct NewInstrumentData {
     pub tag: u8,
-    pub padding_u8: u8,
+    pub mask: u32,
     pub padding_u16: u16,
     pub padding_u32: u32,
-    pub crncy_token_id: u32,
+    pub base_token_id: u32,
     pub lut_slot: u32,
     pub price: i64,
+    pub min_qty: i64,
+    pub fixed_fee_rate: f64,
 }
 
 #[repr(C)]
@@ -679,4 +681,24 @@ pub struct VmChangeWhitelistData {
     pub padding_u16: u16,
     pub mask: u32,
     pub whitelist: [u32; 8],
+}
+
+#[repr(C)]
+#[derive(Clone, Copy, Pod, Zeroable)]
+pub struct SetSMAMinQtyData {
+    pub tag: u8,
+    pub padding_u8: u8,
+    pub padding_u16: u16,
+    pub instr_id: InstrId,
+    pub min_qty: i64,
+}
+
+#[repr(C)]
+#[derive(Clone, Copy, Pod, Zeroable)]
+pub struct SetSMAFxiedFeesData {
+    pub tag: u8,
+    pub padding_u8: u8,
+    pub padding_u16: u16,
+    pub instr_id: InstrId,
+    pub fee_rate: f64,
 }
