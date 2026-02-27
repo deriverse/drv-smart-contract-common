@@ -242,6 +242,7 @@ pub struct DepositData {
     pub amount: i64,
     pub lut_slot: u32,
     pub ref_id: u32,
+    pub custom_id: i64,
 }
 
 #[repr(C)]
@@ -354,6 +355,7 @@ pub struct WithdrawData {
     pub padding_u16: u16,
     pub token_id: u32,
     pub amount: i64,
+    pub custom_id: i64,
 }
 
 #[repr(C)]

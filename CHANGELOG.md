@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [unreleased]
 
+## Changed
+- Added `custom_id` for `DepositData` and `WithdrawData`
+
 ## [v2.32] - 2026-02-24
 
 ## Changed
