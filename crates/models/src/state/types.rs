@@ -75,7 +75,6 @@ pub mod instr_mask {
     use bytemuck::{Pod, Zeroable};
     use serde::{Deserialize, Serialize};
 
-    /// todo work on different instr flags
     #[repr(u32)]
     #[derive(Debug, Serialize, Deserialize, PartialEq, Eq, Clone, Copy)]
     pub enum InstrFlag {
