@@ -880,6 +880,9 @@ pub enum DeriverseErrorKind {
 
     #[error(code = 326, msg = "Invalid operation for similar assets market")]
     InvalidOperationSimilarAssets,
+
+    #[error(code = 327, msg = "Similar Assets Market is not active")]
+    SMAIsNotActive,
 }
 #[cfg(test)]
 mod tests {
