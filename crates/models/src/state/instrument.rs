@@ -304,7 +304,7 @@ pub struct InstrAccountHeader {
     pub liquidation_threshold: f64,
     pub seats_reserve: i64,
     pub similar_assets_min_qty: i64,
-    pub reserved_value5: i64,
+    pub fixed_fee_rate_factor: f64,
     pub reserved_value6: i64,
     pub reserved_value7: i64,
     pub reserved_value8: i64,
