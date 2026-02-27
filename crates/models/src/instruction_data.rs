@@ -787,3 +787,23 @@ pub struct VmChangeWhitelistData {
     pub mask: VmMask,
     pub whitelist: [u32; 8],
 }
+
+#[repr(C)]
+#[derive(Clone, Copy, Pod, Zeroable)]
+pub struct SetSMAMinQtyData {
+    pub tag: u8,
+    pub padding_u8: u8,
+    pub padding_u16: u16,
+    pub padding_u32: u32,
+    pub min_qty: i64,
+}
+
+#[repr(C)]
+#[derive(Clone, Copy, Pod, Zeroable)]
+pub struct SetSMAFxiedFeesData {
+    pub tag: u8,
+    pub padding_u8: u8,
+    pub padding_u16: u16,
+    pub padding_u32: u32,
+    pub fee_rate: f64,
+}

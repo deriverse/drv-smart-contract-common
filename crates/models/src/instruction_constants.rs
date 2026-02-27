@@ -366,3 +366,15 @@ impl DrvInstruction for ExtendCandles {
     const INSTRUCTION_NUMBER: u8 = 73;
     const MIN_ACCOUNTS: usize = 4;
 }
+
+pub struct SetSMAMinQtyInstruction;
+impl DrvInstruction for SetSMAMinQtyInstruction {
+    const INSTRUCTION_NUMBER: u8 = 74;
+    const MIN_ACCOUNTS: usize = 3;
+}
+
+pub struct SetSMAFixedFeesInstruction;
+impl DrvInstruction for SetSMAFixedFeesInstruction {
+    const INSTRUCTION_NUMBER: u8 = 75;
+    const MIN_ACCOUNTS: usize = 3;
+}
