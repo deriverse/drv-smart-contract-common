@@ -217,7 +217,7 @@ pub struct NewInstrumentData {
     pub lut_slot: u32,
     pub price: i64,
     pub min_qty: i64,
-    pub fixed_fee_rate_factor: f64,
+    pub fixed_fee_rate: f64,
 }
 
 #[repr(C)]
