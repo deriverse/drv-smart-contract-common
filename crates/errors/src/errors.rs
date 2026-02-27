@@ -883,6 +883,12 @@ pub enum DeriverseErrorKind {
 
     #[error(code = 327, msg = "Similar Assets Market is not active")]
     SMAIsNotActive,
+
+    #[error(
+        code = 325,
+        msg = "Can not set instr flag {flag} as {up_flag} flag is up"
+    )]
+    ConflictInstrFlags { flag: InstrFlag, up_flag: InstrFlag },
 }
 #[cfg(test)]
 mod tests {
