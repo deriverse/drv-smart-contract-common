@@ -794,7 +794,7 @@ pub struct SetSMAMinQtyData {
     pub tag: u8,
     pub padding_u8: u8,
     pub padding_u16: u16,
-    pub padding_u32: u32,
+    pub instr_id: InstrId,
     pub min_qty: i64,
 }
 
@@ -804,6 +804,6 @@ pub struct SetSMAFxiedFeesData {
     pub tag: u8,
     pub padding_u8: u8,
     pub padding_u16: u16,
-    pub padding_u32: u32,
+    pub instr_id: InstrId,
     pub fee_rate: f64,
 }
