@@ -889,6 +889,12 @@ pub enum DeriverseErrorKind {
         msg = "Can not set instr flag {flag} as {up_flag} flag is up"
     )]
     ConflictInstrFlags { flag: InstrFlag, up_flag: InstrFlag },
+
+    #[error(
+        code = 326,
+        msg = "Instrument is suspended, new orders can not be added"
+    )]
+    SuspendedInstrument,
 }
 #[cfg(test)]
 mod tests {
