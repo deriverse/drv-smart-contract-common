@@ -808,3 +808,12 @@ pub struct SetSMAFxiedFeesData {
     pub instr_id: InstrId,
     pub fee_rate: f64,
 }
+
+#[repr(C)]
+#[derive(Clone, Copy, Pod, Zeroable)]
+pub struct SuspendInstrumentData {
+    pub tag: u8,
+    pub padding_u8: u8,
+    pub padding_u16: u16,
+    pub instr_id: InstrId,
+}
