@@ -378,3 +378,9 @@ impl DrvInstruction for SetSMAFixedFeesInstruction {
     const INSTRUCTION_NUMBER: u8 = 75;
     const MIN_ACCOUNTS: usize = 3;
 }
+
+pub struct SuspendInstrumentInstruction;
+impl DrvInstruction for SuspendInstrumentInstruction {
+    const INSTRUCTION_NUMBER: u8 = 76;
+    const MIN_ACCOUNTS: usize = 3;
+}
