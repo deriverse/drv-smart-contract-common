@@ -898,6 +898,9 @@ pub enum DeriverseErrorKind {
 
     #[error(code = 327, msg = "Invalid operation for active perp")]
     InvalidOperationForActivePerp,
+
+    #[error(code = 328, msg = "Impossible to suspend instrument")]
+    ImpossibleToSuspend,
 }
 #[cfg(test)]
 mod tests {
