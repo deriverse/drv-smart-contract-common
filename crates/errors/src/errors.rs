@@ -895,6 +895,9 @@ pub enum DeriverseErrorKind {
         msg = "Instrument is suspended, new orders can not be added"
     )]
     SuspendedInstrument,
+
+    #[error(code = 327, msg = "Invalid operation for active perp")]
+    InvalidOperationForActivePerp,
 }
 #[cfg(test)]
 mod tests {
