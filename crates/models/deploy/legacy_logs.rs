@@ -48,6 +48,17 @@ pub mod log_type {
     pub const VM_INIT_WITHDRAW: u8 = 43;
     pub const VM_INIT_WITHDRAW_CANCEL: u8 = 44;
     pub const VM_INIT_WITHDRAW_FINALIZE: u8 = 45;
+    pub const PERP_LOSS_COVERAGE: u8 = 46;
+}
+
+#[repr(C)]
+#[derive(Copy, Clone, Zeroable, Pod, Default)]
+pub struct PerpLossCoverage {
+    pub tag: u8,
+    pub padding_u8: u8,
+    pub padding_u16: u16,
+    pub client_id: u32,
+    pub loss_coverage: i64,
 }
 
 #[repr(C)]
