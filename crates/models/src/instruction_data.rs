@@ -53,6 +53,7 @@ pub struct NewRootAccountData {
 /// - `ioc`: bool - Use immediate or cancel mode
 /// - `order_type`: OrderType - new order type
 /// - `order_side`: OrderSide - new order side (Bid/Ask)
+/// - `maker_only`: bool - If set, order price is slid to avoid crossing
 /// - `instr_id` - Instr pair id
 /// - `price` - Price for **Limit** order
 /// - `amount` - Orders qty in base crncy
@@ -62,7 +63,11 @@ pub struct NewSpotOrderData {
     pub ioc: u8,
     pub order_type: u8,
     pub side: u8,
+    pub maker_only: u8,
+    pub padding_u8: u8,
+    pub padding_u16: u16,
     pub instr_id: InstrId,
+    pub padding_u32: u32,
     pub price: i64,
     pub amount: i64,
     pub edge_price: i64,
@@ -91,7 +96,7 @@ pub struct NewPerpOrderData {
     pub leverage: u8,
     pub order_type: u8,
     pub side: u8,
-    pub padding_u8: u8,
+    pub maker_only: u8,
     pub padding_u16: u16,
     pub padding_u32: u32,
     pub instr_id: InstrId,
@@ -397,7 +402,7 @@ pub struct SwapData {
 /// - `instr_id` - Instr pair id
 pub struct SpotQuotesReplaceData {
     pub tag: u8,
-    pub padding_u8: u8, // <- rename to bump for bots
+    pub maker_only: u8,
     pub mask: QuoteMask,
     pub instr_id: InstrId,
 }
@@ -415,7 +420,7 @@ pub struct SpotQuotesReplaceData {
 /// - `instr_id` - Instr pair id
 pub struct PerpQuotesReplaceData {
     pub tag: u8,
-    padding_u8: u8, // <- rename to bump for bots
+    pub maker_only: u8,
     pub mask: QuoteMask,
     pub instr_id: InstrId,
 }
