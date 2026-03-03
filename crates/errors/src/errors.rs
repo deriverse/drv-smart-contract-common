@@ -1,4 +1,4 @@
-use std::error;
+use std::{error, path::Display};
 
 use drv_errors_derive::DrvError;
 use drv_models::{
@@ -901,7 +901,28 @@ pub enum DeriverseErrorKind {
 
     #[error(code = 328, msg = "Impossible to suspend instrument")]
     ImpossibleToSuspend,
+
+    #[error(
+        code = 329,
+        msg = "Can not create an instrument with {reason} for {mint}"
+    )]
+    ImpossibleToCreateInstrument {
+        reason: ForbiddenTokensParams,
+        mint: Pubkey,
+    },
 }
+
+#[derive(Debug, Serialize, Deserialize, PartialEq)]
+pub enum ForbiddenTokensParams {
+    FreezeAuthority,
+}
+
+impl std::fmt::Display for ForbiddenTokensParams {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "{:?}", self)
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
