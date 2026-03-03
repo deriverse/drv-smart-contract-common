@@ -52,7 +52,7 @@ pub mod log_type {
 
 #[repr(C)]
 #[derive(Copy, Clone, Zeroable, Pod, Default)]
-pub struct PerpLossCoverage {
+pub struct PerpLossCoverageReport {
     pub tag: u8,
     pub padding_u8: u8,
     pub padding_u16: u16,
