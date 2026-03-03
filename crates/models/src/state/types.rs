@@ -86,6 +86,8 @@ pub mod instr_mask {
         UsdStablecoin = 0x8,
         Forex = 0x10,
         Suspended = 0x20,
+        LongMarginCall = 0x40,
+        ShortMarginCall = 0x80,
     }
 
     impl std::fmt::Display for InstrFlag {
