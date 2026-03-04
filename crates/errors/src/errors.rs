@@ -5,8 +5,10 @@ use drv_models::{
     constants::TradingSection,
     new_types::instrument::InstrId,
     state::types::{
-        account_type::AccountType, instr_mask::InstrFlag, vm_status::VmFlag, AssetType, OrderSide,
-        OrderType, TokenProgram,
+        account_type::AccountType,
+        instr_mask::{InstrFlag, InstrMask},
+        vm_status::VmFlag,
+        AssetType, OrderSide, OrderType, TokenProgram,
     },
 };
 use serde::{Deserialize, Serialize};
@@ -910,6 +912,9 @@ pub enum DeriverseErrorKind {
         reason: ForbiddenTokensParams,
         mint: Pubkey,
     },
+
+    #[error(code = 330, msg = "Pool deposit is disabled for ZeroFees market")]
+    PoolDepositDisabled { mask: u32 },
 }
 
 #[derive(Debug, Serialize, Deserialize, PartialEq)]
