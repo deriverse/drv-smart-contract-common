@@ -78,7 +78,7 @@ impl DrvInstruction for NewSpotOrderInstruction {
 pub struct SpotOrderCancelInstruction;
 impl DrvInstruction for SpotOrderCancelInstruction {
     const INSTRUCTION_NUMBER: u8 = 13;
-    const MIN_ACCOUNTS: usize = 14;
+    const MIN_ACCOUNTS: usize = 11;
 }
 
 pub struct SpotLpInstruction;
