@@ -858,6 +858,9 @@ pub enum DeriverseErrorKind {
         mask_amount: u32,
         orders_amount: u32,
     },
+
+    #[error(code = 325, msg = "maker_only is incompatible with IOC or Market orders")]
+    MakerOnlyConflict,
 }
 #[cfg(test)]
 mod tests {

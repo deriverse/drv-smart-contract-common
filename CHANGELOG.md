@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## Changed
 - Added `custom_id` for `DepositData` and `WithdrawData`
 - Added `custom_id` for `DepositReport` and `WithdrawReport`
+- Added `maker_only` for spot and perp order and quote instructions
 
 ## [v2.32] - 2026-02-24
 
