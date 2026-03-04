@@ -403,6 +403,7 @@ pub struct SpotQuotesReplaceData {
     pub mask: QuoteMask,
     pub padding_u16: u16,
     pub instr_id: InstrId,
+    pub padding_u32: u32,
 }
 
 #[repr(C)]
@@ -424,6 +425,7 @@ pub struct PerpQuotesReplaceData {
     pub mask: QuoteMask,
     pub padding_u16: u16,
     pub instr_id: InstrId,
+    pub padding_u32: u32,
 }
 
 #[repr(C)]
