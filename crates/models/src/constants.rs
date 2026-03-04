@@ -117,13 +117,6 @@ pub mod memory_maps {
 }
 
 pub mod spot {
-    use crate::constants::{
-        spot::memory_maps::{
-            ASKS_TREE_PT_OFFSET, ASK_ORDERS_PT_OFFSET, BIDS_TREE_PT_OFFSET, BID_ORDERS_PT_OFFSET,
-            LINES_PT_OFFSET, MAPS_SIZE,
-        },
-        SpotConfig,
-    };
 
     pub const MAX_LINES: usize = 2048;
     pub const MAX_ORDERS: u32 = (4 * 64 * 64 - MAX_LINES) as u32 - 2;
@@ -144,25 +137,7 @@ pub mod spot {
     }
 }
 
-pub struct SpotConfig {
-    pub max_lines: usize,
-    pub max_orders: u32,
-    pub bids_tree_pt_offset: usize,
-    pub asks_tree_pt_offset: usize,
-    pub bid_orders_pt_offset: usize,
-    pub ask_orders_pt_offset: usize,
-    pub lines_pt_offset: usize,
-    pub maps_size: usize,
-}
-
 pub mod extended_spot {
-    use crate::constants::{
-        extended_spot::memory_maps::{
-            ASKS_TREE_PT_OFFSET, ASK_ORDERS_PT_OFFSET, BIDS_TREE_PT_OFFSET, BID_ORDERS_PT_OFFSET,
-            LINES_PT_OFFSET, MAPS_SIZE,
-        },
-        SpotConfig,
-    };
 
     pub const MAX_LINES: usize = 2048 * 4;
     pub const MAX_ORDERS: u32 = (16 * 64 * 64 - MAX_LINES) as u32 - 2;
@@ -181,17 +156,6 @@ pub mod extended_spot {
 
         pub const MAPS_SIZE: usize = LINES_PT_OFFSET + TRADE_MEMORY_MAP_UNITS * 8;
     }
-
-    pub static EXTENDED_SPOT_CONFIG: SpotConfig = SpotConfig {
-        max_lines: MAX_LINES,
-        max_orders: MAX_ORDERS,
-        bids_tree_pt_offset: BIDS_TREE_PT_OFFSET,
-        asks_tree_pt_offset: ASKS_TREE_PT_OFFSET,
-        bid_orders_pt_offset: BID_ORDERS_PT_OFFSET,
-        ask_orders_pt_offset: ASK_ORDERS_PT_OFFSET,
-        lines_pt_offset: LINES_PT_OFFSET,
-        maps_size: MAPS_SIZE,
-    };
 }
 
 pub mod perp {
