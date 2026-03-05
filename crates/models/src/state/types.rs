@@ -88,6 +88,7 @@ pub mod instr_mask {
         Suspended = 0x20,
         LongMarginCall = 0x40,
         ShortMarginCall = 0x80,
+        SAMCrncy = 0x100,
     }
 
     impl std::fmt::Display for InstrFlag {
@@ -108,7 +109,7 @@ pub mod instr_mask {
 
     impl InstrMask {
         pub fn merge(&mut self, input: InstrInputMask) {
-            self.0 |= input.0 as u32;
+            self.0 |= (input.0 as u32) & InstrInputMask::ALLOWED_FLAGS;
         }
     }
 
@@ -128,15 +129,11 @@ pub mod instr_mask {
     #[repr(transparent)]
     pub struct InstrInputMask(u8);
 
-    impl From<u8> for InstrInputMask {
-        fn from(value: u8) -> Self {
-            let allowed_mask = (InstrFlag::ZeroFees as u32
-                | InstrFlag::FixedFees as u32
-                | InstrFlag::SimilarAssets as u32
-                | InstrFlag::UsdStablecoin as u32) as u8;
-
-            Self(value & allowed_mask)
-        }
+    impl InstrInputMask {
+        pub const ALLOWED_FLAGS: u32 = InstrFlag::ZeroFees as u32
+            | InstrFlag::FixedFees as u32
+            | InstrFlag::SimilarAssets as u32
+            | InstrFlag::UsdStablecoin as u32;
     }
 
     #[test]
