@@ -871,15 +871,6 @@ pub enum DeriverseErrorKind {
         orders_amount: u32,
     },
 
-    #[error(
-        code = 325,
-        msg = "Can not set instr flag {flag} without {required_flag} flag up"
-    )]
-    CanNotSetInstrFlag {
-        flag: InstrFlag,
-        required_flag: InstrFlag,
-    },
-
     #[error(code = 326, msg = "Invalid operation for similar assets market")]
     InvalidOperationSimilarAssets,
 
@@ -915,6 +906,18 @@ pub enum DeriverseErrorKind {
 
     #[error(code = 330, msg = "Pool deposit is disabled for ZeroFees market")]
     PoolDepositDisabled { mask: u32 },
+
+    #[error(
+        code = 330,
+        msg = "Can not set instr flag {flag} without {required_flag} flag up"
+    )]
+    CanNotSetInstrFlag {
+        flag: InstrFlag,
+        required_flag: InstrFlag,
+    },
+
+    #[error(code = 331, msg = "Impossible to create SMA market with SMACrncy flag")]
+    ImpossibleToCreateSMAWithSMACrncy,
 }
 
 #[derive(Debug, Serialize, Deserialize, PartialEq)]
