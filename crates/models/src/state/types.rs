@@ -181,6 +181,7 @@ pub mod token_mask {
     #[repr(u32)]
     #[derive(Debug, Serialize, Deserialize, PartialEq, Eq, Clone, Copy)]
     pub enum TokenFlag {
+        Token2022 = 0x80000000,
         BaseCrncy = 0x40000000,
         WrappedToken = 0x20000000,
         SMACrncy = 0x10000000,
