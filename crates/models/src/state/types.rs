@@ -126,7 +126,30 @@ pub mod instr_mask {
 
     #[derive(Clone, Copy, Pod, Zeroable, Debug, Default, PartialEq, Eq)]
     #[repr(transparent)]
-    pub struct InstrInputMask(pub u8);
+    pub struct InstrInputMask(u8);
+
+    impl From<u8> for InstrInputMask {
+        fn from(value: u8) -> Self {
+            let allowed_mask = (InstrFlag::ZeroFees as u32
+                | InstrFlag::FixedFees as u32
+                | InstrFlag::SimilarAssets as u32
+                | InstrFlag::UsdStablecoin as u32) as u8;
+
+            Self(value & allowed_mask)
+        }
+    }
+
+    #[test]
+    fn instr_input_mask_from_test() {
+        let mut instr_input_mask = InstrInputMask(0);
+        instr_input_mask.set_flag(InstrFlag::Forex);
+        instr_input_mask.set_flag(InstrFlag::FixedFees);
+
+        let new_instr_input_mask: InstrInputMask = instr_input_mask.0.into();
+
+        assert!(new_instr_input_mask.get_flag(InstrFlag::FixedFees));
+        assert!(!new_instr_input_mask.get_flag(InstrFlag::Forex));
+    }
 
     impl SimpleInstrMask for InstrInputMask {
         fn get_flag(&self, flag: InstrFlag) -> bool {
