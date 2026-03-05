@@ -4,6 +4,8 @@ use solana_program::pubkey::Pubkey;
 #[cfg(feature = "off-chain")]
 use solana_sdk::pubkey::Pubkey;
 
+use crate::state::types::token_mask::TokenMask;
+
 use super::types::Discriminator;
 
 pub enum TokenType {
@@ -26,7 +28,7 @@ pub struct TokenState {
     pub address: Pubkey,
     pub program_address: Pubkey,
     pub id: u32,
-    pub mask: u32,
+    pub mask: TokenMask,
     pub reserved: u32,
     pub base_crncy_index: u32,
 }

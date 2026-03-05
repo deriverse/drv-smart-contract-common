@@ -88,7 +88,6 @@ pub mod instr_mask {
         Suspended = 0x20,
         LongMarginCall = 0x40,
         ShortMarginCall = 0x80,
-        SAMCrncy = 0x100,
     }
 
     impl std::fmt::Display for InstrFlag {
@@ -136,18 +135,6 @@ pub mod instr_mask {
             | InstrFlag::UsdStablecoin as u32;
     }
 
-    #[test]
-    fn instr_input_mask_from_test() {
-        let mut instr_input_mask = InstrInputMask(0);
-        instr_input_mask.set_flag(InstrFlag::Forex);
-        instr_input_mask.set_flag(InstrFlag::FixedFees);
-
-        let new_instr_input_mask: InstrInputMask = instr_input_mask.0.into();
-
-        assert!(new_instr_input_mask.get_flag(InstrFlag::FixedFees));
-        assert!(!new_instr_input_mask.get_flag(InstrFlag::Forex));
-    }
-
     impl SimpleInstrMask for InstrInputMask {
         fn get_flag(&self, flag: InstrFlag) -> bool {
             if flag as u32 > u8::MAX as u32 {
@@ -184,6 +171,76 @@ pub mod instr_mask {
         assert!(instr_mask.get_flag(InstrFlag::Forex));
         assert!(instr_mask.get_flag(InstrFlag::ReadyToPerpUpgrade));
         assert!(instr_mask.get_flag(InstrFlag::SimilarAssets));
+    }
+}
+
+pub mod token_mask {
+    use bytemuck::{Pod, Zeroable};
+    use serde::{Deserialize, Serialize};
+
+    #[repr(u32)]
+    #[derive(Debug, Serialize, Deserialize, PartialEq, Eq, Clone, Copy)]
+    pub enum TokenFlag {
+        BaseCrncy = 0x40000000,
+        WrappedToken = 0x20000000,
+        SMACrncy = 0x10000000,
+    }
+
+    impl std::fmt::Display for TokenFlag {
+        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+            write!(f, "{:?}", self)
+        }
+    }
+
+    #[derive(Clone, Copy, Pod, Zeroable, Debug, Default, PartialEq, Eq)]
+    #[repr(transparent)]
+    pub struct TokenMask(pub u32);
+
+    impl TokenMask {
+        const DECIMALS_MASK: u32 = 0xFF;
+
+        pub fn get_flag(&self, flag: TokenFlag) -> bool {
+            self.0 & flag as u32 != 0
+        }
+
+        pub fn set_flag(&mut self, flag: TokenFlag) {
+            self.0 |= flag as u32;
+        }
+
+        pub fn clear_flag(&mut self, flag: TokenFlag) {
+            self.0 &= !(flag as u32);
+        }
+
+        pub fn decimals(&self) -> u8 {
+            (self.0 & Self::DECIMALS_MASK) as u8
+        }
+
+        pub fn set_decimals(&mut self, decimals: u8) {
+            self.0 = (self.0 & !Self::DECIMALS_MASK) | (decimals as u32);
+        }
+    }
+
+    #[test]
+    fn test_token_mask() {
+        let mut mask = TokenMask(0);
+
+        mask.set_decimals(9);
+        assert_eq!(mask.decimals(), 9);
+
+        mask.set_flag(TokenFlag::BaseCrncy);
+        mask.set_flag(TokenFlag::SMACrncy);
+
+        assert!(mask.get_flag(TokenFlag::BaseCrncy));
+        assert!(mask.get_flag(TokenFlag::SMACrncy));
+        assert!(!mask.get_flag(TokenFlag::WrappedToken));
+
+        assert_eq!(mask.decimals(), 9);
+
+        mask.clear_flag(TokenFlag::BaseCrncy);
+        assert!(!mask.get_flag(TokenFlag::BaseCrncy));
+
+        assert_eq!(mask.decimals(), 9);
+        assert!(mask.get_flag(TokenFlag::SMACrncy));
     }
 }
 
