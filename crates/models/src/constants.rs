@@ -96,7 +96,7 @@ pub const MIN_DENOMINATOR: f64 = 0.01;
 
 pub const EMA_PERIOD: f64 = 60f64;
 
-pub const MAX_SWAP_FEE_RATE: f64 = 0.0002;
+pub const SWAP_FEE_RATE: f64 = 0.0002;
 
 pub const MAX_QUOTE_ORDERS: u8 = 12;
 
