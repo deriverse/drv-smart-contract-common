@@ -805,7 +805,7 @@ pub struct SetSMAMinQtyData {
 #[derive(Clone, Copy, Pod, Zeroable)]
 pub struct ChangeSAMFeesPolicyData {
     pub tag: u8,
-    pub swap_fee_type: u8, // 0 - zero fees, 1 - fixed_fees
+    pub sam_fee_type: u8, // 0 - zero fees, 1 - fixed_fees
     pub padding_u16: u16,
     pub instr_id: InstrId,
     pub fee_rate: f64,
