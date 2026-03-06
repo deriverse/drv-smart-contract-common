@@ -803,7 +803,7 @@ pub struct VmChangeWhitelistData {
 /// ### Fields
 /// - `instr_id` - Instr pair id
 /// - `amount` - Amount of tokens client wants to move from perp to spot
-pub struct WithdrawSwapFeesdata {
+pub struct WithdrawSwapFeesData {
     pub tag: u8,
     pub padding_u8: u8,
     pub padding_u16: u16,
