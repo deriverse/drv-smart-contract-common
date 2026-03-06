@@ -295,7 +295,7 @@ pub struct InstrAccountHeader {
     pub perp_alltime_crncy_tokens: f64,
     pub liquidation_threshold: f64,
     pub seats_reserve: i64,
-    pub swap_fees: i64,
+    pub swap_fees: i64, // add extended admin instruction withdraw swap_fees
     pub reserved_value5: i64,
     pub reserved_value6: i64,
     pub reserved_value7: i64,
