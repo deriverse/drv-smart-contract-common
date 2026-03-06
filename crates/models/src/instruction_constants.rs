@@ -373,8 +373,8 @@ impl DrvInstruction for SetSMAMinQtyInstruction {
     const MIN_ACCOUNTS: usize = 3;
 }
 
-pub struct SetSMAFixedFeesInstruction;
-impl DrvInstruction for SetSMAFixedFeesInstruction {
+pub struct ChangeSAMFeesPolictyInstruction;
+impl DrvInstruction for ChangeSAMFeesPolictyInstruction {
     const INSTRUCTION_NUMBER: u8 = 75;
     const MIN_ACCOUNTS: usize = 3;
 }
