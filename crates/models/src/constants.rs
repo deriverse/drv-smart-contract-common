@@ -3,11 +3,14 @@ use std::ops::Deref;
 use serde::{Deserialize, Serialize};
 use trading_limitations::MARKET_DEPTH;
 
-use crate::state::{
-    instrument::INSTR_ACCOUNT_HEADER_SIZE,
-    types::{
-        account_type::{SPOT_15M_CANDLES, SPOT_1M_CANDLES, SPOT_DAY_CANDLES},
-        LINE_QUOTES_SIZE,
+use crate::{
+    constants::time::DAY,
+    state::{
+        instrument::INSTR_ACCOUNT_HEADER_SIZE,
+        types::{
+            account_type::{SPOT_15M_CANDLES, SPOT_1M_CANDLES, SPOT_DAY_CANDLES},
+            LINE_QUOTES_SIZE,
+        },
     },
 };
 
@@ -95,6 +98,7 @@ pub const MAX_DENOMINATOR: f64 = 500.0;
 pub const MIN_DENOMINATOR: f64 = 0.01;
 
 pub const EMA_PERIOD: f64 = 60f64;
+pub const EMA_SAM_PERIOD: f64 = (21 * DAY) as f64;
 
 pub const MAX_SWAP_FEE_RATE: f64 = 0.0002;
 
