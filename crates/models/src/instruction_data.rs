@@ -793,3 +793,20 @@ pub struct VmChangeWhitelistData {
     pub mask: VmMask,
     pub whitelist: [u32; 8],
 }
+
+#[repr(C)]
+#[derive(Clone, Copy, Pod, Zeroable)]
+/// Perp Withdraw Data
+///
+/// **Tag:** `74`
+///
+/// ### Fields
+/// - `instr_id` - Instr pair id
+/// - `amount` - Amount of tokens client wants to move from perp to spot
+pub struct WithdrawSwapFeesdata {
+    pub tag: u8,
+    pub padding_u8: u8,
+    pub padding_u16: u16,
+    pub instr_id: InstrId,
+    pub amount: i64,
+}
