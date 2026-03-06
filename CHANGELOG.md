@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [unreleased]
 
+## [v2.32] - 2026-03-06
+
 ## Added
 - `WitndhrawSwapFees` instruction
 - `swap_fees` field in `InstrAccountHeader`
