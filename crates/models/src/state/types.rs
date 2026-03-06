@@ -947,7 +947,7 @@ pub mod quote_status {
 }
 
 #[derive(Clone, Copy, Debug)]
-#[repr(u8)]
+#[repr(C)]
 pub enum SAMFeeType {
     ZeroFees = 0,
     FixedFees = 1,

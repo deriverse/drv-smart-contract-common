@@ -1,6 +1,8 @@
 use crate::{
     new_types::{instrument::InstrId, version::Version},
-    state::types::{instr_mask::InstrInputMask, quote_status::QuoteMask, vm_status::VmMask},
+    state::types::{
+        instr_mask::InstrInputMask, quote_status::QuoteMask, vm_status::VmMask, SAMFeeType,
+    },
 };
 use bytemuck::{Pod, Zeroable};
 
@@ -803,7 +805,7 @@ pub struct SetSMAMinQtyData {
 #[derive(Clone, Copy, Pod, Zeroable)]
 pub struct SetSMAFxiedFeesData {
     pub tag: u8,
-    pub padding_u8: u8,
+    pub swap_fee_type: u8, // 0 - zero fees, 1 - fixed_fees
     pub padding_u16: u16,
     pub instr_id: InstrId,
     pub fee_rate: f64,
