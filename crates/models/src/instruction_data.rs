@@ -803,7 +803,7 @@ pub struct SetSMAMinQtyData {
 
 #[repr(C)]
 #[derive(Clone, Copy, Pod, Zeroable)]
-pub struct SetSMAFxiedFeesData {
+pub struct ChangeSAMFeesPolicyData {
     pub tag: u8,
     pub swap_fee_type: u8, // 0 - zero fees, 1 - fixed_fees
     pub padding_u16: u16,
