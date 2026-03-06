@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [unreleased]
 
+## Added
+- `WitndhrawSwapFees` instruction
+- `swap_fees` field in `InstrAccountHeader`
+
+## Removed
+- `ref_fee_rate` from `SwapData`
+
 ## Changed
 - Added `custom_id` for `DepositData` and `WithdrawData`
 - Added `custom_id` for `DepositReport` and `WithdrawReport`

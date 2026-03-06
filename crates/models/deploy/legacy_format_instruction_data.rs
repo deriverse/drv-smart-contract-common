@@ -357,7 +357,6 @@ pub struct SwapData {
     pub instr_id: u32,
     pub price: i64,
     pub amount: i64,
-    pub ref_fee_rate: f64,
     pub min_amount_out: i64,
 }
 
@@ -681,4 +680,12 @@ pub struct VmChangeWhitelistData {
     pub padding_u16: u16,
     pub mask: u32,
     pub whitelist: [u32; 8],
+}
+
+pub struct WithdrawSwapFeesData {
+    pub tag: u8,
+    pub padding_u8: u8,
+    pub padding_u16: u16,
+    pub instr_id: InstrId,
+    pub amount: i64,
 }

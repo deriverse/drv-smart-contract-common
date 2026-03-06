@@ -366,3 +366,9 @@ impl DrvInstruction for ExtendCandles {
     const INSTRUCTION_NUMBER: u8 = 73;
     const MIN_ACCOUNTS: usize = 4;
 }
+
+pub struct WithdrawSwapFeesInstruction;
+impl DrvInstruction for WithdrawSwapFeesInstruction {
+    const INSTRUCTION_NUMBER: u8 = 74;
+    const MIN_ACCOUNTS: usize = 12;
+}
