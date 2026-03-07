@@ -3,7 +3,7 @@ use std::ops::Deref;
 use crate::new_types::instrument::InstrId;
 use bytemuck::{Pod, Zeroable};
 
-use super::types::Discriminator;
+use super::types::{instr_mask::InstrMask, Discriminator};
 
 use solana_pubkey::Pubkey;
 
@@ -16,6 +16,11 @@ use solana_pubkey::Pubkey;
 /// 3. **`mask`**
 ///     * `PERP` = `0x40000000` — Perp instrument flag.
 ///     * `READY_TO_PERP_UPGRADE` = `0x01000000` — Indicates readiness to upgrade to a Perp.
+///     * `ZERO_FEES` = `0x1` — Zero fees flag.
+///     * `FIXED_FEES` = `0x2` — Fixed fees flag.
+///     * `SIMILAR_ASSETS` = `0x4` — Similar assets flag.
+///     * `USD_STABLECOIN` = `0x8` — USD stablecoin flag.
+///     * `FOREX` = `0x10` — Forex flag.
 /// 4. **`asset_tokens`** - Amount of assets tokens
 /// 5. **`crncy_tokens`** - Amount of crncy tokens
 /// 6. **`ps`** - Pool supply
@@ -153,7 +158,7 @@ pub struct InstrAccountHeader {
     pub crncy_token_id: u32,
     pub asset_token_decs_count: u32,
     pub crncy_token_decs_count: u32,
-    pub mask: u32,
+    pub mask: InstrMask,
 
     // Spot page (Instrument Selector)
     pub last_px: i64,
@@ -296,8 +301,8 @@ pub struct InstrAccountHeader {
     pub liquidation_threshold: f64,
     pub seats_reserve: i64,
     pub swap_fees: i64,
-    pub reserved_value5: i64,
-    pub reserved_value6: i64,
+    pub similar_assets_min_qty: i64,
+    pub fixed_fee_rate: f64,
     pub reserved_value7: i64,
     pub reserved_value8: i64,
     pub reserved_value9: i64,

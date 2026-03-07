@@ -3,11 +3,14 @@ use std::ops::Deref;
 use serde::{Deserialize, Serialize};
 use trading_limitations::MARKET_DEPTH;
 
-use crate::state::{
-    instrument::INSTR_ACCOUNT_HEADER_SIZE,
-    types::{
-        account_type::{SPOT_15M_CANDLES, SPOT_1M_CANDLES, SPOT_DAY_CANDLES},
-        LINE_QUOTES_SIZE,
+use crate::{
+    constants::time::DAY,
+    state::{
+        instrument::INSTR_ACCOUNT_HEADER_SIZE,
+        types::{
+            account_type::{SPOT_15M_CANDLES, SPOT_1M_CANDLES, SPOT_DAY_CANDLES},
+            LINE_QUOTES_SIZE,
+        },
     },
 };
 
@@ -79,8 +82,10 @@ pub mod time {
 
 pub mod volatility {
     pub const MIN_VARIANCE: f64 = 0.0001;
+    pub const MIN_SAM_VARIANCE: f64 = 0.00000025;
     pub const MAX_VARIANCE: f64 = 0.25;
     pub const INIT_VARIANCE: f64 = 0.01f64;
+    pub const INIT_SAM_VARIANCE: f64 = 0.00000025;
     pub const INIT_DAY_VOLATILITY: f64 = 0.1f64;
 }
 
@@ -95,6 +100,7 @@ pub const MAX_DENOMINATOR: f64 = 500.0;
 pub const MIN_DENOMINATOR: f64 = 0.01;
 
 pub const EMA_PERIOD: f64 = 60f64;
+pub const EMA_SAM_PERIOD: f64 = (21 * DAY) as f64;
 
 pub const SWAP_FEE_RATE: f64 = 0.0002;
 
@@ -117,13 +123,14 @@ pub mod memory_maps {
 }
 
 pub mod spot {
+
     pub const MAX_LINES: usize = 2048;
     pub const MAX_ORDERS: u32 = (4 * 64 * 64 - MAX_LINES) as u32 - 2;
     pub const MAX_CLIENT_SIDE_ORDERS_COUNT: u32 = 32;
-    pub mod memory_maps {
-        use crate::state::spots::spot_account_header::SpotTradeAccountHeader;
 
+    pub mod memory_maps {
         use super::super::memory_maps::*;
+        use crate::state::spots::spot_account_header::SpotTradeAccountHeader;
 
         pub const BIDS_TREE_PT_OFFSET: usize =
             std::mem::size_of::<SpotTradeAccountHeader<0>>() + MEMORY_MAP_UNITS * 8;
@@ -133,6 +140,27 @@ pub mod spot {
         pub const LINES_PT_OFFSET: usize = ASK_ORDERS_PT_OFFSET + TRADE_MEMORY_MAP_UNITS * 8;
 
         pub const MAPS_SIZE: usize = LINES_PT_OFFSET + SMALL_MEMORY_MAP_UNITS * 8;
+    }
+}
+
+pub mod extended_spot {
+
+    pub const MAX_LINES: usize = 2048 * 4;
+    pub const MAX_ORDERS: u32 = (16 * 64 * 64 - MAX_LINES) as u32 - 2;
+
+    pub mod memory_maps {
+        use super::super::memory_maps::*;
+        use crate::state::spots::spot_account_header::SpotTradeAccountHeader;
+
+        pub const BIDS_TREE_PT_OFFSET: usize =
+            std::mem::size_of::<SpotTradeAccountHeader<0>>() + MEMORY_MAP_UNITS * 8;
+        pub const ASKS_TREE_PT_OFFSET: usize = BIDS_TREE_PT_OFFSET + EXTENDED_MEMORY_MAP_UNITS * 8;
+        pub const BID_ORDERS_PT_OFFSET: usize = ASKS_TREE_PT_OFFSET + EXTENDED_MEMORY_MAP_UNITS * 8;
+        pub const ASK_ORDERS_PT_OFFSET: usize =
+            BID_ORDERS_PT_OFFSET + EXTENDED_MEMORY_MAP_UNITS * 8;
+        pub const LINES_PT_OFFSET: usize = ASK_ORDERS_PT_OFFSET + EXTENDED_MEMORY_MAP_UNITS * 8;
+
+        pub const MAPS_SIZE: usize = LINES_PT_OFFSET + TRADE_MEMORY_MAP_UNITS * 8;
     }
 }
 

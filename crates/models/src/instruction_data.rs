@@ -1,6 +1,8 @@
 use crate::{
     new_types::{instrument::InstrId, version::Version},
-    state::types::{quote_status::QuoteMask, vm_status::VmMask},
+    state::types::{
+        instr_mask::InstrInputMask, quote_status::QuoteMask, vm_status::VmMask, SAMFeeType,
+    },
 };
 use bytemuck::{Pod, Zeroable};
 
@@ -210,12 +212,14 @@ pub struct SpotLpData {
 /// - `price` - Base price for an instrument
 pub struct NewInstrumentData {
     pub tag: u8,
-    pub padding_u8: u8,
+    pub mask: InstrInputMask,
     pub padding_u16: u16,
     pub padding_u32: u32,
     pub crncy_token_id: u32,
     pub lut_slot: u32,
     pub price: i64,
+    pub min_qty: i64,
+    pub fixed_fee_rate: f64,
 }
 
 #[repr(C)]
@@ -809,4 +813,33 @@ pub struct WithdrawSwapFeesData {
     pub padding_u16: u16,
     pub instr_id: InstrId,
     pub amount: i64,
+}
+
+#[repr(C)]
+#[derive(Clone, Copy, Pod, Zeroable)]
+pub struct SetSAMMinQtyData {
+    pub tag: u8,
+    pub padding_u8: u8,
+    pub padding_u16: u16,
+    pub instr_id: InstrId,
+    pub min_qty: i64,
+}
+
+#[repr(C)]
+#[derive(Clone, Copy, Pod, Zeroable)]
+pub struct ChangeSAMFeesPolicyData {
+    pub tag: u8,
+    pub sam_fee_type: u8, // 0 - zero fees, 1 - fixed_fees
+    pub padding_u16: u16,
+    pub instr_id: InstrId,
+    pub fee_rate: f64,
+}
+
+#[repr(C)]
+#[derive(Clone, Copy, Pod, Zeroable)]
+pub struct SuspendInstrumentData {
+    pub tag: u8,
+    pub padding_u8: u8,
+    pub padding_u16: u16,
+    pub instr_id: InstrId,
 }

@@ -1,9 +1,14 @@
 use drv_errors_derive::DrvError;
+use std::{error, path::Display};
+
 use drv_models::{
     constants::TradingSection,
     new_types::instrument::InstrId,
     state::types::{
-        account_type::AccountType, vm_status::VmFlag, AssetType, OrderSide, OrderType, TokenProgram,
+        account_type::AccountType,
+        instr_mask::{InstrFlag, InstrMask},
+        vm_status::VmFlag,
+        AssetType, OrderSide, OrderType, TokenProgram,
     },
 };
 use serde::{Deserialize, Serialize};
@@ -859,9 +864,72 @@ pub enum DeriverseErrorKind {
         orders_amount: u32,
     },
 
-    #[error(code = 325, msg = "maker_only is incompatible with IOC or Market orders")]
+    #[error(
+        code = 325,
+        msg = "maker_only is incompatible with IOC or Market orders"
+    )]
     MakerOnlyConflict,
+
+    #[error(code = 326, msg = "Invalid operation for similar assets market")]
+    InvalidOperationSimilarAssets,
+
+    #[error(code = 327, msg = "Similar Assets Market is not active")]
+    SAMIsNotActive,
+
+    #[error(code = 327, msg = "Invalid operation for active perp")]
+    InvalidOperationForActivePerp,
+
+    #[error(code = 328, msg = "Impossible to suspend instrument")]
+    ImpossibleToSuspend,
+
+    #[error(
+        code = 329,
+        msg = "Can not create an instrument with {reason} for {mint}"
+    )]
+    ImpossibleToCreateInstrument {
+        reason: ForbiddenTokensParams,
+        mint: Pubkey,
+    },
+
+    #[error(code = 330, msg = "Pool deposit is disabled for ZeroFees market")]
+    PoolDepositDisabled { mask: u32 },
+
+    #[error(
+        code = 330,
+        msg = "Can not set instr flag {flag} without {required_flag} flag up"
+    )]
+    CanNotSetInstrFlag {
+        flag: InstrFlag,
+        required_flag: InstrFlag,
+    },
+
+    #[error(code = 331, msg = "Impossible to create SAM market with SAMCrncy flag")]
+    ImpossibleToCreateSAMWithSAMCrncy,
+
+    #[error(
+        code = 332,
+        msg = "Can not set instr flag {flag} as {up_flag} flag is up"
+    )]
+    ConflictInstrFlags { flag: InstrFlag, up_flag: InstrFlag },
+
+    #[error(
+        code = 333,
+        msg = "Instrument is suspended, new orders can not be added"
+    )]
+    SuspendedInstrument,
 }
+
+#[derive(Debug, Serialize, Deserialize, PartialEq)]
+pub enum ForbiddenTokensParams {
+    FreezeAuthority,
+}
+
+impl std::fmt::Display for ForbiddenTokensParams {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "{:?}", self)
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;

@@ -78,7 +78,7 @@ impl DrvInstruction for NewSpotOrderInstruction {
 pub struct SpotOrderCancelInstruction;
 impl DrvInstruction for SpotOrderCancelInstruction {
     const INSTRUCTION_NUMBER: u8 = 13;
-    const MIN_ACCOUNTS: usize = 14;
+    const MIN_ACCOUNTS: usize = 11;
 }
 
 pub struct SpotLpInstruction;
@@ -371,4 +371,22 @@ pub struct WithdrawSwapFeesInstruction;
 impl DrvInstruction for WithdrawSwapFeesInstruction {
     const INSTRUCTION_NUMBER: u8 = 74;
     const MIN_ACCOUNTS: usize = 12;
+}
+
+pub struct SetSAMMinQtyInstruction;
+impl DrvInstruction for SetSAMMinQtyInstruction {
+    const INSTRUCTION_NUMBER: u8 = 75;
+    const MIN_ACCOUNTS: usize = 3;
+}
+
+pub struct ChangeSAMFeesPolictyInstruction;
+impl DrvInstruction for ChangeSAMFeesPolictyInstruction {
+    const INSTRUCTION_NUMBER: u8 = 76;
+    const MIN_ACCOUNTS: usize = 3;
+}
+
+pub struct SuspendInstrumentInstruction;
+impl DrvInstruction for SuspendInstrumentInstruction {
+    const INSTRUCTION_NUMBER: u8 = 77;
+    const MIN_ACCOUNTS: usize = 4;
 }
