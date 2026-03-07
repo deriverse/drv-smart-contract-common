@@ -7,12 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [unreleased]
 
+## [v2.34] - 2026-03-06
+
 ## Added 
 - `SuspendInstrument`, `ChangeSAMFeesPolicyData`, `SetSAMMinQtyData` instruction
 - `SAM EMA PERIOD` constant 
 - `InstrMask` and `TokenMask`
 
-## [v2.32] - 2026-03-06
+## [v2.34] - 2026-03-06
 
 ## Added
 - `WitndhrawSwapFees` instruction
