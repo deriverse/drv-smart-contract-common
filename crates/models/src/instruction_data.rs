@@ -210,7 +210,6 @@ pub struct SpotLpData {
 /// - `crncy_token_id` - Id of token in the system with base crncy flag
 /// - `lut_slot` - LUT creation slot
 /// - `price` - Base price for an instrument
-/// TODO write rust docs
 pub struct NewInstrumentData {
     pub tag: u8,
     pub mask: InstrInputMask,
