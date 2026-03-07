@@ -200,7 +200,7 @@ pub struct SpotLpData {
 /// - `price` - Base price for an instrument
 pub struct NewInstrumentData {
     pub tag: u8,
-    pub mask: u32,
+    pub mask: u8,
     pub padding_u16: u16,
     pub padding_u32: u32,
     pub base_token_id: u32,
