@@ -864,14 +864,17 @@ pub enum DeriverseErrorKind {
         orders_amount: u32,
     },
 
-    #[error(code = 325, msg = "maker_only is incompatible with IOC or Market orders")]
+    #[error(
+        code = 325,
+        msg = "maker_only is incompatible with IOC or Market orders"
+    )]
     MakerOnlyConflict,
 
     #[error(code = 326, msg = "Invalid operation for similar assets market")]
     InvalidOperationSimilarAssets,
 
     #[error(code = 327, msg = "Similar Assets Market is not active")]
-    SMAIsNotActive,
+    SAMIsNotActive,
 
     #[error(code = 327, msg = "Invalid operation for active perp")]
     InvalidOperationForActivePerp,
@@ -900,9 +903,8 @@ pub enum DeriverseErrorKind {
         required_flag: InstrFlag,
     },
 
-    #[error(code = 331, msg = "Impossible to create SMA market with SMACrncy flag")]
-    ImpossibleToCreateSMAWithSMACrncy,
-
+    #[error(code = 331, msg = "Impossible to create SAM market with SAMCrncy flag")]
+    ImpossibleToCreateSAMWithSAMCrncy,
 
     #[error(
         code = 332,

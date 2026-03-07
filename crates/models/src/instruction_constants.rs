@@ -373,8 +373,8 @@ impl DrvInstruction for WithdrawSwapFeesInstruction {
     const MIN_ACCOUNTS: usize = 12;
 }
 
-pub struct SetSMAMinQtyInstruction;
-impl DrvInstruction for SetSMAMinQtyInstruction {
+pub struct SetSAMMinQtyInstruction;
+impl DrvInstruction for SetSAMMinQtyInstruction {
     const INSTRUCTION_NUMBER: u8 = 75;
     const MIN_ACCOUNTS: usize = 3;
 }

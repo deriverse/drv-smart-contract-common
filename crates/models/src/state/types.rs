@@ -183,7 +183,7 @@ pub mod token_mask {
         Token2022 = 0x80000000,
         BaseCrncy = 0x40000000,
         WrappedToken = 0x20000000,
-        SMACrncy = 0x10000000,
+        SAMCrncy = 0x10000000,
     }
 
     impl std::fmt::Display for TokenFlag {
@@ -228,10 +228,10 @@ pub mod token_mask {
         assert_eq!(mask.decimals(), 9);
 
         mask.set_flag(TokenFlag::BaseCrncy);
-        mask.set_flag(TokenFlag::SMACrncy);
+        mask.set_flag(TokenFlag::SAMCrncy);
 
         assert!(mask.get_flag(TokenFlag::BaseCrncy));
-        assert!(mask.get_flag(TokenFlag::SMACrncy));
+        assert!(mask.get_flag(TokenFlag::SAMCrncy));
         assert!(!mask.get_flag(TokenFlag::WrappedToken));
 
         assert_eq!(mask.decimals(), 9);
@@ -240,7 +240,7 @@ pub mod token_mask {
         assert!(!mask.get_flag(TokenFlag::BaseCrncy));
 
         assert_eq!(mask.decimals(), 9);
-        assert!(mask.get_flag(TokenFlag::SMACrncy));
+        assert!(mask.get_flag(TokenFlag::SAMCrncy));
     }
 }
 

@@ -817,7 +817,7 @@ pub struct WithdrawSwapFeesData {
 
 #[repr(C)]
 #[derive(Clone, Copy, Pod, Zeroable)]
-pub struct SetSMAMinQtyData {
+pub struct SetSAMMinQtyData {
     pub tag: u8,
     pub padding_u8: u8,
     pub padding_u16: u16,

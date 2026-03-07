@@ -686,7 +686,7 @@ pub struct VmChangeWhitelistData {
 
 #[repr(C)]
 #[derive(Clone, Copy, Pod, Zeroable)]
-pub struct SetSMAMinQtyData {
+pub struct SetSAMMinQtyData {
     pub tag: u8,
     pub padding_u8: u8,
     pub padding_u16: u16,
@@ -696,7 +696,7 @@ pub struct SetSMAMinQtyData {
 
 #[repr(C)]
 #[derive(Clone, Copy, Pod, Zeroable)]
-pub struct SetSMAFxiedFeesData {
+pub struct SetSAMFxiedFeesData {
     pub tag: u8,
     pub padding_u8: u8,
     pub padding_u16: u16,
