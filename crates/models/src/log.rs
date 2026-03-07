@@ -105,6 +105,7 @@ pub struct DepositReport {
     pub token_id: u32,
     pub time: u32,
     pub amount: i64,
+    pub custom_id: i64,
 }
 
 #[repr(C)]
@@ -178,6 +179,7 @@ pub struct WithdrawReport {
     pub token_id: u32,
     pub time: u32,
     pub amount: i64,
+    pub custom_id: i64,
 }
 
 #[repr(C)]

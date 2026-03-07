@@ -375,7 +375,7 @@ pub struct InstrAccountHeader {
     pub seats_reserve: i64,
     pub similar_assets_min_qty: i64,
     pub fixed_fee_rate: f64,
-    pub reserved_value6: i64,
+    pub swap_fees: i64,
     pub reserved_value7: i64,
     pub reserved_value8: i64,
     pub reserved_value9: i64,

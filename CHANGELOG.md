@@ -7,6 +7,25 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [unreleased]
 
+## [v2.32] - 2026-03-06
+
+## Added
+- `WitndhrawSwapFees` instruction
+- `swap_fees` field in `InstrAccountHeader`
+
+## Removed
+- `ref_fee_rate` from `SwapData`
+
+## Changed
+- Added `custom_id` for `DepositData` and `WithdrawData`
+- Added `custom_id` for `DepositReport` and `WithdrawReport`
+- Added `maker_only` for spot and perp order and quote instructions
+
+## [v2.32] - 2026-02-24
+
+## Changed
+- For `QuoteMask` changed `bid` side to 0
+
 ## [v2.31] - 2026-02-12
 
 ## Added

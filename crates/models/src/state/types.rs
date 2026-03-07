@@ -1,9 +1,6 @@
 use bytemuck::{Pod, Zeroable};
 use serde::{Deserialize, Serialize};
-#[cfg(feature = "on-chain")]
-use solana_program::pubkey::Pubkey;
-#[cfg(feature = "off-chain")]
-use solana_sdk::pubkey::Pubkey;
+use solana_pubkey::Pubkey;
 
 use crate::new_types::{client::ClientId, tag::Tag, version::Version};
 
@@ -51,6 +48,7 @@ pub enum OrderType {
     Limit = 0,
     Market = 1,
     MarginCall = 2,
+    MakerOnly = 3,
 }
 
 impl std::fmt::Display for OrderType {
@@ -62,6 +60,7 @@ impl std::fmt::Display for OrderType {
                 Self::Limit => "Limit",
                 Self::Market => "Market",
                 Self::MarginCall => "Margin Call",
+                Self::MakerOnly => "Maker Only",
             }
         )
     }
@@ -246,11 +245,7 @@ pub mod token_mask {
 }
 
 pub mod account_type {
-
-    #[cfg(feature = "on-chain")]
-    use solana_program::program_error::ProgramError;
-    #[cfg(feature = "off-chain")]
-    use solana_sdk::program_error::ProgramError;
+    use solana_program_error::ProgramError;
 
     use super::*;
 
@@ -809,21 +804,21 @@ pub mod quote_status {
 
         pub fn quote_side(&self, position: usize) -> OrderSide {
             let bit_position = Self::AMOUNT_BITS + position as u16;
-            if (self.0 >> bit_position) & 1 != 0 {
+            if (self.0 >> bit_position) & 1 == 0 {
                 OrderSide::Bid
             } else {
                 OrderSide::Ask
             }
         }
 
-        /// bid: true for Bid, false for Ask
+        /// bid: false for Bid, true for Ask
         pub fn set_quote(&mut self, position: usize, order_side: OrderSide) {
             assert!(position < Self::QUOTE_ARRAY_SIZE, "Position must be 0-11");
             let bit_position = Self::AMOUNT_BITS + position as u16;
 
             match order_side {
-                OrderSide::Bid => self.0 |= 1 << bit_position,
-                OrderSide::Ask => self.0 &= !(1 << bit_position),
+                OrderSide::Bid => self.0 &= !(1 << bit_position),
+                OrderSide::Ask => self.0 |= 1 << bit_position,
             }
         }
 
@@ -900,20 +895,20 @@ pub mod quote_status {
             let mut mask = QuoteMask::new(3);
 
             for i in 0..mask.amount() as usize {
-                assert_eq!(mask.quote_side(i), OrderSide::Ask);
+                assert_eq!(mask.quote_side(i), OrderSide::Bid);
             }
 
-            mask.set_quote(0, OrderSide::Bid);
-            mask.set_quote(5, OrderSide::Bid);
-            mask.set_quote(11, OrderSide::Bid);
+            mask.set_quote(0, OrderSide::Ask);
+            mask.set_quote(5, OrderSide::Ask);
+            mask.set_quote(11, OrderSide::Ask);
 
-            assert_eq!(mask.quote_side(0), OrderSide::Bid);
-            assert_eq!(mask.quote_side(5), OrderSide::Bid);
-            assert_eq!(mask.quote_side(11), OrderSide::Bid);
+            assert_eq!(mask.quote_side(0), OrderSide::Ask);
+            assert_eq!(mask.quote_side(5), OrderSide::Ask);
+            assert_eq!(mask.quote_side(11), OrderSide::Ask);
 
-            assert_eq!(mask.quote_side(1), OrderSide::Ask);
-            assert_eq!(mask.quote_side(6), OrderSide::Ask);
-            assert_eq!(mask.quote_side(1), OrderSide::Ask);
+            assert_eq!(mask.quote_side(1), OrderSide::Bid);
+            assert_eq!(mask.quote_side(6), OrderSide::Bid);
+            assert_eq!(mask.quote_side(1), OrderSide::Bid);
         }
 
         #[test]

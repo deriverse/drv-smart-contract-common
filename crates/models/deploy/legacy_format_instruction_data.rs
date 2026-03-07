@@ -234,6 +234,7 @@ pub struct DepositData {
     pub amount: i64,
     pub lut_slot: u32,
     pub ref_id: u32,
+    pub custom_id: i64,
 }
 
 #[repr(C)]
@@ -346,6 +347,7 @@ pub struct WithdrawData {
     padding_u16: u16,
     pub token_id: u32,
     pub amount: i64,
+    pub custom_id: i64,
 }
 
 #[repr(C)]
@@ -357,7 +359,6 @@ pub struct SwapData {
     pub instr_id: u32,
     pub price: i64,
     pub amount: i64,
-    pub ref_fee_rate: f64,
     pub min_amount_out: i64,
 }
 
@@ -701,4 +702,12 @@ pub struct SetSMAFxiedFeesData {
     pub padding_u16: u16,
     pub instr_id: InstrId,
     pub fee_rate: f64,
+}
+
+pub struct WithdrawSwapFeesData {
+    pub tag: u8,
+    pub padding_u8: u8,
+    pub padding_u16: u16,
+    pub instr_id: InstrId,
+    pub amount: i64,
 }

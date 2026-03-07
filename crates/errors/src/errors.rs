@@ -1,6 +1,6 @@
+use drv_errors_derive::DrvError;
 use std::{error, path::Display};
 
-use drv_errors_derive::DrvError;
 use drv_models::{
     constants::TradingSection,
     new_types::instrument::InstrId,
@@ -12,12 +12,9 @@ use drv_models::{
     },
 };
 use serde::{Deserialize, Serialize};
-#[cfg(feature = "on-chain")]
-use solana_program::{msg, program_error::ProgramError, pubkey::Pubkey};
-#[cfg(feature = "off-chain")]
-use solana_sdk::pubkey::Pubkey;
-#[cfg(not(any(feature = "on-chain", feature = "off-chain")))]
-compile_error!("Either 'on-chain' or 'off-chain' feature must be enabled");
+use solana_msg::msg;
+use solana_program_error::ProgramError;
+use solana_pubkey::Pubkey;
 
 pub trait ResultExt<T, E> {
     fn context<C>(self, ctx: C) -> Result<T, C>;
@@ -28,14 +25,13 @@ impl<T, E> ResultExt<T, E> for Result<T, E> {
         self.map_err(|_| ctx)
     }
 }
-#[cfg(feature = "on-chain")]
+
 impl From<ProgramError> for DeriverseErrorKind {
     fn from(e: ProgramError) -> Self {
         DeriverseErrorKind::SystemError { error: e }
     }
 }
 
-#[cfg(feature = "on-chain")]
 impl From<DeriverseErrorKind> for ProgramError {
     fn from(e: DeriverseErrorKind) -> Self {
         msg!("{}", e.to_json().to_string());
@@ -43,7 +39,6 @@ impl From<DeriverseErrorKind> for ProgramError {
     }
 }
 
-#[cfg(feature = "on-chain")]
 impl From<DeriverseError> for ProgramError {
     fn from(e: DeriverseError) -> Self {
         msg!("{}", e.to_json().to_string());
@@ -51,7 +46,6 @@ impl From<DeriverseError> for ProgramError {
     }
 }
 
-#[cfg(feature = "off-chain")]
 impl From<DeriverseError> for u32 {
     fn from(e: DeriverseError) -> Self {
         e.code()
@@ -136,7 +130,6 @@ fn some_test() {
 
 #[derive(Debug, DrvError, Serialize, Deserialize, PartialEq)]
 pub enum DeriverseErrorKind {
-    #[cfg(feature = "on-chain")]
     #[error(code = 100, msg = "System error {error}")]
     SystemError { error: ProgramError },
 
@@ -871,23 +864,14 @@ pub enum DeriverseErrorKind {
         orders_amount: u32,
     },
 
+    #[error(code = 325, msg = "maker_only is incompatible with IOC or Market orders")]
+    MakerOnlyConflict,
+
     #[error(code = 326, msg = "Invalid operation for similar assets market")]
     InvalidOperationSimilarAssets,
 
     #[error(code = 327, msg = "Similar Assets Market is not active")]
     SMAIsNotActive,
-
-    #[error(
-        code = 325,
-        msg = "Can not set instr flag {flag} as {up_flag} flag is up"
-    )]
-    ConflictInstrFlags { flag: InstrFlag, up_flag: InstrFlag },
-
-    #[error(
-        code = 326,
-        msg = "Instrument is suspended, new orders can not be added"
-    )]
-    SuspendedInstrument,
 
     #[error(code = 327, msg = "Invalid operation for active perp")]
     InvalidOperationForActivePerp,
@@ -918,6 +902,19 @@ pub enum DeriverseErrorKind {
 
     #[error(code = 331, msg = "Impossible to create SMA market with SMACrncy flag")]
     ImpossibleToCreateSMAWithSMACrncy,
+
+
+    #[error(
+        code = 332,
+        msg = "Can not set instr flag {flag} as {up_flag} flag is up"
+    )]
+    ConflictInstrFlags { flag: InstrFlag, up_flag: InstrFlag },
+
+    #[error(
+        code = 333,
+        msg = "Instrument is suspended, new orders can not be added"
+    )]
+    SuspendedInstrument,
 }
 
 #[derive(Debug, Serialize, Deserialize, PartialEq)]
@@ -934,10 +931,7 @@ impl std::fmt::Display for ForbiddenTokensParams {
 #[cfg(test)]
 mod tests {
     use super::*;
-    #[cfg(feature = "on-chain")]
-    use solana_program::pubkey::Pubkey;
-    #[cfg(feature = "off-chain")]
-    use solana_sdk::pubkey::Pubkey;
+    use solana_pubkey::Pubkey;
 
     #[test]
     fn test_wallet_address() {
@@ -973,21 +967,19 @@ mod tests {
         assert!(debug_str.contains("InvalidAccountsNumber"));
     }
 
-    #[cfg(feature = "off-chain")]
     #[test]
     fn test_solana_integration_off_chain() {
         let err = DeriverseErrorKind::InvalidDataLength {
             expected: 100,
             actual: 50,
         };
-        let code: u32 = err.into();
+        let code: u32 = err.code();
         assert_eq!(code, 102);
     }
 
-    #[cfg(feature = "on-chain")]
     #[test]
     fn test_solana_integration_on_chain() {
-        use solana_program::program_error::ProgramError;
+        use solana_program_error::ProgramError;
 
         let err = DeriverseErrorKind::InvalidOperatorAccount {
             address: Pubkey::new_unique(),

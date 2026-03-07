@@ -246,6 +246,7 @@ pub struct DepositData {
     pub amount: i64,
     pub lut_slot: u32,
     pub ref_id: u32,
+    pub custom_id: i64,
 }
 
 #[repr(C)]
@@ -358,6 +359,7 @@ pub struct WithdrawData {
     pub padding_u16: u16,
     pub token_id: u32,
     pub amount: i64,
+    pub custom_id: i64,
 }
 
 #[repr(C)]
@@ -373,7 +375,6 @@ pub struct WithdrawData {
 /// - `instr_id` - Instr pair id
 /// - `price` - Limit price for a swap
 /// - `amount` - Swaps qty in base crncy
-/// - `ref_fee_rate` - Referral fee for swap orders, 0 by default
 /// - `min_amount_out` - Min amount threshold for trade result, 0 by default
 pub struct SwapData {
     pub tag: u8,
@@ -382,7 +383,6 @@ pub struct SwapData {
     pub instr_id: InstrId,
     pub price: i64,
     pub amount: i64,
-    pub ref_fee_rate: f64,
     pub min_amount_out: i64,
 }
 
@@ -399,9 +399,13 @@ pub struct SwapData {
 /// - `instr_id` - Instr pair id
 pub struct SpotQuotesReplaceData {
     pub tag: u8,
-    pub padding_u8: u8, // <- rename to bump for bots
+    pub bump: u8,
+    pub order_type: u8,
+    pub padding_u8: u8,
     pub mask: QuoteMask,
+    pub padding_u16: u16,
     pub instr_id: InstrId,
+    pub padding_u32: u32,
 }
 
 #[repr(C)]
@@ -417,9 +421,13 @@ pub struct SpotQuotesReplaceData {
 /// - `instr_id` - Instr pair id
 pub struct PerpQuotesReplaceData {
     pub tag: u8,
-    padding_u8: u8, // <- rename to bump for bots
+    pub bump: u8,
+    pub order_type: u8,
+    pub padding_u8: u8,
     pub mask: QuoteMask,
+    pub padding_u16: u16,
     pub instr_id: InstrId,
+    pub padding_u32: u32,
 }
 
 #[repr(C)]
@@ -788,6 +796,23 @@ pub struct VmChangeWhitelistData {
     pub padding_u16: u16,
     pub mask: VmMask,
     pub whitelist: [u32; 8],
+}
+
+#[repr(C)]
+#[derive(Clone, Copy, Pod, Zeroable)]
+/// Perp Withdraw Data
+///
+/// **Tag:** `74`
+///
+/// ### Fields
+/// - `instr_id` - Instr pair id
+/// - `amount` - Amount of tokens client wants to move from perp to spot
+pub struct WithdrawSwapFeesData {
+    pub tag: u8,
+    pub padding_u8: u8,
+    pub padding_u16: u16,
+    pub instr_id: InstrId,
+    pub amount: i64,
 }
 
 #[repr(C)]

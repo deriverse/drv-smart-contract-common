@@ -1,13 +1,11 @@
 use bytemuck::{Pod, Zeroable};
 
-use crate::{new_types::client::ClientId, state::types::vm_status::VmMask};
+use crate::{
+    new_types::client::ClientId,
+    state::types::{vm_status::VmMask, Discriminator},
+};
 
-#[cfg(feature = "on-chain")]
-use solana_program::pubkey::Pubkey;
-
-use super::types::Discriminator;
-#[cfg(feature = "off-chain")]
-use solana_sdk::pubkey::Pubkey;
+use solana_pubkey::Pubkey;
 
 /// Client Primary Account Header
 ///

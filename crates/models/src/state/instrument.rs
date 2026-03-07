@@ -5,10 +5,7 @@ use bytemuck::{Pod, Zeroable};
 
 use super::types::{instr_mask::InstrMask, Discriminator};
 
-#[cfg(feature = "on-chain")]
-use solana_program::pubkey::Pubkey;
-#[cfg(feature = "off-chain")]
-use solana_sdk::pubkey::Pubkey;
+use solana_pubkey::Pubkey;
 
 /// Instr Account Header describe the state of an Instrument
 ///
@@ -303,10 +300,10 @@ pub struct InstrAccountHeader {
     pub perp_alltime_crncy_tokens: f64,
     pub liquidation_threshold: f64,
     pub seats_reserve: i64,
+    pub swap_fees: i64,
+    pub reserved_value5: i64,
     pub similar_assets_min_qty: i64,
     pub fixed_fee_rate: f64,
-    pub reserved_value6: i64,
-    pub reserved_value7: i64,
     pub reserved_value8: i64,
     pub reserved_value9: i64,
     pub reserved_value10: i64,
