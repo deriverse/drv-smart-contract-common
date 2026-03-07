@@ -85,6 +85,7 @@ pub mod volatility {
     pub const MIN_SAM_VARIANCE: f64 = 0.00000025;
     pub const MAX_VARIANCE: f64 = 0.25;
     pub const INIT_VARIANCE: f64 = 0.01f64;
+    pub const INIT_SAM_VARIANCE: f64 = 0.00000025;
     pub const INIT_DAY_VOLATILITY: f64 = 0.1f64;
 }
 
