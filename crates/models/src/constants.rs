@@ -183,9 +183,6 @@ pub mod perp {
     pub const DEFAULT_FOREX_DAY_VOLATILITY: f64 = 0.02;
     pub const DEFAULT_SAM_DAY_VOLATILITY: f64 = 0.001;
 
-    // pub const MIN_LIQUIDATION_THRESHOLD: f64 = 0.5 / MAX_PERP_LEVERAGE as f64;
-    // pub const MAX_PERP_LEVERAGE: u8 = 20;
-
     pub mod memory_maps {
         use super::super::memory_maps::*;
         use crate::state::spots::spot_account_header::SpotTradeAccountHeader;
