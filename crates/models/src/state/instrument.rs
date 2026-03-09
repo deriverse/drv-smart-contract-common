@@ -175,7 +175,6 @@ pub struct InstrAccountHeader {
     pub prev_day_trades: i64,
     pub perp_insurance_fund: i64,
     pub perp_price_delta: f64,
-    // todo update models
     pub short_ema_px: f64,
 
     // Liquidity page

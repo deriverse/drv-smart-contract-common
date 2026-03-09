@@ -7,16 +7,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [unreleased]
 
+## [v2.35] - 2026-03-09
+
+## Changed
+- `DAY_VOLATILITY` based constants
+- `ema_px` to `short_ema_px`
+
+## Added
+- `mid_ema_px` and `long_ema_px`
+
 ## [v2.34] - 2026-03-06
 
 ## Added 
 - `SuspendInstrument`, `ChangeSAMFeesPolicyData`, `SetSAMMinQtyData` instruction
 - `SAM EMA PERIOD` constant 
 - `InstrMask` and `TokenMask`
-
-## [v2.34] - 2026-03-06
-
-## Added
 - `WitndhrawSwapFees` instruction
 - `swap_fees` field in `InstrAccountHeader`
 
