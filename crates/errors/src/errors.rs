@@ -418,11 +418,8 @@ pub enum DeriverseErrorKind {
     #[error(code = 231, msg = "Max perp clients count reached")]
     MaxPerpClientsCountReached { value: u32, max: u32 },
 
-    #[error(
-        code = 232,
-        msg = "Invalid leverage, leverage {value} > max leverage {max} or equal to 0"
-    )]
-    InvalidLeverage { value: u32, max: u32 },
+    #[error(code = 232, msg = "Invalid leverage")]
+    InvalidLeverage { value: u32 },
     #[error(code = 233, msg = "Invalid Socialized Loss Open Interest")]
     InvalidSocializedLossOpenInterest,
 
