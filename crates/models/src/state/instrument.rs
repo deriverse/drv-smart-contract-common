@@ -175,7 +175,8 @@ pub struct InstrAccountHeader {
     pub prev_day_trades: i64,
     pub perp_insurance_fund: i64,
     pub perp_price_delta: f64,
-    pub ema_px: f64,
+    // todo update models
+    pub short_ema_px: f64,
 
     // Liquidity page
     pub lp_prev_day_fees: i64,
@@ -303,8 +304,8 @@ pub struct InstrAccountHeader {
     pub swap_fees: i64,
     pub similar_assets_min_qty: i64,
     pub fixed_fee_rate: f64,
-    pub reserved_value7: i64,
-    pub reserved_value8: i64,
+    pub mid_ema_px: i64,
+    pub long_ema_px: i64,
     pub reserved_value9: i64,
     pub reserved_value10: i64,
 }

@@ -4,7 +4,7 @@ use serde::{Deserialize, Serialize};
 use trading_limitations::MARKET_DEPTH;
 
 use crate::{
-    constants::time::DAY,
+    constants::time::{DAY, MINUTE, WEEK},
     state::{
         instrument::INSTR_ACCOUNT_HEADER_SIZE,
         types::{
@@ -69,6 +69,7 @@ pub mod seeds {
 }
 
 pub mod time {
+    pub const MINUTE: u32 = 60;
     pub const HOUR: u32 = 3600;
     pub const DAY: u32 = 86400;
     pub const WEEK: u32 = DAY * 7;
@@ -99,8 +100,9 @@ pub const MIN_AMOUNT_FOR_DIVIDENDS_ALLOCATION: i64 = 10;
 pub const MAX_DENOMINATOR: f64 = 500.0;
 pub const MIN_DENOMINATOR: f64 = 0.01;
 
-pub const EMA_PERIOD: f64 = 60f64;
-pub const EMA_SAM_PERIOD: f64 = (21 * DAY) as f64;
+pub const SHORT_EMA_PERIOD: f64 = (5 * MINUTE) as f64;
+pub const MID_EMA_PERIOD: f64 = DAY as f64;
+pub const LONG_EMA_PERIOD: f64 = WEEK as f64;
 
 pub const SWAP_FEE_RATE: f64 = 0.0002;
 
@@ -173,8 +175,16 @@ pub mod perp {
     pub const INIT_SEAT_PRICE: f64 = 1.0;
     pub const MAX_PERP_CLIENTS: u32 = 262_143;
 
-    pub const MIN_LIQUIDATION_THRESHOLD: f64 = 0.5 / MAX_PERP_LEVERAGE as f64;
-    pub const MAX_PERP_LEVERAGE: u8 = 20;
+    pub const MIN_DAY_VOLATILITY: f64 = 0.025;
+    pub const MIN_FOREX_DAY_VOLATILITY: f64 = 0.01;
+    pub const MIN_SAM_DAY_VOLATILITY: f64 = 0.0005;
+
+    pub const DEFAULT_DAY_VOLATILITY: f64 = 0.1;
+    pub const DEFAULT_FOREX_DAY_VOLATILITY: f64 = 0.02;
+    pub const DEFAULT_SAM_DAY_VOLATILITY: f64 = 0.001;
+
+    // pub const MIN_LIQUIDATION_THRESHOLD: f64 = 0.5 / MAX_PERP_LEVERAGE as f64;
+    // pub const MAX_PERP_LEVERAGE: u8 = 20;
 
     pub mod memory_maps {
         use super::super::memory_maps::*;
