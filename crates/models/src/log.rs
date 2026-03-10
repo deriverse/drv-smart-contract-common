@@ -189,12 +189,13 @@ pub struct WithdrawReport {
     pub tag: u8,
     pub padding_u8: u8,
     pub padding_u16: u16,
+    pub padding_u32: u32,
+    pub seq_no: u32,
     pub client_id: ClientId,
     pub token_id: u32,
     pub time: u32,
     pub amount: i64,
     pub custom_id: i64,
-    pub seq_no: u64,
 }
 
 #[repr(C)]
