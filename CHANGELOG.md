@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [unreleased]
 
+## [v2.35] - 2026-03-10
+
+## Added
+- `seq_no` for logs
+
 ## [v2.35] - 2026-03-09
 
 ## Changed

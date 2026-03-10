@@ -2,53 +2,54 @@ use crate::new_types::{client::ClientId, instrument::InstrId};
 use bytemuck::{Pod, Zeroable};
 
 pub mod log_type {
-    pub const DEPOSIT: u8 = 1; // client
-    pub const WITHDRAW: u8 = 2; // client
-    pub const FEES_DEPOSIT: u8 = 5; // client
-    pub const FEES_WITHDRAW: u8 = 6; // client
-    pub const EARNINGS: u8 = 8; // client
-    pub const DRVS_AIRDROP: u8 = 9; // client
-    pub const VM_INIT_ACTIVATE: u8 = 36; // client
-    pub const VM_INIT_ACTIVATE_CANCEL: u8 = 37; // client
-    pub const VM_FINALIZE_ACTIVATE: u8 = 38; // client
-    pub const VM_INIT_DEACTIVATE: u8 = 39; // client
-    pub const VM_INIT_DEACTIVATE_CANCEL: u8 = 40; // client
-    pub const VM_FINALIZE_DEACTIVATE: u8 = 41; // client
-    pub const VM_CHANGE_LIST: u8 = 42; // client
-    pub const VM_INIT_WITHDRAW: u8 = 43; // client
-    pub const VM_INIT_WITHDRAW_CANCEL: u8 = 44; // client
-    pub const VM_INIT_WITHDRAW_FINALIZE: u8 = 45; // client
-    pub const CHANGED_POINTS: u8 = 34; // client
-    pub const MOVE_SPOT: u8 = 32; // client
+    // Client logs
+    pub const DEPOSIT: u8 = 1;
+    pub const WITHDRAW: u8 = 2;
+    pub const FEES_DEPOSIT: u8 = 5;
+    pub const FEES_WITHDRAW: u8 = 6;
+    pub const EARNINGS: u8 = 8;
+    pub const DRVS_AIRDROP: u8 = 9;
+    pub const VM_INIT_ACTIVATE: u8 = 36;
+    pub const VM_INIT_ACTIVATE_CANCEL: u8 = 37;
+    pub const VM_FINALIZE_ACTIVATE: u8 = 38;
+    pub const VM_INIT_DEACTIVATE: u8 = 39;
+    pub const VM_INIT_DEACTIVATE_CANCEL: u8 = 40;
+    pub const VM_FINALIZE_DEACTIVATE: u8 = 41;
+    pub const VM_CHANGE_LIST: u8 = 42;
+    pub const VM_INIT_WITHDRAW: u8 = 43;
+    pub const VM_INIT_WITHDRAW_CANCEL: u8 = 44;
+    pub const VM_INIT_WITHDRAW_FINALIZE: u8 = 45;
+    pub const CHANGED_POINTS: u8 = 34;
+    pub const MOVE_SPOT: u8 = 32;
 
-    pub const PERP_DEPOSIT: u8 = 3; // instrument
-    pub const PERP_WITHDRAW: u8 = 4; // instrument
-    pub const SPOT_LP_TRADE: u8 = 7; // instrument
-    pub const SPOT_PLACE_ORDER: u8 = 10; // instrument
-    pub const SPOT_FILL_ORDER: u8 = 11; // instrument
-    pub const SPOT_NEW_ORDER: u8 = 12; // instrument
-    pub const SPOT_ORDER_CANCEL: u8 = 13; // instrument
-    pub const SPOT_ORDER_REVOKE: u8 = 14; // instrument
-    pub const SPOT_FEES: u8 = 15; // instrument
-    pub const SPOT_PLACE_MASS_CANCEL: u8 = 16; // instrument
-    pub const SPOT_MASS_CANCEL: u8 = 17; // instrument
-    pub const PERP_PLACE_ORDER: u8 = 18; // instrument
-    pub const PERP_FILL_ORDER: u8 = 19; // instrument
-    pub const PERP_NEW_ORDER: u8 = 20; // instrument
-    pub const PERP_ORDER_CANCEL: u8 = 21; // instrument
-    pub const PERP_ORDER_REVOKE: u8 = 22; // instrument
-    pub const PERP_FEES: u8 = 23; // instrument
-    pub const PERP_FUNDING: u8 = 24; // instrument
-    pub const PERP_PLACE_MASS_CANCEL: u8 = 25; // instrument
-    pub const PERP_MASS_CANCEL: u8 = 26; // instrument
-    pub const PERP_SOC_LOSS: u8 = 27; // instrument
-    pub const PERP_CHANGE_LEVERAGE: u8 = 28; // instrument
-    pub const BUY_MARKET_SEAT: u8 = 29; // instrument
-    pub const SELL_MARKET_SEAT: u8 = 30; // instrument
-    pub const SWAP_ORDER: u8 = 31; // instrument
-    pub const NEW_PRIVATE_CLIENT: u8 = 33; // unused
-    pub const SWAP_FEES: u8 = 35; // instrument
-    pub const PERP_LOSS_COVERAGE: u8 = 46; // instrument
+    // Instrument logs
+    pub const PERP_DEPOSIT: u8 = 3;
+    pub const PERP_WITHDRAW: u8 = 4;
+    pub const SPOT_LP_TRADE: u8 = 7;
+    pub const SPOT_PLACE_ORDER: u8 = 10;
+    pub const SPOT_FILL_ORDER: u8 = 11;
+    pub const SPOT_NEW_ORDER: u8 = 12;
+    pub const SPOT_ORDER_CANCEL: u8 = 13;
+    pub const SPOT_ORDER_REVOKE: u8 = 14;
+    pub const SPOT_FEES: u8 = 15;
+    pub const SPOT_PLACE_MASS_CANCEL: u8 = 16;
+    pub const SPOT_MASS_CANCEL: u8 = 17;
+    pub const PERP_PLACE_ORDER: u8 = 18;
+    pub const PERP_FILL_ORDER: u8 = 19;
+    pub const PERP_NEW_ORDER: u8 = 20;
+    pub const PERP_ORDER_CANCEL: u8 = 21;
+    pub const PERP_ORDER_REVOKE: u8 = 22;
+    pub const PERP_FEES: u8 = 23;
+    pub const PERP_FUNDING: u8 = 24;
+    pub const PERP_PLACE_MASS_CANCEL: u8 = 25;
+    pub const PERP_MASS_CANCEL: u8 = 26;
+    pub const PERP_SOC_LOSS: u8 = 27;
+    pub const PERP_CHANGE_LEVERAGE: u8 = 28;
+    pub const BUY_MARKET_SEAT: u8 = 29;
+    pub const SELL_MARKET_SEAT: u8 = 30;
+    pub const SWAP_ORDER: u8 = 31;
+    pub const SWAP_FEES: u8 = 35;
+    pub const PERP_LOSS_COVERAGE: u8 = 46;
 }
 
 #[repr(C)]
