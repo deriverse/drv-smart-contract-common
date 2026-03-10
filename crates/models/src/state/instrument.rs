@@ -305,7 +305,7 @@ pub struct InstrAccountHeader {
     pub fixed_fee_rate: f64,
     pub mid_ema_px: f64,
     pub long_ema_px: f64,
-    pub reserved_value9: i64,
+    pub log_seq_no: i64,
     pub reserved_value10: i64,
 }
 
