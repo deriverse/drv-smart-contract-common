@@ -19,6 +19,7 @@ pub mod log_type {
     pub const VM_INIT_WITHDRAW_CANCEL: u8 = 44; // client
     pub const VM_INIT_WITHDRAW_FINALIZE: u8 = 45; // client
     pub const CHANGED_POINTS: u8 = 34; // client
+    pub const MOVE_SPOT: u8 = 32; // client
 
     pub const PERP_DEPOSIT: u8 = 3; // instrument
     pub const PERP_WITHDRAW: u8 = 4; // instrument
@@ -45,7 +46,6 @@ pub mod log_type {
     pub const BUY_MARKET_SEAT: u8 = 29; // instrument
     pub const SELL_MARKET_SEAT: u8 = 30; // instrument
     pub const SWAP_ORDER: u8 = 31; // instrument
-    pub const MOVE_SPOT: u8 = 32; // instrument
     pub const NEW_PRIVATE_CLIENT: u8 = 33; // unused
     pub const SWAP_FEES: u8 = 35; // instrument
     pub const PERP_LOSS_COVERAGE: u8 = 46; // instrument
@@ -521,12 +521,13 @@ pub struct MoveSpotAvailFundsReport {
     pub tag: u8,
     pub padding_u8: u8,
     pub padding_u16: u16,
+    pub padding_u32: u32,
+    pub seq_no: u32,
     pub client_id: ClientId,
     pub instr_id: InstrId,
     pub time: u32,
     pub qty: i64,
     pub crncy: i64,
-    pub seq_no: i64,
 }
 
 #[repr(C)]
