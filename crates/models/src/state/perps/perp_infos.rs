@@ -116,7 +116,7 @@ pub const PERP_CLIENT_INFO4_SIZE: usize = size_of::<PerpClientInfo4>();
 /// 4. **`funding_node`** - Node in rebalance_time RBTree
 pub struct PerpClientInfo5 {
     pub funding_funds: CappedI64,
-    pub last_funding_rate: CappedI64,
+    pub last_funding_rate: f64,
     pub reserved: i64,
     pub rebalance_time: u32,
     pub funding_node: u32,
