@@ -863,6 +863,18 @@ pub struct CappedI64 {
     pub value: i64,
 }
 
+impl PartialEq<i64> for CappedI64 {
+    fn eq(&self, other: &i64) -> bool {
+        self.value == *other
+    }
+}
+
+impl PartialOrd<i64> for CappedI64 {
+    fn partial_cmp(&self, other: &i64) -> Option<std::cmp::Ordering> {
+        self.value.partial_cmp(other)
+    }
+}
+
 impl From<i64> for CappedI64 {
     fn from(value: i64) -> Self {
         CappedI64 { value }
