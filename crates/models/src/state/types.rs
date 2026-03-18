@@ -859,7 +859,7 @@ impl VmWhitelistRecord {
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub struct CappedI64 {
-    value: i64,
+    pub value: i64,
 }
 
 impl From<i64> for CappedI64 {
