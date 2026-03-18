@@ -22,8 +22,8 @@ use crate::{new_types::client::ClientId, state::types::CappedI64};
 /// - `ClientCommunityRecord` is stored in a Vec. For each different **`crncy_token_id`**
 pub struct ClientCommunityRecord {
     pub dividends_rate: f64,
-    pub dividends_value: i64,
-    pub fees_prepayment: i64,
+    pub dividends_value: CappedI64,
+    pub fees_prepayment: CappedI64,
     pub fees_ratio: f64,
     pub ref_rewards: CappedI64,
     pub ref_payments: CappedI64,
@@ -51,11 +51,11 @@ pub struct ClientCommunityAccountHeader {
     pub last_voting_time: u32,
     pub last_voting_counter: u32,
     pub current_voting_counter: u32,
-    pub current_voting_tokens: i64,
-    pub last_voting_tokens: i64,
+    pub current_voting_tokens: CappedI64,
+    pub last_voting_tokens: CappedI64,
     pub last_choice: u32,
     pub slot: u32,
-    pub drvs_tokens: i64,
+    pub drvs_tokens: CappedI64,
     pub count: u32,
     pub reserved: u32,
 }
