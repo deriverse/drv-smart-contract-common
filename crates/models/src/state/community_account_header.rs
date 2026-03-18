@@ -1,5 +1,7 @@
 use bytemuck::{Pod, Zeroable};
 
+use crate::state::types::CappedI64;
+
 use super::types::Discriminator;
 
 /// Community Account Header

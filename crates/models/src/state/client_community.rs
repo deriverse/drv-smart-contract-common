@@ -3,7 +3,7 @@ use std::mem::size_of;
 use bytemuck::{Pod, Zeroable};
 
 use super::types::Discriminator;
-use crate::new_types::client::ClientId;
+use crate::{new_types::client::ClientId, state::types::CappedI64};
 
 #[repr(C)]
 #[derive(Pod, Zeroable, Clone, Copy)]
@@ -25,8 +25,8 @@ pub struct ClientCommunityRecord {
     pub dividends_value: i64,
     pub fees_prepayment: i64,
     pub fees_ratio: f64,
-    pub ref_rewards: i64,
-    pub ref_payments: i64,
+    pub ref_rewards: CappedI64,
+    pub ref_payments: CappedI64,
     pub last_fees_prepayment_time: u32,
     pub crncy_token_id: u32,
 }

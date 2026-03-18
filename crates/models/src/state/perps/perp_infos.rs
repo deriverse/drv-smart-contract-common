@@ -1,7 +1,10 @@
 ///! # Perp client infos module
 ///! - Store information about clients state on perp
 ///! - Each info record is stored in an array in different accounts at temp_client_id index and managed by memory map from maps_acc
-use crate::{new_types::client::ClientId, state::types::OrderSide};
+use crate::{
+    new_types::client::ClientId,
+    state::types::{CappedI64, OrderSide},
+};
 use bytemuck::{Pod, Zeroable};
 
 use std::mem::size_of;
@@ -21,10 +24,10 @@ pub fn get_perp_info<T>(data: &[u8], id: ClientId) -> *mut T {
 /// 3. **`in_order_funds`** - Clients funds locked in buy orders
 /// 4. **`in_orders_perps`** - Clients funds locked in sell orders
 pub struct PerpClientInfo {
-    pub funds: i64,
-    pub perps: i64,
-    pub in_orders_funds: i64,
-    pub in_orders_perps: i64,
+    pub funds: CappedI64,
+    pub perps: CappedI64,
+    pub in_orders_funds: CappedI64,
+    pub in_orders_perps: CappedI64,
 }
 
 pub const PERP_CLIENT_INFO_SIZE: usize = size_of::<PerpClientInfo>();
@@ -43,8 +46,8 @@ pub const PERP_CLIENT_INFO_SIZE: usize = size_of::<PerpClientInfo>();
 ///     - 0xFF - Current clients leverage
 ///     - 0x40000000
 pub struct PerpClientInfo2 {
-    pub cost: i64,
-    pub result: i64,
+    pub cost: CappedI64,
+    pub result: CappedI64,
     pub bid_slot: u32,
     pub ask_slot: u32,
     pub px_node: u32,
@@ -80,8 +83,8 @@ pub struct PerpClientInfo3 {
     pub filled_orders: u32,
     pub bids_entry: u32,
     pub asks_entry: u32,
-    pub fees: i64,
-    pub rebates: i64,
+    pub fees: CappedI64,
+    pub rebates: CappedI64,
 }
 
 pub const PERP_CLIENT_INFO3_SIZE: usize = size_of::<PerpClientInfo3>();
@@ -97,8 +100,8 @@ pub const PERP_CLIENT_INFO3_SIZE: usize = size_of::<PerpClientInfo3>();
 pub struct PerpClientInfo4 {
     pub last_soc_loss_rate: f64,
     pub last_soc_loss_perps: i64,
-    pub soc_loss_funds: i64,
-    pub loss_coverage: i64,
+    pub soc_loss_funds: CappedI64,
+    pub loss_coverage: CappedI64,
 }
 
 pub const PERP_CLIENT_INFO4_SIZE: usize = size_of::<PerpClientInfo4>();
@@ -112,8 +115,8 @@ pub const PERP_CLIENT_INFO4_SIZE: usize = size_of::<PerpClientInfo4>();
 /// 3. **`rebalance_time`** - Last rebalance time record. rebalance_time and temp_client_id form key in rebalance RBTree
 /// 4. **`funding_node`** - Node in rebalance_time RBTree
 pub struct PerpClientInfo5 {
-    pub funding_funds: i64,
-    pub last_funding_rate: f64,
+    pub funding_funds: CappedI64,
+    pub last_funding_rate: CappedI64,
     pub reserved: i64,
     pub rebalance_time: u32,
     pub funding_node: u32,

@@ -4,7 +4,7 @@
 use bytemuck::{Pod, Zeroable};
 use std::mem::size_of;
 
-use crate::new_types::client::ClientId;
+use crate::{new_types::client::ClientId, state::types::CappedI64};
 
 use super::spot_account_header::SPOT_TRADE_ACCOUNT_HEADER_SIZE;
 
@@ -27,8 +27,8 @@ pub struct SpotClientInfo {
     pub filled_orders: u32,
     pub bids_entry: u32,
     pub asks_entry: u32,
-    pub avail_asset_tokens: i64,
-    pub avail_crncy_tokens: i64,
+    pub avail_asset_tokens: CappedI64,
+    pub avail_crncy_tokens: CappedI64,
 }
 
 pub const SPOT_CLIENT_INFO_SIZE: usize = size_of::<SpotClientInfo>();
@@ -43,8 +43,8 @@ pub const SPOT_CLIENT_INFO_SIZE: usize = size_of::<SpotClientInfo>();
 /// 3. **`bid_slot`** - Slot of last update on bid side
 /// 4. **`ask_slot`** - Slot of last update on asl=k side
 pub struct SpotClientInfo2 {
-    pub in_orders_asset_tokens: i64,
-    pub in_orders_crncy_tokens: i64,
+    pub in_orders_asset_tokens: CappedI64,
+    pub in_orders_crncy_tokens: CappedI64,
     pub bid_slot: u32,
     pub ask_slot: u32,
     pub reserved: i64,

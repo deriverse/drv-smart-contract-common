@@ -857,7 +857,8 @@ impl VmWhitelistRecord {
     }
 }
 
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Pod, Zeroable, Default)]
+#[repr(transparent)]
 pub struct CappedI64 {
     pub value: i64,
 }

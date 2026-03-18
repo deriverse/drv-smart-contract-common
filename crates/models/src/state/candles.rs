@@ -1,5 +1,5 @@
 use super::types::Discriminator;
-use crate::new_types::instrument::InstrId;
+use crate::{new_types::instrument::InstrId, state::types::CappedI64};
 use bytemuck::{Pod, Zeroable};
 use drv_macros::pod_wrapper;
 
@@ -30,8 +30,8 @@ pub struct Candle {
     pub close: i64,
     pub max: i64,
     pub min: i64,
-    pub asset_tokens: i64,
-    pub crncy_tokens: i64,
+    pub asset_tokens: CappedI64,
+    pub crncy_tokens: CappedI64,
     pub time: u32,
     pub counter: u32,
 }
