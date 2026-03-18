@@ -862,6 +862,12 @@ pub struct CappedI64 {
     value: i64,
 }
 
+impl From<i64> for CappedI64 {
+    fn from(value: i64) -> Self {
+        CappedI64 { value }
+    }
+}
+
 impl CappedI64 {
     pub const fn new(value: i64) -> Self {
         debug_assert!(value <= MAX_NUMBER);
@@ -872,9 +878,9 @@ impl CappedI64 {
         self.value
     }
 
-    pub const fn add(&self, other: i64) -> Self {
+    pub const fn add<T: Into<Self>>(&self, other: T) -> Self {
         Self {
-            value: self.value + other,
+            value: self.value + other.into(),
         }
     }
 }
