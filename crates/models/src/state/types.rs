@@ -2,7 +2,10 @@ use bytemuck::{Pod, Zeroable};
 use serde::{Deserialize, Serialize};
 use solana_pubkey::Pubkey;
 
-use crate::new_types::{client::ClientId, tag::Tag, version::Version};
+use crate::{
+    constants::MAX_NUMBER,
+    new_types::{client::ClientId, tag::Tag, version::Version},
+};
 
 #[derive(Clone, Copy, PartialEq, Eq, Debug, Serialize, Deserialize)]
 pub enum OrderSide {
@@ -851,5 +854,27 @@ impl VmWhitelistRecord {
 
     pub fn set_tag(&mut self, tag: VmWhitelistTag) {
         self.tag = tag as u32;
+    }
+}
+
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub struct CappedI64 {
+    value: i64,
+}
+
+impl CappedI64 {
+    pub const fn new(value: i64) -> Self {
+        debug_assert!(value <= MAX_NUMBER);
+        Self { value }
+    }
+
+    pub const fn get(&self) -> i64 {
+        self.value
+    }
+
+    pub const fn add(&self, other: i64) -> Self {
+        Self {
+            value: self.value + other,
+        }
     }
 }

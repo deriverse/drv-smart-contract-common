@@ -273,6 +273,8 @@ pub const INSTR_ACCOUNT_INITIAL_SIZE: usize =
 
 pub const MAX_INSTR_COUNT: u32 = 0x10000000;
 
+pub const MAX_NUMBER: i64 = i64::MAX >> 4;
+
 pub mod rebates {
     pub const REBATES_RATIO: f64 = 0.125;
 
