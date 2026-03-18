@@ -99,7 +99,7 @@ pub const PERP_CLIENT_INFO3_SIZE: usize = size_of::<PerpClientInfo3>();
 /// 4. **`loss_coverage`** - Amount of funds compensated in total
 pub struct PerpClientInfo4 {
     pub last_soc_loss_rate: f64,
-    pub last_soc_loss_perps: i64,
+    pub last_soc_loss_perps: CappedI64,
     pub soc_loss_funds: CappedI64,
     pub loss_coverage: CappedI64,
 }
