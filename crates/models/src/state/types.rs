@@ -867,3 +867,9 @@ impl From<i64> for CappedI64 {
         CappedI64 { value }
     }
 }
+
+impl From<CappedI64> for i64 {
+    fn from(value: CappedI64) -> Self {
+        value.value
+    }
+}
