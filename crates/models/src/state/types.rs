@@ -113,6 +113,7 @@ pub mod account_type {
     pub const PERP_SHORT_PX_TREE: u32 = 49;
     pub const PERP_REBALANCE_TIME_TREE: u32 = 50;
     pub const PRIVATE_CLIENTS: u32 = 51;
+    pub const VM_CLIENT: u32 = 52;
 
     #[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
     #[repr(u32)]
@@ -152,6 +153,7 @@ pub mod account_type {
         PerpShortPxTree = 49,
         PerpRebalanceTimeTree = 50,
         PrivateClients = 51,
+        VmClient = 52,
         ProgramTokenAccount,
         DrvsAuthority,
     }
@@ -195,6 +197,7 @@ pub mod account_type {
                 49 => Self::PerpShortPxTree,
                 50 => Self::PerpRebalanceTimeTree,
                 51 => Self::PrivateClients,
+                52 => Self::VmClient,
 
                 _ => return Err(ProgramError::InvalidAccountData),
             })
