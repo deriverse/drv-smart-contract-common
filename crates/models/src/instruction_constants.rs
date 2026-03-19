@@ -390,3 +390,21 @@ impl DrvInstruction for SuspendInstrumentInstruction {
     const INSTRUCTION_NUMBER: u8 = 77;
     const MIN_ACCOUNTS: usize = 4;
 }
+
+pub struct AddWithdrawalAddressInstruction;
+impl DrvInstruction for AddWithdrawalAddressInstruction {
+    const INSTRUCTION_NUMBER: u8 = 78;
+    const MIN_ACCOUNTS: usize = 4;
+}
+
+pub struct RemoveWithdrawalAddressInstruction;
+impl DrvInstruction for RemoveWithdrawalAddressInstruction {
+    const INSTRUCTION_NUMBER: u8 = 79;
+    const MIN_ACCOUNTS: usize = 4;
+}
+
+pub struct VmDirectWithdrawInstruction;
+impl DrvInstruction for VmDirectWithdrawInstruction {
+    const INSTRUCTION_NUMBER: u8 = 80;
+    const MIN_ACCOUNTS: usize = 4;
+}

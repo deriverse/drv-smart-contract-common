@@ -4,11 +4,12 @@ use std::{error, path::Display};
 use drv_models::{
     constants::TradingSection,
     new_types::instrument::InstrId,
-    state::types::{
-        account_type::AccountType,
-        instr_mask::{InstrFlag, InstrMask},
-        vm_status::VmFlag,
-        AssetType, OrderSide, OrderType, TokenProgram,
+    state::{
+        masks::instr_mask::InstrFlag,
+        types::{
+            account_type::AccountType, vm_status::VmFlag, AssetType, OrderSide, OrderType,
+            TokenProgram,
+        },
     },
 };
 use serde::{Deserialize, Serialize};

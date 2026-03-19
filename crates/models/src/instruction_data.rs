@@ -6,6 +6,7 @@ use crate::{
     },
 };
 use bytemuck::{Pod, Zeroable};
+use solana_pubkey::Pubkey;
 
 #[repr(C)]
 #[derive(Clone, Copy, Pod, Zeroable)]
@@ -843,4 +844,32 @@ pub struct SuspendInstrumentData {
     pub padding_u8: u8,
     pub padding_u16: u16,
     pub instr_id: InstrId,
+}
+
+#[repr(C)]
+#[derive(Clone, Copy, Pod, Zeroable)]
+pub struct AddWithdrawalAddressData {
+    pub tag: u8,
+    pub padding_u8: u8,
+    pub padding_u16: u16,
+    pub withdrawal: Pubkey,
+}
+
+#[repr(C)]
+#[derive(Clone, Copy, Pod, Zeroable)]
+pub struct RemoveWithdrawalAddressData {
+    pub tag: u8,
+    pub padding_u8: u8,
+    pub padding_u16: u16,
+    pub withdrawal: Pubkey,
+}
+
+#[repr(C)]
+#[derive(Clone, Copy, Pod, Zeroable)]
+pub struct VmDirectWithdrawData {
+    pub tag: u8,
+    pub padding_u8: u8,
+    pub padding_u16: u16,
+    pub token_id: u32,
+    pub amount: i64,
 }
