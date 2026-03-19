@@ -800,13 +800,19 @@ pub struct ClientVmAccountHeader {
     pub reserved: u32,
 }
 
-#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+#[derive(Clone, Copy, Debug, PartialEq, Eq, Serialize, Deserialize)]
 #[repr(u32)]
 pub enum VmWhitelistTag {
     Vacant = 0,
     WithdrawAccount = 1,
     ProgramId = 2,
     MarketId = 3,
+}
+
+impl std::fmt::Display for VmWhitelistTag {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "{:?}", self)
+    }
 }
 
 #[repr(C)]
@@ -832,6 +838,14 @@ impl VmWhitelistRecord {
             2 => Some(VmWhitelistTag::ProgramId),
             3 => Some(VmWhitelistTag::MarketId),
             _ => None,
+        }
+    }
+
+    pub fn vacant() -> Self {
+        VmWhitelistRecord {
+            tag: VmWhitelistTag::Vacant as u32,
+            reference: 0,
+            address: Pubkey::default(),
         }
     }
 

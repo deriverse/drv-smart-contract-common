@@ -8,7 +8,7 @@ use drv_models::{
         masks::instr_mask::InstrFlag,
         types::{
             account_type::AccountType, vm_status::VmFlag, AssetType, OrderSide, OrderType,
-            TokenProgram,
+            TokenProgram, VmWhitelistTag,
         },
     },
 };
@@ -921,6 +921,12 @@ pub enum DeriverseErrorKind {
         msg = "Couldnt find withdrawal address {withdrawal_address}"
     )]
     WithdrawalAddressWasNotFound { withdrawal_address: Pubkey },
+
+    #[error(
+        code = 335,
+        msg = "Invalid VmWhitelistTag for requested operation, tag: {tag}"
+    )]
+    InvalidVmRecordTag { tag: VmWhitelistTag },
 }
 
 #[derive(Debug, Serialize, Deserialize, PartialEq)]
