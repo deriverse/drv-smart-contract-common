@@ -848,24 +848,6 @@ pub struct SuspendInstrumentData {
 
 #[repr(C)]
 #[derive(Clone, Copy, Pod, Zeroable)]
-pub struct AddWithdrawalAddressData {
-    pub tag: u8,
-    pub padding_u8: u8,
-    pub padding_u16: u16,
-    pub withdrawal: Pubkey,
-}
-
-#[repr(C)]
-#[derive(Clone, Copy, Pod, Zeroable)]
-pub struct RemoveWithdrawalAddressData {
-    pub tag: u8,
-    pub padding_u8: u8,
-    pub padding_u16: u16,
-    pub withdrawal: Pubkey,
-}
-
-#[repr(C)]
-#[derive(Clone, Copy, Pod, Zeroable)]
 pub struct VmDirectWithdrawData {
     pub tag: u8,
     pub padding_u8: u8,

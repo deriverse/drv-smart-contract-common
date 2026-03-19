@@ -65,6 +65,7 @@ pub mod account_type {
     pub const PERP_SHORT_PX_TREE: u32 = 49;
     pub const PERP_REBALANCE_TIME_TREE: u32 = 50;
     pub const PRIVATE_CLIENTS: u32 = 51;
+    pub const CLIENT_VM: u32 = 52;
 }
 
 #[repr(C)]
