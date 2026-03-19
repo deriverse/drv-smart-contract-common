@@ -926,7 +926,7 @@ pub enum DeriverseErrorKind {
         code = 335,
         msg = "Invalid VmWhitelistTag for requested operation, tag: {tag}"
     )]
-    InvalidVmRecordTag { tag: VmWhitelistTag },
+    InvalidVmWhitelistRecordTag { tag: VmWhitelistTag },
 }
 
 #[derive(Debug, Serialize, Deserialize, PartialEq)]
