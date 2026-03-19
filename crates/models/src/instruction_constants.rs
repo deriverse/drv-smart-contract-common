@@ -394,7 +394,7 @@ impl DrvInstruction for SuspendInstrumentInstruction {
 pub struct AddWithdrawalAddressInstruction;
 impl DrvInstruction for AddWithdrawalAddressInstruction {
     const INSTRUCTION_NUMBER: u8 = 78;
-    const MIN_ACCOUNTS: usize = 4;
+    const MIN_ACCOUNTS: usize = 5;
 }
 
 pub struct RemoveWithdrawalAddressInstruction;
