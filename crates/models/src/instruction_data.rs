@@ -862,5 +862,5 @@ pub struct VmRemoveWithdrawalAddressData {
     pub tag: u8,
     pub padding_u8: u8,
     pub padding_u16: u16,
-    pub withdraw_address: Pubkey,
+    pub withdrawal_address: Pubkey,
 }
