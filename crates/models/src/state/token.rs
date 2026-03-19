@@ -1,7 +1,7 @@
 use bytemuck::{Pod, Zeroable};
 use solana_pubkey::Pubkey;
 
-use crate::state::types::token_mask::TokenMask;
+use crate::state::masks::token_mask::TokenMask;
 
 use super::types::Discriminator;
 

@@ -4,6 +4,7 @@ pub mod client_primary_account_header;
 pub mod community_account_header;
 pub mod holder;
 pub mod instrument;
+pub mod masks;
 pub mod perps;
 pub mod private_mode;
 pub mod root;

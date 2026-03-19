@@ -1,9 +1,9 @@
 use std::ops::Deref;
 
-use crate::new_types::instrument::InstrId;
+use crate::{new_types::instrument::InstrId, state::masks::instr_mask::InstrMask};
 use bytemuck::{Pod, Zeroable};
 
-use super::types::{instr_mask::InstrMask, Discriminator};
+use super::types::Discriminator;
 
 use solana_pubkey::Pubkey;
 
