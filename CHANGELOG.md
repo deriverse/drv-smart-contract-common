@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [unreleased]
 
+## Added
+- `vm_add_withdrawal_address`, `vm_remove_withdrawal_address`, `vm_direct_withdraw` instructions
+
 ## [v2.38] - 2026-03-13
 
 ## Added
