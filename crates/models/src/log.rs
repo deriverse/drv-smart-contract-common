@@ -675,7 +675,7 @@ pub struct VmInitWithdrawFinalizeReport {
 
 #[repr(C)]
 #[derive(Copy, Clone, Zeroable, Pod, Default)]
-pub struct VmDirectWithdraw {
+pub struct VmDirectWithdrawReport {
     pub tag: u8,
     pub padding_u8: u8,
     pub padding_u16: u16,
