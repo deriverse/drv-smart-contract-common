@@ -816,7 +816,7 @@ impl std::fmt::Display for VmWhitelistTag {
 }
 
 #[repr(C)]
-#[derive(Clone, Copy, Pod, Zeroable)]
+#[derive(Clone, Copy, Pod, Zeroable, Debug)]
 /// Vm Whitelist Record
 ///
 /// # Fields
