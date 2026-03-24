@@ -21,6 +21,7 @@ pub mod log_type {
     pub const VM_INIT_WITHDRAW_FINALIZE: u8 = 45;
     pub const CHANGED_POINTS: u8 = 34;
     pub const MOVE_SPOT: u8 = 32;
+    pub const VM_DIRECT_WITHDRAW: u8 = 47;
 
     // Instrument logs
     pub const PERP_DEPOSIT: u8 = 3;
