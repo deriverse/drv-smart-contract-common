@@ -672,3 +672,17 @@ pub struct VmInitWithdrawFinalizeReport {
     pub time: u32,
     pub amount: i64,
 }
+
+#[repr(C)]
+#[derive(Copy, Clone, Zeroable, Pod, Default)]
+pub struct VmDirectWithdraw {
+    pub tag: u8,
+    pub padding_u8: u8,
+    pub padding_u16: u16,
+    pub withdrawal_record_id: u32,
+    pub seq_no: u32,
+    pub client_id: ClientId,
+    pub token_id: u32,
+    pub time: u32,
+    pub amount: i64,
+}

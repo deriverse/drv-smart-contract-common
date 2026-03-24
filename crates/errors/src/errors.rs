@@ -360,7 +360,7 @@ pub enum DeriverseErrorKind {
     )]
     InsufficientDeriverseTokensSupply { amount: i64, min_amount: i64 },
 
-    #[error(code = 204, msg = "Invalid client Id in client community account")]
+    #[error(code = 204, msg = "Invalid Client Id")]
     InvalidClientId {
         address: Pubkey,
         expected: u32,
