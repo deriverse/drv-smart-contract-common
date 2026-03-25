@@ -335,8 +335,8 @@ pub struct AssetRecord {
 /// - Each client also maintains a linked list of their orders.
 /// - When an order is not present, the constant `NULL_ORDER` is used to represent a `None` value.
 pub struct Order {
-    pub qty: i64,
-    pub sum: i64,
+    pub qty: CappedI64,
+    pub sum: CappedI64,
     pub order_id: i64,
     pub orig_client_id: ClientId,
     pub client_id: ClientId,
@@ -375,7 +375,7 @@ pub struct Order {
 /// - Prices are aligned to SpotPrams or PerpParams list.
 pub struct PxOrders {
     pub price: i64,
-    pub qty: i64,
+    pub qty: CappedI64,
     pub next: u32,
     pub prev: u32,
     pub sref: u32,
