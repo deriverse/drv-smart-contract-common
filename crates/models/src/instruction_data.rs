@@ -3,6 +3,9 @@ use crate::{
     state::{
         masks::instr_mask::InstrInputMask,
         types::{quote_status::QuoteMask, vm_status::VmMask, SAMFeeType},
+    state::types::{
+        instr_mask::InstrInputMask, quote_status::QuoteMask, vm_status::VmMask, CappedI64,
+        SAMFeeType,
     },
 };
 use bytemuck::{Pod, Zeroable};
@@ -68,7 +71,7 @@ pub struct NewSpotOrderData {
     pub side: u8,
     pub instr_id: InstrId,
     pub price: i64,
-    pub amount: i64,
+    pub amount: CappedI64,
     pub edge_price: i64,
 }
 
