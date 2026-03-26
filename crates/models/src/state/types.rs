@@ -277,11 +277,11 @@ pub const LINE_QUOTES_SIZE: usize = std::mem::size_of::<LineQuotes>();
 pub struct BaseCrncyRecord {
     pub crncy_token_id: u32,
     pub decs_count: u32,
-    pub funds: i64,
+    pub funds: CappedI64,
     pub rate: f64,
     pub denominator: f64,
-    pub locked_drvs_amount: i64,
-    pub locked_drvs_dividends_value: i64,
+    pub locked_drvs_amount: CappedI64,
+    pub locked_drvs_dividends_value: CappedI64,
     pub mask: i64,
 }
 
@@ -861,16 +861,6 @@ impl VmWhitelistRecord {
 #[repr(transparent)]
 pub struct CappedI64 {
     pub value: i64,
-}
-
-#[test]
-fn compare() {
-    let val = CappedI64 { value: 0 };
-    let val2 = CappedI64 { value: 1 };
-
-    if val < val2 {
-        println!("STOP");
-    }
 }
 
 impl PartialEq<i64> for CappedI64 {
