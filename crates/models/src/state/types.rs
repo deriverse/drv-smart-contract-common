@@ -857,10 +857,20 @@ impl VmWhitelistRecord {
     }
 }
 
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Pod, Zeroable, Default)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Pod, Zeroable, Default, PartialOrd, Ord)]
 #[repr(transparent)]
 pub struct CappedI64 {
     pub value: i64,
+}
+
+#[test]
+fn compare() {
+    let val = CappedI64 { value: 0 };
+    let val2 = CappedI64 { value: 1 };
+
+    if val < val2 {
+        println!("STOP");
+    }
 }
 
 impl PartialEq<i64> for CappedI64 {
