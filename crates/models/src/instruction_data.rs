@@ -103,7 +103,7 @@ pub struct NewPerpOrderData {
     pub padding_u32: u32,
     pub instr_id: InstrId,
     pub price: i64,
-    pub amount: i64,
+    pub amount: CappedI64,
     pub edge_price: i64,
 }
 
@@ -198,7 +198,7 @@ pub struct SpotLpData {
     pub side: u8,
     pub padding_u16: u16,
     pub instr_id: InstrId,
-    pub amount: i64,
+    pub amount: CappedI64,
     pub min_price: i64,
     pub max_price: i64,
 }
@@ -248,7 +248,7 @@ pub struct DepositData {
     pub deposit_all: u8,
     pub padding_u8: u8,
     pub token_id: u32,
-    pub amount: i64,
+    pub amount: CappedI64,
     pub lut_slot: u32,
     pub ref_id: u32,
     pub custom_id: i64,
@@ -270,7 +270,7 @@ pub struct FeesDepositData {
     pub padding_u8: u8,
     pub padding_u16: u16,
     pub token_id: u32,
-    pub amount: i64,
+    pub amount: CappedI64,
 }
 
 #[repr(C)]
@@ -289,7 +289,7 @@ pub struct FeesWithdrawData {
     pub padding_u8: u8,
     pub padding_u16: u16,
     pub token_id: u32,
-    pub amount: i64,
+    pub amount: CappedI64,
 }
 
 #[repr(C)]
@@ -308,7 +308,7 @@ pub struct PerpDepositData {
     pub padding_u8: u8,
     pub padding_u16: u16,
     pub instr_id: InstrId,
-    pub amount: i64,
+    pub amount: CappedI64,
 }
 
 #[repr(C)]
@@ -344,7 +344,7 @@ pub struct PerpWithdrawData {
     pub padding_u8: u8,
     pub padding_u16: u16,
     pub instr_id: InstrId,
-    pub amount: i64,
+    pub amount: CappedI64,
 }
 
 #[repr(C)]
@@ -363,7 +363,7 @@ pub struct WithdrawData {
     pub padding_u8: u8, // <- bump
     pub padding_u16: u16,
     pub token_id: u32,
-    pub amount: i64,
+    pub amount: CappedI64,
     pub custom_id: i64,
 }
 
@@ -387,7 +387,7 @@ pub struct SwapData {
     pub padding_u16: u16,
     pub instr_id: InstrId,
     pub price: i64,
-    pub amount: i64,
+    pub amount: CappedI64,
     pub min_amount_out: i64,
 }
 
@@ -584,7 +584,7 @@ pub struct BuyMarketSeatData {
     pub padding_u16: u16,
     pub instr_id: InstrId,
     pub edge_price: i64,
-    pub amount: i64,
+    pub amount: CappedI64,
 }
 
 #[repr(C)]
@@ -790,7 +790,7 @@ pub struct VmInitWithdrawData {
     pub padding_u8: u8,
     pub padding_u16: u16,
     pub token_id: u32,
-    pub amount: i64,
+    pub amount: CappedI64,
 }
 
 #[repr(C)]
@@ -817,7 +817,7 @@ pub struct WithdrawSwapFeesData {
     pub padding_u8: u8,
     pub padding_u16: u16,
     pub instr_id: InstrId,
-    pub amount: i64,
+    pub amount: CappedI64,
 }
 
 #[repr(C)]
@@ -827,7 +827,7 @@ pub struct SetSAMMinQtyData {
     pub padding_u8: u8,
     pub padding_u16: u16,
     pub instr_id: InstrId,
-    pub min_qty: i64,
+    pub min_qty: CappedI64,
 }
 
 #[repr(C)]
