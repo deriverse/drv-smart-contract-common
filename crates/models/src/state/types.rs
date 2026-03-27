@@ -1,3 +1,5 @@
+use std::ops::Neg;
+
 use bytemuck::{Pod, Zeroable};
 use serde::{Deserialize, Serialize};
 use solana_pubkey::Pubkey;
@@ -861,6 +863,14 @@ impl VmWhitelistRecord {
 #[repr(transparent)]
 pub struct CappedI64 {
     pub value: i64,
+}
+
+impl Neg for CappedI64 {
+    type Output = Self;
+
+    fn neg(self) -> Self::Output {
+        Self { value: -self.value }
+    }
 }
 
 impl PartialEq<i64> for CappedI64 {
