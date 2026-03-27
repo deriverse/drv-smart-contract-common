@@ -223,7 +223,7 @@ pub struct NewInstrumentData {
     pub crncy_token_id: u32,
     pub lut_slot: u32,
     pub price: i64,
-    pub min_qty: i64,
+    pub min_qty: CappedI64,
     pub fixed_fee_rate: f64,
 }
 

@@ -609,7 +609,7 @@ pub mod quote_status {
     #[derive(Clone, Copy, Debug, Zeroable, Pod)]
     pub struct QuoteOrder {
         pub new_price: i64,
-        pub new_qty: i64,
+        pub new_qty: CappedI64,
         pub old_id: i64,
     }
 
