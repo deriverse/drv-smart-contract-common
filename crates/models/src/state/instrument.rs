@@ -1,7 +1,7 @@
 use std::ops::Deref;
 
+use crate::state::types::CappedI64;
 use crate::{new_types::instrument::InstrId, state::masks::instr_mask::InstrMask};
-use crate::{new_types::instrument::InstrId, state::types::CappedI64};
 use bytemuck::{Pod, Zeroable};
 
 use super::types::Discriminator;

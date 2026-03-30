@@ -2,10 +2,7 @@ use crate::{
     new_types::{instrument::InstrId, version::Version},
     state::{
         masks::instr_mask::InstrInputMask,
-        types::{quote_status::QuoteMask, vm_status::VmMask, SAMFeeType},
-    state::types::{
-        instr_mask::InstrInputMask, quote_status::QuoteMask, vm_status::VmMask, CappedI64,
-        SAMFeeType,
+        types::{quote_status::QuoteMask, vm_status::VmMask, CappedI64, SAMFeeType},
     },
 };
 use bytemuck::{Pod, Zeroable};
