@@ -1,4 +1,4 @@
-use std::ops::Neg;
+use std::{fmt::write, ops::Neg};
 
 use bytemuck::{Pod, Zeroable};
 use serde::{Deserialize, Serialize};
@@ -863,6 +863,12 @@ impl VmWhitelistRecord {
 #[repr(transparent)]
 pub struct CappedI64 {
     pub value: i64,
+}
+
+impl std::fmt::Display for CappedI64 {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "{:?}", self)
+    }
 }
 
 impl Neg for CappedI64 {
