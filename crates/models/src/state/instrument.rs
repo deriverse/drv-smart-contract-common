@@ -293,7 +293,7 @@ pub struct InstrAccountHeader {
     pub perp_soc_loss_long_rate: f64,
     pub perp_soc_loss_short_rate: f64,
     pub perp_funding_rate: f64,
-    pub perp_funding_funds: i64,
+    pub perp_funding_funds: CappedI64,
     pub perp_soc_loss_funds: CappedI64,
     pub perp_prev_day_asset_tokens: CappedI64,
     pub perp_prev_day_crncy_tokens: CappedI64,
