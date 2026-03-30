@@ -170,7 +170,7 @@ pub struct InstrAccountHeader {
     // Perp page
     pub perp_last_px: i64,
     pub perp_last_close: i64,
-    pub perp_open_int: i64,
+    pub perp_open_int: CappedI64,
     pub variance: f64,
     pub max_leverage: f64,
     pub prev_day_trades: i64,
