@@ -220,8 +220,8 @@ pub mod voting {
     pub const MIN_FEE_RATE: u32 = 10;
     pub const MAX_FEE_RATE: u32 = 30;
     pub const FEE_RATE_STEP: f64 = 0.0005;
-    pub const START_SPOT_FEE_RATE: u32 = 10;
-    pub const START_PERP_FEE_RATE: u32 = 10;
+    pub const START_SPOT_FEE_RATE: u32 = 20;
+    pub const START_PERP_FEE_RATE: u32 = 20;
 
     /// Topic 2 - Pool ratio
     pub const MIN_POOL_RATIO: u32 = 4;
