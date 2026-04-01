@@ -7,13 +7,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [unreleased]
 
+## [v2.40] - 2026-04-01
+
+## Changed
+- `START_SPOT_FEE_RATE` and `START_SPOT_FEE_RATE` to 10
+
+## Added
+- `CappedI64`
+- 
 ## [v2.39] - 2026-03-31
 
 ## Added
 - `vm_add_withdrawal_address`, `vm_remove_withdrawal_address`, `vm_direct_withdraw` instructions
 
-## Changed
-- `START_SPOT_FEE_RATE` and `START_SPOT_FEE_RATE` to 10
 
 ## [v2.38] - 2026-03-13
 
