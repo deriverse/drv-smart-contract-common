@@ -74,7 +74,7 @@ pub mod account_type {
 pub struct ClientCommunityRecord {
     pub dividends_rate: f64,
     pub dividends_value: i64,
-    pub fees_prepayment: Ca,
+    pub fees_prepayment: i64,
     pub fees_ratio: f64,
     pub ref_rewards: i64,
     pub ref_payments: i64,
