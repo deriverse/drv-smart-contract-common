@@ -391,8 +391,8 @@ impl DrvInstruction for SuspendInstrumentInstruction {
     const MIN_ACCOUNTS: usize = 4;
 }
 
-pub struct AddWithdrawalAddressInstruction;
-impl DrvInstruction for AddWithdrawalAddressInstruction {
+pub struct VmAddWithdrawalAddressInstruction;
+impl DrvInstruction for VmAddWithdrawalAddressInstruction {
     const INSTRUCTION_NUMBER: u8 = 78;
     const MIN_ACCOUNTS: usize = 5;
 }
@@ -449,4 +449,16 @@ pub struct SetForeignDepositInstruction;
 impl DrvInstruction for SetForeignDepositInstruction {
     const INSTRUCTION_NUMBER: u8 = 87;
     const MIN_ACCOUNTS: usize = 3;
+}
+
+pub struct VmAddMarketAddressInstruction;
+impl DrvInstruction for VmAddMarketAddressInstruction {
+    const INSTRUCTION_NUMBER: u8 = 88;
+    const MIN_ACCOUNTS: usize = 6;
+}
+
+pub struct VmAddProgramAddressInstruction;
+impl DrvInstruction for VmAddProgramAddressInstruction {
+    const INSTRUCTION_NUMBER: u8 = 89;
+    const MIN_ACCOUNTS: usize = 5;
 }

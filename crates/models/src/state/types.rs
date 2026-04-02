@@ -1,6 +1,6 @@
-use std::ops::Neg;
+use std::ops::{Deref, Neg};
 
-use bytemuck::{Pod, Zeroable};
+use bytemuck::{bytes_of_mut, Pod, PodCastError, Zeroable};
 use serde::{Deserialize, Serialize};
 use solana_pubkey::Pubkey;
 
@@ -837,10 +837,75 @@ impl std::fmt::Display for VmWhitelistTag {
 /// 1. **`tag`** - VmWhitelistTag represent type of a record
 /// 2. **`reference`** - will be used later
 /// 3. **`address`** - Address
+/// size 40
 pub struct VmWhitelistRecord {
     pub tag: u32,
-    pub reference: u32,
+
+    pub padding_u32: u32,
+    pub padding_u64: u64,
+
     pub address: Pubkey,
+}
+
+#[repr(C)]
+#[derive(Clone, Copy, Pod, Zeroable, Debug)]
+pub struct VmMarketWhitelistRecord {
+    pub tag: u32,
+
+    pub program_ref: u32,
+
+    pub padding_u64: u64,
+
+    pub address: Pubkey,
+}
+
+#[repr(C)]
+#[derive(Clone, Copy, Pod, Zeroable, Debug)]
+pub struct Provider {
+    pub accounts_length: u8,
+    pub data_length: u8,
+    pub amount_in_offset: u8,
+    pub market_id_offset: u8,
+    pub direction_offset: u8,
+
+    pub default_direction: u8,
+
+    pub b_token_acc_index: u8,
+    pub b_token_program_acc_index: u8,
+    pub b_mint_acc_index: u8,
+
+    pub a_token_acc_index: u8,
+    pub a_token_program_acc_index: u8,
+    pub a_mint_acc_index: u8,
+}
+
+#[repr(C)]
+#[derive(Clone, Copy, Pod, Zeroable, Debug)]
+pub struct VmProgramWhitelistRecord {
+    pub tag: u32,
+    pub provider: Provider,
+    pub address: Pubkey,
+}
+
+impl Deref for VmProgramWhitelistRecord {
+    type Target = Provider;
+
+    fn deref(&self) -> &Self::Target {
+        &self.provider
+    }
+}
+
+#[derive(Debug)]
+pub enum VmWhitelistRecordTyped<'a> {
+    Market(&'a VmMarketWhitelistRecord),
+    Program(&'a VmProgramWhitelistRecord),
+    Other(&'a VmWhitelistRecord),
+}
+
+pub enum VmWhitelistRecordTypedMut<'a> {
+    Market(&'a mut VmMarketWhitelistRecord),
+    Program(&'a mut VmProgramWhitelistRecord),
+    Other(&'a mut VmWhitelistRecord),
 }
 
 impl VmWhitelistRecord {
@@ -855,11 +920,35 @@ impl VmWhitelistRecord {
         }
     }
 
+    pub fn get_typed<'a>(&'a self) -> Result<VmWhitelistRecordTyped<'a>, PodCastError> {
+        match self.tag() {
+            Some(VmWhitelistTag::ProgramId) => Ok(VmWhitelistRecordTyped::Program(
+                bytemuck::try_cast_ref(self)?,
+            )),
+            Some(VmWhitelistTag::MarketId) => Ok(VmWhitelistRecordTyped::Market(
+                bytemuck::try_cast_ref(self)?,
+            )),
+            _ => Ok(VmWhitelistRecordTyped::Other(self)),
+        }
+    }
+
+    pub fn get_typed_mut<'a>(&'a mut self) -> Result<VmWhitelistRecordTypedMut<'a>, PodCastError> {
+        match self.tag() {
+            Some(VmWhitelistTag::ProgramId) => Ok(VmWhitelistRecordTypedMut::Program(
+                bytemuck::try_cast_mut(self)?,
+            )),
+            Some(VmWhitelistTag::MarketId) => Ok(VmWhitelistRecordTypedMut::Market(
+                bytemuck::try_cast_mut(self)?,
+            )),
+            _ => Ok(VmWhitelistRecordTypedMut::Other(self)),
+        }
+    }
+
     pub fn vacant() -> Self {
         VmWhitelistRecord {
             tag: VmWhitelistTag::Vacant as u32,
-            reference: 0,
             address: Pubkey::default(),
+            ..Zeroable::zeroed()
         }
     }
 
