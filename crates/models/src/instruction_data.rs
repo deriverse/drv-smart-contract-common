@@ -389,7 +389,7 @@ pub struct SwapData {
 }
 
 #[repr(C)]
-#[derive(Clone, Copy, Pod, Zeroable)]
+#[derive(Clone, Copy, Pod, Zeroable, Debug)]
 /// Spot Quotes Replace Data
 ///
 /// **Used in:** `spot_quotes_replace` instruction
