@@ -278,7 +278,7 @@ pub struct PerpPlaceOrderReport {
 }
 
 #[repr(C)]
-#[derive(Copy, Clone, Zeroable, Pod, Default)]
+#[derive(Copy, Clone, Zeroable, Pod, Default, Debug)]
 pub struct SpotPlaceOrderReport {
     pub tag: u8,
     pub ioc: u8,
