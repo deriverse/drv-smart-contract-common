@@ -48,6 +48,16 @@ pub struct RootState {
     pub mask: u32,
     pub points_program_expiration: u32,
     pub purchasing_perp_seat_fee: f64,
+    // community related topics
+    pub spot_fee_rate: u32,
+    pub perp_fee_rate: u32,
+    pub spot_pool_ratio: u32,
+    pub margin_call_penalty_rate: u32,
+
+    pub reserved_1: u64,
+    pub reserved_2: u64,
+    pub reserved_3: u64,
+    pub reserved_4: u64,
 }
 
 impl Deref for RootState {
