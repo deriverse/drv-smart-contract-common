@@ -53,6 +53,7 @@ pub struct RootState {
     pub perp_fee_rate: u32,
     pub spot_pool_ratio: u32,
     pub margin_call_penalty_rate: u32,
+    pub fees_prepayment_for_max_discount: u32,
 
     pub reserved_1: u64,
     pub reserved_2: u64,
