@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [unreleased]
 
+## [v2.42] - 2026-04-06
+
+## Changed
+
+- Reduced `swap` min input accounts
+
 ## [v2.41] - 2026-04-06
 
 ## Changed 
