@@ -91,13 +91,18 @@ pub mod account_type {
     pub const ROOT: u32 = 2;
     pub const INSTR: u32 = 7;
 
-    pub const SPOT_15M_CANDLES: u32 = 20;
-    pub const SPOT_1M_CANDLES: u32 = 19;
     pub const SPOT_ASK_ORDERS: u32 = 17;
     pub const SPOT_ASKS_TREE: u32 = 15;
     pub const SPOT_BID_ORDERS: u32 = 16;
     pub const SPOT_BIDS_TREE: u32 = 14;
-    pub const SPOT_CANDLES: u32 = 12;
+    pub const SPOT_CANDLES: u32 = 19;
+    // todo remove
+    pub const SPOT_15M_CANDLES: u32 = 20;
+    pub const SPOT_1M_CANDLES: u32 = 19;
+    pub const SPOT_DAY_CANDLES: u32 = 21;
+
+    pub const SPOT_CLIENT_INFOS: u32 = 12;
+    pub const SPOT_CLIENT_INFOS2: u32 = 13;
     pub const SPOT_LINES: u32 = 18;
     pub const SPOT_MAPS: u32 = 10;
     pub const TOKEN: u32 = 4;
