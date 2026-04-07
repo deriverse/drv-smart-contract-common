@@ -36,9 +36,7 @@ pub struct Candle {
 
 #[repr(C)]
 #[derive(Pod, Zeroable, Clone, Copy, Debug, PartialEq)]
-pub struct CandlesAccountHeader {
-    pub discriminator: Discriminator,
-    pub id: InstrId,
+pub struct CandlesHeader {
     pub total_count: u32,
     pub used_count: u32,
     pub count_1m: u32,
@@ -50,5 +48,9 @@ pub struct CandlesAccountHeader {
     pub last_1m: u32,
     pub last_15m: u32,
     pub last_day: u32,
-    pub slot: u32,
+    pub padding: u32,
 }
+
+pub const M1_CANDLE: u16 = 1;
+pub const M15_CANDLE: u16 = 2;
+pub const DAY_CANDLE: u16 = 3;

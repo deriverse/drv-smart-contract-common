@@ -16,10 +16,12 @@ use crate::{
 
 pub mod candles {
 
+    use crate::state::candles::{DAY_CANDLE, M15_CANDLE, M1_CANDLE};
+
     use super::*;
     #[derive(Clone, Copy)]
     pub struct CandleParams {
-        pub tag: u32,
+        pub kind: u16,
         pub capacity: u32,
         pub duration: u32,
     }
@@ -39,17 +41,17 @@ pub mod candles {
     pub const CANDLES: CandleRegister = CandleRegister {
         candles: &[
             CandleParams {
-                tag: SPOT_1M_CANDLES,
+                kind: M1_CANDLE,
                 capacity: 10080,
                 duration: 60,
             },
             CandleParams {
-                tag: SPOT_15M_CANDLES,
+                kind: M15_CANDLE,
                 capacity: 2688,
                 duration: 900,
             },
             CandleParams {
-                tag: SPOT_DAY_CANDLES,
+                kind: DAY_CANDLE,
                 capacity: 5844,
                 duration: 86400,
             },
