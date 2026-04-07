@@ -55,6 +55,8 @@ pub mod candles {
             },
         ],
     };
+
+    pub const NULL_CANDLE: u32 = 0xFFFF;
 }
 
 pub mod price_helper {

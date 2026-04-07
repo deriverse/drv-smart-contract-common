@@ -1,9 +1,6 @@
 use super::types::Discriminator;
 use crate::{new_types::instrument::InstrId, state::types::CappedI64};
 use bytemuck::{Pod, Zeroable};
-use drv_macros::pod_wrapper;
-
-use std::mem::size_of;
 
 /// Represents a single price candle in a circular buffer of candles (`CandleBuffer`).
 ///
@@ -33,24 +30,24 @@ pub struct Candle {
     pub asset_tokens: CappedI64,
     pub crncy_tokens: CappedI64,
     pub time: u32,
-    pub counter: u32,
+    pub kind: u16,
+    pub next: u16, // todo make typesafe wrapper
 }
-pub const CANDLE_SIZE: usize = size_of::<Candle>();
-
-#[derive(Debug, PartialEq)]
-#[pod_wrapper]
 #[repr(C)]
 #[derive(Pod, Zeroable, Clone, Copy, Debug, PartialEq)]
-/// Describe the state of candles buffer based on candles tag and instrument.
-///
-/// 4. **`count`** - amount of allocated candles in the buffer. count < CANDLE.capacity
-/// 5. **`last`** - index of last written candle. last < CANDLE.capacity
-pub struct CandlesAccountHeader<const TAG: u32> {
+pub struct CandlesAccountHeader {
     pub discriminator: Discriminator,
     pub id: InstrId,
+    pub total_count: u32,
+    pub used_count: u32,
+    pub count_1m: u32,
+    pub count_15m: u32,
+    pub count_day: u32,
+    pub first_1m: u32,
+    pub first_15m: u32,
+    pub first_day: u32,
+    pub last_1m: u32,
+    pub last_15m: u32,
+    pub last_day: u32,
     pub slot: u32,
-    pub count: u32,
-    pub last: u32,
 }
-
-pub const CANDLES_ACCOUNT_HEADER_SIZE: usize = size_of::<CandlesAccountHeader<0>>();
