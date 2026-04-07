@@ -30,9 +30,10 @@ pub struct Candle {
     pub asset_tokens: CappedI64,
     pub crncy_tokens: CappedI64,
     pub time: u32,
-    pub kind: u16,
+    pub kind: u16, // todo make typesafe wrapper
     pub next: u16, // todo make typesafe wrapper
 }
+
 #[repr(C)]
 #[derive(Pod, Zeroable, Clone, Copy, Debug, PartialEq)]
 pub struct CandlesAccountHeader {
