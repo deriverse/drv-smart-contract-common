@@ -1,13 +1,10 @@
-use std::{fmt::write, ops::Neg};
+use std::ops::Neg;
 
 use bytemuck::{Pod, Zeroable};
 use serde::{Deserialize, Serialize};
 use solana_pubkey::Pubkey;
 
-use crate::{
-    constants::MAX_NUMBER,
-    new_types::{client::ClientId, tag::Tag, version::Version},
-};
+use crate::new_types::{client::ClientId, tag::Tag, version::Version};
 
 #[derive(Clone, Copy, PartialEq, Eq, Debug, Serialize, Deserialize)]
 pub enum OrderSide {
@@ -95,7 +92,6 @@ pub mod account_type {
     pub const SPOT_ASKS_TREE: u32 = 15;
     pub const SPOT_BID_ORDERS: u32 = 16;
     pub const SPOT_BIDS_TREE: u32 = 14;
-    pub const SPOT_CANDLES: u32 = 19;
 
     pub const SPOT_CLIENT_INFOS: u32 = 12;
     pub const SPOT_CLIENT_INFOS2: u32 = 13;
