@@ -54,7 +54,7 @@ impl DrvInstruction for WithdrawInstruction {
 pub struct NewInstrumentInstruction;
 impl DrvInstruction for NewInstrumentInstruction {
     const INSTRUCTION_NUMBER: u8 = 9;
-    const MIN_ACCOUNTS: usize = 23;
+    const MIN_ACCOUNTS: usize = 20;
 }
 
 pub struct UpgradeToPerpInstruction;
