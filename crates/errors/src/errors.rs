@@ -928,6 +928,9 @@ pub enum DeriverseErrorKind {
         msg = "Invalid VmWhitelistTag for requested operation, tag: {tag}"
     )]
     InvalidVmWhitelistRecordTag { tag: VmWhitelistTag },
+
+    #[error(code = 336, msg = "Out of bounds. Index: {index}")]
+    OutOfBounds { index: u32 },
 }
 
 #[derive(Debug, Serialize, Deserialize, PartialEq)]
