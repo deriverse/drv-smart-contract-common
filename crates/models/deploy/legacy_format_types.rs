@@ -202,8 +202,7 @@ pub struct LineQuotes {
 pub const LINE_QUOTES_SIZE: usize = std::mem::size_of::<LineQuotes>();
 
 #[repr(C)]
-#[derive(Clone, Copy)]
-/// New path - src/state/candle.rs
+#[derive(Clone, Copy, Debug, Pod, Zeroable)]
 pub struct Candle {
     pub open: i64,
     pub close: i64,
@@ -212,21 +211,25 @@ pub struct Candle {
     pub asset_tokens: i64,
     pub crncy_tokens: i64,
     pub time: u32,
-    pub counter: u32,
+    pub kind: u16, // todo make typesafe wrapper
+    pub next: u16, // todo make typesafe wrapper
 }
 
-pub const CANDLE_SIZE: usize = std::mem::size_of::<Candle>();
-
 #[repr(C)]
-#[derive(Zeroable, Default)]
-/// New path - src/state/candle.rs
-pub struct CandlesAccountHeader {
-    pub tag: u32,
-    pub version: u32,
-    pub id: u32,
-    pub slot: u32,
-    pub count: u32,
-    pub last: u32,
+#[derive(Pod, Zeroable, Clone, Copy, Debug, PartialEq)]
+pub struct CandlesHeader {
+    pub total_count: u32,
+    pub used_count: u32,
+    pub count_1m: u32,
+    pub count_15m: u32,
+    pub count_day: u32,
+    pub first_1m: u32,
+    pub first_15m: u32,
+    pub first_day: u32,
+    pub last_1m: u32,
+    pub last_15m: u32,
+    pub last_day: u32,
+    pub padding: u32,
 }
 
 pub const CANDLES_ACCOUNT_HEADER_SIZE: usize = std::mem::size_of::<CandlesAccountHeader>();

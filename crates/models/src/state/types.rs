@@ -96,10 +96,6 @@ pub mod account_type {
     pub const SPOT_BID_ORDERS: u32 = 16;
     pub const SPOT_BIDS_TREE: u32 = 14;
     pub const SPOT_CANDLES: u32 = 19;
-    // todo remove
-    pub const SPOT_15M_CANDLES: u32 = 20;
-    pub const SPOT_1M_CANDLES: u32 = 19;
-    pub const SPOT_DAY_CANDLES: u32 = 21;
 
     pub const SPOT_CLIENT_INFOS: u32 = 12;
     pub const SPOT_CLIENT_INFOS2: u32 = 13;
