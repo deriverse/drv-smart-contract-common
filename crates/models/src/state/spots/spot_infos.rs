@@ -22,6 +22,10 @@ pub fn get_spot_info<T>(data: &[u8], id: ClientId) -> *mut T {
 /// 3. **`ask_entry`** - Stores clients asks orders linked list head in last 4 bits and linked list length in first 4 bits
 /// 4. **`avail_asset_tokens`** - Total avail asset tokens to withdraw
 /// 5. **`avail_crncy_tokens`** - Total avail crncy tokens to withdraw
+/// 6. **`in_orders_asset_tokens`** - Total amount of assets tokens locked in orders
+/// 7. **`in_orders_crncy_tokens`** - Total amount of crncy tokens locked in orders
+/// 8. **`bid_slot`** - Slot of last update on bid side
+/// 9. **`ask_slot`** - Slot of last update on asl=k side
 pub struct SpotClientInfo {
     pub client: ClientId,
     pub filled_orders: u32,
@@ -29,20 +33,6 @@ pub struct SpotClientInfo {
     pub asks_entry: u32,
     pub avail_asset_tokens: CappedI64,
     pub avail_crncy_tokens: CappedI64,
-}
-
-pub const SPOT_CLIENT_INFO_SIZE: usize = size_of::<SpotClientInfo>();
-
-#[repr(C)]
-#[derive(Copy, Clone, Pod, Zeroable, Debug)]
-
-/// Spo Client Info 2
-///
-/// 1. **`in_orders_asset_tokens`** - Total amount of assets tokens locked in orders
-/// 2. **`in_orders_crncy_tokens`** - Total amount of crncy tokens locked in orders
-/// 3. **`bid_slot`** - Slot of last update on bid side
-/// 4. **`ask_slot`** - Slot of last update on asl=k side
-pub struct SpotClientInfo2 {
     pub in_orders_asset_tokens: CappedI64,
     pub in_orders_crncy_tokens: CappedI64,
     pub bid_slot: u32,
@@ -50,4 +40,4 @@ pub struct SpotClientInfo2 {
     pub reserved: i64,
 }
 
-pub const SPOT_CLIENT_INFO2_SIZE: usize = size_of::<SpotClientInfo2>();
+pub const SPOT_CLIENT_INFO_SIZE: usize = size_of::<SpotClientInfo>();
