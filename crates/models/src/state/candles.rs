@@ -1,5 +1,4 @@
-use super::types::Discriminator;
-use crate::{new_types::instrument::InstrId, state::types::CappedI64};
+use crate::state::types::CappedI64;
 use bytemuck::{Pod, Zeroable};
 
 /// Represents a single price candle in a circular buffer of candles (`CandleBuffer`).
