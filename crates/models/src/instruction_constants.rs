@@ -298,7 +298,7 @@ pub struct CleanCandlesInstruction;
 impl DrvInstruction for CleanCandlesInstruction {
     const INSTRUCTION_NUMBER: u8 = 62;
 
-    const MIN_ACCOUNTS: usize = 6;
+    const MIN_ACCOUNTS: usize = 4;
 }
 
 pub struct VmInitActivate;
@@ -364,7 +364,7 @@ impl DrvInstruction for VmChangeWhitelist {
 pub struct ExtendCandles;
 impl DrvInstruction for ExtendCandles {
     const INSTRUCTION_NUMBER: u8 = 73;
-    const MIN_ACCOUNTS: usize = 4;
+    const MIN_ACCOUNTS: usize = 5;
 }
 
 pub struct WithdrawSwapFeesInstruction;

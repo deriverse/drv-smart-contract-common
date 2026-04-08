@@ -782,6 +782,21 @@ pub struct CleanCandlesData {
 
 #[repr(C)]
 #[derive(Clone, Copy, Pod, Zeroable)]
+/// Extend Candles Data
+///
+/// **Tag** `62`
+///
+/// ### FIelds
+/// - `instr_id` - instrument id
+pub struct ExtendCandlesData {
+    pub tag: u8,
+    pub padding_u8: u8,
+    pub padding_u16: u16,
+    pub instr_id: InstrId,
+}
+
+#[repr(C)]
+#[derive(Clone, Copy, Pod, Zeroable)]
 pub struct VmInitWithdrawData {
     pub tag: u8,
     pub padding_u8: u8,
