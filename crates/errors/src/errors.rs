@@ -931,6 +931,9 @@ pub enum DeriverseErrorKind {
 
     #[error(code = 336, msg = "Out of bounds. Index: {index}")]
     OutOfBounds { index: u32 },
+
+    #[error(code = 337, msg = "Corrupted candles records")]
+    CorruptedCandlesRecords,
 }
 
 #[derive(Debug, Serialize, Deserialize, PartialEq)]
