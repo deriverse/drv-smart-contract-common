@@ -5,13 +5,7 @@ use trading_limitations::MARKET_DEPTH;
 
 use crate::{
     constants::time::{DAY, MINUTE, WEEK},
-    state::{
-        instrument::INSTR_ACCOUNT_HEADER_SIZE,
-        types::{
-            account_type::{SPOT_15M_CANDLES, SPOT_1M_CANDLES, SPOT_DAY_CANDLES},
-            LINE_QUOTES_SIZE,
-        },
-    },
+    state::{instrument::INSTR_ACCOUNT_HEADER_SIZE, types::LINE_QUOTES_SIZE},
 };
 
 pub mod candles {
