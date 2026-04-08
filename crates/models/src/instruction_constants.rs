@@ -48,13 +48,13 @@ impl DrvInstruction for DepositInstruction {
 pub struct WithdrawInstruction;
 impl DrvInstruction for WithdrawInstruction {
     const INSTRUCTION_NUMBER: u8 = 8;
-    const MIN_ACCOUNTS: usize = 11;
+    const MIN_ACCOUNTS: usize = 10;
 }
 
 pub struct NewInstrumentInstruction;
 impl DrvInstruction for NewInstrumentInstruction {
     const INSTRUCTION_NUMBER: u8 = 9;
-    const MIN_ACCOUNTS: usize = 20;
+    const MIN_ACCOUNTS: usize = 19;
 }
 
 pub struct UpgradeToPerpInstruction;
@@ -72,13 +72,13 @@ impl DrvInstruction for PerpDepositInstruction {
 pub struct NewSpotOrderInstruction;
 impl DrvInstruction for NewSpotOrderInstruction {
     const INSTRUCTION_NUMBER: u8 = 12;
-    const MIN_ACCOUNTS: usize = 15;
+    const MIN_ACCOUNTS: usize = 14;
 }
 
 pub struct SpotOrderCancelInstruction;
 impl DrvInstruction for SpotOrderCancelInstruction {
     const INSTRUCTION_NUMBER: u8 = 13;
-    const MIN_ACCOUNTS: usize = 11;
+    const MIN_ACCOUNTS: usize = 10;
 }
 
 pub struct SpotLpInstruction;
@@ -90,7 +90,7 @@ impl DrvInstruction for SpotLpInstruction {
 pub struct SpotMassCancelInstruction;
 impl DrvInstruction for SpotMassCancelInstruction {
     const INSTRUCTION_NUMBER: u8 = 15;
-    const MIN_ACCOUNTS: usize = 14;
+    const MIN_ACCOUNTS: usize = 13;
 }
 
 pub struct NextVotingInstruction;
@@ -114,7 +114,7 @@ impl DrvInstruction for DividendsAllocationInstruction {
 pub struct SwapInstruction;
 impl DrvInstruction for SwapInstruction {
     const INSTRUCTION_NUMBER: u8 = 26;
-    const MIN_ACCOUNTS: usize = 17;
+    const MIN_ACCOUNTS: usize = 16;
 }
 
 pub struct AirdropInstruction;
@@ -144,7 +144,7 @@ impl DrvInstruction for VotingInstruction {
 pub struct SpotQuotesReplaceInstruction;
 impl DrvInstruction for SpotQuotesReplaceInstruction {
     const INSTRUCTION_NUMBER: u8 = 34;
-    const MIN_ACCOUNTS: usize = 15;
+    const MIN_ACCOUNTS: usize = 14;
 }
 
 pub struct PerpMassCancelInstruction;
