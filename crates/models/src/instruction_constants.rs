@@ -400,7 +400,7 @@ impl DrvInstruction for AddWithdrawalAddressInstruction {
 pub struct RemoveWithdrawalAddressInstruction;
 impl DrvInstruction for RemoveWithdrawalAddressInstruction {
     const INSTRUCTION_NUMBER: u8 = 79;
-    const MIN_ACCOUNTS: usize = 4;
+    const MIN_ACCOUNTS: usize = 5;
 }
 
 pub struct VmDirectWithdrawInstruction;

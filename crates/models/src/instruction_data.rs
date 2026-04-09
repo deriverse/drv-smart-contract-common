@@ -870,12 +870,3 @@ pub struct VmDirectWithdrawData {
     pub token_id: u32,
     pub amount: i64,
 }
-
-#[repr(C)]
-#[derive(Clone, Copy, Pod, Zeroable)]
-pub struct VmRemoveWithdrawalAddressData {
-    pub tag: u8,
-    pub padding_u8: u8,
-    pub padding_u16: u16,
-    pub withdrawal_address: Pubkey,
-}
