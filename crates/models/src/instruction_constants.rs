@@ -408,3 +408,24 @@ impl DrvInstruction for VmDirectWithdrawInstruction {
     const INSTRUCTION_NUMBER: u8 = 80;
     const MIN_ACCOUNTS: usize = 3;
 }
+
+pub struct MigrateTokenInstruction;
+impl DrvInstruction for MigrateTokenInstruction {
+    const INSTRUCTION_NUMBER: u8 = 81;
+
+    const MIN_ACCOUNTS: usize = 6;
+}
+
+pub struct MigrateInstrInstruction;
+impl DrvInstruction for MigrateInstrInstruction {
+    const INSTRUCTION_NUMBER: u8 = 82;
+
+    const MIN_ACCOUNTS: usize = 7;
+}
+
+pub struct MoveFundsInstruction;
+impl DrvInstruction for MoveFundsInstruction {
+    const INSTRUCTION_NUMBER: u8 = 83;
+
+    const MIN_ACCOUNTS: usize = 7;
+}
