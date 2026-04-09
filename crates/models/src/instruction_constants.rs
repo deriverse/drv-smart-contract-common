@@ -48,7 +48,7 @@ impl DrvInstruction for DepositInstruction {
 pub struct WithdrawInstruction;
 impl DrvInstruction for WithdrawInstruction {
     const INSTRUCTION_NUMBER: u8 = 8;
-    const MIN_ACCOUNTS: usize = 10;
+    const MIN_ACCOUNTS: usize = 9;
 }
 
 pub struct NewInstrumentInstruction;
@@ -114,7 +114,7 @@ impl DrvInstruction for DividendsAllocationInstruction {
 pub struct SwapInstruction;
 impl DrvInstruction for SwapInstruction {
     const INSTRUCTION_NUMBER: u8 = 26;
-    const MIN_ACCOUNTS: usize = 16;
+    const MIN_ACCOUNTS: usize = 14;
 }
 
 pub struct AirdropInstruction;
