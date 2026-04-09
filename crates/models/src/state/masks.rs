@@ -127,6 +127,8 @@ pub mod token_mask {
 
     impl TokenMask {
         const DECIMALS_MASK: u32 = 0xFF;
+        const BUMP_MASK: u32 = 0xFF00;
+        const BUMP_SHIFT: u32 = 8;
 
         pub fn get_flag(&self, flag: TokenFlag) -> bool {
             self.0 & flag as u32 != 0
@@ -147,6 +149,14 @@ pub mod token_mask {
         pub fn set_decimals(&mut self, decimals: u8) {
             self.0 = (self.0 & !Self::DECIMALS_MASK) | (decimals as u32);
         }
+
+        pub fn bump_seed(&self) -> u8 {
+            ((self.0 & Self::BUMP_MASK) >> Self::BUMP_SHIFT) as u8
+        }
+
+        pub fn set_bump_seed(&mut self, bump_seed: u8) {
+            self.0 = (self.0 & !Self::BUMP_MASK) | ((bump_seed as u32) << Self::BUMP_SHIFT);
+        }
     }
 
     #[test]
@@ -156,6 +166,9 @@ pub mod token_mask {
         mask.set_decimals(9);
         assert_eq!(mask.decimals(), 9);
 
+        mask.set_bump_seed(255);
+        assert_eq!(mask.bump_seed(), 255);
+
         mask.set_flag(TokenFlag::BaseCrncy);
         mask.set_flag(TokenFlag::SAMCrncy);
 
@@ -164,11 +177,13 @@ pub mod token_mask {
         assert!(!mask.get_flag(TokenFlag::WrappedToken));
 
         assert_eq!(mask.decimals(), 9);
+        assert_eq!(mask.bump_seed(), 255);
 
         mask.clear_flag(TokenFlag::BaseCrncy);
         assert!(!mask.get_flag(TokenFlag::BaseCrncy));
 
         assert_eq!(mask.decimals(), 9);
+        assert_eq!(mask.bump_seed(), 255);
         assert!(mask.get_flag(TokenFlag::SAMCrncy));
     }
 }
