@@ -5,6 +5,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v2.45] - 2026-04-09
+
+## Changed
+
+- Moved to PDA vault accounts
+- Removed `drv_auth` from inputs accounts for: `new_base_crncy`, `withdraw`, `swap`, `init_withdraw_finalize`, `withdraw_swap_fees`, `vm_direct_withdraw`
+- Removed `root_acc` from swap
+
+## Added
+- `spot_pool_ration`, `spot_fee_rate`, `asset_bump_seed`, `crncy_bump_seed` in `InstrAccountHeader`
+- `vault_token_bump_seed` in `TokenMask`
+
 ## [v2.44] - 2026-04-08
 
 ## Changed

@@ -379,8 +379,13 @@ pub struct InstrAccountHeader {
     pub swap_fees: i64,
     pub mid_ema_px: f64,
     pub long_ema_px: f64,
-    pub reserved_value9: i64,
-    pub reserved_value10: i64,
+
+    pub asset_bump_seed: u8,
+    pub crncy_bump_seed: u8,
+    pub spot_fee_rate: u8,
+    pub spot_pool_ratio: u8,
+
+    pub reserved_value10: u32,
 }
 
 pub const INSTR_ACCOUNT_HEADER_SIZE: usize = std::mem::size_of::<InstrAccountHeader>();
