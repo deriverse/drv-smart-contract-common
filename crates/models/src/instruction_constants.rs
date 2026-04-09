@@ -413,7 +413,7 @@ pub struct MigrateTokenInstruction;
 impl DrvInstruction for MigrateTokenInstruction {
     const INSTRUCTION_NUMBER: u8 = 81;
 
-    const MIN_ACCOUNTS: usize = 6;
+    const MIN_ACCOUNTS: usize = 7;
 }
 
 pub struct MigrateInstrInstruction;
@@ -427,5 +427,5 @@ pub struct MoveFundsInstruction;
 impl DrvInstruction for MoveFundsInstruction {
     const INSTRUCTION_NUMBER: u8 = 83;
 
-    const MIN_ACCOUNTS: usize = 7;
+    const MIN_ACCOUNTS: usize = 8;
 }
