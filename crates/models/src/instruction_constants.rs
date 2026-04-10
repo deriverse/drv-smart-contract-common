@@ -409,9 +409,6 @@ impl DrvInstruction for VmDirectWithdrawInstruction {
     const MIN_ACCOUNTS: usize = 3;
 }
 
-pub const SPOT_15M_CANDLES: u32 = 20;
-pub const SPOT_1M_CANDLES: u32 = 19;
-
 pub struct CloseCandlesInstruction;
 impl DrvInstruction for CloseCandlesInstruction {
     const INSTRUCTION_NUMBER: u8 = 81;
