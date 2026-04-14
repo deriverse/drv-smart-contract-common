@@ -873,7 +873,7 @@ pub struct VmDirectWithdrawData {
 
 #[repr(C)]
 #[derive(Clone, Copy, Pod, Zeroable)]
-pub struct VmInitActivate {
+pub struct VmInitActivateData {
     pub tag: u8,
     pub multisig: u8,
 }
