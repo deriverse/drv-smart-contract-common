@@ -870,3 +870,10 @@ pub struct VmDirectWithdrawData {
     pub token_id: u32,
     pub amount: i64,
 }
+
+#[repr(C)]
+#[derive(Clone, Copy, Pod, Zeroable)]
+pub struct VmInitActivate {
+    pub tag: u8,
+    pub multisig: u8,
+}

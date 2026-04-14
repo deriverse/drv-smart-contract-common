@@ -106,6 +106,8 @@ pub const SWAP_FEE_RATE: f64 = 0.0002;
 
 pub const MAX_QUOTE_ORDERS: u8 = 12;
 
+pub const MULTISIG_FLAG: i64 = 0x80;
+
 pub mod nulls {
     pub const NULL_NODE: u32 = 0xFFFFFFFF;
     pub const NULL_ORDER: u32 = 0xFFFF;
