@@ -629,9 +629,6 @@ pub struct ClientPrimaryAccountHeader {
     pub reserved_value2: i64,
     pub reserved_value3: i64,
     pub reserved_value4: i64,
-    pub reserved_value5: i64,
-    pub reserved_value6: i64,
-    pub reserved_value7: i64,
 }
 
 pub const CLIENT_PRIMARY_ACCOUNT_HEADER_SIZE: usize =

@@ -81,9 +81,6 @@ pub struct ClientPrimaryAccountHeader {
     pub reserved_value2: i64,
     pub reserved_value3: i64,
     pub reserved_value4: i64,
-    pub reserved_value5: i64,
-    pub reserved_value6: i64,
-    pub reserved_value7: i64,
 }
 // potential multisig pda. Add a bit for a mask where vault mod leave in multisig pda
 
