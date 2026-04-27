@@ -548,17 +548,6 @@ pub struct ChangePointsReport {
 
 #[repr(C)]
 #[derive(Copy, Clone, Zeroable, Pod, Default)]
-pub struct SwapRefFeesReport {
-    pub tag: u8,
-    pub padding_u8: u8,
-    pub padding_u16: u16,
-    pub padding_u32: u32,
-    pub fees: i64,
-    pub seq_no: i64,
-}
-
-#[repr(C)]
-#[derive(Copy, Clone, Zeroable, Pod, Default)]
 pub struct VmInitActivateReport {
     pub tag: u8,
     pub padding_u8: u8,
