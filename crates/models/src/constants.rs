@@ -102,6 +102,8 @@ pub const SHORT_EMA_PERIOD: f64 = (5 * MINUTE) as f64;
 pub const MID_EMA_PERIOD: f64 = DAY as f64;
 pub const LONG_EMA_PERIOD: f64 = WEEK as f64;
 
+pub const EMA_COEFFICIENT: f64 = 2.0;
+
 pub const SWAP_FEE_RATE: f64 = 0.0002;
 
 pub const MAX_QUOTE_ORDERS: u8 = 12;
