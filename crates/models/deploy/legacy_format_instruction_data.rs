@@ -380,11 +380,14 @@ pub struct SwapData {
 /// - `old_ask_order_id` - Old Asko order id
 pub struct SpotQuotesReplaceData {
     pub tag: u8,
-    padding_u8: u8, // <- rename to bump for bots
+    pub bump: u8,
+    pub order_type: u8,
+    pub bail_on_order_not_found: u8,
     pub mask: u16,
+    pub padding_u16: u16,
     pub instr_id: u32,
+    pub padding_u32: u32,
 }
-
 #[repr(C)]
 #[derive(Clone, Copy, Pod, Zeroable)]
 /// Perp Quotes Replace Data
@@ -403,9 +406,13 @@ pub struct SpotQuotesReplaceData {
 /// - `old_ask_order_id` - Old Asko order id
 pub struct PerpQuotesReplaceData {
     pub tag: u8,
-    padding_u8: u8, // <- rename to bump for bots
+    pub bump: u8,
+    pub order_type: u8,
+    pub bail_on_order_not_found: u8,
     pub mask: u16,
+    pub padding_u16: u16,
     pub instr_id: u32,
+    pub padding_u32: u32,
 }
 
 #[repr(C)]
