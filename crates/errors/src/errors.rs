@@ -5,8 +5,9 @@ use drv_models::{
     state::{
         masks::instr_mask::InstrFlag,
         types::{
-            account_type::AccountType, vm_status::VmFlag, AssetType, OrderSide, OrderType,
-            TokenProgram, VmWhitelistTag,
+            account_type::AccountType,
+            vm_status::{VmFlag, VmMask},
+            AssetType, OrderSide, OrderType, TokenProgram, VmWhitelistTag,
         },
     },
 };
@@ -939,7 +940,7 @@ pub enum DeriverseErrorKind {
         code = 338,
         msg = "Impossible to close account with active vm mode procedure"
     )]
-    ImpossibleToCloseAccountVmMode { vm_mask: u32 },
+    ImpossibleToCloseAccountVmMode { vm_mask: VmMask },
 
     #[error(code = 339, msg = "Impossible to close account with active position")]
     ImpossibleToCloseAccountActiveSpotPosition { vm_mask: u32 },
