@@ -417,7 +417,7 @@ pub mod vm_status {
         Withdraw = 0x20000000,
     }
 
-    #[derive(Clone, Copy, Pod, Zeroable)]
+    #[derive(Clone, Copy, Pod, Zeroable, PartialEq, Eq)]
     #[repr(transparent)]
     pub struct VmMask(u32);
 
