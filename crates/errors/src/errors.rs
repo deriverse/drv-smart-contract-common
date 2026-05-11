@@ -7,7 +7,7 @@ use drv_models::{
         types::{
             account_type::AccountType,
             vm_status::{VmFlag, VmMask},
-            AssetType, OrderSide, OrderType, TokenProgram, VmWhitelistTag,
+            AssetRecord, AssetType, OrderSide, OrderType, TokenProgram, VmWhitelistTag,
         },
     },
 };
@@ -942,8 +942,11 @@ pub enum DeriverseErrorKind {
     )]
     ImpossibleToCloseAccountVmMode { vm_mask: u32 },
 
-    #[error(code = 339, msg = "Impossible to close account with active position")]
-    ImpossibleToCloseAccountActiveSpotPosition { vm_mask: u32 },
+    #[error(
+        code = 339,
+        msg = "Impossible to close account with unclosed {asset_record}"
+    )]
+    ImpossibleToCloseAccountUnclosedAsset { asset_record: AssetRecord },
 }
 
 #[derive(Debug, Serialize, Deserialize, PartialEq)]

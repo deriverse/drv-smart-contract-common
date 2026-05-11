@@ -297,12 +297,17 @@ impl std::fmt::Display for AssetType {
 }
 
 #[repr(C)]
-#[derive(Copy, Clone, Zeroable, Pod, Debug)]
+#[derive(Copy, Clone, Zeroable, Pod, Debug, Serialize, Deserialize, PartialEq, Eq)]
 pub struct AssetRecord {
     pub asset_id: u32,
-    // client
     pub temp_id: u32,
     pub value: i64,
+}
+
+impl std::fmt::Display for AssetRecord {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "{:?}", self)
+    }
 }
 
 #[repr(C)]
