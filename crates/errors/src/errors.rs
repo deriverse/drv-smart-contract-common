@@ -940,7 +940,7 @@ pub enum DeriverseErrorKind {
         code = 338,
         msg = "Impossible to close account with active vm mode procedure"
     )]
-    ImpossibleToCloseAccountVmMode { vm_mask: VmMask },
+    ImpossibleToCloseAccountVmMode { vm_mask: u32 },
 
     #[error(code = 339, msg = "Impossible to close account with active position")]
     ImpossibleToCloseAccountActiveSpotPosition { vm_mask: u32 },

@@ -422,12 +422,18 @@ pub mod vm_status {
     pub struct VmMask(u32);
 
     impl VmMask {
+        pub fn raw(&self) -> u32 {
+            self.0
+        }
+
         pub fn get_flag(&self, flag: VmFlag) -> bool {
             self.0 & flag as u32 != 0
         }
+
         pub fn set_flag(&mut self, flag: VmFlag) {
             self.0 |= flag as u32
         }
+
         pub fn clear_flag(&mut self, flag: VmFlag) {
             self.0 &= !(flag as u32)
         }
