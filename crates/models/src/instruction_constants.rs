@@ -412,5 +412,5 @@ impl DrvInstruction for VmDirectWithdrawInstruction {
 pub struct CloseAccountInstruction;
 impl DrvInstruction for CloseAccountInstruction {
     const INSTRUCTION_NUMBER: u8 = 81;
-    const MIN_ACCOUNTS: usize = 0;
+    const MIN_ACCOUNTS: usize = 6;
 }
