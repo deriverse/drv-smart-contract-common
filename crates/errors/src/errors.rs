@@ -947,6 +947,18 @@ pub enum DeriverseErrorKind {
         msg = "Impossible to close account with unclosed {asset_record}"
     )]
     ImpossibleToCloseAccountUnclosedAsset { asset_record: AssetRecord },
+
+    #[error(
+        code = 340,
+        msg = "Uncollected fees prepayment for token with id {crncy_token_id}"
+    )]
+    UncollectedFeesPrepayment { crncy_token_id: u32 },
+
+    #[error(
+        code = 340,
+        msg = "Uncollected dividends for token with id {crncy_token_id}"
+    )]
+    UncollectedDividendsPrepayment { crncy_token_id: u32 },
 }
 
 #[derive(Debug, Serialize, Deserialize, PartialEq)]
