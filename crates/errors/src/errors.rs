@@ -964,7 +964,7 @@ pub enum DeriverseErrorKind {
         code = 342,
         msg = "Foreign deposit forbidden for client {client_address}"
     )]
-    ForeignDepositIsForbidden { client_address: Pubkey, mask: u64 },
+    ForeignDepositIsForbidden { client_address: Pubkey, mask: i64 },
 
     #[error(code = 343, msg = "Foreign deposit forbidden for new account creation")]
     ForeignDepositForbiddenNewAccount,
