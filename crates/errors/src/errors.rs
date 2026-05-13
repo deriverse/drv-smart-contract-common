@@ -955,10 +955,22 @@ pub enum DeriverseErrorKind {
     UncollectedFeesPrepayment { crncy_token_id: u32 },
 
     #[error(
-        code = 340,
+        code = 341,
         msg = "Uncollected dividends for token with id {crncy_token_id}"
     )]
     UncollectedDividendsPrepayment { crncy_token_id: u32 },
+
+    #[error(
+        code = 342,
+        msg = "Foreign deposit is not allowed for client {client_address}"
+    )]
+    ForeignDepositIsNotAllowed { client_address: Pubkey, mask: u64 },
+
+    #[error(
+        code = 343,
+        msg = "Foreign deposit is not allowed for new account creation"
+    )]
+    ForeignDepositIsNotAllowedNewAccount,
 }
 
 #[derive(Debug, Serialize, Deserialize, PartialEq)]
