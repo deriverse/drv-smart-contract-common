@@ -880,7 +880,7 @@ pub struct VmInitActivateData {
 
 #[repr(C)]
 #[derive(Clone, Copy, Pod, Zeroable)]
-pub struct SetForeignDeposit {
+pub struct SetForeignDepositData {
     pub tag: u8,
     pub foreign_deposit: u8, // bool - allow/forebidde
 }
