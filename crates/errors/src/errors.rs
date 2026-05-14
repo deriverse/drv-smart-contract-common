@@ -934,6 +934,36 @@ pub enum DeriverseErrorKind {
 
     #[error(code = 337, msg = "Corrupted candles records")]
     CorruptedCandlesRecords,
+
+    #[error(code = 338, msg = "Kamino is not whitelisted for this client")]
+    KaminoNotWhitelistedForClient,
+
+    #[error(code = 339, msg = "Invalid Kamino lend program id")]
+    InvalidKlendProgramId,
+
+    #[error(
+        code = 340,
+        msg = "Kamino reserve mint does not match instrument mint (reserve_mint={reserve_mint}, instrument_mint={instrument_mint})"
+    )]
+    KaminoReserveMintMismatch {
+        reserve_mint: Pubkey,
+        instrument_mint: Pubkey,
+    },
+
+    #[error(code = 341, msg = "Kamino change_position called with no-op deltas")]
+    KaminoChangePositionNoOp,
+
+    #[error(
+        code = 342,
+        msg = "Kamino reserve farm-state account mismatch (passed={passed}, expected={expected})"
+    )]
+    KaminoReserveFarmMismatch { passed: Pubkey, expected: Pubkey },
+
+    #[error(
+        code = 343,
+        msg = "Kamino obligation_farm PDA mismatch (passed={passed}, expected={expected})"
+    )]
+    KaminoObligationFarmMismatch { passed: Pubkey, expected: Pubkey },
 }
 
 #[derive(Debug, Serialize, Deserialize, PartialEq)]

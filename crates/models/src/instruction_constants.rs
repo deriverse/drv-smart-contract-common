@@ -408,3 +408,39 @@ impl DrvInstruction for VmDirectWithdrawInstruction {
     const INSTRUCTION_NUMBER: u8 = 80;
     const MIN_ACCOUNTS: usize = 3;
 }
+
+pub struct VmAddKaminoInstruction;
+impl DrvInstruction for VmAddKaminoInstruction {
+    const INSTRUCTION_NUMBER: u8 = 81;
+    const MIN_ACCOUNTS: usize = 4;
+}
+
+pub struct VmRemoveKaminoInstruction;
+impl DrvInstruction for VmRemoveKaminoInstruction {
+    const INSTRUCTION_NUMBER: u8 = 82;
+    const MIN_ACCOUNTS: usize = 4;
+}
+
+pub struct KaminoInitObligationInstruction;
+impl DrvInstruction for KaminoInitObligationInstruction {
+    const INSTRUCTION_NUMBER: u8 = 83;
+    const MIN_ACCOUNTS: usize = 14;
+}
+
+pub struct KaminoInitTokenAccountsInstruction;
+impl DrvInstruction for KaminoInitTokenAccountsInstruction {
+    const INSTRUCTION_NUMBER: u8 = 84;
+    const MIN_ACCOUNTS: usize = 12;
+}
+
+pub struct KaminoChangePositionInstruction;
+impl DrvInstruction for KaminoChangePositionInstruction {
+    const INSTRUCTION_NUMBER: u8 = 85;
+    const MIN_ACCOUNTS: usize = 39;
+}
+
+pub struct KaminoInitObligationFarmsInstruction;
+impl DrvInstruction for KaminoInitObligationFarmsInstruction {
+    const INSTRUCTION_NUMBER: u8 = 86;
+    const MIN_ACCOUNTS: usize = 16;
+}

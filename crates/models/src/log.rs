@@ -22,6 +22,7 @@ pub mod log_type {
     pub const CHANGED_POINTS: u8 = 34;
     pub const MOVE_SPOT: u8 = 32;
     pub const VM_DIRECT_WITHDRAW: u8 = 47;
+    pub const KAMINO_CHANGE_POSITION: u8 = 48;
 
     // Instrument logs
     pub const PERP_DEPOSIT: u8 = 3;
@@ -675,4 +676,20 @@ pub struct VmDirectWithdrawReport {
     pub token_id: u32,
     pub time: u32,
     pub amount: i64,
+}
+
+#[repr(C)]
+#[derive(Copy, Clone, Zeroable, Pod, Default)]
+pub struct KaminoChangePositionReport {
+    pub tag: u8,
+    pub padding_u8: u8,
+    pub padding_u16: u16,
+    pub padding_u32: u32,
+    pub seq_no: u32,
+    pub client_id: ClientId,
+    pub instr_id: InstrId,
+    pub time: u32,
+    pub borrow_delta: i64,
+    pub collateral_delta: i64,
+    pub custom_id: i64,
 }
