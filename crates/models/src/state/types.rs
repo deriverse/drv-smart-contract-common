@@ -113,6 +113,7 @@ pub mod account_type {
     pub const PERP_REBALANCE_TIME_TREE: u32 = 50;
     pub const PRIVATE_CLIENTS: u32 = 51;
     pub const VM_CLIENT: u32 = 52;
+    pub const KAMINO_CLIENT: u32 = 53;
 
     #[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
     #[repr(u32)]
@@ -153,6 +154,7 @@ pub mod account_type {
         PerpRebalanceTimeTree = 50,
         PrivateClients = 51,
         VmClient = 52,
+        KaminoClient = 53,
         ProgramTokenAccount,
         DrvsAuthority,
     }
@@ -197,6 +199,7 @@ pub mod account_type {
                 50 => Self::PerpRebalanceTimeTree,
                 51 => Self::PrivateClients,
                 52 => Self::VmClient,
+                53 => Self::KaminoClient,
 
                 _ => return Err(ProgramError::InvalidAccountData),
             })
@@ -817,6 +820,7 @@ pub enum VmWhitelistTag {
     WithdrawAccount = 1,
     ProgramId = 2,
     MarketId = 3,
+    Kamino = 4,
 }
 
 impl std::fmt::Display for VmWhitelistTag {
@@ -847,6 +851,7 @@ impl VmWhitelistRecord {
             1 => Some(VmWhitelistTag::WithdrawAccount),
             2 => Some(VmWhitelistTag::ProgramId),
             3 => Some(VmWhitelistTag::MarketId),
+            4 => Some(VmWhitelistTag::Kamino),
             _ => None,
         }
     }
