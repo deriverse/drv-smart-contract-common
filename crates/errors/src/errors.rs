@@ -968,6 +968,9 @@ pub enum DeriverseErrorKind {
 
     #[error(code = 343, msg = "Foreign deposit forbidden for new account creation")]
     ForeignDepositForbiddenNewAccount,
+
+    #[error(code = 344, msg = "Forebidden withdrawal address {withdrawal_address}")]
+    ForibddenWithdrawalAddress { withdrawal_address: Pubkey },
 }
 
 #[derive(Debug, Serialize, Deserialize, PartialEq)]
