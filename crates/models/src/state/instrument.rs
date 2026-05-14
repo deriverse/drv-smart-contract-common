@@ -185,7 +185,7 @@ pub struct InstrAccountHeader {
     pub ps: CappedI64,
     pub pool_fees: CappedI64,
 
-    pub reserved_value1: i64,
+    pub protocol_fees_alloc: f64,
     pub reserved_value2: i64,
     pub reserved_value3: i64,
 

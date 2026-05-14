@@ -409,6 +409,18 @@ impl DrvInstruction for VmDirectWithdrawInstruction {
     const MIN_ACCOUNTS: usize = 3;
 }
 
+pub struct CloseAccountInstruction;
+impl DrvInstruction for CloseAccountInstruction {
+    const INSTRUCTION_NUMBER: u8 = 81;
+    const MIN_ACCOUNTS: usize = 6;
+}
+
+pub struct SetForeignDepositInstruction;
+impl DrvInstruction for SetForeignDepositInstruction {
+    const INSTRUCTION_NUMBER: u8 = 82;
+    const MIN_ACCOUNTS: usize = 3;
+}
+
 pub struct VmAddKaminoInstruction;
 impl DrvInstruction for VmAddKaminoInstruction {
     const INSTRUCTION_NUMBER: u8 = 81;

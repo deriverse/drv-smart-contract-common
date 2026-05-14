@@ -260,7 +260,7 @@ pub struct InstrAccountHeader {
     pub crncy_tokens: i64,
     pub ps: i64,
     pub pool_fees: i64,
-    pub reserved_value1: i64,
+    pub protocol_fees_alloc: f64,
     pub reserved_value2: i64,
     pub reserved_value3: i64,
     pub last_trade_asset_tokens: i64,

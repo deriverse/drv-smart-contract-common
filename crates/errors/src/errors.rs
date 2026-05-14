@@ -5,8 +5,9 @@ use drv_models::{
     state::{
         masks::instr_mask::InstrFlag,
         types::{
-            account_type::AccountType, vm_status::VmFlag, AssetType, OrderSide, OrderType,
-            TokenProgram, VmWhitelistTag,
+            account_type::AccountType,
+            vm_status::{VmFlag, VmMask},
+            AssetRecord, AssetType, OrderSide, OrderType, TokenProgram, VmWhitelistTag,
         },
     },
 };
@@ -935,14 +936,47 @@ pub enum DeriverseErrorKind {
     #[error(code = 337, msg = "Corrupted candles records")]
     CorruptedCandlesRecords,
 
-    #[error(code = 338, msg = "Kamino is not whitelisted for this client")]
-    KaminoNotWhitelistedForClient,
+    #[error(
+        code = 338,
+        msg = "Impossible to close account with active vm mode procedure"
+    )]
+    ImpossibleToCloseAccountVmMode { vm_mask: u32 },
 
-    #[error(code = 339, msg = "Invalid Kamino lend program id")]
-    InvalidKlendProgramId,
+    #[error(
+        code = 339,
+        msg = "Impossible to close account with unclosed {asset_record}"
+    )]
+    ImpossibleToCloseAccountUnclosedAsset { asset_record: AssetRecord },
 
     #[error(
         code = 340,
+        msg = "Uncollected fees prepayment for token with id {crncy_token_id}"
+    )]
+    UncollectedFeesPrepayment { crncy_token_id: u32 },
+
+    #[error(
+        code = 341,
+        msg = "Uncollected dividends for token with id {crncy_token_id}"
+    )]
+    UncollectedDividendsPrepayment { crncy_token_id: u32 },
+
+    #[error(
+        code = 342,
+        msg = "Foreign deposit forbidden for client {client_address}"
+    )]
+    ForeignDepositIsForbidden { client_address: Pubkey, mask: i64 },
+
+    #[error(code = 343, msg = "Foreign deposit forbidden for new account creation")]
+    ForeignDepositForbiddenNewAccount,
+
+    #[error(code = 344, msg = "Kamino is not whitelisted for this client")]
+    KaminoNotWhitelistedForClient,
+
+    #[error(code = 345, msg = "Invalid Kamino lend program id")]
+    InvalidKlendProgramId,
+
+    #[error(
+        code = 346,
         msg = "Kamino reserve mint does not match instrument mint (reserve_mint={reserve_mint}, instrument_mint={instrument_mint})"
     )]
     KaminoReserveMintMismatch {
@@ -950,17 +984,17 @@ pub enum DeriverseErrorKind {
         instrument_mint: Pubkey,
     },
 
-    #[error(code = 341, msg = "Kamino change_position called with no-op deltas")]
+    #[error(code = 347, msg = "Kamino change_position called with no-op deltas")]
     KaminoChangePositionNoOp,
 
     #[error(
-        code = 342,
+        code = 348,
         msg = "Kamino reserve farm-state account mismatch (passed={passed}, expected={expected})"
     )]
     KaminoReserveFarmMismatch { passed: Pubkey, expected: Pubkey },
 
     #[error(
-        code = 343,
+        code = 349,
         msg = "Kamino obligation_farm PDA mismatch (passed={passed}, expected={expected})"
     )]
     KaminoObligationFarmMismatch { passed: Pubkey, expected: Pubkey },

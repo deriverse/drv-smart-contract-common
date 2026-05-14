@@ -300,12 +300,17 @@ impl std::fmt::Display for AssetType {
 }
 
 #[repr(C)]
-#[derive(Copy, Clone, Zeroable, Pod, Debug)]
+#[derive(Copy, Clone, Zeroable, Pod, Debug, Serialize, Deserialize, PartialEq, Eq)]
 pub struct AssetRecord {
     pub asset_id: u32,
-    // client
     pub temp_id: u32,
     pub value: i64,
+}
+
+impl std::fmt::Display for AssetRecord {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "{:?}", self)
+    }
 }
 
 #[repr(C)]
@@ -420,17 +425,23 @@ pub mod vm_status {
         Withdraw = 0x20000000,
     }
 
-    #[derive(Clone, Copy, Pod, Zeroable)]
+    #[derive(Clone, Copy, Pod, Zeroable, PartialEq, Eq)]
     #[repr(transparent)]
     pub struct VmMask(u32);
 
     impl VmMask {
+        pub fn raw(&self) -> u32 {
+            self.0
+        }
+
         pub fn get_flag(&self, flag: VmFlag) -> bool {
             self.0 & flag as u32 != 0
         }
+
         pub fn set_flag(&mut self, flag: VmFlag) {
             self.0 |= flag as u32
         }
+
         pub fn clear_flag(&mut self, flag: VmFlag) {
             self.0 &= !(flag as u32)
         }
