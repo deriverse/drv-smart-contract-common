@@ -31,7 +31,6 @@ pub mod candles {
             &self.candles
         }
     }
-    #[cfg(not(feature = "test-sbf"))]
     pub const CANDLES: CandleRegister = CandleRegister {
         candles: &[
             CandleParams {
@@ -47,27 +46,6 @@ pub mod candles {
             CandleParams {
                 kind: DAY_CANDLE,
                 capacity: 5844,
-                duration: 86400,
-            },
-        ],
-    };
-
-    #[cfg(feature = "test-sbf")]
-    pub const CANDLES: CandleRegister = CandleRegister {
-        candles: &[
-            CandleParams {
-                kind: M1_CANDLE,
-                capacity: 100,
-                duration: 60,
-            },
-            CandleParams {
-                kind: M15_CANDLE,
-                capacity: 20,
-                duration: 900,
-            },
-            CandleParams {
-                kind: DAY_CANDLE,
-                capacity: 30,
                 duration: 86400,
             },
         ],

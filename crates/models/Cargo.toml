@@ -13,7 +13,3 @@ solana-pubkey = { version = "3.0.0", features = ["bytemuck"] }
 
 [lints]
 workspace = true
-
-[features]
-test-sbf = []
-competition = []
