@@ -998,6 +998,9 @@ pub enum DeriverseErrorKind {
         msg = "Kamino obligation_farm PDA mismatch (passed={passed}, expected={expected})"
     )]
     KaminoObligationFarmMismatch { passed: Pubkey, expected: Pubkey },
+
+    #[error(code = 350, msg = "Invalid Kamino farms program id")]
+    InvalidFarmsProgramId,
 }
 
 #[derive(Debug, Serialize, Deserialize, PartialEq)]
