@@ -1001,6 +1001,16 @@ pub enum DeriverseErrorKind {
 
     #[error(code = 350, msg = "Invalid Kamino farms program id")]
     InvalidFarmsProgramId,
+
+    #[error(
+        code = 351,
+        msg = "ATA address mismatch for mint {mint} (passed={passed}, expected={expected})"
+    )]
+    InvalidAtaAddress {
+        mint: Pubkey,
+        passed: Pubkey,
+        expected: Pubkey,
+    },
 }
 
 #[derive(Debug, Serialize, Deserialize, PartialEq)]
