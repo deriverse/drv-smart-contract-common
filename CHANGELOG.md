@@ -16,7 +16,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `FOREIGN_DEPOSIT` flag in `ClientPrimaryAccountHeader` mask
 - `set_foreign_deposit` instruction
 
-
 ## [v2.54] - 2026-05-13
 
 ## Added 
