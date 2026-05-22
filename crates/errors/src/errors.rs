@@ -1011,6 +1011,16 @@ pub enum DeriverseErrorKind {
         passed: Pubkey,
         expected: Pubkey,
     },
+
+    #[error(
+        code = 352,
+        msg = "Invalid Reserves ordering expected {index} reserve.mint == {expected_mint_address}. Actula: {actual_mint_address}"
+    )]
+    InvalidReservesOrdering {
+        index: usize,
+        expected_mint_address: Pubkey,
+        actual_mint_address: Pubkey,
+    },
 }
 
 #[derive(Debug, Serialize, Deserialize, PartialEq)]
