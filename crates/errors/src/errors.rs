@@ -968,6 +968,49 @@ pub enum DeriverseErrorKind {
 
     #[error(code = 343, msg = "Foreign deposit forbidden for new account creation")]
     ForeignDepositForbiddenNewAccount,
+
+    #[error(code = 344, msg = "Kamino is not whitelisted for this client")]
+    KaminoNotWhitelistedForClient,
+
+    #[error(code = 345, msg = "Invalid Kamino lend program id")]
+    InvalidKlendProgramId,
+
+    #[error(
+        code = 346,
+        msg = "Kamino reserve mint does not match instrument mint (reserve_mint={reserve_mint}, instrument_mint={instrument_mint})"
+    )]
+    KaminoReserveMintMismatch {
+        reserve_mint: Pubkey,
+        instrument_mint: Pubkey,
+    },
+
+    #[error(code = 347, msg = "Kamino change_position called with no-op deltas")]
+    KaminoChangePositionNoOp,
+
+    #[error(
+        code = 348,
+        msg = "Kamino reserve farm-state account mismatch (passed={passed}, expected={expected})"
+    )]
+    KaminoReserveFarmMismatch { passed: Pubkey, expected: Pubkey },
+
+    #[error(
+        code = 349,
+        msg = "Kamino obligation_farm PDA mismatch (passed={passed}, expected={expected})"
+    )]
+    KaminoObligationFarmMismatch { passed: Pubkey, expected: Pubkey },
+
+    #[error(code = 350, msg = "Invalid Kamino farms program id")]
+    InvalidFarmsProgramId,
+
+    #[error(
+        code = 351,
+        msg = "ATA address mismatch for mint {mint} (passed={passed}, expected={expected})"
+    )]
+    InvalidAtaAddress {
+        mint: Pubkey,
+        passed: Pubkey,
+        expected: Pubkey,
+    },
 }
 
 #[derive(Debug, Serialize, Deserialize, PartialEq)]
