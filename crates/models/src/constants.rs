@@ -292,6 +292,11 @@ pub mod instr_upgrade_params {
     pub const TRADES_THRESHOLD: i64 = 100000;
 }
 
+pub mod kamino_flags {
+    pub const REPAY_ALL: u8 = 1 << 0;
+    pub const WITHDRAW_ALL: u8 = 1 << 1;
+}
+
 pub const INSTR_ACCOUNT_INITIAL_SIZE: usize =
     INSTR_ACCOUNT_HEADER_SIZE + 4 * LINE_QUOTES_SIZE * MARKET_DEPTH;
 

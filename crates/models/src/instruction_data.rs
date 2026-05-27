@@ -934,10 +934,11 @@ pub struct KaminoInitObligationFarmsData {
 #[derive(Clone, Copy, Pod, Zeroable)]
 pub struct KaminoChangePositionData {
     pub tag: u8,
-    pub padding_u8: u8,
+    pub flags: u8,
     pub padding_u16: u16,
     pub instr_id: InstrId,
     pub borrow_delta: i64,
     pub collateral_delta: i64,
     pub custom_id: i64,
 }
+

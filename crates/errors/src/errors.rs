@@ -1011,6 +1011,18 @@ pub enum DeriverseErrorKind {
         passed: Pubkey,
         expected: Pubkey,
     },
+
+    #[error(
+        code = 352,
+        msg = "Kamino obligation does not contain an entry for reserve {reserve}"
+    )]
+    KaminoObligationReserveNotFound { reserve: Pubkey },
+
+    #[error(code = 353, msg = "Kamino obligation account has invalid layout")]
+    InvalidKaminoObligationLayout,
+
+    #[error(code = 354, msg = "Invalid kamino_change_position flags")]
+    InvalidKaminoChangePositionFlags,
 }
 
 #[derive(Debug, Serialize, Deserialize, PartialEq)]
