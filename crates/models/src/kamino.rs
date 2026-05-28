@@ -165,6 +165,7 @@ pub struct ReserveConfig {
 #[repr(C)]
 #[derive(Clone, Copy, Zeroable, Pod)]
 pub struct ObligationPrefix {
+    pub discriminator: [u8; 8],
     pub tag: u64,
     pub last_update: [u8; 16],
     pub lending_market: Pubkey,
