@@ -1029,6 +1029,12 @@ pub enum DeriverseErrorKind {
         msg = "No kamino collateral deposit for given reserve was found {reserve_address}"
     )]
     NoKaminoCollateralDepositWasFound { reserve_address: Pubkey },
+
+    #[error(
+        code = 356,
+        msg = "Kamino reserve account has invalid layout {reserve_address}"
+    )]
+    InvalidKaminoReserveLayout { reserve_address: Pubkey },
 }
 
 #[derive(Debug, Serialize, Deserialize, PartialEq)]
