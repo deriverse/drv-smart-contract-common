@@ -1023,6 +1023,12 @@ pub enum DeriverseErrorKind {
 
     #[error(code = 354, msg = "Invalid kamino_change_position flags")]
     InvalidKaminoChangePositionFlags,
+
+    #[error(
+        code = 355,
+        msg = "No kamino collateral deposit for given reserve was found {reserve_address}"
+    )]
+    NoKaminoCollateralDepositWasFound { reserve_address: Pubkey },
 }
 
 #[derive(Debug, Serialize, Deserialize, PartialEq)]
