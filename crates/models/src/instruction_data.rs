@@ -923,21 +923,25 @@ pub struct KaminoInitObligationFarmsData {
     pub instr_id: InstrId,
 }
 
+/// Kamino Change Position Data
+///
+/// **Used in:** `kamino_change_position` instruction
+///
+/// **Tag:** `85`
+///
+/// ### Fields
+/// - `flags` - kamino_flags - REPAY_ALL/WITHDRAW_ALL
+/// - `instr_id` - Instrument id
+/// - `borrow_delta` - Position change of liquidity in kamino
+/// - `collateral_delta` - Position change of collateral in kamino
 #[repr(C)]
 #[derive(Clone, Copy, Pod, Zeroable)]
 pub struct KaminoChangePositionData {
     pub tag: u8,
-    pub padding_u8: u8,
+    pub flags: u8,
     pub padding_u16: u16,
     pub instr_id: InstrId,
     pub borrow_delta: i64,
     pub collateral_delta: i64,
     pub custom_id: i64,
-}
-
-#[repr(C)]
-#[derive(Clone, Copy, Pod, Zeroable)]
-pub struct SetForeignDepositData {
-    pub tag: u8,
-    pub foreign_deposit: u8,
 }
