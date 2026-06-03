@@ -72,20 +72,6 @@ pub struct ObligationLiquidity {
     pub padding2: [u64; 4],
 }
 
-// #[repr(C)]
-// #[derive(Clone, Copy, Pod, Zeroable)]
-// pub struct ObligationPrefix {
-//     pub discriminator: [u8; 8],
-//     pub tag: u64,
-//     pub last_update: [u8; 16],
-//     pub lending_market: Pubkey,
-//     pub owner: Pubkey,
-//     pub deposits: [ObligationCollateral; 8],
-//     pub lowest_reserve_deposit_liquidation_ltv: u64,
-//     pub deposited_value_sf: [u8; 16],
-//     pub borrows: [ObligationLiquidity; 5],
-// }
-
 #[repr(C)]
 #[derive(Debug, Clone, Copy, Zeroable, Pod)]
 pub struct ReserveConfig {
