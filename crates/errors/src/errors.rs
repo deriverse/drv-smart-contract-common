@@ -1038,6 +1038,16 @@ pub enum DeriverseErrorKind {
 
     #[error(code = 357, msg = "Referral program is active")]
     RefProgramIsActive,
+
+    #[error(
+        code = 358,
+        msg = "Token balance counter destruction for {token_acc_address}"
+    )]
+    TokenBalanceDestruction {
+        token_acc_address: Pubkey,
+        expected_amount: u64,
+        actual_amount: u64,
+    },
 }
 
 #[derive(Debug, Serialize, Deserialize, PartialEq)]
