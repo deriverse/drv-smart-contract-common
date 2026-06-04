@@ -1035,6 +1035,9 @@ pub enum DeriverseErrorKind {
         msg = "Kamino reserve account has invalid layout {reserve_address}"
     )]
     InvalidKaminoReserveLayout { reserve_address: Pubkey },
+
+    #[error(code = 357, msg = "Referral program is active")]
+    RefProgramIsActive,
 }
 
 #[derive(Debug, Serialize, Deserialize, PartialEq)]
