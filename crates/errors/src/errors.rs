@@ -988,21 +988,6 @@ pub enum DeriverseErrorKind {
     KaminoChangePositionNoOp,
 
     #[error(
-        code = 348,
-        msg = "Kamino reserve farm-state account mismatch (passed={passed}, expected={expected})"
-    )]
-    KaminoReserveFarmMismatch { passed: Pubkey, expected: Pubkey },
-
-    #[error(
-        code = 349,
-        msg = "Kamino obligation_farm PDA mismatch (passed={passed}, expected={expected})"
-    )]
-    KaminoObligationFarmMismatch { passed: Pubkey, expected: Pubkey },
-
-    #[error(code = 350, msg = "Invalid Kamino farms program id")]
-    InvalidFarmsProgramId,
-
-    #[error(
         code = 351,
         msg = "ATA address mismatch for mint {mint} (passed={passed}, expected={expected})"
     )]

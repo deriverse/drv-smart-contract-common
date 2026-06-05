@@ -31,13 +31,6 @@ pub struct U64ArgsIx {
 
 #[repr(C)]
 #[derive(Clone, Copy, Pod, Zeroable)]
-pub struct InitObligationFarmsForReserveArgs {
-    pub disc: [u8; 8],
-    pub mode: u8,
-}
-
-#[repr(C)]
-#[derive(Clone, Copy, Pod, Zeroable)]
 pub struct ObligationCollateral {
     pub deposit_reserve: Pubkey,
     pub deposited_amount: u64,
