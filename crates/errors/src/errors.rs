@@ -987,6 +987,9 @@ pub enum DeriverseErrorKind {
     #[error(code = 347, msg = "Kamino change_position called with no-op deltas")]
     KaminoChangePositionNoOp,
 
+    #[error(code = 348, msg = "Invalid Farms Program Id")]
+    InvalidFarmsProgramId,
+
     #[error(
         code = 351,
         msg = "ATA address mismatch for mint {mint} (passed={passed}, expected={expected})"

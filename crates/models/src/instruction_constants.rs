@@ -436,7 +436,7 @@ impl DrvInstruction for KaminoInitTokenAccountsInstruction {
 pub struct KaminoChangePositionInstruction;
 impl DrvInstruction for KaminoChangePositionInstruction {
     const INSTRUCTION_NUMBER: u8 = 85;
-    const MIN_ACCOUNTS: usize = 34;
+    const MIN_ACCOUNTS: usize = 35;
 }
 
 pub struct CloseAccountInstruction;
