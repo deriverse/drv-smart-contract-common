@@ -907,18 +907,9 @@ pub struct KaminoInitObligationData {
 
 #[repr(C)]
 #[derive(Clone, Copy, Pod, Zeroable)]
-pub struct KaminoInitTokenAccountsData {
+pub struct KaminoInitInstrumentData {
     pub tag: u8,
     pub padding_u8: u8,
-    pub padding_u16: u16,
-    pub instr_id: InstrId,
-}
-
-#[repr(C)]
-#[derive(Clone, Copy, Pod, Zeroable)]
-pub struct KaminoInitObligationFarmsData {
-    pub tag: u8,
-    pub side: u8,
     pub padding_u16: u16,
     pub instr_id: InstrId,
 }

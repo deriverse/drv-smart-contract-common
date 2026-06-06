@@ -427,22 +427,16 @@ impl DrvInstruction for KaminoInitObligationInstruction {
     const MIN_ACCOUNTS: usize = 12;
 }
 
-pub struct KaminoInitTokenAccountsInstruction;
-impl DrvInstruction for KaminoInitTokenAccountsInstruction {
+pub struct KaminoInitInstrument;
+impl DrvInstruction for KaminoInitInstrument {
     const INSTRUCTION_NUMBER: u8 = 84;
-    const MIN_ACCOUNTS: usize = 11;
+    const MIN_ACCOUNTS: usize = 18;
 }
 
 pub struct KaminoChangePositionInstruction;
 impl DrvInstruction for KaminoChangePositionInstruction {
     const INSTRUCTION_NUMBER: u8 = 85;
     const MIN_ACCOUNTS: usize = 39;
-}
-
-pub struct KaminoInitObligationFarmsInstruction;
-impl DrvInstruction for KaminoInitObligationFarmsInstruction {
-    const INSTRUCTION_NUMBER: u8 = 86;
-    const MIN_ACCOUNTS: usize = 14;
 }
 
 pub struct CloseAccountInstruction;
