@@ -427,8 +427,8 @@ impl DrvInstruction for KaminoInitObligationInstruction {
     const MIN_ACCOUNTS: usize = 12;
 }
 
-pub struct KaminoInitInstrument;
-impl DrvInstruction for KaminoInitInstrument {
+pub struct KaminoInitInstrumentInstruction;
+impl DrvInstruction for KaminoInitInstrumentInstruction {
     const INSTRUCTION_NUMBER: u8 = 84;
     const MIN_ACCOUNTS: usize = 18;
 }
