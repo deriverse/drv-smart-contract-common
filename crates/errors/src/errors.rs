@@ -1051,6 +1051,16 @@ pub enum DeriverseErrorKind {
 
     #[error(code = 359, msg = "Invalid Kamino account {account_address}")]
     InvalidKaminoAccount { account_address: Pubkey },
+
+    #[error(
+        code = 360,
+        msg = "Expected different Kamino account {account_address}"
+    )]
+    ExpectedDifferentKaminoAccount {
+        account_address: Pubkey,
+        expected_discriminator: [u8; 8],
+        actual_discriminator: [u8; 8],
+    },
 }
 
 #[derive(Debug, Serialize, Deserialize, PartialEq)]
