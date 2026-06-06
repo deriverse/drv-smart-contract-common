@@ -5,6 +5,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v2.60]
+
+## Changed
+- Removed `kamino_init_farms_ix` and `kamino_init_tokens_ix` created `kamino_init_instrument` ix
+
 ## [v2.59]
 
 ## Added 
