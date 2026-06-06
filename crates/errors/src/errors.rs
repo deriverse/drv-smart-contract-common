@@ -1048,6 +1048,9 @@ pub enum DeriverseErrorKind {
         expected_amount: u64,
         actual_amount: u64,
     },
+
+    #[error(code = 359, msg = "Invalid Kamino account {account_address}")]
+    InvalidKaminoAccount { account_address: Pubkey },
 }
 
 #[derive(Debug, Serialize, Deserialize, PartialEq)]
