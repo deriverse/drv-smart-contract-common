@@ -1061,6 +1061,12 @@ pub enum DeriverseErrorKind {
         expected_discriminator: [u8; 8],
         actual_discriminator: [u8; 8],
     },
+
+    #[error(code = 361, msg = "Invalid operation for empty obligation")]
+    InvalidOperationForEmptyObligation {
+        borrow_delta: i64,
+        collateral_delta: i64,
+    },
 }
 
 #[derive(Debug, Serialize, Deserialize, PartialEq)]
