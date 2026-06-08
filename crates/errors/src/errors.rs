@@ -1067,6 +1067,9 @@ pub enum DeriverseErrorKind {
         borrow_delta: i64,
         collateral_delta: i64,
     },
+
+    #[error(code = 362, msg = "Kamino Reserve {reserve_address} is missing")]
+    KaminoReserveIsMissing { reserve_address: Pubkey },
 }
 
 #[derive(Debug, Serialize, Deserialize, PartialEq)]
