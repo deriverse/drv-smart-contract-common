@@ -273,7 +273,6 @@ pub mod instr_upgrade_params {
 pub mod kamino_flags {
     pub const REPAY_ALL: u8 = 1 << 0;
     pub const WITHDRAW_ALL: u8 = 1 << 1;
-    pub const KEEP_OBLIGATION_ALIVE: u8 = 1 << 2;
 }
 
 pub const INSTR_ACCOUNT_INITIAL_SIZE: usize =
