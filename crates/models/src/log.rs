@@ -683,7 +683,8 @@ pub struct VmDirectWithdrawReport {
 pub struct KaminoChangePositionReport {
     pub tag: u8,
     pub assets_is_collateral: u8,
-    pub padding_u16: u16,
+    pub withdraw_all: u8,
+    pub repay_all: u8,
     pub padding_u32: u32,
     pub seq_no: u32,
     pub client_id: ClientId,

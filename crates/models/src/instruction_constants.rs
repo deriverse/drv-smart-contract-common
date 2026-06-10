@@ -424,7 +424,7 @@ impl DrvInstruction for VmRemoveKaminoInstruction {
 pub struct KaminoInitObligationInstruction;
 impl DrvInstruction for KaminoInitObligationInstruction {
     const INSTRUCTION_NUMBER: u8 = 83;
-    const MIN_ACCOUNTS: usize = 11;
+    const MIN_ACCOUNTS: usize = 10;
 }
 
 pub struct KaminoInitInstrumentInstruction;

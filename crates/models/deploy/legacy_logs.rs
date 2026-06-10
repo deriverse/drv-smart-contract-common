@@ -671,8 +671,25 @@ pub struct VmDirectWithdrawReport {
     pub padding_u16: u16,
     pub withdrawal_record_id: u32,
     pub seq_no: u32,
-    pub client_id: ClientId,
+    pub client_id: u32,
     pub token_id: u32,
     pub time: u32,
     pub amount: i64,
+}
+
+#[repr(C)]
+#[derive(Copy, Clone, Zeroable, Pod, Default)]
+pub struct KaminoChangePositionReport {
+    pub tag: u8,
+    pub assets_is_collateral: u8,
+    pub withdraw_all: u8,
+    pub repay_all: u8,
+    pub padding_u32: u32,
+    pub seq_no: u32,
+    pub client_id: u32,
+    pub instr_id: u32,
+    pub time: u32,
+    pub borrow_delta: i64,
+    pub collateral_delta: i64,
+    pub custom_id: i64,
 }
