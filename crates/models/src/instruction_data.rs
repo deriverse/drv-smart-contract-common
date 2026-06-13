@@ -932,7 +932,7 @@ pub struct KaminoChangePositionData {
     pub flags: u8,
     pub padding_u16: u16,
     pub instr_id: InstrId,
-    pub borrow_delta: i64,
-    pub collateral_delta: i64,
+    pub asset_delta: i64,
+    pub cnrcy_delta: i64,
     pub custom_id: i64,
 }
