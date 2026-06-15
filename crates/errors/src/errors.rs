@@ -1070,6 +1070,24 @@ pub enum DeriverseErrorKind {
 
     #[error(code = 362, msg = "Kamino Reserve {reserve_address} is missing")]
     KaminoReserveIsMissing { reserve_address: Pubkey },
+
+    #[error(
+        code = 363,
+        msg = "Kamino failed to deposit, collateral reserve is already in obligation borrows {reserve_address}"
+    )]
+    KaminoFaileadToDepositCollateralResrveInBorrows {
+        reserve_address: Pubkey,
+        obligation: Pubkey,
+    },
+
+    #[error(
+        code = 364,
+        msg = "Kamino failed to borrow, liquidity reserve is already in obligation deposits {reserve_address}"
+    )]
+    KaminoFailedToBorrowLiquidityReserveInDeposits {
+        reserve_address: Pubkey,
+        obligation: Pubkey,
+    },
 }
 
 #[derive(Debug, Serialize, Deserialize, PartialEq)]
