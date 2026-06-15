@@ -1086,7 +1086,7 @@ pub enum DeriverseErrorKind {
     )]
     KaminoFailedToBorrowLiquidityReserveInDeposits {
         reserve_address: Pubkey,
-        obligation: Pubkey,
+        obligation_address: Pubkey,
     },
 }
 
