@@ -441,12 +441,12 @@ impl DrvInstruction for KaminoChangePositionInstruction {
 
 pub struct CloseAccountInstruction;
 impl DrvInstruction for CloseAccountInstruction {
-    const INSTRUCTION_NUMBER: u8 = 87;
+    const INSTRUCTION_NUMBER: u8 = 86;
     const MIN_ACCOUNTS: usize = 6;
 }
 
 pub struct SetForeignDepositInstruction;
 impl DrvInstruction for SetForeignDepositInstruction {
-    const INSTRUCTION_NUMBER: u8 = 88;
+    const INSTRUCTION_NUMBER: u8 = 87;
     const MIN_ACCOUNTS: usize = 3;
 }

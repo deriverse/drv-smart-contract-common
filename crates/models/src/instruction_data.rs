@@ -936,3 +936,10 @@ pub struct KaminoChangePositionData {
     pub collateral_delta: i64,
     pub custom_id: i64,
 }
+
+#[repr(C)]
+#[derive(Clone, Copy, Pod, Zeroable)]
+pub struct SetForeignDepositData {
+    pub tag: u8,
+    pub foreign_deposit: u8,
+}
