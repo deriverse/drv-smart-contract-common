@@ -220,10 +220,13 @@ pub mod account_type {
 
 #[repr(C)]
 #[derive(Copy, Clone, Default, Debug, Zeroable, Pod, PartialEq)]
+#[derive(shank::ShankType)]
 /// Discriminator is a unique identifier of every account in the system.
 /// Should be stored in the first 8 bytes of accounts data.
 pub struct Discriminator {
+    #[idl_type(u32)]
     pub tag: Tag,
+    #[idl_type(u32)]
     pub version: Version,
 }
 
@@ -235,8 +238,10 @@ impl Discriminator {
 
 #[repr(C)]
 #[derive(Debug, Clone, Copy, Default)]
+#[derive(shank::ShankType)]
 pub struct Operator {
     pub operator_address: Pubkey,
+    #[idl_type(u32)]
     pub version: Version,
     pub reserved: u32,
 }
@@ -245,6 +250,7 @@ pub const OPERATOR_SIZE: usize = std::mem::size_of::<Operator>();
 
 #[repr(C)]
 #[derive(Copy, Clone, Zeroable)]
+#[derive(shank::ShankType)]
 /// Line Quotes
 ///
 /// 1. **`px`** - price
@@ -262,6 +268,7 @@ pub const LINE_QUOTES_SIZE: usize = std::mem::size_of::<LineQuotes>();
 
 #[repr(C)]
 #[derive(Clone, Copy, Zeroable, Pod)]
+#[derive(shank::ShankType)]
 /// Base Crncy Record
 ///
 /// 1. **`crncy_token_id`** - Token id from token state
@@ -275,10 +282,13 @@ pub const LINE_QUOTES_SIZE: usize = std::mem::size_of::<LineQuotes>();
 pub struct BaseCrncyRecord {
     pub crncy_token_id: u32,
     pub decs_count: u32,
+    #[idl_type(i64)]
     pub funds: CappedI64,
     pub rate: f64,
     pub denominator: f64,
+    #[idl_type(i64)]
     pub locked_drvs_amount: CappedI64,
+    #[idl_type(i64)]
     pub locked_drvs_dividends_value: CappedI64,
     pub mask: i64,
 }
@@ -299,7 +309,10 @@ impl std::fmt::Display for AssetType {
 }
 
 #[repr(C)]
-#[derive(Copy, Clone, Zeroable, Pod, Debug, Serialize, Deserialize, PartialEq, Eq)]
+#[derive(
+    Copy, Clone, Zeroable, Pod, Debug, Serialize, Deserialize, PartialEq, Eq,
+)]
+#[derive(shank::ShankType)]
 pub struct AssetRecord {
     pub asset_id: u32,
     pub temp_id: u32,
@@ -314,6 +327,7 @@ impl std::fmt::Display for AssetRecord {
 
 #[repr(C)]
 #[derive(Copy, Clone, Debug, PartialEq, Pod, Zeroable)]
+#[derive(shank::ShankType)]
 /// Order
 ///
 /// 1. **`qty`** — The total quantity of the order.
@@ -338,10 +352,14 @@ impl std::fmt::Display for AssetRecord {
 /// - Each client also maintains a linked list of their orders.
 /// - When an order is not present, the constant `NULL_ORDER` is used to represent a `None` value.
 pub struct Order {
+    #[idl_type(i64)]
     pub qty: CappedI64,
+    #[idl_type(i64)]
     pub sum: CappedI64,
     pub order_id: i64,
+    #[idl_type(u32)]
     pub orig_client_id: ClientId,
+    #[idl_type(u32)]
     pub client_id: ClientId,
     pub line: u32,
     pub prev: u32,
@@ -355,6 +373,7 @@ pub struct Order {
 
 #[repr(C)]
 #[derive(Copy, Clone, Debug, PartialEq, Pod, Zeroable)]
+#[derive(shank::ShankType)]
 /// PxOrders(Lines)
 ///
 /// Each `PxOrders` structure corresponds to a specific price level and maintains
@@ -378,6 +397,7 @@ pub struct Order {
 /// - Prices are aligned to SpotPrams or PerpParams list.
 pub struct PxOrders {
     pub price: i64,
+    #[idl_type(i64)]
     pub qty: CappedI64,
     pub next: u32,
     pub prev: u32,
@@ -424,7 +444,7 @@ pub mod vm_status {
         Withdraw = 0x20000000,
     }
 
-    #[derive(Clone, Copy, Pod, Zeroable, PartialEq, Eq)]
+    #[derive(Clone, Copy, Pod, Zeroable, PartialEq, Eq, Debug)]
     #[repr(transparent)]
     pub struct VmMask(u32);
 
@@ -614,8 +634,10 @@ pub mod quote_status {
 
     #[repr(C)]
     #[derive(Clone, Copy, Debug, Zeroable, Pod)]
+    #[derive(shank::ShankType)]
     pub struct QuoteOrder {
         pub new_price: i64,
+        #[idl_type(i64)]
         pub new_qty: CappedI64,
         pub old_id: i64,
     }
@@ -793,6 +815,7 @@ pub mod quote_status {
 
 #[repr(C)]
 #[derive(Clone, Copy, Pod, Zeroable, Default)]
+#[derive(shank::ShankType, shank::ShankAccount)]
 /// Client Vaulut Mode Account Header
 ///
 /// # Fields
@@ -806,6 +829,7 @@ pub mod quote_status {
 /// - Account Store VmWhitelistRecords list
 pub struct ClientVmAccountHeader {
     pub discriminator: Discriminator,
+    #[idl_type(u32)]
     pub id: ClientId,
     pub count: u32,
     pub slot: u32,
@@ -830,6 +854,7 @@ impl std::fmt::Display for VmWhitelistTag {
 
 #[repr(C)]
 #[derive(Clone, Copy, Pod, Zeroable, Debug)]
+#[derive(shank::ShankType)]
 /// Vm Whitelist Record
 ///
 /// # Fields
@@ -868,7 +893,7 @@ impl VmWhitelistRecord {
     }
 }
 
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Pod, Zeroable, Default, PartialOrd, Ord)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Pod, Zeroable, Default, PartialOrd, Ord, shank::ShankType)]
 #[repr(transparent)]
 pub struct CappedI64 {
     pub value: i64,

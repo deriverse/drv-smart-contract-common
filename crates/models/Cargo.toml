@@ -8,6 +8,7 @@ bytemuck = { version = "^1.23.0", features = ["derive"] }
 drv-macros.workspace = true
 serde = { version = "^1.0.145", features = ["derive"] }
 serde_json.workspace = true
+shank = { path = "/Users/user/Work/shank/shank" }
 solana-program-error = "3.0.0"
 solana-pubkey = { version = "3.0.0", features = ["bytemuck"] }
 

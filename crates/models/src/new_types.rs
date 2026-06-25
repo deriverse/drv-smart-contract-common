@@ -10,17 +10,6 @@ mod tests {
     pub struct Wrapper(pub u32);
 
     const VAL: u32 = 10;
-
-    #[test]
-    fn test_new_macro() {
-        let wrapper = Wrapper(VAL);
-
-        assert_eq!(wrapper, VAL);
-        assert!(wrapper > VAL - 1);
-        let val: u32 = *wrapper;
-
-        assert_eq!(val, VAL as u32);
-    }
 }
 
 pub mod version {

@@ -28,7 +28,7 @@ use super::types::Discriminator;
 /// # Notes
 /// - Ref stats can be adjust with change_ref_program instruction
 #[repr(C)]
-#[derive(Pod, Zeroable, Clone, Copy, Default, Debug)]
+#[derive(Pod, Zeroable, Clone, Copy, Default, Debug, shank::ShankType, shank::ShankAccount)]
 pub struct RootState {
     pub discriminator: Discriminator,
     pub operator_address: Pubkey,

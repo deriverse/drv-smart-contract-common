@@ -6,7 +6,7 @@ use super::types::Discriminator;
 use crate::{new_types::client::ClientId, state::types::CappedI64};
 
 #[repr(C)]
-#[derive(Pod, Zeroable, Clone, Copy)]
+#[derive(Pod, Zeroable, Clone, Copy, shank::ShankType)]
 /// Clients community information records for a specific currency.
 ///
 /// 1. **`dividends_rate`** - Dividents rate per 1 DRVS token
@@ -22,10 +22,14 @@ use crate::{new_types::client::ClientId, state::types::CappedI64};
 /// - `ClientCommunityRecord` is stored in a Vec. For each different **`crncy_token_id`**
 pub struct ClientCommunityRecord {
     pub dividends_rate: f64,
+    #[idl_type(i64)]
     pub dividends_value: CappedI64,
+    #[idl_type(i64)]
     pub fees_prepayment: CappedI64,
     pub fees_ratio: f64,
+    #[idl_type(i64)]
     pub ref_rewards: CappedI64,
+    #[idl_type(i64)]
     pub ref_payments: CappedI64,
     pub last_fees_prepayment_time: u32,
     pub crncy_token_id: u32,
@@ -34,27 +38,21 @@ pub struct ClientCommunityRecord {
 pub const CLIENT_COMMUNITY_RECORD_SIZE: usize = size_of::<ClientCommunityRecord>();
 
 #[repr(C)]
-#[derive(Pod, Zeroable, Clone, Copy)]
-/// Clients community account header
-///
-/// 1. **`last_voting_time`** - time record during last vote
-/// 2. **`last_voting_counter`** - record of voting counter during last vote
-/// 3. **`current_voting_counter`** - record of voting counter during last interaction with the system
-/// 4. **`current_voting_tokens`** - time record during last interaction with the system
-/// 5. **`last_voting_tokens`** - record of used voting tokens during last vote
-/// 6. **`last_choice`** - choice of last vote
-/// 7. **`drvs_tokens`** - current voting tokens
-/// 8. **`count`** - `ClientCommunityRecord` array length
+#[derive(Pod, Zeroable, Clone, Copy, shank::ShankType, shank::ShankAccount)]
 pub struct ClientCommunityAccountHeader {
     pub discriminator: Discriminator,
+    #[idl_type(u32)]
     pub id: ClientId,
     pub last_voting_time: u32,
     pub last_voting_counter: u32,
     pub current_voting_counter: u32,
+    #[idl_type(i64)]
     pub current_voting_tokens: CappedI64,
+    #[idl_type(i64)]
     pub last_voting_tokens: CappedI64,
     pub last_choice: u32,
     pub slot: u32,
+    #[idl_type(i64)]
     pub drvs_tokens: CappedI64,
     pub count: u32,
     pub reserved: u32,

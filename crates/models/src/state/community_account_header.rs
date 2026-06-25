@@ -28,17 +28,23 @@ use super::types::Discriminator;
 /// 20. **`count`** - Length of `BaseCrncyRecord` array
 
 #[repr(C)]
-#[derive(Pod, Zeroable, Clone, Copy)]
+#[derive(Pod, Zeroable, Clone, Copy, shank::ShankType, shank::ShankAccount)]
 pub struct CommunityAccountHeader {
     pub discriminator: Discriminator,
+    #[idl_type(i64)]
     pub drvs_tokens: CappedI64,
     pub min_amount: i64,
+    #[idl_type(i64)]
     pub voting_supply: CappedI64,
+    #[idl_type(i64)]
     pub prev_voting_supply: CappedI64,
+    #[idl_type(i64)]
     pub voting_decr: CappedI64,
     pub prev_voting_decr: i64,
+    #[idl_type(i64)]
     pub voting_unchange: CappedI64,
     pub prev_voting_unchange: i64,
+    #[idl_type(i64)]
     pub voting_incr: CappedI64,
     pub prev_voting_incr: i64,
     pub voting_counter: u32,

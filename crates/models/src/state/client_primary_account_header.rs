@@ -40,7 +40,7 @@ use solana_pubkey::Pubkey;
 /// 26. **`slot`** - Record last **writable** manipulation with ClientPrimaryAccountHeader
 /// 27. **`assets_count`** - Length of assets record array
 #[repr(C)]
-#[derive(Pod, Zeroable, Clone, Copy)]
+#[derive(Pod, Zeroable, Clone, Copy, shank::ShankType, shank::ShankAccount)]
 pub struct ClientPrimaryAccountHeader {
     pub discriminator: Discriminator,
     pub wallet_address: Pubkey,
@@ -49,7 +49,9 @@ pub struct ClientPrimaryAccountHeader {
     pub vm_wallet_address: Pubkey,
     pub vm_instrs: [u32; 8],
     pub vm_withdraw_token_id: u32,
+    #[idl_type(u32)]
     pub vm_mask: VmMask,
+    #[idl_type(i64)]
     pub vm_withdraw_amount: CappedI64,
     pub first_ref_link_discount: f64,
     pub second_ref_link_discount: f64,
@@ -59,7 +61,9 @@ pub struct ClientPrimaryAccountHeader {
     pub ref_program_ratio: f64,
     pub reserved: i64,
     pub mask: i64,
+    #[idl_type(u32)]
     pub id: ClientId,
+    #[idl_type(u32)]
     pub ref_client_id: ClientId,
     pub ref_counter: u32,
     pub first_ref_link_id: u32,

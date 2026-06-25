@@ -3,7 +3,7 @@ use std::mem::size_of;
 use bytemuck::{Pod, Zeroable};
 
 #[repr(C)]
-#[derive(Debug, Clone, Copy, Default, Zeroable, Pod)]
+#[derive(Debug, Clone, Copy, Default, Zeroable, Pod, shank::ShankType, shank::ShankAccount)]
 pub struct HolderAccountHeader {
     pub tag: u32,
     pub operators_count: u32,

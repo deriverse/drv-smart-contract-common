@@ -19,12 +19,15 @@ pub enum TokenType {
 ///     - Base crncy flag = 0x40000000
 /// 4. **`base_crncy_index`** - Index of BaseCrncyRecord in CommunityState
 #[repr(C)]
-#[derive(Pod, Zeroable, Clone, Copy, Default, PartialEq, Debug)]
+#[derive(
+    Pod, Zeroable, Clone, Copy, Default, PartialEq, Debug, shank::ShankType, shank::ShankAccount,
+)]
 pub struct TokenState {
     pub discriminator: Discriminator,
     pub address: Pubkey,
     pub program_address: Pubkey,
     pub id: u32,
+    #[idl_type(u32)]
     pub mask: TokenMask,
     pub reserved: u32,
     pub base_crncy_index: u32,

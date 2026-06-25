@@ -424,19 +424,19 @@ impl DrvInstruction for VmRemoveKaminoInstruction {
 pub struct KaminoInitObligationInstruction;
 impl DrvInstruction for KaminoInitObligationInstruction {
     const INSTRUCTION_NUMBER: u8 = 83;
-    const MIN_ACCOUNTS: usize = 10;
+    const MIN_ACCOUNTS: usize = 7;
 }
 
 pub struct KaminoInitInstrumentInstruction;
 impl DrvInstruction for KaminoInitInstrumentInstruction {
     const INSTRUCTION_NUMBER: u8 = 84;
-    const MIN_ACCOUNTS: usize = 18;
+    const MIN_ACCOUNTS: usize = 15;
 }
 
 pub struct KaminoChangePositionInstruction;
 impl DrvInstruction for KaminoChangePositionInstruction {
     const INSTRUCTION_NUMBER: u8 = 85;
-    const MIN_ACCOUNTS: usize = 41;
+    const MIN_ACCOUNTS: usize = 20;
 }
 
 pub struct CloseAccountInstruction;

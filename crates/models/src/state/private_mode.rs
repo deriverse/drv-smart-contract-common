@@ -3,13 +3,13 @@ use bytemuck::{Pod, Zeroable};
 use solana_pubkey::Pubkey;
 
 #[repr(C)]
-#[derive(Pod, Zeroable, Clone, Copy, Default, Debug)]
+#[derive(Pod, Zeroable, Clone, Copy, Default, Debug, shank::ShankType, shank::ShankAccount)]
 pub struct PrivateClientHeader {
     pub discriminator: Discriminator,
 }
 
 #[repr(C)]
-#[derive(Pod, Zeroable, Clone, Copy, Default, Debug)]
+#[derive(Pod, Zeroable, Clone, Copy, Default, Debug, shank::ShankType)]
 pub struct PrivateClient {
     pub creation_time: u32,
     pub expiration_time: u32,

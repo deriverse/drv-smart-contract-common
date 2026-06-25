@@ -3,7 +3,7 @@ version = "0.2.68"
 edition = "2021"
 
 [workspace]
-members = ["crates/*"]
+members = ["crates/drv-macros", "crates/errors", "crates/errors-derive", "crates/models", "xtask"]
 resolver = "2"
 
 [workspace.dependencies]

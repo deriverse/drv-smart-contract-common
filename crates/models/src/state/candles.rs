@@ -20,13 +20,15 @@ use bytemuck::{Pod, Zeroable};
 /// - The `time` field is always aligned to the candle duration.
 /// - Allowed price limits `MIN_PRICE..MAX_PRICE`
 #[repr(C)]
-#[derive(Clone, Copy, Debug, Pod, Zeroable)]
+#[derive(Clone, Copy, Debug, Pod, Zeroable, shank::ShankType)]
 pub struct Candle {
     pub open: i64,
     pub close: i64,
     pub max: i64,
     pub min: i64,
+    #[idl_type(i64)]
     pub asset_tokens: CappedI64,
+    #[idl_type(i64)]
     pub crncy_tokens: CappedI64,
     pub time: u32,
     pub kind: u16, // todo make typesafe wrapper
@@ -34,7 +36,7 @@ pub struct Candle {
 }
 
 #[repr(C)]
-#[derive(Pod, Zeroable, Clone, Copy, Debug, PartialEq)]
+#[derive(Pod, Zeroable, Clone, Copy, Debug, PartialEq, shank::ShankType)]
 pub struct CandlesHeader {
     pub total_count: u32,
     pub used_count: u32,
@@ -47,6 +49,7 @@ pub struct CandlesHeader {
     pub last_1m: u32,
     pub last_15m: u32,
     pub last_day: u32,
+    #[padding]
     pub padding: u32,
 }
 

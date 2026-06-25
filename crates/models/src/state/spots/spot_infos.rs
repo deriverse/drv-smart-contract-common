@@ -13,7 +13,7 @@ pub fn get_spot_info<T>(data: &[u8], id: ClientId) -> *mut T {
 }
 
 #[repr(C)]
-#[derive(Copy, Clone, Pod, Zeroable, Debug)]
+#[derive(Copy, Clone, Pod, Zeroable, Debug, shank::ShankType)]
 /// Spot Client Info
 ///
 /// 1. **`client`** - Original client id
@@ -27,13 +27,18 @@ pub fn get_spot_info<T>(data: &[u8], id: ClientId) -> *mut T {
 /// 8. **`bid_slot`** - Slot of last update on bid side
 /// 9. **`ask_slot`** - Slot of last update on asl=k side
 pub struct SpotClientInfo {
+    #[idl_type(u32)]
     pub client: ClientId,
     pub filled_orders: u32,
     pub bids_entry: u32,
     pub asks_entry: u32,
+    #[idl_type(i64)]
     pub avail_asset_tokens: CappedI64,
+    #[idl_type(i64)]
     pub avail_crncy_tokens: CappedI64,
+    #[idl_type(i64)]
     pub in_orders_asset_tokens: CappedI64,
+    #[idl_type(i64)]
     pub in_orders_crncy_tokens: CappedI64,
     pub bid_slot: u32,
     pub ask_slot: u32,

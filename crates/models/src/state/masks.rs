@@ -32,6 +32,7 @@ pub mod instr_mask {
 
     #[derive(Clone, Copy, Pod, Zeroable, Debug, Default, PartialEq, Eq)]
     #[repr(transparent)]
+    #[derive()]
     pub struct InstrMask(pub u32);
 
     impl InstrMask {
@@ -123,6 +124,7 @@ pub mod token_mask {
 
     #[derive(Clone, Copy, Pod, Zeroable, Debug, Default, PartialEq, Eq)]
     #[repr(transparent)]
+    #[derive()]
     pub struct TokenMask(pub u32);
 
     impl TokenMask {

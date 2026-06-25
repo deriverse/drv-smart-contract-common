@@ -150,15 +150,19 @@ use solana_pubkey::Pubkey;
 /// 125. **`liquidation_threshold`** - Threshold for liquidation process, based on makret volaitlity. liquidation_threshold <= MIN_LIQUIDATION_THRESHOLD
 /// 126. **`seats_reserve`** - Current amount of funds spent on seats purchasing
 #[repr(C)]
-#[derive(Pod, Zeroable, Clone, Copy, Default, PartialEq, Debug)]
+#[derive(
+    Pod, Zeroable, Clone, Copy, Default, PartialEq, Debug, shank::ShankType, shank::ShankAccount,
+)]
 pub struct InstrAccountHeader {
     // Basic information about the instrument
     pub discriminator: Discriminator,
+    #[idl_type(u32)]
     pub instr_id: InstrId,
     pub asset_token_id: u32,
     pub crncy_token_id: u32,
     pub asset_token_decs_count: u32,
     pub crncy_token_decs_count: u32,
+    #[idl_type(u32)]
     pub mask: InstrMask,
 
     // Spot page (Instrument Selector)
@@ -170,30 +174,41 @@ pub struct InstrAccountHeader {
     // Perp page
     pub perp_last_px: i64,
     pub perp_last_close: i64,
+    #[idl_type(i64)]
     pub perp_open_int: CappedI64,
     pub variance: f64,
     pub max_leverage: f64,
     pub prev_day_trades: i64,
+    #[idl_type(i64)]
     pub perp_insurance_fund: CappedI64,
     pub perp_price_delta: f64,
     pub short_ema_px: f64,
 
     // Liquidity page
+    #[idl_type(i64)]
     pub lp_prev_day_fees: CappedI64,
+    #[idl_type(i64)]
     pub asset_tokens: CappedI64,
+    #[idl_type(i64)]
     pub crncy_tokens: CappedI64,
+    #[idl_type(i64)]
     pub ps: CappedI64,
+    #[idl_type(i64)]
     pub pool_fees: CappedI64,
 
     pub protocol_fees_alloc: f64,
     pub reserved_value2: i64,
     pub reserved_value3: i64,
 
+    #[idl_type(i64)]
     pub last_trade_asset_tokens: CappedI64,
+    #[idl_type(i64)]
     pub last_trade_crncy_tokens: CappedI64,
     pub day_low: i64,
     pub day_high: i64,
+    #[idl_type(i64)]
     pub day_asset_tokens: CappedI64,
+    #[idl_type(i64)]
     pub day_crncy_tokens: CappedI64,
     pub perp_clients_count: u32,
     pub perp_day_trades: u32,
@@ -201,11 +216,15 @@ pub struct InstrAccountHeader {
     pub perp_best_ask: i64,
     pub perp_day_low: i64,
     pub perp_day_high: i64,
+    #[idl_type(i64)]
     pub perp_day_asset_tokens: CappedI64,
+    #[idl_type(i64)]
     pub perp_day_crncy_tokens: CappedI64,
     pub perp_alltime_trades: i64,
     pub perp_prev_day_trades: i64,
+    #[idl_type(i64)]
     pub perp_last_trade_asset_tokens: CappedI64,
+    #[idl_type(i64)]
     pub perp_last_trade_crncy_tokens: CappedI64,
     pub alltime_trades: i64,
 
@@ -238,12 +257,17 @@ pub struct InstrAccountHeader {
     pub bid_orders_count: u32,
     pub ask_orders_count: u32,
     pub fixing_time: u32,
+    #[idl_type(i64)]
     pub fixing_crncy_tokens: CappedI64,
+    #[idl_type(i64)]
     pub fixing_asset_tokens: CappedI64,
     pub counter: i64,
+    #[idl_type(i64)]
     pub protocol_fees: CappedI64,
     pub hits_counter: i64,
+    #[idl_type(i64)]
     pub last_asset_tokens: CappedI64,
+    #[idl_type(i64)]
     pub last_crncy_tokens: CappedI64,
     pub perp_underlying_px: i64,
     pub fixing_px: i64,
@@ -251,13 +275,16 @@ pub struct InstrAccountHeader {
     pub last_spread: f64,
     pub last_spread_time: u32,
     pub total_spread_period: u32,
+    #[idl_type(i64)]
     pub prev_day_asset_tokens: CappedI64,
+    #[idl_type(i64)]
     pub prev_day_crncy_tokens: CappedI64,
     pub alltime_asset_tokens: f64,
     pub alltime_crncy_tokens: f64,
     pub day_trades: u32,
     pub lp_day_trades: u32,
     pub lp_alltime_fees: f64,
+    #[idl_type(i64)]
     pub lp_day_fees: CappedI64,
     pub lp_prev_day_trades: u32,
     pub lp_time: u32,
@@ -293,15 +320,21 @@ pub struct InstrAccountHeader {
     pub perp_soc_loss_long_rate: f64,
     pub perp_soc_loss_short_rate: f64,
     pub perp_funding_rate: f64,
+    #[idl_type(i64)]
     pub perp_funding_funds: CappedI64,
+    #[idl_type(i64)]
     pub perp_soc_loss_funds: CappedI64,
+    #[idl_type(i64)]
     pub perp_prev_day_asset_tokens: CappedI64,
+    #[idl_type(i64)]
     pub perp_prev_day_crncy_tokens: CappedI64,
     pub perp_alltime_asset_tokens: f64,
     pub perp_alltime_crncy_tokens: f64,
     pub liquidation_threshold: f64,
     pub seats_reserve: i64,
+    #[idl_type(i64)]
     pub swap_fees: CappedI64,
+    #[idl_type(i64)]
     pub similar_assets_min_qty: CappedI64,
     pub fixed_fee_rate: f64,
     pub mid_ema_px: f64,

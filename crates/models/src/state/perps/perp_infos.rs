@@ -16,7 +16,7 @@ pub fn get_perp_info<T>(data: &[u8], id: ClientId) -> *mut T {
 }
 
 #[repr(C)]
-#[derive(Copy, Clone, Pod, Zeroable, Debug)]
+#[derive(Copy, Clone, Pod, Zeroable, Debug, shank::ShankType)]
 /// Perp Client Info
 ///
 /// 1. **`funds`** - Client available funds in base crncy
@@ -24,16 +24,20 @@ pub fn get_perp_info<T>(data: &[u8], id: ClientId) -> *mut T {
 /// 3. **`in_order_funds`** - Clients funds locked in buy orders
 /// 4. **`in_orders_perps`** - Clients funds locked in sell orders
 pub struct PerpClientInfo {
+    #[idl_type(i64)]
     pub funds: CappedI64,
+    #[idl_type(i64)]
     pub perps: CappedI64,
+    #[idl_type(i64)]
     pub in_orders_funds: CappedI64,
+    #[idl_type(i64)]
     pub in_orders_perps: CappedI64,
 }
 
 pub const PERP_CLIENT_INFO_SIZE: usize = size_of::<PerpClientInfo>();
 
 #[repr(C)]
-#[derive(Copy, Clone, Pod, Zeroable, Debug)]
+#[derive(Copy, Clone, Pod, Zeroable, Debug, shank::ShankType)]
 /// Perp Client Info 2
 ///
 /// 1. **`cost`** - Amount of funds in base crncy spent or received for the open position
@@ -46,7 +50,9 @@ pub const PERP_CLIENT_INFO_SIZE: usize = size_of::<PerpClientInfo>();
 ///     - 0xFF - Current clients leverage
 ///     - 0x40000000
 pub struct PerpClientInfo2 {
+    #[idl_type(u32)]
     pub cost: CappedI64,
+    #[idl_type(i64)]
     pub result: CappedI64,
     pub bid_slot: u32,
     pub ask_slot: u32,
@@ -69,7 +75,7 @@ impl PerpClientInfo2 {
 }
 
 #[repr(C)]
-#[derive(Copy, Clone, Pod, Zeroable, Debug)]
+#[derive(Copy, Clone, Pod, Zeroable, Debug, shank::ShankType)]
 /// Perp Client Info 3
 ///
 /// 1. **`client`** - Original client id
@@ -79,18 +85,21 @@ impl PerpClientInfo2 {
 /// 5. **`fee`** - Statistic of all amount of fees paid to the protocol
 /// 6. **`rebates`** - Statisit of rebates received from protocol
 pub struct PerpClientInfo3 {
+    #[idl_type(u32)]
     pub client: ClientId,
     pub filled_orders: u32,
     pub bids_entry: u32,
     pub asks_entry: u32,
+    #[idl_type(i64)]
     pub fees: CappedI64,
+    #[idl_type(i64)]
     pub rebates: CappedI64,
 }
 
 pub const PERP_CLIENT_INFO3_SIZE: usize = size_of::<PerpClientInfo3>();
 
 #[repr(C)]
-#[derive(Copy, Clone, Pod, Zeroable, Debug)]
+#[derive(Copy, Clone, Pod, Zeroable, Debug, shank::ShankType)]
 /// Perp Client Info 4
 ///
 /// 1. **`last_soc_loss_rate`** - Last social loss rate according to clients position
@@ -99,15 +108,18 @@ pub const PERP_CLIENT_INFO3_SIZE: usize = size_of::<PerpClientInfo3>();
 /// 4. **`loss_coverage`** - Amount of funds compensated in total
 pub struct PerpClientInfo4 {
     pub last_soc_loss_rate: f64,
+    #[idl_type(i64)]
     pub last_soc_loss_perps: CappedI64,
+    #[idl_type(i64)]
     pub soc_loss_funds: CappedI64,
+    #[idl_type(i64)]
     pub loss_coverage: CappedI64,
 }
 
 pub const PERP_CLIENT_INFO4_SIZE: usize = size_of::<PerpClientInfo4>();
 
 #[repr(C)]
-#[derive(Copy, Clone, Pod, Zeroable, Debug)]
+#[derive(Copy, Clone, Pod, Zeroable, Debug, shank::ShankType)]
 /// Perp Client Info 5
 ///
 /// 1. **`funding_funds`** - Statistic over received funding funds from protocol
@@ -115,6 +127,7 @@ pub const PERP_CLIENT_INFO4_SIZE: usize = size_of::<PerpClientInfo4>();
 /// 3. **`rebalance_time`** - Last rebalance time record. rebalance_time and temp_client_id form key in rebalance RBTree
 /// 4. **`funding_node`** - Node in rebalance_time RBTree
 pub struct PerpClientInfo5 {
+    #[idl_type(i64)]
     pub funding_funds: CappedI64,
     pub last_funding_rate: f64,
     pub reserved: i64,
