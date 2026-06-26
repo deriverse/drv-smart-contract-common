@@ -1,7 +1,8 @@
 use bytemuck::Zeroable;
 use shank::ShankInstruction;
 
-use crate::instruction_data::*;
+#[allow(unused_imports)]
+use crate::{instruction_data::*, state::types::account_type};
 
 #[derive(Debug, Clone, Copy, ShankInstruction)]
 #[repr(u8)]
@@ -40,9 +41,9 @@ pub enum DrvInstructionIdl {
         seeds = [b"drvs001", admin.key()],
         bump
     )]
-    #[account(2, writable, name = "root", desc = "Root PDA", seeds = [args.version.to_le_bytes(), [2u8, 0u8, 0u8, 0u8], deriverse_authority.key()], bump)]
+    #[account(2, writable, name = "root", desc = "Root PDA", seeds = [args.version.to_le_bytes(), account_type::ROOT.to_le_bytes(), deriverse_authority.key()], bump)]
     #[account(3, name = "deriverse_authority", desc = "Deriverse authority PDA", seeds = [b"ndxnt"], bump)]
-    #[account(4, writable, name = "community", desc = "Community PDA", seeds = [args.version.to_le_bytes(), [34u8, 0u8, 0u8, 0u8], deriverse_authority.key()], bump)]
+    #[account(4, writable, name = "community", desc = "Community PDA", seeds = [args.version.to_le_bytes(), account_type::COMMUNITY.to_le_bytes(), deriverse_authority.key()], bump)]
     #[account(5, name = "drvs_mint", desc = "DRVS mint")]
     #[account(6, writable, name = "drvs_token", desc = "DRVS token metadata PDA")]
     #[account(
@@ -66,7 +67,7 @@ pub enum DrvInstructionIdl {
         writable,
         name = "client_primary",
         desc = "Client primary account",
-        seeds = [root.discriminator.version.to_le_bytes(), [31u8, 0u8, 0u8, 0u8], signer.key()],
+        seeds = [root.discriminator.version.to_le_bytes(), account_type::CLIENT_PRIMARY.to_le_bytes(), signer.key()],
         bump
     )]
     #[account(3, writable, name = "instrument", desc = "Instrument account")]
@@ -199,7 +200,7 @@ pub enum DrvInstructionIdl {
     #[account(3, name = "mint", desc = "Token mint")]
     #[account(4, name = "root", desc = "Root PDA")]
     #[account(5, name = "token", desc = "Token metadata PDA")]
-    #[account(6, writable, name = "client_primary", desc = "Client primary account", seeds = [root.discriminator.version.to_le_bytes(), [31u8, 0u8, 0u8, 0u8], signer.key()], bump)]
+    #[account(6, writable, name = "client_primary", desc = "Client primary account", seeds = [root.discriminator.version.to_le_bytes(), account_type::CLIENT_PRIMARY.to_le_bytes(), signer.key()], bump)]
     #[account(7, name = "system_program", desc = "System program")]
     #[account(8, name = "token_program", desc = "Token program id")]
     Deposit(DepositData) = 7,
@@ -223,7 +224,7 @@ pub enum DrvInstructionIdl {
     #[account(3, name = "mint", desc = "Token mint")]
     #[account(4, name = "root", desc = "Root PDA")]
     #[account(5, name = "token", desc = "Token metadata PDA")]
-    #[account(6, writable, name = "client_primary", desc = "Client primary account", seeds = [root.discriminator.version.to_le_bytes(), [31u8, 0u8, 0u8, 0u8], signer.key()], bump)]
+    #[account(6, writable, name = "client_primary", desc = "Client primary account", seeds = [root.discriminator.version.to_le_bytes(), account_type::CLIENT_PRIMARY.to_le_bytes(), signer.key()], bump)]
     #[account(7, name = "system_program", desc = "System program")]
     #[account(8, name = "token_program", desc = "Token program id")]
     #[account(
@@ -263,19 +264,19 @@ pub enum DrvInstructionIdl {
     #[account(8, name = "token_program", desc = "Token program id")]
     #[account(9, name = "lut_program", desc = "Address lookup table program")]
     #[account(10, name = "deriverse_authority", desc = "Deriverse authority PDA", seeds = [b"ndxnt"], bump)]
-    #[account(11, writable, name = "instrument", desc = "Instrument account", seeds = [root.discriminator.version.to_le_bytes(), [7u8, 0u8, 0u8, 0u8], asset_token.id.to_le_bytes(), args.crncy_token_id.to_le_bytes(), deriverse_authority.key()], bump)]
-    #[account(12, writable, name = "bids_tree", desc = "Bids tree account", seeds = [root.discriminator.version.to_le_bytes(), [14u8, 0u8, 0u8, 0u8], asset_token.id.to_le_bytes(), args.crncy_token_id.to_le_bytes(), deriverse_authority.key()], bump)]
-    #[account(13, writable, name = "asks_tree", desc = "Asks tree account", seeds = [root.discriminator.version.to_le_bytes(), [15u8, 0u8, 0u8, 0u8], asset_token.id.to_le_bytes(), args.crncy_token_id.to_le_bytes(), deriverse_authority.key()], bump)]
-    #[account(14, writable, name = "bid_orders", desc = "Bid orders account", seeds = [root.discriminator.version.to_le_bytes(), [16u8, 0u8, 0u8, 0u8], asset_token.id.to_le_bytes(), args.crncy_token_id.to_le_bytes(), deriverse_authority.key()], bump)]
-    #[account(15, writable, name = "ask_orders", desc = "Ask orders account", seeds = [root.discriminator.version.to_le_bytes(), [17u8, 0u8, 0u8, 0u8], asset_token.id.to_le_bytes(), args.crncy_token_id.to_le_bytes(), deriverse_authority.key()], bump)]
-    #[account(16, writable, name = "lines", desc = "Spot lines account", seeds = [root.discriminator.version.to_le_bytes(), [18u8, 0u8, 0u8, 0u8], asset_token.id.to_le_bytes(), args.crncy_token_id.to_le_bytes(), deriverse_authority.key()], bump)]
+    #[account(11, writable, name = "instrument", desc = "Instrument account", seeds = [root.discriminator.version.to_le_bytes(), account_type::INSTR.to_le_bytes(), asset_token.id.to_le_bytes(), args.crncy_token_id.to_le_bytes(), deriverse_authority.key()], bump)]
+    #[account(12, writable, name = "bids_tree", desc = "Bids tree account", seeds = [root.discriminator.version.to_le_bytes(), account_type::SPOT_BIDS_TREE.to_le_bytes(), asset_token.id.to_le_bytes(), args.crncy_token_id.to_le_bytes(), deriverse_authority.key()], bump)]
+    #[account(13, writable, name = "asks_tree", desc = "Asks tree account", seeds = [root.discriminator.version.to_le_bytes(), account_type::SPOT_ASKS_TREE.to_le_bytes(), asset_token.id.to_le_bytes(), args.crncy_token_id.to_le_bytes(), deriverse_authority.key()], bump)]
+    #[account(14, writable, name = "bid_orders", desc = "Bid orders account", seeds = [root.discriminator.version.to_le_bytes(), account_type::SPOT_BID_ORDERS.to_le_bytes(), asset_token.id.to_le_bytes(), args.crncy_token_id.to_le_bytes(), deriverse_authority.key()], bump)]
+    #[account(15, writable, name = "ask_orders", desc = "Ask orders account", seeds = [root.discriminator.version.to_le_bytes(), account_type::SPOT_ASK_ORDERS.to_le_bytes(), asset_token.id.to_le_bytes(), args.crncy_token_id.to_le_bytes(), deriverse_authority.key()], bump)]
+    #[account(16, writable, name = "lines", desc = "Spot lines account", seeds = [root.discriminator.version.to_le_bytes(), account_type::SPOT_LINES.to_le_bytes(), asset_token.id.to_le_bytes(), args.crncy_token_id.to_le_bytes(), deriverse_authority.key()], bump)]
     #[account(17, writable, name = "maps", desc = "Spot maps account")]
     #[account(
         18,
         writable,
         name = "client_infos",
         desc = "Spot client infos account",
-        seeds = [root.discriminator.version.to_le_bytes(), [12u8, 0u8, 0u8, 0u8], asset_token.id.to_le_bytes(), args.crncy_token_id.to_le_bytes(), deriverse_authority.key()],
+        seeds = [root.discriminator.version.to_le_bytes(), account_type::SPOT_CLIENT_INFOS.to_le_bytes(), asset_token.id.to_le_bytes(), args.crncy_token_id.to_le_bytes(), deriverse_authority.key()],
         bump
     )]
     NewInstrument(NewInstrumentData) = 9,
@@ -293,14 +294,14 @@ pub enum DrvInstructionIdl {
     #[account(4, name = "system_program", desc = "System program")]
     #[account(5, name = "lut_program", desc = "Address lookup table program")]
     #[account(6, name = "deriverse_authority", desc = "Deriverse authority PDA")]
-    #[account(7, writable, name = "perp_bids_tree", desc = "Perp bids tree account", seeds = [root.discriminator.version.to_le_bytes(), [39u8, 0u8, 0u8, 0u8], instrument.asset_token_id.to_le_bytes(), instrument.crncy_token_id.to_le_bytes(), deriverse_authority.key()], bump)]
-    #[account(8, writable, name = "perp_asks_tree", desc = "Perp asks tree account", seeds = [root.discriminator.version.to_le_bytes(), [37u8, 0u8, 0u8, 0u8], instrument.asset_token_id.to_le_bytes(), instrument.crncy_token_id.to_le_bytes(), deriverse_authority.key()], bump)]
+    #[account(7, writable, name = "perp_bids_tree", desc = "Perp bids tree account", seeds = [root.discriminator.version.to_le_bytes(), account_type::PERP_BIDS_TREE.to_le_bytes(), instrument.asset_token_id.to_le_bytes(), instrument.crncy_token_id.to_le_bytes(), deriverse_authority.key()], bump)]
+    #[account(8, writable, name = "perp_asks_tree", desc = "Perp asks tree account", seeds = [root.discriminator.version.to_le_bytes(), account_type::PERP_ASKS_TREE.to_le_bytes(), instrument.asset_token_id.to_le_bytes(), instrument.crncy_token_id.to_le_bytes(), deriverse_authority.key()], bump)]
     #[account(
         9,
         writable,
         name = "perp_bid_orders",
         desc = "Perp bid orders account",
-        seeds = [root.discriminator.version.to_le_bytes(), [38u8, 0u8, 0u8, 0u8], instrument.asset_token_id.to_le_bytes(), instrument.crncy_token_id.to_le_bytes(), deriverse_authority.key()],
+        seeds = [root.discriminator.version.to_le_bytes(), account_type::PERP_BID_ORDERS.to_le_bytes(), instrument.asset_token_id.to_le_bytes(), instrument.crncy_token_id.to_le_bytes(), deriverse_authority.key()],
         bump
     )]
     #[account(
@@ -308,17 +309,17 @@ pub enum DrvInstructionIdl {
         writable,
         name = "perp_ask_orders",
         desc = "Perp ask orders account",
-        seeds = [root.discriminator.version.to_le_bytes(), [36u8, 0u8, 0u8, 0u8], instrument.asset_token_id.to_le_bytes(), instrument.crncy_token_id.to_le_bytes(), deriverse_authority.key()],
+        seeds = [root.discriminator.version.to_le_bytes(), account_type::PERP_ASK_ORDERS.to_le_bytes(), instrument.asset_token_id.to_le_bytes(), instrument.crncy_token_id.to_le_bytes(), deriverse_authority.key()],
         bump
     )]
-    #[account(11, writable, name = "perp_lines", desc = "Perp lines account", seeds = [root.discriminator.version.to_le_bytes(), [46u8, 0u8, 0u8, 0u8], instrument.asset_token_id.to_le_bytes(), instrument.crncy_token_id.to_le_bytes(), deriverse_authority.key()], bump)]
+    #[account(11, writable, name = "perp_lines", desc = "Perp lines account", seeds = [root.discriminator.version.to_le_bytes(), account_type::PERP_LINES.to_le_bytes(), instrument.asset_token_id.to_le_bytes(), instrument.crncy_token_id.to_le_bytes(), deriverse_authority.key()], bump)]
     #[account(12, writable, name = "perp_maps", desc = "Perp maps account")]
     #[account(
         13,
         writable,
         name = "perp_client_infos",
         desc = "Perp client infos account",
-        seeds = [root.discriminator.version.to_le_bytes(), [41u8, 0u8, 0u8, 0u8], instrument.asset_token_id.to_le_bytes(), instrument.crncy_token_id.to_le_bytes(), deriverse_authority.key()],
+        seeds = [root.discriminator.version.to_le_bytes(), account_type::PERP_CLIENT_INFOS.to_le_bytes(), instrument.asset_token_id.to_le_bytes(), instrument.crncy_token_id.to_le_bytes(), deriverse_authority.key()],
         bump
     )]
     #[account(
@@ -326,7 +327,7 @@ pub enum DrvInstructionIdl {
         writable,
         name = "perp_client_infos2",
         desc = "Perp client infos2 account",
-        seeds = [root.discriminator.version.to_le_bytes(), [42u8, 0u8, 0u8, 0u8], instrument.asset_token_id.to_le_bytes(), instrument.crncy_token_id.to_le_bytes(), deriverse_authority.key()],
+        seeds = [root.discriminator.version.to_le_bytes(), account_type::PERP_CLIENT_INFOS2.to_le_bytes(), instrument.asset_token_id.to_le_bytes(), instrument.crncy_token_id.to_le_bytes(), deriverse_authority.key()],
         bump
     )]
     #[account(
@@ -334,7 +335,7 @@ pub enum DrvInstructionIdl {
         writable,
         name = "perp_client_infos3",
         desc = "Perp client infos3 account",
-        seeds = [root.discriminator.version.to_le_bytes(), [43u8, 0u8, 0u8, 0u8], instrument.asset_token_id.to_le_bytes(), instrument.crncy_token_id.to_le_bytes(), deriverse_authority.key()],
+        seeds = [root.discriminator.version.to_le_bytes(), account_type::PERP_CLIENT_INFOS3.to_le_bytes(), instrument.asset_token_id.to_le_bytes(), instrument.crncy_token_id.to_le_bytes(), deriverse_authority.key()],
         bump
     )]
     #[account(
@@ -342,7 +343,7 @@ pub enum DrvInstructionIdl {
         writable,
         name = "perp_client_infos4",
         desc = "Perp client infos4 account",
-        seeds = [root.discriminator.version.to_le_bytes(), [44u8, 0u8, 0u8, 0u8], instrument.asset_token_id.to_le_bytes(), instrument.crncy_token_id.to_le_bytes(), deriverse_authority.key()],
+        seeds = [root.discriminator.version.to_le_bytes(), account_type::PERP_CLIENT_INFOS4.to_le_bytes(), instrument.asset_token_id.to_le_bytes(), instrument.crncy_token_id.to_le_bytes(), deriverse_authority.key()],
         bump
     )]
     #[account(
@@ -350,7 +351,7 @@ pub enum DrvInstructionIdl {
         writable,
         name = "perp_client_infos5",
         desc = "Perp client infos5 account",
-        seeds = [root.discriminator.version.to_le_bytes(), [45u8, 0u8, 0u8, 0u8], instrument.asset_token_id.to_le_bytes(), instrument.crncy_token_id.to_le_bytes(), deriverse_authority.key()],
+        seeds = [root.discriminator.version.to_le_bytes(), account_type::PERP_CLIENT_INFOS5.to_le_bytes(), instrument.asset_token_id.to_le_bytes(), instrument.crncy_token_id.to_le_bytes(), deriverse_authority.key()],
         bump
     )]
     #[account(
@@ -358,7 +359,7 @@ pub enum DrvInstructionIdl {
         writable,
         name = "perp_long_px_tree",
         desc = "Perp long price tree account",
-        seeds = [root.discriminator.version.to_le_bytes(), [48u8, 0u8, 0u8, 0u8], instrument.asset_token_id.to_le_bytes(), instrument.crncy_token_id.to_le_bytes(), deriverse_authority.key()],
+        seeds = [root.discriminator.version.to_le_bytes(), account_type::PERP_LONG_PX_TREE.to_le_bytes(), instrument.asset_token_id.to_le_bytes(), instrument.crncy_token_id.to_le_bytes(), deriverse_authority.key()],
         bump
     )]
     #[account(
@@ -366,7 +367,7 @@ pub enum DrvInstructionIdl {
         writable,
         name = "perp_short_px_tree",
         desc = "Perp short price tree account",
-        seeds = [root.discriminator.version.to_le_bytes(), [49u8, 0u8, 0u8, 0u8], instrument.asset_token_id.to_le_bytes(), instrument.crncy_token_id.to_le_bytes(), deriverse_authority.key()],
+        seeds = [root.discriminator.version.to_le_bytes(), account_type::PERP_SHORT_PX_TREE.to_le_bytes(), instrument.asset_token_id.to_le_bytes(), instrument.crncy_token_id.to_le_bytes(), deriverse_authority.key()],
         bump
     )]
     #[account(
@@ -374,7 +375,7 @@ pub enum DrvInstructionIdl {
         writable,
         name = "perp_rebalance_time_tree",
         desc = "Perp rebalance time tree account",
-        seeds = [root.discriminator.version.to_le_bytes(), [50u8, 0u8, 0u8, 0u8], instrument.asset_token_id.to_le_bytes(), instrument.crncy_token_id.to_le_bytes(), deriverse_authority.key()],
+        seeds = [root.discriminator.version.to_le_bytes(), account_type::PERP_REBALANCE_TIME_TREE.to_le_bytes(), instrument.asset_token_id.to_le_bytes(), instrument.crncy_token_id.to_le_bytes(), deriverse_authority.key()],
         bump
     )]
     UpgradeToPerp(UpgradeToPerpData) = 10,
@@ -382,101 +383,125 @@ pub enum DrvInstructionIdl {
     /// Move funds from spot balance into perp collateral for one instrument.
     #[account(0, signer, writable, name = "signer", desc = "Perp account owner")]
     #[account(1, name = "root", desc = "Root PDA")]
-    #[account(2, writable, name = "client_primary", desc = "Client primary account", seeds = [root.discriminator.version.to_le_bytes(), [31u8, 0u8, 0u8, 0u8], signer.key()], bump)]
+    #[account(2, writable, name = "client_primary", desc = "Client primary account", seeds = [root.discriminator.version.to_le_bytes(), account_type::CLIENT_PRIMARY.to_le_bytes(), signer.key()], bump)]
     #[account(3, writable, name = "instrument", desc = "Instrument account")]
-    #[account(4, writable, name = "perp_bids_tree", desc = "Perp bids tree account")]
-    #[account(5, writable, name = "perp_asks_tree", desc = "Perp asks tree account")]
+    #[account(4, writable, name = "perp_bids_tree", desc = "Perp bids tree account", seeds = [root.discriminator.version.to_le_bytes(), account_type::PERP_BIDS_TREE.to_le_bytes(), instrument.asset_token_id.to_le_bytes(), instrument.crncy_token_id.to_le_bytes(), deriverse_authority.key()], bump)]
+    #[account(5, writable, name = "perp_asks_tree", desc = "Perp asks tree account", seeds = [root.discriminator.version.to_le_bytes(), account_type::PERP_ASKS_TREE.to_le_bytes(), instrument.asset_token_id.to_le_bytes(), instrument.crncy_token_id.to_le_bytes(), deriverse_authority.key()], bump)]
     #[account(
         6,
         writable,
         name = "perp_bid_orders",
-        desc = "Perp bid orders account"
+        desc = "Perp bid orders account",
+        seeds = [root.discriminator.version.to_le_bytes(), account_type::PERP_BID_ORDERS.to_le_bytes(), instrument.asset_token_id.to_le_bytes(), instrument.crncy_token_id.to_le_bytes(), deriverse_authority.key()],
+        bump
     )]
     #[account(
         7,
         writable,
         name = "perp_ask_orders",
-        desc = "Perp ask orders account"
+        desc = "Perp ask orders account",
+        seeds = [root.discriminator.version.to_le_bytes(), account_type::PERP_ASK_ORDERS.to_le_bytes(), instrument.asset_token_id.to_le_bytes(), instrument.crncy_token_id.to_le_bytes(), deriverse_authority.key()],
+        bump
     )]
-    #[account(8, writable, name = "perp_lines", desc = "Perp lines account")]
+    #[account(8, writable, name = "perp_lines", desc = "Perp lines account", seeds = [root.discriminator.version.to_le_bytes(), account_type::PERP_LINES.to_le_bytes(), instrument.asset_token_id.to_le_bytes(), instrument.crncy_token_id.to_le_bytes(), deriverse_authority.key()], bump)]
     #[account(9, writable, name = "perp_maps", desc = "Perp maps account")]
     #[account(
         10,
         writable,
         name = "perp_client_infos",
-        desc = "Perp client infos account"
+        desc = "Perp client infos account",
+        seeds = [root.discriminator.version.to_le_bytes(), account_type::PERP_CLIENT_INFOS.to_le_bytes(), instrument.asset_token_id.to_le_bytes(), instrument.crncy_token_id.to_le_bytes(), deriverse_authority.key()],
+        bump
     )]
     #[account(
         11,
         writable,
         name = "perp_client_infos2",
-        desc = "Perp client infos2 account"
+        desc = "Perp client infos2 account",
+        seeds = [root.discriminator.version.to_le_bytes(), account_type::PERP_CLIENT_INFOS2.to_le_bytes(), instrument.asset_token_id.to_le_bytes(), instrument.crncy_token_id.to_le_bytes(), deriverse_authority.key()],
+        bump
     )]
     #[account(
         12,
         writable,
         name = "perp_client_infos3",
-        desc = "Perp client infos3 account"
+        desc = "Perp client infos3 account",
+        seeds = [root.discriminator.version.to_le_bytes(), account_type::PERP_CLIENT_INFOS3.to_le_bytes(), instrument.asset_token_id.to_le_bytes(), instrument.crncy_token_id.to_le_bytes(), deriverse_authority.key()],
+        bump
     )]
     #[account(
         13,
         writable,
         name = "perp_client_infos4",
-        desc = "Perp client infos4 account"
+        desc = "Perp client infos4 account",
+        seeds = [root.discriminator.version.to_le_bytes(), account_type::PERP_CLIENT_INFOS4.to_le_bytes(), instrument.asset_token_id.to_le_bytes(), instrument.crncy_token_id.to_le_bytes(), deriverse_authority.key()],
+        bump
     )]
     #[account(
         14,
         writable,
         name = "perp_client_infos5",
-        desc = "Perp client infos5 account"
+        desc = "Perp client infos5 account",
+        seeds = [root.discriminator.version.to_le_bytes(), account_type::PERP_CLIENT_INFOS5.to_le_bytes(), instrument.asset_token_id.to_le_bytes(), instrument.crncy_token_id.to_le_bytes(), deriverse_authority.key()],
+        bump
     )]
     #[account(
         15,
         writable,
         name = "perp_long_px_tree",
-        desc = "Perp long price tree account"
+        desc = "Perp long price tree account",
+        seeds = [root.discriminator.version.to_le_bytes(), account_type::PERP_LONG_PX_TREE.to_le_bytes(), instrument.asset_token_id.to_le_bytes(), instrument.crncy_token_id.to_le_bytes(), deriverse_authority.key()],
+        bump
     )]
     #[account(
         16,
         writable,
         name = "perp_short_px_tree",
-        desc = "Perp short price tree account"
+        desc = "Perp short price tree account",
+        seeds = [root.discriminator.version.to_le_bytes(), account_type::PERP_SHORT_PX_TREE.to_le_bytes(), instrument.asset_token_id.to_le_bytes(), instrument.crncy_token_id.to_le_bytes(), deriverse_authority.key()],
+        bump
     )]
     #[account(
         17,
         writable,
         name = "perp_rebalance_time_tree",
-        desc = "Perp rebalance time tree account"
+        desc = "Perp rebalance time tree account",
+        seeds = [root.discriminator.version.to_le_bytes(), account_type::PERP_REBALANCE_TIME_TREE.to_le_bytes(), instrument.asset_token_id.to_le_bytes(), instrument.crncy_token_id.to_le_bytes(), deriverse_authority.key()],
+        bump
     )]
     #[account(18, name = "system_program", desc = "System program")]
+    #[account(19, name = "deriverse_authority", desc = "Deriverse authority PDA", seeds = [b"ndxnt"], bump)]
     PerpDeposit(PerpDepositData) = 11,
 
     /// Create a new spot order.
     #[account(0, signer, writable, name = "signer", desc = "Order owner")]
     #[account(1, name = "root", desc = "Root PDA")]
-    #[account(2, writable, name = "client_primary", desc = "Client primary account", seeds = [root.discriminator.version.to_le_bytes(), [31u8, 0u8, 0u8, 0u8], signer.key()], bump)]
-    #[account(3, writable, name = "client_community", desc = "Client community account", seeds = [root.discriminator.version.to_le_bytes(), [35u8, 0u8, 0u8, 0u8], signer.key()], bump)]
+    #[account(2, writable, name = "client_primary", desc = "Client primary account", seeds = [root.discriminator.version.to_le_bytes(), account_type::CLIENT_PRIMARY.to_le_bytes(), signer.key()], bump)]
+    #[account(3, writable, name = "client_community", desc = "Client community account", seeds = [root.discriminator.version.to_le_bytes(), account_type::CLIENT_COMMUNITY.to_le_bytes(), signer.key()], bump)]
     #[account(4, writable, name = "instrument", desc = "Instrument account")]
-    #[account(5, writable, name = "bids_tree", desc = "Bids tree account")]
-    #[account(6, writable, name = "asks_tree", desc = "Asks tree account")]
-    #[account(7, writable, name = "bid_orders", desc = "Bid orders account")]
-    #[account(8, writable, name = "ask_orders", desc = "Ask orders account")]
-    #[account(9, writable, name = "lines", desc = "Spot lines account")]
+    #[account(5, writable, name = "bids_tree", desc = "Bids tree account", seeds = [root.discriminator.version.to_le_bytes(), account_type::SPOT_BIDS_TREE.to_le_bytes(), instrument.asset_token_id.to_le_bytes(), instrument.crncy_token_id.to_le_bytes(), deriverse_authority.key()], bump)]
+    #[account(6, writable, name = "asks_tree", desc = "Asks tree account", seeds = [root.discriminator.version.to_le_bytes(), account_type::SPOT_ASKS_TREE.to_le_bytes(), instrument.asset_token_id.to_le_bytes(), instrument.crncy_token_id.to_le_bytes(), deriverse_authority.key()], bump)]
+    #[account(7, writable, name = "bid_orders", desc = "Bid orders account", seeds = [root.discriminator.version.to_le_bytes(), account_type::SPOT_BID_ORDERS.to_le_bytes(), instrument.asset_token_id.to_le_bytes(), instrument.crncy_token_id.to_le_bytes(), deriverse_authority.key()], bump)]
+    #[account(8, writable, name = "ask_orders", desc = "Ask orders account", seeds = [root.discriminator.version.to_le_bytes(), account_type::SPOT_ASK_ORDERS.to_le_bytes(), instrument.asset_token_id.to_le_bytes(), instrument.crncy_token_id.to_le_bytes(), deriverse_authority.key()], bump)]
+    #[account(9, writable, name = "lines", desc = "Spot lines account", seeds = [root.discriminator.version.to_le_bytes(), account_type::SPOT_LINES.to_le_bytes(), instrument.asset_token_id.to_le_bytes(), instrument.crncy_token_id.to_le_bytes(), deriverse_authority.key()], bump)]
     #[account(10, writable, name = "maps", desc = "Spot maps account")]
     #[account(
         11,
         writable,
         name = "client_infos",
-        desc = "Spot client infos account"
+        desc = "Spot client infos account",
+        seeds = [root.discriminator.version.to_le_bytes(), account_type::SPOT_CLIENT_INFOS.to_le_bytes(), instrument.asset_token_id.to_le_bytes(), instrument.crncy_token_id.to_le_bytes(), deriverse_authority.key()],
+        bump
     )]
     #[account(12, name = "community", desc = "Community account")]
     #[account(13, name = "system_program", desc = "System program")]
+    #[account(14, name = "deriverse_authority", desc = "Deriverse authority PDA", seeds = [b"ndxnt"], bump)]
     NewSpotOrder(NewSpotOrderData) = 12,
 
     /// Cancel one existing spot order by side and id.
     #[account(0, signer, writable, name = "signer", desc = "Order owner")]
     #[account(1, name = "root", desc = "Root PDA")]
-    #[account(2, writable, name = "client_primary", desc = "Client primary account", seeds = [root.discriminator.version.to_le_bytes(), [31u8, 0u8, 0u8, 0u8], signer.key()], bump)]
+    #[account(2, writable, name = "client_primary", desc = "Client primary account", seeds = [root.discriminator.version.to_le_bytes(), account_type::CLIENT_PRIMARY.to_le_bytes(), signer.key()], bump)]
     #[account(3, writable, name = "instrument", desc = "Instrument account")]
     #[account(4, writable, name = "tree", desc = "Bid or ask tree based on side")]
     #[account(
@@ -495,29 +520,32 @@ pub enum DrvInstructionIdl {
     #[account(0, signer, name = "signer", desc = "LP trader")]
     #[account(1, writable, name = "root", desc = "Root PDA")]
     #[account(2, writable, name = "instrument", desc = "Instrument account")]
-    #[account(3, writable, name = "client_primary", desc = "Client primary account", seeds = [root.discriminator.version.to_le_bytes(), [31u8, 0u8, 0u8, 0u8], signer.key()], bump)]
+    #[account(3, writable, name = "client_primary", desc = "Client primary account", seeds = [root.discriminator.version.to_le_bytes(), account_type::CLIENT_PRIMARY.to_le_bytes(), signer.key()], bump)]
     #[account(4, name = "system_program", desc = "System program")]
     SpotLp(SpotLpData) = 14,
 
     /// Cancel all open spot orders for one instrument.
     #[account(0, signer, writable, name = "signer", desc = "Order owner")]
     #[account(1, name = "root", desc = "Root PDA")]
-    #[account(2, writable, name = "client_primary", desc = "Client primary account", seeds = [root.discriminator.version.to_le_bytes(), [31u8, 0u8, 0u8, 0u8], signer.key()], bump)]
+    #[account(2, writable, name = "client_primary", desc = "Client primary account", seeds = [root.discriminator.version.to_le_bytes(), account_type::CLIENT_PRIMARY.to_le_bytes(), signer.key()], bump)]
     #[account(3, writable, name = "instrument", desc = "Instrument account")]
-    #[account(4, writable, name = "bids_tree", desc = "Bids tree account")]
-    #[account(5, writable, name = "asks_tree", desc = "Asks tree account")]
-    #[account(6, writable, name = "bid_orders", desc = "Bid orders account")]
-    #[account(7, writable, name = "ask_orders", desc = "Ask orders account")]
-    #[account(8, writable, name = "lines", desc = "Spot lines account")]
+    #[account(4, writable, name = "bids_tree", desc = "Bids tree account", seeds = [root.discriminator.version.to_le_bytes(), account_type::SPOT_BIDS_TREE.to_le_bytes(), instrument.asset_token_id.to_le_bytes(), instrument.crncy_token_id.to_le_bytes(), deriverse_authority.key()], bump)]
+    #[account(5, writable, name = "asks_tree", desc = "Asks tree account", seeds = [root.discriminator.version.to_le_bytes(), account_type::SPOT_ASKS_TREE.to_le_bytes(), instrument.asset_token_id.to_le_bytes(), instrument.crncy_token_id.to_le_bytes(), deriverse_authority.key()], bump)]
+    #[account(6, writable, name = "bid_orders", desc = "Bid orders account", seeds = [root.discriminator.version.to_le_bytes(), account_type::SPOT_BID_ORDERS.to_le_bytes(), instrument.asset_token_id.to_le_bytes(), instrument.crncy_token_id.to_le_bytes(), deriverse_authority.key()], bump)]
+    #[account(7, writable, name = "ask_orders", desc = "Ask orders account", seeds = [root.discriminator.version.to_le_bytes(), account_type::SPOT_ASK_ORDERS.to_le_bytes(), instrument.asset_token_id.to_le_bytes(), instrument.crncy_token_id.to_le_bytes(), deriverse_authority.key()], bump)]
+    #[account(8, writable, name = "lines", desc = "Spot lines account", seeds = [root.discriminator.version.to_le_bytes(), account_type::SPOT_LINES.to_le_bytes(), instrument.asset_token_id.to_le_bytes(), instrument.crncy_token_id.to_le_bytes(), deriverse_authority.key()], bump)]
     #[account(9, writable, name = "maps", desc = "Spot maps account")]
     #[account(
         10,
         writable,
         name = "client_infos",
-        desc = "Spot client infos account"
+        desc = "Spot client infos account",
+        seeds = [root.discriminator.version.to_le_bytes(), account_type::SPOT_CLIENT_INFOS.to_le_bytes(), instrument.asset_token_id.to_le_bytes(), instrument.crncy_token_id.to_le_bytes(), deriverse_authority.key()],
+        bump
     )]
     #[account(11, name = "community", desc = "Community account")]
     #[account(12, name = "system_program", desc = "System program")]
+    #[account(13, name = "deriverse_authority", desc = "Deriverse authority PDA", seeds = [b"ndxnt"], bump)]
     SpotMassCancel(SpotMassCancelData) = 15,
 
     /// Advance to the next governance voting topic once the previous session is finalized.
@@ -530,75 +558,96 @@ pub enum DrvInstructionIdl {
     /// Create a new perp order.
     #[account(0, signer, writable, name = "signer", desc = "Perp trader")]
     #[account(1, name = "root", desc = "Root PDA")]
-    #[account(2, writable, name = "client_primary", desc = "Client primary account", seeds = [root.discriminator.version.to_le_bytes(), [31u8, 0u8, 0u8, 0u8], signer.key()], bump)]
-    #[account(3, writable, name = "client_community", desc = "Client community account", seeds = [root.discriminator.version.to_le_bytes(), [35u8, 0u8, 0u8, 0u8], signer.key()], bump)]
+    #[account(2, writable, name = "client_primary", desc = "Client primary account", seeds = [root.discriminator.version.to_le_bytes(), account_type::CLIENT_PRIMARY.to_le_bytes(), signer.key()], bump)]
+    #[account(3, writable, name = "client_community", desc = "Client community account", seeds = [root.discriminator.version.to_le_bytes(), account_type::CLIENT_COMMUNITY.to_le_bytes(), signer.key()], bump)]
     #[account(4, writable, name = "instrument", desc = "Instrument account")]
-    #[account(5, writable, name = "perp_bids_tree", desc = "Perp bids tree account")]
-    #[account(6, writable, name = "perp_asks_tree", desc = "Perp asks tree account")]
+    #[account(5, writable, name = "perp_bids_tree", desc = "Perp bids tree account", seeds = [root.discriminator.version.to_le_bytes(), account_type::PERP_BIDS_TREE.to_le_bytes(), instrument.asset_token_id.to_le_bytes(), instrument.crncy_token_id.to_le_bytes(), deriverse_authority.key()], bump)]
+    #[account(6, writable, name = "perp_asks_tree", desc = "Perp asks tree account", seeds = [root.discriminator.version.to_le_bytes(), account_type::PERP_ASKS_TREE.to_le_bytes(), instrument.asset_token_id.to_le_bytes(), instrument.crncy_token_id.to_le_bytes(), deriverse_authority.key()], bump)]
     #[account(
         7,
         writable,
         name = "perp_bid_orders",
-        desc = "Perp bid orders account"
+        desc = "Perp bid orders account",
+        seeds = [root.discriminator.version.to_le_bytes(), account_type::PERP_BID_ORDERS.to_le_bytes(), instrument.asset_token_id.to_le_bytes(), instrument.crncy_token_id.to_le_bytes(), deriverse_authority.key()],
+        bump
     )]
     #[account(
         8,
         writable,
         name = "perp_ask_orders",
-        desc = "Perp ask orders account"
+        desc = "Perp ask orders account",
+        seeds = [root.discriminator.version.to_le_bytes(), account_type::PERP_ASK_ORDERS.to_le_bytes(), instrument.asset_token_id.to_le_bytes(), instrument.crncy_token_id.to_le_bytes(), deriverse_authority.key()],
+        bump
     )]
-    #[account(9, writable, name = "perp_lines", desc = "Perp lines account")]
+    #[account(9, writable, name = "perp_lines", desc = "Perp lines account", seeds = [root.discriminator.version.to_le_bytes(), account_type::PERP_LINES.to_le_bytes(), instrument.asset_token_id.to_le_bytes(), instrument.crncy_token_id.to_le_bytes(), deriverse_authority.key()], bump)]
     #[account(10, writable, name = "perp_maps", desc = "Perp maps account")]
     #[account(
         11,
         writable,
         name = "perp_client_infos",
-        desc = "Perp client infos account"
+        desc = "Perp client infos account",
+        seeds = [root.discriminator.version.to_le_bytes(), account_type::PERP_CLIENT_INFOS.to_le_bytes(), instrument.asset_token_id.to_le_bytes(), instrument.crncy_token_id.to_le_bytes(), deriverse_authority.key()],
+        bump
     )]
     #[account(
         12,
         writable,
         name = "perp_client_infos2",
-        desc = "Perp client infos2 account"
+        desc = "Perp client infos2 account",
+        seeds = [root.discriminator.version.to_le_bytes(), account_type::PERP_CLIENT_INFOS2.to_le_bytes(), instrument.asset_token_id.to_le_bytes(), instrument.crncy_token_id.to_le_bytes(), deriverse_authority.key()],
+        bump
     )]
     #[account(
         13,
         writable,
         name = "perp_client_infos3",
-        desc = "Perp client infos3 account"
+        desc = "Perp client infos3 account",
+        seeds = [root.discriminator.version.to_le_bytes(), account_type::PERP_CLIENT_INFOS3.to_le_bytes(), instrument.asset_token_id.to_le_bytes(), instrument.crncy_token_id.to_le_bytes(), deriverse_authority.key()],
+        bump
     )]
     #[account(
         14,
         writable,
         name = "perp_client_infos4",
-        desc = "Perp client infos4 account"
+        desc = "Perp client infos4 account",
+        seeds = [root.discriminator.version.to_le_bytes(), account_type::PERP_CLIENT_INFOS4.to_le_bytes(), instrument.asset_token_id.to_le_bytes(), instrument.crncy_token_id.to_le_bytes(), deriverse_authority.key()],
+        bump
     )]
     #[account(
         15,
         writable,
         name = "perp_client_infos5",
-        desc = "Perp client infos5 account"
+        desc = "Perp client infos5 account",
+        seeds = [root.discriminator.version.to_le_bytes(), account_type::PERP_CLIENT_INFOS5.to_le_bytes(), instrument.asset_token_id.to_le_bytes(), instrument.crncy_token_id.to_le_bytes(), deriverse_authority.key()],
+        bump
     )]
     #[account(
         16,
         writable,
         name = "perp_long_px_tree",
-        desc = "Perp long price tree account"
+        desc = "Perp long price tree account",
+        seeds = [root.discriminator.version.to_le_bytes(), account_type::PERP_LONG_PX_TREE.to_le_bytes(), instrument.asset_token_id.to_le_bytes(), instrument.crncy_token_id.to_le_bytes(), deriverse_authority.key()],
+        bump
     )]
     #[account(
         17,
         writable,
         name = "perp_short_px_tree",
-        desc = "Perp short price tree account"
+        desc = "Perp short price tree account",
+        seeds = [root.discriminator.version.to_le_bytes(), account_type::PERP_SHORT_PX_TREE.to_le_bytes(), instrument.asset_token_id.to_le_bytes(), instrument.crncy_token_id.to_le_bytes(), deriverse_authority.key()],
+        bump
     )]
     #[account(
         18,
         writable,
         name = "perp_rebalance_time_tree",
-        desc = "Perp rebalance time tree account"
+        desc = "Perp rebalance time tree account",
+        seeds = [root.discriminator.version.to_le_bytes(), account_type::PERP_REBALANCE_TIME_TREE.to_le_bytes(), instrument.asset_token_id.to_le_bytes(), instrument.crncy_token_id.to_le_bytes(), deriverse_authority.key()],
+        bump
     )]
     #[account(19, name = "community", desc = "Community account")]
     #[account(20, name = "system_program", desc = "System program")]
+    #[account(21, name = "deriverse_authority", desc = "Deriverse authority PDA", seeds = [b"ndxnt"], bump)]
     NewPerpOrder(NewPerpOrderData) = 19,
 
     // 20-24 reserved
@@ -699,13 +748,13 @@ pub enum DrvInstructionIdl {
         desc = "Wallet that owns the target client account"
     )]
     #[account(3, writable, name = "root", desc = "Root PDA")]
-    #[account(4, writable, name = "client_primary", desc = "Client primary account", seeds = [root.discriminator.version.to_le_bytes(), [31u8, 0u8, 0u8, 0u8], wallet.key()], bump)]
+    #[account(4, writable, name = "client_primary", desc = "Client primary account", seeds = [root.discriminator.version.to_le_bytes(), account_type::CLIENT_PRIMARY.to_le_bytes(), wallet.key()], bump)]
     #[account(
         5,
         writable,
         name = "client_community",
         desc = "Client community account",
-        seeds = [root.discriminator.version.to_le_bytes(), [35u8, 0u8, 0u8, 0u8], wallet.key()],
+        seeds = [root.discriminator.version.to_le_bytes(), account_type::CLIENT_COMMUNITY.to_le_bytes(), wallet.key()],
         bump
     )]
     #[account(6, name = "drvs_mint", desc = "DRVS mint account")]
@@ -727,13 +776,13 @@ pub enum DrvInstructionIdl {
     #[account(0, signer, name = "signer", desc = "Dividend claimant")]
     #[account(1, name = "root", desc = "Root PDA")]
     #[account(2, writable, name = "community", desc = "Community account")]
-    #[account(3, writable, name = "client_primary", desc = "Client primary account", seeds = [root.discriminator.version.to_le_bytes(), [31u8, 0u8, 0u8, 0u8], signer.key()], bump)]
+    #[account(3, writable, name = "client_primary", desc = "Client primary account", seeds = [root.discriminator.version.to_le_bytes(), account_type::CLIENT_PRIMARY.to_le_bytes(), signer.key()], bump)]
     #[account(
         4,
         writable,
         name = "client_community",
         desc = "Client community account",
-        seeds = [root.discriminator.version.to_le_bytes(), [35u8, 0u8, 0u8, 0u8], signer.key()],
+        seeds = [root.discriminator.version.to_le_bytes(), account_type::CLIENT_COMMUNITY.to_le_bytes(), signer.key()],
         bump
     )]
     #[account(5, name = "system_program", desc = "System program")]
@@ -743,88 +792,109 @@ pub enum DrvInstructionIdl {
     /// Cancel one existing perp order by side and id.
     #[account(0, signer, writable, name = "signer", desc = "Perp trader")]
     #[account(1, name = "root", desc = "Root PDA")]
-    #[account(2, writable, name = "client_primary", desc = "Client primary account", seeds = [root.discriminator.version.to_le_bytes(), [31u8, 0u8, 0u8, 0u8], signer.key()], bump)]
+    #[account(2, writable, name = "client_primary", desc = "Client primary account", seeds = [root.discriminator.version.to_le_bytes(), account_type::CLIENT_PRIMARY.to_le_bytes(), signer.key()], bump)]
     #[account(3, writable, name = "instrument", desc = "Instrument account")]
-    #[account(4, writable, name = "perp_bids_tree", desc = "Perp bids tree account")]
-    #[account(5, writable, name = "perp_asks_tree", desc = "Perp asks tree account")]
+    #[account(4, writable, name = "perp_bids_tree", desc = "Perp bids tree account", seeds = [root.discriminator.version.to_le_bytes(), account_type::PERP_BIDS_TREE.to_le_bytes(), instrument.asset_token_id.to_le_bytes(), instrument.crncy_token_id.to_le_bytes(), deriverse_authority.key()], bump)]
+    #[account(5, writable, name = "perp_asks_tree", desc = "Perp asks tree account", seeds = [root.discriminator.version.to_le_bytes(), account_type::PERP_ASKS_TREE.to_le_bytes(), instrument.asset_token_id.to_le_bytes(), instrument.crncy_token_id.to_le_bytes(), deriverse_authority.key()], bump)]
     #[account(
         6,
         writable,
         name = "perp_bid_orders",
-        desc = "Perp bid orders account"
+        desc = "Perp bid orders account",
+        seeds = [root.discriminator.version.to_le_bytes(), account_type::PERP_BID_ORDERS.to_le_bytes(), instrument.asset_token_id.to_le_bytes(), instrument.crncy_token_id.to_le_bytes(), deriverse_authority.key()],
+        bump
     )]
     #[account(
         7,
         writable,
         name = "perp_ask_orders",
-        desc = "Perp ask orders account"
+        desc = "Perp ask orders account",
+        seeds = [root.discriminator.version.to_le_bytes(), account_type::PERP_ASK_ORDERS.to_le_bytes(), instrument.asset_token_id.to_le_bytes(), instrument.crncy_token_id.to_le_bytes(), deriverse_authority.key()],
+        bump
     )]
-    #[account(8, writable, name = "perp_lines", desc = "Perp lines account")]
+    #[account(8, writable, name = "perp_lines", desc = "Perp lines account", seeds = [root.discriminator.version.to_le_bytes(), account_type::PERP_LINES.to_le_bytes(), instrument.asset_token_id.to_le_bytes(), instrument.crncy_token_id.to_le_bytes(), deriverse_authority.key()], bump)]
     #[account(9, writable, name = "perp_maps", desc = "Perp maps account")]
     #[account(
         10,
         writable,
         name = "perp_client_infos",
-        desc = "Perp client infos account"
+        desc = "Perp client infos account",
+        seeds = [root.discriminator.version.to_le_bytes(), account_type::PERP_CLIENT_INFOS.to_le_bytes(), instrument.asset_token_id.to_le_bytes(), instrument.crncy_token_id.to_le_bytes(), deriverse_authority.key()],
+        bump
     )]
     #[account(
         11,
         writable,
         name = "perp_client_infos2",
-        desc = "Perp client infos2 account"
+        desc = "Perp client infos2 account",
+        seeds = [root.discriminator.version.to_le_bytes(), account_type::PERP_CLIENT_INFOS2.to_le_bytes(), instrument.asset_token_id.to_le_bytes(), instrument.crncy_token_id.to_le_bytes(), deriverse_authority.key()],
+        bump
     )]
     #[account(
         12,
         writable,
         name = "perp_client_infos3",
-        desc = "Perp client infos3 account"
+        desc = "Perp client infos3 account",
+        seeds = [root.discriminator.version.to_le_bytes(), account_type::PERP_CLIENT_INFOS3.to_le_bytes(), instrument.asset_token_id.to_le_bytes(), instrument.crncy_token_id.to_le_bytes(), deriverse_authority.key()],
+        bump
     )]
     #[account(
         13,
         writable,
         name = "perp_client_infos4",
-        desc = "Perp client infos4 account"
+        desc = "Perp client infos4 account",
+        seeds = [root.discriminator.version.to_le_bytes(), account_type::PERP_CLIENT_INFOS4.to_le_bytes(), instrument.asset_token_id.to_le_bytes(), instrument.crncy_token_id.to_le_bytes(), deriverse_authority.key()],
+        bump
     )]
     #[account(
         14,
         writable,
         name = "perp_client_infos5",
-        desc = "Perp client infos5 account"
+        desc = "Perp client infos5 account",
+        seeds = [root.discriminator.version.to_le_bytes(), account_type::PERP_CLIENT_INFOS5.to_le_bytes(), instrument.asset_token_id.to_le_bytes(), instrument.crncy_token_id.to_le_bytes(), deriverse_authority.key()],
+        bump
     )]
     #[account(
         15,
         writable,
         name = "perp_long_px_tree",
-        desc = "Perp long price tree account"
+        desc = "Perp long price tree account",
+        seeds = [root.discriminator.version.to_le_bytes(), account_type::PERP_LONG_PX_TREE.to_le_bytes(), instrument.asset_token_id.to_le_bytes(), instrument.crncy_token_id.to_le_bytes(), deriverse_authority.key()],
+        bump
     )]
     #[account(
         16,
         writable,
         name = "perp_short_px_tree",
-        desc = "Perp short price tree account"
+        desc = "Perp short price tree account",
+        seeds = [root.discriminator.version.to_le_bytes(), account_type::PERP_SHORT_PX_TREE.to_le_bytes(), instrument.asset_token_id.to_le_bytes(), instrument.crncy_token_id.to_le_bytes(), deriverse_authority.key()],
+        bump
     )]
     #[account(
         17,
         writable,
         name = "perp_rebalance_time_tree",
-        desc = "Perp rebalance time tree account"
+        desc = "Perp rebalance time tree account",
+        seeds = [root.discriminator.version.to_le_bytes(), account_type::PERP_REBALANCE_TIME_TREE.to_le_bytes(), instrument.asset_token_id.to_le_bytes(), instrument.crncy_token_id.to_le_bytes(), deriverse_authority.key()],
+        bump
     )]
     #[account(18, name = "community", desc = "Community account")]
     #[account(19, name = "system_program", desc = "System program")]
+    #[account(20, name = "deriverse_authority", desc = "Deriverse authority PDA", seeds = [b"ndxnt"], bump)]
     PerpOrderCancel(PerpOrderCancelData) = 30,
 
     // 31 reserved
     /// Vote on the current community governance topic.
     #[account(0, signer, name = "signer", desc = "Voter authority")]
     #[account(1, writable, name = "root", desc = "Root PDA")]
-    #[account(2, writable, name = "client_primary", desc = "Client primary account", seeds = [root.discriminator.version.to_le_bytes(), [31u8, 0u8, 0u8, 0u8], signer.key()], bump)]
+    #[account(2, writable, name = "client_primary", desc = "Client primary account", seeds = [root.discriminator.version.to_le_bytes(), account_type::CLIENT_PRIMARY.to_le_bytes(), signer.key()], bump)]
     #[account(3, writable, name = "community", desc = "Community account")]
     #[account(
         4,
         writable,
         name = "client_community",
         desc = "Client community account",
-        seeds = [root.discriminator.version.to_le_bytes(), [35u8, 0u8, 0u8, 0u8], signer.key()],
+        seeds = [root.discriminator.version.to_le_bytes(), account_type::CLIENT_COMMUNITY.to_le_bytes(), signer.key()],
         bump
     )]
     #[account(5, name = "system_program", desc = "System program")]
@@ -834,179 +904,224 @@ pub enum DrvInstructionIdl {
     /// Replace a set of spot quotes using a packed header plus packed quote tail.
     #[account(0, signer, writable, name = "signer", desc = "Quote owner")]
     #[account(1, name = "root", desc = "Root PDA")]
-    #[account(2, writable, name = "client_primary", desc = "Client primary account", seeds = [root.discriminator.version.to_le_bytes(), [31u8, 0u8, 0u8, 0u8], signer.key()], bump)]
-    #[account(3, writable, name = "client_community", desc = "Client community account", seeds = [root.discriminator.version.to_le_bytes(), [35u8, 0u8, 0u8, 0u8], signer.key()], bump)]
+    #[account(2, writable, name = "client_primary", desc = "Client primary account", seeds = [root.discriminator.version.to_le_bytes(), account_type::CLIENT_PRIMARY.to_le_bytes(), signer.key()], bump)]
+    #[account(3, writable, name = "client_community", desc = "Client community account", seeds = [root.discriminator.version.to_le_bytes(), account_type::CLIENT_COMMUNITY.to_le_bytes(), signer.key()], bump)]
     #[account(4, writable, name = "instrument", desc = "Instrument account")]
-    #[account(5, writable, name = "bids_tree", desc = "Bids tree account")]
-    #[account(6, writable, name = "asks_tree", desc = "Asks tree account")]
-    #[account(7, writable, name = "bid_orders", desc = "Bid orders account")]
-    #[account(8, writable, name = "ask_orders", desc = "Ask orders account")]
-    #[account(9, writable, name = "lines", desc = "Spot lines account")]
+    #[account(5, writable, name = "bids_tree", desc = "Bids tree account", seeds = [root.discriminator.version.to_le_bytes(), account_type::SPOT_BIDS_TREE.to_le_bytes(), instrument.asset_token_id.to_le_bytes(), instrument.crncy_token_id.to_le_bytes(), deriverse_authority.key()], bump)]
+    #[account(6, writable, name = "asks_tree", desc = "Asks tree account", seeds = [root.discriminator.version.to_le_bytes(), account_type::SPOT_ASKS_TREE.to_le_bytes(), instrument.asset_token_id.to_le_bytes(), instrument.crncy_token_id.to_le_bytes(), deriverse_authority.key()], bump)]
+    #[account(7, writable, name = "bid_orders", desc = "Bid orders account", seeds = [root.discriminator.version.to_le_bytes(), account_type::SPOT_BID_ORDERS.to_le_bytes(), instrument.asset_token_id.to_le_bytes(), instrument.crncy_token_id.to_le_bytes(), deriverse_authority.key()], bump)]
+    #[account(8, writable, name = "ask_orders", desc = "Ask orders account", seeds = [root.discriminator.version.to_le_bytes(), account_type::SPOT_ASK_ORDERS.to_le_bytes(), instrument.asset_token_id.to_le_bytes(), instrument.crncy_token_id.to_le_bytes(), deriverse_authority.key()], bump)]
+    #[account(9, writable, name = "lines", desc = "Spot lines account", seeds = [root.discriminator.version.to_le_bytes(), account_type::SPOT_LINES.to_le_bytes(), instrument.asset_token_id.to_le_bytes(), instrument.crncy_token_id.to_le_bytes(), deriverse_authority.key()], bump)]
     #[account(10, writable, name = "maps", desc = "Spot maps account")]
     #[account(
         11,
         writable,
         name = "client_infos",
-        desc = "Spot client infos account"
+        desc = "Spot client infos account",
+        seeds = [root.discriminator.version.to_le_bytes(), account_type::SPOT_CLIENT_INFOS.to_le_bytes(), instrument.asset_token_id.to_le_bytes(), instrument.crncy_token_id.to_le_bytes(), deriverse_authority.key()],
+        bump
     )]
     #[account(12, name = "community", desc = "Community account")]
     #[account(13, name = "system_program", desc = "System program")]
+    #[account(14, name = "deriverse_authority", desc = "Deriverse authority PDA", seeds = [b"ndxnt"], bump)]
     SpotQuotesReplace(SpotQuotesReplaceData) = 34,
 
     // 35 reserved
     /// Cancel all currently open perp orders for one instrument.
     #[account(0, signer, writable, name = "signer", desc = "Perp trader")]
     #[account(1, name = "root", desc = "Root PDA")]
-    #[account(2, writable, name = "client_primary", desc = "Client primary account", seeds = [root.discriminator.version.to_le_bytes(), [31u8, 0u8, 0u8, 0u8], signer.key()], bump)]
+    #[account(2, writable, name = "client_primary", desc = "Client primary account", seeds = [root.discriminator.version.to_le_bytes(), account_type::CLIENT_PRIMARY.to_le_bytes(), signer.key()], bump)]
     #[account(3, writable, name = "instrument", desc = "Instrument account")]
-    #[account(4, writable, name = "perp_bids_tree", desc = "Perp bids tree account")]
-    #[account(5, writable, name = "perp_asks_tree", desc = "Perp asks tree account")]
+    #[account(4, writable, name = "perp_bids_tree", desc = "Perp bids tree account", seeds = [root.discriminator.version.to_le_bytes(), account_type::PERP_BIDS_TREE.to_le_bytes(), instrument.asset_token_id.to_le_bytes(), instrument.crncy_token_id.to_le_bytes(), deriverse_authority.key()], bump)]
+    #[account(5, writable, name = "perp_asks_tree", desc = "Perp asks tree account", seeds = [root.discriminator.version.to_le_bytes(), account_type::PERP_ASKS_TREE.to_le_bytes(), instrument.asset_token_id.to_le_bytes(), instrument.crncy_token_id.to_le_bytes(), deriverse_authority.key()], bump)]
     #[account(
         6,
         writable,
         name = "perp_bid_orders",
-        desc = "Perp bid orders account"
+        desc = "Perp bid orders account",
+        seeds = [root.discriminator.version.to_le_bytes(), account_type::PERP_BID_ORDERS.to_le_bytes(), instrument.asset_token_id.to_le_bytes(), instrument.crncy_token_id.to_le_bytes(), deriverse_authority.key()],
+        bump
     )]
     #[account(
         7,
         writable,
         name = "perp_ask_orders",
-        desc = "Perp ask orders account"
+        desc = "Perp ask orders account",
+        seeds = [root.discriminator.version.to_le_bytes(), account_type::PERP_ASK_ORDERS.to_le_bytes(), instrument.asset_token_id.to_le_bytes(), instrument.crncy_token_id.to_le_bytes(), deriverse_authority.key()],
+        bump
     )]
-    #[account(8, writable, name = "perp_lines", desc = "Perp lines account")]
+    #[account(8, writable, name = "perp_lines", desc = "Perp lines account", seeds = [root.discriminator.version.to_le_bytes(), account_type::PERP_LINES.to_le_bytes(), instrument.asset_token_id.to_le_bytes(), instrument.crncy_token_id.to_le_bytes(), deriverse_authority.key()], bump)]
     #[account(9, writable, name = "perp_maps", desc = "Perp maps account")]
     #[account(
         10,
         writable,
         name = "perp_client_infos",
-        desc = "Perp client infos account"
+        desc = "Perp client infos account",
+        seeds = [root.discriminator.version.to_le_bytes(), account_type::PERP_CLIENT_INFOS.to_le_bytes(), instrument.asset_token_id.to_le_bytes(), instrument.crncy_token_id.to_le_bytes(), deriverse_authority.key()],
+        bump
     )]
     #[account(
         11,
         writable,
         name = "perp_client_infos2",
-        desc = "Perp client infos2 account"
+        desc = "Perp client infos2 account",
+        seeds = [root.discriminator.version.to_le_bytes(), account_type::PERP_CLIENT_INFOS2.to_le_bytes(), instrument.asset_token_id.to_le_bytes(), instrument.crncy_token_id.to_le_bytes(), deriverse_authority.key()],
+        bump
     )]
     #[account(
         12,
         writable,
         name = "perp_client_infos3",
-        desc = "Perp client infos3 account"
+        desc = "Perp client infos3 account",
+        seeds = [root.discriminator.version.to_le_bytes(), account_type::PERP_CLIENT_INFOS3.to_le_bytes(), instrument.asset_token_id.to_le_bytes(), instrument.crncy_token_id.to_le_bytes(), deriverse_authority.key()],
+        bump
     )]
     #[account(
         13,
         writable,
         name = "perp_client_infos4",
-        desc = "Perp client infos4 account"
+        desc = "Perp client infos4 account",
+        seeds = [root.discriminator.version.to_le_bytes(), account_type::PERP_CLIENT_INFOS4.to_le_bytes(), instrument.asset_token_id.to_le_bytes(), instrument.crncy_token_id.to_le_bytes(), deriverse_authority.key()],
+        bump
     )]
     #[account(
         14,
         writable,
         name = "perp_client_infos5",
-        desc = "Perp client infos5 account"
+        desc = "Perp client infos5 account",
+        seeds = [root.discriminator.version.to_le_bytes(), account_type::PERP_CLIENT_INFOS5.to_le_bytes(), instrument.asset_token_id.to_le_bytes(), instrument.crncy_token_id.to_le_bytes(), deriverse_authority.key()],
+        bump
     )]
     #[account(
         15,
         writable,
         name = "perp_long_px_tree",
-        desc = "Perp long price tree account"
+        desc = "Perp long price tree account",
+        seeds = [root.discriminator.version.to_le_bytes(), account_type::PERP_LONG_PX_TREE.to_le_bytes(), instrument.asset_token_id.to_le_bytes(), instrument.crncy_token_id.to_le_bytes(), deriverse_authority.key()],
+        bump
     )]
     #[account(
         16,
         writable,
         name = "perp_short_px_tree",
-        desc = "Perp short price tree account"
+        desc = "Perp short price tree account",
+        seeds = [root.discriminator.version.to_le_bytes(), account_type::PERP_SHORT_PX_TREE.to_le_bytes(), instrument.asset_token_id.to_le_bytes(), instrument.crncy_token_id.to_le_bytes(), deriverse_authority.key()],
+        bump
     )]
     #[account(
         17,
         writable,
         name = "perp_rebalance_time_tree",
-        desc = "Perp rebalance time tree account"
+        desc = "Perp rebalance time tree account",
+        seeds = [root.discriminator.version.to_le_bytes(), account_type::PERP_REBALANCE_TIME_TREE.to_le_bytes(), instrument.asset_token_id.to_le_bytes(), instrument.crncy_token_id.to_le_bytes(), deriverse_authority.key()],
+        bump
     )]
     #[account(18, name = "community", desc = "Community account")]
     #[account(19, name = "system_program", desc = "System program")]
+    #[account(20, name = "deriverse_authority", desc = "Deriverse authority PDA", seeds = [b"ndxnt"], bump)]
     PerpMassCancel(PerpMassCancelData) = 36,
 
     /// Change the leverage setting used for one perp client position.
     #[account(0, signer, writable, name = "signer", desc = "Perp trader")]
     #[account(1, name = "root", desc = "Root PDA")]
-    #[account(2, writable, name = "client_primary", desc = "Client primary account", seeds = [root.discriminator.version.to_le_bytes(), [31u8, 0u8, 0u8, 0u8], signer.key()], bump)]
+    #[account(2, writable, name = "client_primary", desc = "Client primary account", seeds = [root.discriminator.version.to_le_bytes(), account_type::CLIENT_PRIMARY.to_le_bytes(), signer.key()], bump)]
     #[account(3, writable, name = "instrument", desc = "Instrument account")]
-    #[account(4, writable, name = "perp_bids_tree", desc = "Perp bids tree account")]
-    #[account(5, writable, name = "perp_asks_tree", desc = "Perp asks tree account")]
+    #[account(4, writable, name = "perp_bids_tree", desc = "Perp bids tree account", seeds = [root.discriminator.version.to_le_bytes(), account_type::PERP_BIDS_TREE.to_le_bytes(), instrument.asset_token_id.to_le_bytes(), instrument.crncy_token_id.to_le_bytes(), deriverse_authority.key()], bump)]
+    #[account(5, writable, name = "perp_asks_tree", desc = "Perp asks tree account", seeds = [root.discriminator.version.to_le_bytes(), account_type::PERP_ASKS_TREE.to_le_bytes(), instrument.asset_token_id.to_le_bytes(), instrument.crncy_token_id.to_le_bytes(), deriverse_authority.key()], bump)]
     #[account(
         6,
         writable,
         name = "perp_bid_orders",
-        desc = "Perp bid orders account"
+        desc = "Perp bid orders account",
+        seeds = [root.discriminator.version.to_le_bytes(), account_type::PERP_BID_ORDERS.to_le_bytes(), instrument.asset_token_id.to_le_bytes(), instrument.crncy_token_id.to_le_bytes(), deriverse_authority.key()],
+        bump
     )]
     #[account(
         7,
         writable,
         name = "perp_ask_orders",
-        desc = "Perp ask orders account"
+        desc = "Perp ask orders account",
+        seeds = [root.discriminator.version.to_le_bytes(), account_type::PERP_ASK_ORDERS.to_le_bytes(), instrument.asset_token_id.to_le_bytes(), instrument.crncy_token_id.to_le_bytes(), deriverse_authority.key()],
+        bump
     )]
-    #[account(8, writable, name = "perp_lines", desc = "Perp lines account")]
+    #[account(8, writable, name = "perp_lines", desc = "Perp lines account", seeds = [root.discriminator.version.to_le_bytes(), account_type::PERP_LINES.to_le_bytes(), instrument.asset_token_id.to_le_bytes(), instrument.crncy_token_id.to_le_bytes(), deriverse_authority.key()], bump)]
     #[account(9, writable, name = "perp_maps", desc = "Perp maps account")]
     #[account(
         10,
         writable,
         name = "perp_client_infos",
-        desc = "Perp client infos account"
+        desc = "Perp client infos account",
+        seeds = [root.discriminator.version.to_le_bytes(), account_type::PERP_CLIENT_INFOS.to_le_bytes(), instrument.asset_token_id.to_le_bytes(), instrument.crncy_token_id.to_le_bytes(), deriverse_authority.key()],
+        bump
     )]
     #[account(
         11,
         writable,
         name = "perp_client_infos2",
-        desc = "Perp client infos2 account"
+        desc = "Perp client infos2 account",
+        seeds = [root.discriminator.version.to_le_bytes(), account_type::PERP_CLIENT_INFOS2.to_le_bytes(), instrument.asset_token_id.to_le_bytes(), instrument.crncy_token_id.to_le_bytes(), deriverse_authority.key()],
+        bump
     )]
     #[account(
         12,
         writable,
         name = "perp_client_infos3",
-        desc = "Perp client infos3 account"
+        desc = "Perp client infos3 account",
+        seeds = [root.discriminator.version.to_le_bytes(), account_type::PERP_CLIENT_INFOS3.to_le_bytes(), instrument.asset_token_id.to_le_bytes(), instrument.crncy_token_id.to_le_bytes(), deriverse_authority.key()],
+        bump
     )]
     #[account(
         13,
         writable,
         name = "perp_client_infos4",
-        desc = "Perp client infos4 account"
+        desc = "Perp client infos4 account",
+        seeds = [root.discriminator.version.to_le_bytes(), account_type::PERP_CLIENT_INFOS4.to_le_bytes(), instrument.asset_token_id.to_le_bytes(), instrument.crncy_token_id.to_le_bytes(), deriverse_authority.key()],
+        bump
     )]
     #[account(
         14,
         writable,
         name = "perp_client_infos5",
-        desc = "Perp client infos5 account"
+        desc = "Perp client infos5 account",
+        seeds = [root.discriminator.version.to_le_bytes(), account_type::PERP_CLIENT_INFOS5.to_le_bytes(), instrument.asset_token_id.to_le_bytes(), instrument.crncy_token_id.to_le_bytes(), deriverse_authority.key()],
+        bump
     )]
     #[account(
         15,
         writable,
         name = "perp_long_px_tree",
-        desc = "Perp long price tree account"
+        desc = "Perp long price tree account",
+        seeds = [root.discriminator.version.to_le_bytes(), account_type::PERP_LONG_PX_TREE.to_le_bytes(), instrument.asset_token_id.to_le_bytes(), instrument.crncy_token_id.to_le_bytes(), deriverse_authority.key()],
+        bump
     )]
     #[account(
         16,
         writable,
         name = "perp_short_px_tree",
-        desc = "Perp short price tree account"
+        desc = "Perp short price tree account",
+        seeds = [root.discriminator.version.to_le_bytes(), account_type::PERP_SHORT_PX_TREE.to_le_bytes(), instrument.asset_token_id.to_le_bytes(), instrument.crncy_token_id.to_le_bytes(), deriverse_authority.key()],
+        bump
     )]
     #[account(
         17,
         writable,
         name = "perp_rebalance_time_tree",
-        desc = "Perp rebalance time tree account"
+        desc = "Perp rebalance time tree account",
+        seeds = [root.discriminator.version.to_le_bytes(), account_type::PERP_REBALANCE_TIME_TREE.to_le_bytes(), instrument.asset_token_id.to_le_bytes(), instrument.crncy_token_id.to_le_bytes(), deriverse_authority.key()],
+        bump
     )]
     #[account(18, name = "community", desc = "Community account")]
     #[account(19, name = "system_program", desc = "System program")]
+    #[account(20, name = "deriverse_authority", desc = "Deriverse authority PDA", seeds = [b"ndxnt"], bump)]
     PerpChangeLeverage(PerpChangeLeverageData) = 37,
 
     // 38 reserved
     /// Withdraw previously prepaid community fees back into the client balance state.
     #[account(0, signer, name = "signer", desc = "Client wallet")]
     #[account(1, writable, name = "root", desc = "Root PDA")]
-    #[account(2, writable, name = "client_primary", desc = "Client primary account", seeds = [root.discriminator.version.to_le_bytes(), [31u8, 0u8, 0u8, 0u8], signer.key()], bump)]
+    #[account(2, writable, name = "client_primary", desc = "Client primary account", seeds = [root.discriminator.version.to_le_bytes(), account_type::CLIENT_PRIMARY.to_le_bytes(), signer.key()], bump)]
     #[account(3, writable, name = "community", desc = "Community account")]
-    #[account(4, writable, name = "client_community", desc = "Client community account", seeds = [root.discriminator.version.to_le_bytes(), [35u8, 0u8, 0u8, 0u8], signer.key()], bump)]
+    #[account(4, writable, name = "client_community", desc = "Client community account", seeds = [root.discriminator.version.to_le_bytes(), account_type::CLIENT_COMMUNITY.to_le_bytes(), signer.key()], bump)]
     #[account(5, name = "system_program", desc = "System program")]
     FeesWithdraw(FeesWithdrawData) = 39,
 
@@ -1020,81 +1135,102 @@ pub enum DrvInstructionIdl {
     /// Replace a set of perp quotes using a packed header plus packed quote tail.
     #[account(0, signer, writable, name = "signer", desc = "Perp trader")]
     #[account(1, name = "root", desc = "Root PDA")]
-    #[account(2, writable, name = "client_primary", desc = "Client primary account", seeds = [root.discriminator.version.to_le_bytes(), [31u8, 0u8, 0u8, 0u8], signer.key()], bump)]
-    #[account(3, writable, name = "client_community", desc = "Client community account", seeds = [root.discriminator.version.to_le_bytes(), [35u8, 0u8, 0u8, 0u8], signer.key()], bump)]
+    #[account(2, writable, name = "client_primary", desc = "Client primary account", seeds = [root.discriminator.version.to_le_bytes(), account_type::CLIENT_PRIMARY.to_le_bytes(), signer.key()], bump)]
+    #[account(3, writable, name = "client_community", desc = "Client community account", seeds = [root.discriminator.version.to_le_bytes(), account_type::CLIENT_COMMUNITY.to_le_bytes(), signer.key()], bump)]
     #[account(4, writable, name = "instrument", desc = "Instrument account")]
-    #[account(5, writable, name = "perp_bids_tree", desc = "Perp bids tree account")]
-    #[account(6, writable, name = "perp_asks_tree", desc = "Perp asks tree account")]
+    #[account(5, writable, name = "perp_bids_tree", desc = "Perp bids tree account", seeds = [root.discriminator.version.to_le_bytes(), account_type::PERP_BIDS_TREE.to_le_bytes(), instrument.asset_token_id.to_le_bytes(), instrument.crncy_token_id.to_le_bytes(), deriverse_authority.key()], bump)]
+    #[account(6, writable, name = "perp_asks_tree", desc = "Perp asks tree account", seeds = [root.discriminator.version.to_le_bytes(), account_type::PERP_ASKS_TREE.to_le_bytes(), instrument.asset_token_id.to_le_bytes(), instrument.crncy_token_id.to_le_bytes(), deriverse_authority.key()], bump)]
     #[account(
         7,
         writable,
         name = "perp_bid_orders",
-        desc = "Perp bid orders account"
+        desc = "Perp bid orders account",
+        seeds = [root.discriminator.version.to_le_bytes(), account_type::PERP_BID_ORDERS.to_le_bytes(), instrument.asset_token_id.to_le_bytes(), instrument.crncy_token_id.to_le_bytes(), deriverse_authority.key()],
+        bump
     )]
     #[account(
         8,
         writable,
         name = "perp_ask_orders",
-        desc = "Perp ask orders account"
+        desc = "Perp ask orders account",
+        seeds = [root.discriminator.version.to_le_bytes(), account_type::PERP_ASK_ORDERS.to_le_bytes(), instrument.asset_token_id.to_le_bytes(), instrument.crncy_token_id.to_le_bytes(), deriverse_authority.key()],
+        bump
     )]
-    #[account(9, writable, name = "perp_lines", desc = "Perp lines account")]
+    #[account(9, writable, name = "perp_lines", desc = "Perp lines account", seeds = [root.discriminator.version.to_le_bytes(), account_type::PERP_LINES.to_le_bytes(), instrument.asset_token_id.to_le_bytes(), instrument.crncy_token_id.to_le_bytes(), deriverse_authority.key()], bump)]
     #[account(10, writable, name = "perp_maps", desc = "Perp maps account")]
     #[account(
         11,
         writable,
         name = "perp_client_infos",
-        desc = "Perp client infos account"
+        desc = "Perp client infos account",
+        seeds = [root.discriminator.version.to_le_bytes(), account_type::PERP_CLIENT_INFOS.to_le_bytes(), instrument.asset_token_id.to_le_bytes(), instrument.crncy_token_id.to_le_bytes(), deriverse_authority.key()],
+        bump
     )]
     #[account(
         12,
         writable,
         name = "perp_client_infos2",
-        desc = "Perp client infos2 account"
+        desc = "Perp client infos2 account",
+        seeds = [root.discriminator.version.to_le_bytes(), account_type::PERP_CLIENT_INFOS2.to_le_bytes(), instrument.asset_token_id.to_le_bytes(), instrument.crncy_token_id.to_le_bytes(), deriverse_authority.key()],
+        bump
     )]
     #[account(
         13,
         writable,
         name = "perp_client_infos3",
-        desc = "Perp client infos3 account"
+        desc = "Perp client infos3 account",
+        seeds = [root.discriminator.version.to_le_bytes(), account_type::PERP_CLIENT_INFOS3.to_le_bytes(), instrument.asset_token_id.to_le_bytes(), instrument.crncy_token_id.to_le_bytes(), deriverse_authority.key()],
+        bump
     )]
     #[account(
         14,
         writable,
         name = "perp_client_infos4",
-        desc = "Perp client infos4 account"
+        desc = "Perp client infos4 account",
+        seeds = [root.discriminator.version.to_le_bytes(), account_type::PERP_CLIENT_INFOS4.to_le_bytes(), instrument.asset_token_id.to_le_bytes(), instrument.crncy_token_id.to_le_bytes(), deriverse_authority.key()],
+        bump
     )]
     #[account(
         15,
         writable,
         name = "perp_client_infos5",
-        desc = "Perp client infos5 account"
+        desc = "Perp client infos5 account",
+        seeds = [root.discriminator.version.to_le_bytes(), account_type::PERP_CLIENT_INFOS5.to_le_bytes(), instrument.asset_token_id.to_le_bytes(), instrument.crncy_token_id.to_le_bytes(), deriverse_authority.key()],
+        bump
     )]
     #[account(
         16,
         writable,
         name = "perp_long_px_tree",
-        desc = "Perp long price tree account"
+        desc = "Perp long price tree account",
+        seeds = [root.discriminator.version.to_le_bytes(), account_type::PERP_LONG_PX_TREE.to_le_bytes(), instrument.asset_token_id.to_le_bytes(), instrument.crncy_token_id.to_le_bytes(), deriverse_authority.key()],
+        bump
     )]
     #[account(
         17,
         writable,
         name = "perp_short_px_tree",
-        desc = "Perp short price tree account"
+        desc = "Perp short price tree account",
+        seeds = [root.discriminator.version.to_le_bytes(), account_type::PERP_SHORT_PX_TREE.to_le_bytes(), instrument.asset_token_id.to_le_bytes(), instrument.crncy_token_id.to_le_bytes(), deriverse_authority.key()],
+        bump
     )]
     #[account(
         18,
         writable,
         name = "perp_rebalance_time_tree",
-        desc = "Perp rebalance time tree account"
+        desc = "Perp rebalance time tree account",
+        seeds = [root.discriminator.version.to_le_bytes(), account_type::PERP_REBALANCE_TIME_TREE.to_le_bytes(), instrument.asset_token_id.to_le_bytes(), instrument.crncy_token_id.to_le_bytes(), deriverse_authority.key()],
+        bump
     )]
     #[account(19, name = "community", desc = "Community account")]
     #[account(20, name = "system_program", desc = "System program")]
+    #[account(21, name = "deriverse_authority", desc = "Deriverse authority PDA", seeds = [b"ndxnt"], bump)]
     PerpQuotesReplace(PerpQuotesReplaceData) = 42,
 
     /// Move available spot funds from temporary client-info storage into the wallet account state.
     #[account(0, signer, writable, name = "signer", desc = "Client wallet")]
     #[account(1, name = "root", desc = "Root PDA")]
-    #[account(2, writable, name = "client_primary", desc = "Client primary account", seeds = [root.discriminator.version.to_le_bytes(), [31u8, 0u8, 0u8, 0u8], signer.key()], bump)]
+    #[account(2, writable, name = "client_primary", desc = "Client primary account", seeds = [root.discriminator.version.to_le_bytes(), account_type::CLIENT_PRIMARY.to_le_bytes(), signer.key()], bump)]
     #[account(3, writable, name = "maps", desc = "Spot maps account")]
     #[account(4, writable, name = "client_infos", desc = "Spot client infos account")]
     #[account(5, name = "system_program", desc = "System program")]
@@ -1108,226 +1244,289 @@ pub enum DrvInstructionIdl {
     /// Create or refresh one of the two referral-link slots owned by the caller-authorized client primary.
     #[account(0, signer, name = "signer", desc = "Referral-link owner authority")]
     #[account(1, writable, name = "root", desc = "Root PDA")]
-    #[account(2, writable, name = "client_primary", desc = "Client primary account", seeds = [root.discriminator.version.to_le_bytes(), [31u8, 0u8, 0u8, 0u8], signer.key()], bump)]
+    #[account(2, writable, name = "client_primary", desc = "Client primary account", seeds = [root.discriminator.version.to_le_bytes(), account_type::CLIENT_PRIMARY.to_le_bytes(), signer.key()], bump)]
     NewRefLink = 45,
 
     /// Reset one client's accumulated perp statistics before running the usual perp maintenance path.
     #[account(0, signer, writable, name = "signer", desc = "Perp trader")]
     #[account(1, name = "root", desc = "Root PDA")]
-    #[account(2, writable, name = "client_primary", desc = "Client primary account", seeds = [root.discriminator.version.to_le_bytes(), [31u8, 0u8, 0u8, 0u8], signer.key()], bump)]
+    #[account(2, writable, name = "client_primary", desc = "Client primary account", seeds = [root.discriminator.version.to_le_bytes(), account_type::CLIENT_PRIMARY.to_le_bytes(), signer.key()], bump)]
     #[account(3, writable, name = "instrument", desc = "Instrument account")]
-    #[account(4, writable, name = "perp_bids_tree", desc = "Perp bids tree account")]
-    #[account(5, writable, name = "perp_asks_tree", desc = "Perp asks tree account")]
+    #[account(4, writable, name = "perp_bids_tree", desc = "Perp bids tree account", seeds = [root.discriminator.version.to_le_bytes(), account_type::PERP_BIDS_TREE.to_le_bytes(), instrument.asset_token_id.to_le_bytes(), instrument.crncy_token_id.to_le_bytes(), deriverse_authority.key()], bump)]
+    #[account(5, writable, name = "perp_asks_tree", desc = "Perp asks tree account", seeds = [root.discriminator.version.to_le_bytes(), account_type::PERP_ASKS_TREE.to_le_bytes(), instrument.asset_token_id.to_le_bytes(), instrument.crncy_token_id.to_le_bytes(), deriverse_authority.key()], bump)]
     #[account(
         6,
         writable,
         name = "perp_bid_orders",
-        desc = "Perp bid orders account"
+        desc = "Perp bid orders account",
+        seeds = [root.discriminator.version.to_le_bytes(), account_type::PERP_BID_ORDERS.to_le_bytes(), instrument.asset_token_id.to_le_bytes(), instrument.crncy_token_id.to_le_bytes(), deriverse_authority.key()],
+        bump
     )]
     #[account(
         7,
         writable,
         name = "perp_ask_orders",
-        desc = "Perp ask orders account"
+        desc = "Perp ask orders account",
+        seeds = [root.discriminator.version.to_le_bytes(), account_type::PERP_ASK_ORDERS.to_le_bytes(), instrument.asset_token_id.to_le_bytes(), instrument.crncy_token_id.to_le_bytes(), deriverse_authority.key()],
+        bump
     )]
-    #[account(8, writable, name = "perp_lines", desc = "Perp lines account")]
+    #[account(8, writable, name = "perp_lines", desc = "Perp lines account", seeds = [root.discriminator.version.to_le_bytes(), account_type::PERP_LINES.to_le_bytes(), instrument.asset_token_id.to_le_bytes(), instrument.crncy_token_id.to_le_bytes(), deriverse_authority.key()], bump)]
     #[account(9, writable, name = "perp_maps", desc = "Perp maps account")]
     #[account(
         10,
         writable,
         name = "perp_client_infos",
-        desc = "Perp client infos account"
+        desc = "Perp client infos account",
+        seeds = [root.discriminator.version.to_le_bytes(), account_type::PERP_CLIENT_INFOS.to_le_bytes(), instrument.asset_token_id.to_le_bytes(), instrument.crncy_token_id.to_le_bytes(), deriverse_authority.key()],
+        bump
     )]
     #[account(
         11,
         writable,
         name = "perp_client_infos2",
-        desc = "Perp client infos2 account"
+        desc = "Perp client infos2 account",
+        seeds = [root.discriminator.version.to_le_bytes(), account_type::PERP_CLIENT_INFOS2.to_le_bytes(), instrument.asset_token_id.to_le_bytes(), instrument.crncy_token_id.to_le_bytes(), deriverse_authority.key()],
+        bump
     )]
     #[account(
         12,
         writable,
         name = "perp_client_infos3",
-        desc = "Perp client infos3 account"
+        desc = "Perp client infos3 account",
+        seeds = [root.discriminator.version.to_le_bytes(), account_type::PERP_CLIENT_INFOS3.to_le_bytes(), instrument.asset_token_id.to_le_bytes(), instrument.crncy_token_id.to_le_bytes(), deriverse_authority.key()],
+        bump
     )]
     #[account(
         13,
         writable,
         name = "perp_client_infos4",
-        desc = "Perp client infos4 account"
+        desc = "Perp client infos4 account",
+        seeds = [root.discriminator.version.to_le_bytes(), account_type::PERP_CLIENT_INFOS4.to_le_bytes(), instrument.asset_token_id.to_le_bytes(), instrument.crncy_token_id.to_le_bytes(), deriverse_authority.key()],
+        bump
     )]
     #[account(
         14,
         writable,
         name = "perp_client_infos5",
-        desc = "Perp client infos5 account"
+        desc = "Perp client infos5 account",
+        seeds = [root.discriminator.version.to_le_bytes(), account_type::PERP_CLIENT_INFOS5.to_le_bytes(), instrument.asset_token_id.to_le_bytes(), instrument.crncy_token_id.to_le_bytes(), deriverse_authority.key()],
+        bump
     )]
     #[account(
         15,
         writable,
         name = "perp_long_px_tree",
-        desc = "Perp long price tree account"
+        desc = "Perp long price tree account",
+        seeds = [root.discriminator.version.to_le_bytes(), account_type::PERP_LONG_PX_TREE.to_le_bytes(), instrument.asset_token_id.to_le_bytes(), instrument.crncy_token_id.to_le_bytes(), deriverse_authority.key()],
+        bump
     )]
     #[account(
         16,
         writable,
         name = "perp_short_px_tree",
-        desc = "Perp short price tree account"
+        desc = "Perp short price tree account",
+        seeds = [root.discriminator.version.to_le_bytes(), account_type::PERP_SHORT_PX_TREE.to_le_bytes(), instrument.asset_token_id.to_le_bytes(), instrument.crncy_token_id.to_le_bytes(), deriverse_authority.key()],
+        bump
     )]
     #[account(
         17,
         writable,
         name = "perp_rebalance_time_tree",
-        desc = "Perp rebalance time tree account"
+        desc = "Perp rebalance time tree account",
+        seeds = [root.discriminator.version.to_le_bytes(), account_type::PERP_REBALANCE_TIME_TREE.to_le_bytes(), instrument.asset_token_id.to_le_bytes(), instrument.crncy_token_id.to_le_bytes(), deriverse_authority.key()],
+        bump
     )]
     #[account(18, name = "community", desc = "Community account")]
     #[account(19, name = "system_program", desc = "System program")]
+    #[account(20, name = "deriverse_authority", desc = "Deriverse authority PDA", seeds = [b"ndxnt"], bump)]
     PerpStatisticsReset(PerpStatisticsResetData) = 46,
 
     /// Buy a perp market seat for one instrument, optionally depositing extra perp collateral.
     #[account(0, signer, writable, name = "signer", desc = "Perp trader")]
     #[account(1, name = "root", desc = "Root PDA")]
-    #[account(2, writable, name = "client_primary", desc = "Client primary account", seeds = [root.discriminator.version.to_le_bytes(), [31u8, 0u8, 0u8, 0u8], signer.key()], bump)]
+    #[account(2, writable, name = "client_primary", desc = "Client primary account", seeds = [root.discriminator.version.to_le_bytes(), account_type::CLIENT_PRIMARY.to_le_bytes(), signer.key()], bump)]
     #[account(3, writable, name = "instrument", desc = "Instrument account")]
-    #[account(4, writable, name = "perp_bids_tree", desc = "Perp bids tree account")]
-    #[account(5, writable, name = "perp_asks_tree", desc = "Perp asks tree account")]
+    #[account(4, writable, name = "perp_bids_tree", desc = "Perp bids tree account", seeds = [root.discriminator.version.to_le_bytes(), account_type::PERP_BIDS_TREE.to_le_bytes(), instrument.asset_token_id.to_le_bytes(), instrument.crncy_token_id.to_le_bytes(), deriverse_authority.key()], bump)]
+    #[account(5, writable, name = "perp_asks_tree", desc = "Perp asks tree account", seeds = [root.discriminator.version.to_le_bytes(), account_type::PERP_ASKS_TREE.to_le_bytes(), instrument.asset_token_id.to_le_bytes(), instrument.crncy_token_id.to_le_bytes(), deriverse_authority.key()], bump)]
     #[account(
         6,
         writable,
         name = "perp_bid_orders",
-        desc = "Perp bid orders account"
+        desc = "Perp bid orders account",
+        seeds = [root.discriminator.version.to_le_bytes(), account_type::PERP_BID_ORDERS.to_le_bytes(), instrument.asset_token_id.to_le_bytes(), instrument.crncy_token_id.to_le_bytes(), deriverse_authority.key()],
+        bump
     )]
     #[account(
         7,
         writable,
         name = "perp_ask_orders",
-        desc = "Perp ask orders account"
+        desc = "Perp ask orders account",
+        seeds = [root.discriminator.version.to_le_bytes(), account_type::PERP_ASK_ORDERS.to_le_bytes(), instrument.asset_token_id.to_le_bytes(), instrument.crncy_token_id.to_le_bytes(), deriverse_authority.key()],
+        bump
     )]
-    #[account(8, writable, name = "perp_lines", desc = "Perp lines account")]
+    #[account(8, writable, name = "perp_lines", desc = "Perp lines account", seeds = [root.discriminator.version.to_le_bytes(), account_type::PERP_LINES.to_le_bytes(), instrument.asset_token_id.to_le_bytes(), instrument.crncy_token_id.to_le_bytes(), deriverse_authority.key()], bump)]
     #[account(9, writable, name = "perp_maps", desc = "Perp maps account")]
     #[account(
         10,
         writable,
         name = "perp_client_infos",
-        desc = "Perp client infos account"
+        desc = "Perp client infos account",
+        seeds = [root.discriminator.version.to_le_bytes(), account_type::PERP_CLIENT_INFOS.to_le_bytes(), instrument.asset_token_id.to_le_bytes(), instrument.crncy_token_id.to_le_bytes(), deriverse_authority.key()],
+        bump
     )]
     #[account(
         11,
         writable,
         name = "perp_client_infos2",
-        desc = "Perp client infos2 account"
+        desc = "Perp client infos2 account",
+        seeds = [root.discriminator.version.to_le_bytes(), account_type::PERP_CLIENT_INFOS2.to_le_bytes(), instrument.asset_token_id.to_le_bytes(), instrument.crncy_token_id.to_le_bytes(), deriverse_authority.key()],
+        bump
     )]
     #[account(
         12,
         writable,
         name = "perp_client_infos3",
-        desc = "Perp client infos3 account"
+        desc = "Perp client infos3 account",
+        seeds = [root.discriminator.version.to_le_bytes(), account_type::PERP_CLIENT_INFOS3.to_le_bytes(), instrument.asset_token_id.to_le_bytes(), instrument.crncy_token_id.to_le_bytes(), deriverse_authority.key()],
+        bump
     )]
     #[account(
         13,
         writable,
         name = "perp_client_infos4",
-        desc = "Perp client infos4 account"
+        desc = "Perp client infos4 account",
+        seeds = [root.discriminator.version.to_le_bytes(), account_type::PERP_CLIENT_INFOS4.to_le_bytes(), instrument.asset_token_id.to_le_bytes(), instrument.crncy_token_id.to_le_bytes(), deriverse_authority.key()],
+        bump
     )]
     #[account(
         14,
         writable,
         name = "perp_client_infos5",
-        desc = "Perp client infos5 account"
+        desc = "Perp client infos5 account",
+        seeds = [root.discriminator.version.to_le_bytes(), account_type::PERP_CLIENT_INFOS5.to_le_bytes(), instrument.asset_token_id.to_le_bytes(), instrument.crncy_token_id.to_le_bytes(), deriverse_authority.key()],
+        bump
     )]
     #[account(
         15,
         writable,
         name = "perp_long_px_tree",
-        desc = "Perp long price tree account"
+        desc = "Perp long price tree account",
+        seeds = [root.discriminator.version.to_le_bytes(), account_type::PERP_LONG_PX_TREE.to_le_bytes(), instrument.asset_token_id.to_le_bytes(), instrument.crncy_token_id.to_le_bytes(), deriverse_authority.key()],
+        bump
     )]
     #[account(
         16,
         writable,
         name = "perp_short_px_tree",
-        desc = "Perp short price tree account"
+        desc = "Perp short price tree account",
+        seeds = [root.discriminator.version.to_le_bytes(), account_type::PERP_SHORT_PX_TREE.to_le_bytes(), instrument.asset_token_id.to_le_bytes(), instrument.crncy_token_id.to_le_bytes(), deriverse_authority.key()],
+        bump
     )]
     #[account(
         17,
         writable,
         name = "perp_rebalance_time_tree",
-        desc = "Perp rebalance time tree account"
+        desc = "Perp rebalance time tree account",
+        seeds = [root.discriminator.version.to_le_bytes(), account_type::PERP_REBALANCE_TIME_TREE.to_le_bytes(), instrument.asset_token_id.to_le_bytes(), instrument.crncy_token_id.to_le_bytes(), deriverse_authority.key()],
+        bump
     )]
     #[account(18, name = "community", desc = "Community account")]
     #[account(19, name = "system_program", desc = "System program")]
+    #[account(20, name = "deriverse_authority", desc = "Deriverse authority PDA", seeds = [b"ndxnt"], bump)]
     BuyMarketSeat(BuyMarketSeatData) = 47,
 
     /// Sell a perp market seat and close the perp client account when allowed.
     #[account(0, signer, writable, name = "signer", desc = "Perp trader")]
     #[account(1, name = "root", desc = "Root PDA")]
-    #[account(2, writable, name = "client_primary", desc = "Client primary account", seeds = [root.discriminator.version.to_le_bytes(), [31u8, 0u8, 0u8, 0u8], signer.key()], bump)]
+    #[account(2, writable, name = "client_primary", desc = "Client primary account", seeds = [root.discriminator.version.to_le_bytes(), account_type::CLIENT_PRIMARY.to_le_bytes(), signer.key()], bump)]
     #[account(3, writable, name = "instrument", desc = "Instrument account")]
-    #[account(4, writable, name = "perp_bids_tree", desc = "Perp bids tree account")]
-    #[account(5, writable, name = "perp_asks_tree", desc = "Perp asks tree account")]
+    #[account(4, writable, name = "perp_bids_tree", desc = "Perp bids tree account", seeds = [root.discriminator.version.to_le_bytes(), account_type::PERP_BIDS_TREE.to_le_bytes(), instrument.asset_token_id.to_le_bytes(), instrument.crncy_token_id.to_le_bytes(), deriverse_authority.key()], bump)]
+    #[account(5, writable, name = "perp_asks_tree", desc = "Perp asks tree account", seeds = [root.discriminator.version.to_le_bytes(), account_type::PERP_ASKS_TREE.to_le_bytes(), instrument.asset_token_id.to_le_bytes(), instrument.crncy_token_id.to_le_bytes(), deriverse_authority.key()], bump)]
     #[account(
         6,
         writable,
         name = "perp_bid_orders",
-        desc = "Perp bid orders account"
+        desc = "Perp bid orders account",
+        seeds = [root.discriminator.version.to_le_bytes(), account_type::PERP_BID_ORDERS.to_le_bytes(), instrument.asset_token_id.to_le_bytes(), instrument.crncy_token_id.to_le_bytes(), deriverse_authority.key()],
+        bump
     )]
     #[account(
         7,
         writable,
         name = "perp_ask_orders",
-        desc = "Perp ask orders account"
+        desc = "Perp ask orders account",
+        seeds = [root.discriminator.version.to_le_bytes(), account_type::PERP_ASK_ORDERS.to_le_bytes(), instrument.asset_token_id.to_le_bytes(), instrument.crncy_token_id.to_le_bytes(), deriverse_authority.key()],
+        bump
     )]
-    #[account(8, writable, name = "perp_lines", desc = "Perp lines account")]
+    #[account(8, writable, name = "perp_lines", desc = "Perp lines account", seeds = [root.discriminator.version.to_le_bytes(), account_type::PERP_LINES.to_le_bytes(), instrument.asset_token_id.to_le_bytes(), instrument.crncy_token_id.to_le_bytes(), deriverse_authority.key()], bump)]
     #[account(9, writable, name = "perp_maps", desc = "Perp maps account")]
     #[account(
         10,
         writable,
         name = "perp_client_infos",
-        desc = "Perp client infos account"
+        desc = "Perp client infos account",
+        seeds = [root.discriminator.version.to_le_bytes(), account_type::PERP_CLIENT_INFOS.to_le_bytes(), instrument.asset_token_id.to_le_bytes(), instrument.crncy_token_id.to_le_bytes(), deriverse_authority.key()],
+        bump
     )]
     #[account(
         11,
         writable,
         name = "perp_client_infos2",
-        desc = "Perp client infos2 account"
+        desc = "Perp client infos2 account",
+        seeds = [root.discriminator.version.to_le_bytes(), account_type::PERP_CLIENT_INFOS2.to_le_bytes(), instrument.asset_token_id.to_le_bytes(), instrument.crncy_token_id.to_le_bytes(), deriverse_authority.key()],
+        bump
     )]
     #[account(
         12,
         writable,
         name = "perp_client_infos3",
-        desc = "Perp client infos3 account"
+        desc = "Perp client infos3 account",
+        seeds = [root.discriminator.version.to_le_bytes(), account_type::PERP_CLIENT_INFOS3.to_le_bytes(), instrument.asset_token_id.to_le_bytes(), instrument.crncy_token_id.to_le_bytes(), deriverse_authority.key()],
+        bump
     )]
     #[account(
         13,
         writable,
         name = "perp_client_infos4",
-        desc = "Perp client infos4 account"
+        desc = "Perp client infos4 account",
+        seeds = [root.discriminator.version.to_le_bytes(), account_type::PERP_CLIENT_INFOS4.to_le_bytes(), instrument.asset_token_id.to_le_bytes(), instrument.crncy_token_id.to_le_bytes(), deriverse_authority.key()],
+        bump
     )]
     #[account(
         14,
         writable,
         name = "perp_client_infos5",
-        desc = "Perp client infos5 account"
+        desc = "Perp client infos5 account",
+        seeds = [root.discriminator.version.to_le_bytes(), account_type::PERP_CLIENT_INFOS5.to_le_bytes(), instrument.asset_token_id.to_le_bytes(), instrument.crncy_token_id.to_le_bytes(), deriverse_authority.key()],
+        bump
     )]
     #[account(
         15,
         writable,
         name = "perp_long_px_tree",
-        desc = "Perp long price tree account"
+        desc = "Perp long price tree account",
+        seeds = [root.discriminator.version.to_le_bytes(), account_type::PERP_LONG_PX_TREE.to_le_bytes(), instrument.asset_token_id.to_le_bytes(), instrument.crncy_token_id.to_le_bytes(), deriverse_authority.key()],
+        bump
     )]
     #[account(
         16,
         writable,
         name = "perp_short_px_tree",
-        desc = "Perp short price tree account"
+        desc = "Perp short price tree account",
+        seeds = [root.discriminator.version.to_le_bytes(), account_type::PERP_SHORT_PX_TREE.to_le_bytes(), instrument.asset_token_id.to_le_bytes(), instrument.crncy_token_id.to_le_bytes(), deriverse_authority.key()],
+        bump
     )]
     #[account(
         17,
         writable,
         name = "perp_rebalance_time_tree",
-        desc = "Perp rebalance time tree account"
+        desc = "Perp rebalance time tree account",
+        seeds = [root.discriminator.version.to_le_bytes(), account_type::PERP_REBALANCE_TIME_TREE.to_le_bytes(), instrument.asset_token_id.to_le_bytes(), instrument.crncy_token_id.to_le_bytes(), deriverse_authority.key()],
+        bump
     )]
     #[account(18, name = "community", desc = "Community account")]
     #[account(19, name = "system_program", desc = "System program")]
+    #[account(20, name = "deriverse_authority", desc = "Deriverse authority PDA", seeds = [b"ndxnt"], bump)]
     SellMarketSeat(SellMarketSeatData) = 48,
 
     /// Add a wallet to the private-mode queue.
@@ -1350,7 +1549,7 @@ pub enum DrvInstructionIdl {
         5,
         name = "client_primary",
         desc = "Derived client primary PDA for the wallet",
-        seeds = [root.discriminator.version.to_le_bytes(), [31u8, 0u8, 0u8, 0u8], wallet.key()],
+        seeds = [root.discriminator.version.to_le_bytes(), account_type::CLIENT_PRIMARY.to_le_bytes(), wallet.key()],
         bump
     )]
     NewPrivateClient(NewPrivateClient) = 49,
@@ -1552,7 +1751,7 @@ pub enum DrvInstructionIdl {
         desc = "Main wallet that owns the client account"
     )]
     #[account(1, name = "root", desc = "Root PDA")]
-    #[account(2, writable, name = "client_primary", desc = "Client primary account", seeds = [root.discriminator.version.to_le_bytes(), [31u8, 0u8, 0u8, 0u8], signer.key()], bump)]
+    #[account(2, writable, name = "client_primary", desc = "Client primary account", seeds = [root.discriminator.version.to_le_bytes(), account_type::CLIENT_PRIMARY.to_le_bytes(), signer.key()], bump)]
     #[account(3, name = "vm_mode_authority", desc = "Future VM authority wallet")]
     VmInitActivate(VmInitActivateData) = 63,
 
@@ -1564,13 +1763,13 @@ pub enum DrvInstructionIdl {
         desc = "Main wallet that owns the client account"
     )]
     #[account(1, name = "root", desc = "Root PDA")]
-    #[account(2, writable, name = "client_primary", desc = "Client primary account", seeds = [root.discriminator.version.to_le_bytes(), [31u8, 0u8, 0u8, 0u8], signer.key()], bump)]
+    #[account(2, writable, name = "client_primary", desc = "Client primary account", seeds = [root.discriminator.version.to_le_bytes(), account_type::CLIENT_PRIMARY.to_le_bytes(), signer.key()], bump)]
     VmInitActivateCancel = 64,
 
     /// Finalize VM activation from the assigned VM authority wallet.
     #[account(0, signer, name = "signer", desc = "VM authority wallet")]
     #[account(1, name = "root", desc = "Root PDA")]
-    #[account(2, writable, name = "client_primary", desc = "Client primary account", seeds = [root.discriminator.version.to_le_bytes(), [31u8, 0u8, 0u8, 0u8], signer.key()], bump)]
+    #[account(2, writable, name = "client_primary", desc = "Client primary account", seeds = [root.discriminator.version.to_le_bytes(), account_type::CLIENT_PRIMARY.to_le_bytes(), signer.key()], bump)]
     VmFinalizeActivate = 65,
 
     /// Start VM deactivation from the main wallet side.
@@ -1581,7 +1780,7 @@ pub enum DrvInstructionIdl {
         desc = "Main wallet that owns the client account"
     )]
     #[account(1, name = "root", desc = "Root PDA")]
-    #[account(2, writable, name = "client_primary", desc = "Client primary account", seeds = [root.discriminator.version.to_le_bytes(), [31u8, 0u8, 0u8, 0u8], signer.key()], bump)]
+    #[account(2, writable, name = "client_primary", desc = "Client primary account", seeds = [root.discriminator.version.to_le_bytes(), account_type::CLIENT_PRIMARY.to_le_bytes(), signer.key()], bump)]
     VmInitDeactivate = 66,
 
     /// Cancel a pending VM deactivation before finalization.
@@ -1592,13 +1791,13 @@ pub enum DrvInstructionIdl {
         desc = "Main wallet that owns the client account"
     )]
     #[account(1, name = "root", desc = "Root PDA")]
-    #[account(2, writable, name = "client_primary", desc = "Client primary account", seeds = [root.discriminator.version.to_le_bytes(), [31u8, 0u8, 0u8, 0u8], signer.key()], bump)]
+    #[account(2, writable, name = "client_primary", desc = "Client primary account", seeds = [root.discriminator.version.to_le_bytes(), account_type::CLIENT_PRIMARY.to_le_bytes(), signer.key()], bump)]
     VmInitDeactivateCancel = 67,
 
     /// Finalize VM deactivation from the VM authority wallet.
     #[account(0, signer, name = "signer", desc = "VM authority wallet")]
     #[account(1, name = "root", desc = "Root PDA")]
-    #[account(2, writable, name = "client_primary", desc = "Client primary account", seeds = [root.discriminator.version.to_le_bytes(), [31u8, 0u8, 0u8, 0u8], signer.key()], bump)]
+    #[account(2, writable, name = "client_primary", desc = "Client primary account", seeds = [root.discriminator.version.to_le_bytes(), account_type::CLIENT_PRIMARY.to_le_bytes(), signer.key()], bump)]
     VmFinalizeDeactivate = 68,
 
     /// Begin a VM withdrawal by moving balance into the client header's pending withdraw fields.
@@ -1609,7 +1808,7 @@ pub enum DrvInstructionIdl {
         desc = "Main wallet that owns the client account"
     )]
     #[account(1, writable, name = "root", desc = "Root PDA")]
-    #[account(2, writable, name = "client_primary", desc = "Client primary account", seeds = [root.discriminator.version.to_le_bytes(), [31u8, 0u8, 0u8, 0u8], signer.key()], bump)]
+    #[account(2, writable, name = "client_primary", desc = "Client primary account", seeds = [root.discriminator.version.to_le_bytes(), account_type::CLIENT_PRIMARY.to_le_bytes(), signer.key()], bump)]
     #[account(3, name = "system_program", desc = "System program")]
     VmInitWithdraw(VmInitWithdrawData) = 69,
 
@@ -1621,7 +1820,7 @@ pub enum DrvInstructionIdl {
         desc = "Main wallet that owns the client account"
     )]
     #[account(1, writable, name = "root", desc = "Root PDA")]
-    #[account(2, writable, name = "client_primary", desc = "Client primary account", seeds = [root.discriminator.version.to_le_bytes(), [31u8, 0u8, 0u8, 0u8], signer.key()], bump)]
+    #[account(2, writable, name = "client_primary", desc = "Client primary account", seeds = [root.discriminator.version.to_le_bytes(), account_type::CLIENT_PRIMARY.to_le_bytes(), signer.key()], bump)]
     #[account(3, name = "system_program", desc = "System program")]
     VmInitWithdrawCancel = 70,
 
@@ -1644,7 +1843,7 @@ pub enum DrvInstructionIdl {
     #[account(3, name = "mint", desc = "Token mint")]
     #[account(4, name = "root", desc = "Root PDA")]
     #[account(5, name = "token", desc = "Token metadata PDA")]
-    #[account(6, writable, name = "client_primary", desc = "Client primary account", seeds = [root.discriminator.version.to_le_bytes(), [31u8, 0u8, 0u8, 0u8], vm_mode_authority.key()], bump)]
+    #[account(6, writable, name = "client_primary", desc = "Client primary account", seeds = [root.discriminator.version.to_le_bytes(), account_type::CLIENT_PRIMARY.to_le_bytes(), vm_mode_authority.key()], bump)]
     #[account(7, name = "system_program", desc = "System program")]
     #[account(8, name = "token_program", desc = "Token program id")]
     #[account(
@@ -1657,7 +1856,7 @@ pub enum DrvInstructionIdl {
     /// Replace the VM whitelist instrument slots.
     #[account(0, signer, name = "signer", desc = "VM authority wallet")]
     #[account(1, name = "root", desc = "Root PDA")]
-    #[account(2, writable, name = "client_primary", desc = "Client primary account", seeds = [root.discriminator.version.to_le_bytes(), [31u8, 0u8, 0u8, 0u8], signer.key()], bump)]
+    #[account(2, writable, name = "client_primary", desc = "Client primary account", seeds = [root.discriminator.version.to_le_bytes(), account_type::CLIENT_PRIMARY.to_le_bytes(), signer.key()], bump)]
     VmChangeWhitelist(VmChangeWhitelistData) = 72,
 
     /// Extend the spot maps account with a fresh candles header and candles storage block.
@@ -1724,13 +1923,13 @@ pub enum DrvInstructionIdl {
     /// Add a withdrawal token authority to the VM whitelist.
     #[account(0, signer, name = "signer", desc = "VM authority wallet")]
     #[account(1, name = "root", desc = "Root PDA")]
-    #[account(2, writable, name = "client_primary", desc = "Client primary account", seeds = [root.discriminator.version.to_le_bytes(), [31u8, 0u8, 0u8, 0u8], signer.key()], bump)]
+    #[account(2, writable, name = "client_primary", desc = "Client primary account", seeds = [root.discriminator.version.to_le_bytes(), account_type::CLIENT_PRIMARY.to_le_bytes(), signer.key()], bump)]
     #[account(
         3,
         writable,
         name = "client_vm_account",
         desc = "Client VM whitelist account",
-        seeds = [root.discriminator.version.to_le_bytes(), [52u8, 0u8, 0u8, 0u8], signer.key()],
+        seeds = [root.discriminator.version.to_le_bytes(), account_type::VM_CLIENT.to_le_bytes(), signer.key()],
         bump
     )]
     #[account(
@@ -1776,7 +1975,7 @@ pub enum DrvInstructionIdl {
     #[account(3, name = "mint", desc = "Token mint")]
     #[account(4, writable, name = "root", desc = "Root PDA")]
     #[account(5, name = "token", desc = "Token metadata PDA")]
-    #[account(6, writable, name = "client_primary", desc = "Client primary account", seeds = [root.discriminator.version.to_le_bytes(), [31u8, 0u8, 0u8, 0u8], signer.key()], bump)]
+    #[account(6, writable, name = "client_primary", desc = "Client primary account", seeds = [root.discriminator.version.to_le_bytes(), account_type::CLIENT_PRIMARY.to_le_bytes(), signer.key()], bump)]
     #[account(7, name = "client_vm_account", desc = "Client VM whitelist account")]
     #[account(8, name = "system_program", desc = "System program")]
     #[account(9, name = "token_program", desc = "Token program id")]

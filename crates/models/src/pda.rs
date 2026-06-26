@@ -31,18 +31,21 @@ impl PdaRef {
     }
 }
 
-/// Associates a Deriverse account type with its canonical PDA derivation.
+/// Associates a Deriverse account type with its on-chain tag and canonical PDA derivation.
 pub trait DrvAccount {
+    const TAG: u32;
     const PDA: PdaRef;
 }
 
 // ── Non-instrument accounts ──────────────────────────────────────────────────
 
 impl DrvAccount for HolderAccountHeader {
+    const TAG: u32 = account_type::HOLDER;
     const PDA: PdaRef = PdaRef::new(&[Seed::ConstAscii("drvs001"), Seed::Param("holderAdmin")]);
 }
 
 impl DrvAccount for RootState {
+    const TAG: u32 = account_type::ROOT;
     const PDA: PdaRef = PdaRef::new(&[
         Seed::ParamU32("version"),
         Seed::ConstU32(account_type::ROOT),
@@ -51,6 +54,7 @@ impl DrvAccount for RootState {
 }
 
 impl DrvAccount for CommunityAccountHeader {
+    const TAG: u32 = account_type::COMMUNITY;
     const PDA: PdaRef = PdaRef::new(&[
         Seed::ParamU32("version"),
         Seed::ConstU32(account_type::COMMUNITY),
@@ -59,6 +63,7 @@ impl DrvAccount for CommunityAccountHeader {
 }
 
 impl DrvAccount for PrivateClientHeader {
+    const TAG: u32 = account_type::PRIVATE_CLIENTS;
     const PDA: PdaRef = PdaRef::new(&[
         Seed::ParamU32("version"),
         Seed::ConstU32(account_type::PRIVATE_CLIENTS),
@@ -67,6 +72,7 @@ impl DrvAccount for PrivateClientHeader {
 }
 
 impl DrvAccount for ClientPrimaryAccountHeader {
+    const TAG: u32 = account_type::CLIENT_PRIMARY;
     const PDA: PdaRef = PdaRef::new(&[
         Seed::ParamU32("version"),
         Seed::ConstU32(account_type::CLIENT_PRIMARY),
@@ -75,6 +81,7 @@ impl DrvAccount for ClientPrimaryAccountHeader {
 }
 
 impl DrvAccount for ClientCommunityAccountHeader {
+    const TAG: u32 = account_type::CLIENT_COMMUNITY;
     const PDA: PdaRef = PdaRef::new(&[
         Seed::ParamU32("version"),
         Seed::ConstU32(account_type::CLIENT_COMMUNITY),
@@ -83,6 +90,7 @@ impl DrvAccount for ClientCommunityAccountHeader {
 }
 
 impl DrvAccount for ClientVmAccountHeader {
+    const TAG: u32 = account_type::VM_CLIENT;
     const PDA: PdaRef = PdaRef::new(&[
         Seed::ParamU32("version"),
         Seed::ConstU32(account_type::VM_CLIENT),
@@ -93,6 +101,7 @@ impl DrvAccount for ClientVmAccountHeader {
 // ── Instrument account ───────────────────────────────────────────────────────
 
 impl DrvAccount for InstrAccountHeader {
+    const TAG: u32 = account_type::INSTR;
     const PDA: PdaRef = PdaRef::new(&[
         Seed::ParamU32("version"),
         Seed::ConstU32(account_type::INSTR),
@@ -105,6 +114,7 @@ impl DrvAccount for InstrAccountHeader {
 // ── Spot accounts ────────────────────────────────────────────────────────────
 
 impl DrvAccount for SpotTradeAccountHeader<{ account_type::SPOT_CLIENT_INFOS }> {
+    const TAG: u32 = account_type::SPOT_CLIENT_INFOS;
     const PDA: PdaRef = PdaRef::new(&[
         Seed::ParamU32("version"),
         Seed::ConstU32(account_type::SPOT_CLIENT_INFOS),
@@ -115,6 +125,7 @@ impl DrvAccount for SpotTradeAccountHeader<{ account_type::SPOT_CLIENT_INFOS }> 
 }
 
 impl DrvAccount for SpotTradeAccountHeader<{ account_type::SPOT_BIDS_TREE }> {
+    const TAG: u32 = account_type::SPOT_BIDS_TREE;
     const PDA: PdaRef = PdaRef::new(&[
         Seed::ParamU32("version"),
         Seed::ConstU32(account_type::SPOT_BIDS_TREE),
@@ -125,6 +136,7 @@ impl DrvAccount for SpotTradeAccountHeader<{ account_type::SPOT_BIDS_TREE }> {
 }
 
 impl DrvAccount for SpotTradeAccountHeader<{ account_type::SPOT_ASKS_TREE }> {
+    const TAG: u32 = account_type::SPOT_ASKS_TREE;
     const PDA: PdaRef = PdaRef::new(&[
         Seed::ParamU32("version"),
         Seed::ConstU32(account_type::SPOT_ASKS_TREE),
@@ -135,6 +147,7 @@ impl DrvAccount for SpotTradeAccountHeader<{ account_type::SPOT_ASKS_TREE }> {
 }
 
 impl DrvAccount for SpotTradeAccountHeader<{ account_type::SPOT_BID_ORDERS }> {
+    const TAG: u32 = account_type::SPOT_BID_ORDERS;
     const PDA: PdaRef = PdaRef::new(&[
         Seed::ParamU32("version"),
         Seed::ConstU32(account_type::SPOT_BID_ORDERS),
@@ -145,6 +158,7 @@ impl DrvAccount for SpotTradeAccountHeader<{ account_type::SPOT_BID_ORDERS }> {
 }
 
 impl DrvAccount for SpotTradeAccountHeader<{ account_type::SPOT_ASK_ORDERS }> {
+    const TAG: u32 = account_type::SPOT_ASK_ORDERS;
     const PDA: PdaRef = PdaRef::new(&[
         Seed::ParamU32("version"),
         Seed::ConstU32(account_type::SPOT_ASK_ORDERS),
@@ -155,6 +169,7 @@ impl DrvAccount for SpotTradeAccountHeader<{ account_type::SPOT_ASK_ORDERS }> {
 }
 
 impl DrvAccount for SpotTradeAccountHeader<{ account_type::SPOT_LINES }> {
+    const TAG: u32 = account_type::SPOT_LINES;
     const PDA: PdaRef = PdaRef::new(&[
         Seed::ParamU32("version"),
         Seed::ConstU32(account_type::SPOT_LINES),
@@ -167,6 +182,7 @@ impl DrvAccount for SpotTradeAccountHeader<{ account_type::SPOT_LINES }> {
 // ── Perp accounts ────────────────────────────────────────────────────────────
 
 impl DrvAccount for PerpTradeAccountHeader<{ account_type::PERP_ASK_ORDERS }> {
+    const TAG: u32 = account_type::PERP_ASK_ORDERS;
     const PDA: PdaRef = PdaRef::new(&[
         Seed::ParamU32("version"),
         Seed::ConstU32(account_type::PERP_ASK_ORDERS),
@@ -177,6 +193,7 @@ impl DrvAccount for PerpTradeAccountHeader<{ account_type::PERP_ASK_ORDERS }> {
 }
 
 impl DrvAccount for PerpTradeAccountHeader<{ account_type::PERP_ASKS_TREE }> {
+    const TAG: u32 = account_type::PERP_ASKS_TREE;
     const PDA: PdaRef = PdaRef::new(&[
         Seed::ParamU32("version"),
         Seed::ConstU32(account_type::PERP_ASKS_TREE),
@@ -187,6 +204,7 @@ impl DrvAccount for PerpTradeAccountHeader<{ account_type::PERP_ASKS_TREE }> {
 }
 
 impl DrvAccount for PerpTradeAccountHeader<{ account_type::PERP_BID_ORDERS }> {
+    const TAG: u32 = account_type::PERP_BID_ORDERS;
     const PDA: PdaRef = PdaRef::new(&[
         Seed::ParamU32("version"),
         Seed::ConstU32(account_type::PERP_BID_ORDERS),
@@ -197,6 +215,7 @@ impl DrvAccount for PerpTradeAccountHeader<{ account_type::PERP_BID_ORDERS }> {
 }
 
 impl DrvAccount for PerpTradeAccountHeader<{ account_type::PERP_BIDS_TREE }> {
+    const TAG: u32 = account_type::PERP_BIDS_TREE;
     const PDA: PdaRef = PdaRef::new(&[
         Seed::ParamU32("version"),
         Seed::ConstU32(account_type::PERP_BIDS_TREE),
@@ -207,6 +226,7 @@ impl DrvAccount for PerpTradeAccountHeader<{ account_type::PERP_BIDS_TREE }> {
 }
 
 impl DrvAccount for PerpTradeAccountHeader<{ account_type::PERP_CLIENT_INFOS }> {
+    const TAG: u32 = account_type::PERP_CLIENT_INFOS;
     const PDA: PdaRef = PdaRef::new(&[
         Seed::ParamU32("version"),
         Seed::ConstU32(account_type::PERP_CLIENT_INFOS),
@@ -217,6 +237,7 @@ impl DrvAccount for PerpTradeAccountHeader<{ account_type::PERP_CLIENT_INFOS }> 
 }
 
 impl DrvAccount for PerpTradeAccountHeader<{ account_type::PERP_CLIENT_INFOS2 }> {
+    const TAG: u32 = account_type::PERP_CLIENT_INFOS2;
     const PDA: PdaRef = PdaRef::new(&[
         Seed::ParamU32("version"),
         Seed::ConstU32(account_type::PERP_CLIENT_INFOS2),
@@ -227,6 +248,7 @@ impl DrvAccount for PerpTradeAccountHeader<{ account_type::PERP_CLIENT_INFOS2 }>
 }
 
 impl DrvAccount for PerpTradeAccountHeader<{ account_type::PERP_CLIENT_INFOS3 }> {
+    const TAG: u32 = account_type::PERP_CLIENT_INFOS3;
     const PDA: PdaRef = PdaRef::new(&[
         Seed::ParamU32("version"),
         Seed::ConstU32(account_type::PERP_CLIENT_INFOS3),
@@ -237,6 +259,7 @@ impl DrvAccount for PerpTradeAccountHeader<{ account_type::PERP_CLIENT_INFOS3 }>
 }
 
 impl DrvAccount for PerpTradeAccountHeader<{ account_type::PERP_CLIENT_INFOS4 }> {
+    const TAG: u32 = account_type::PERP_CLIENT_INFOS4;
     const PDA: PdaRef = PdaRef::new(&[
         Seed::ParamU32("version"),
         Seed::ConstU32(account_type::PERP_CLIENT_INFOS4),
@@ -247,6 +270,7 @@ impl DrvAccount for PerpTradeAccountHeader<{ account_type::PERP_CLIENT_INFOS4 }>
 }
 
 impl DrvAccount for PerpTradeAccountHeader<{ account_type::PERP_CLIENT_INFOS5 }> {
+    const TAG: u32 = account_type::PERP_CLIENT_INFOS5;
     const PDA: PdaRef = PdaRef::new(&[
         Seed::ParamU32("version"),
         Seed::ConstU32(account_type::PERP_CLIENT_INFOS5),
@@ -257,6 +281,7 @@ impl DrvAccount for PerpTradeAccountHeader<{ account_type::PERP_CLIENT_INFOS5 }>
 }
 
 impl DrvAccount for PerpTradeAccountHeader<{ account_type::PERP_LINES }> {
+    const TAG: u32 = account_type::PERP_LINES;
     const PDA: PdaRef = PdaRef::new(&[
         Seed::ParamU32("version"),
         Seed::ConstU32(account_type::PERP_LINES),
@@ -267,6 +292,7 @@ impl DrvAccount for PerpTradeAccountHeader<{ account_type::PERP_LINES }> {
 }
 
 impl DrvAccount for PerpTradeAccountHeader<{ account_type::PERP_LONG_PX_TREE }> {
+    const TAG: u32 = account_type::PERP_LONG_PX_TREE;
     const PDA: PdaRef = PdaRef::new(&[
         Seed::ParamU32("version"),
         Seed::ConstU32(account_type::PERP_LONG_PX_TREE),
@@ -277,6 +303,7 @@ impl DrvAccount for PerpTradeAccountHeader<{ account_type::PERP_LONG_PX_TREE }> 
 }
 
 impl DrvAccount for PerpTradeAccountHeader<{ account_type::PERP_SHORT_PX_TREE }> {
+    const TAG: u32 = account_type::PERP_SHORT_PX_TREE;
     const PDA: PdaRef = PdaRef::new(&[
         Seed::ParamU32("version"),
         Seed::ConstU32(account_type::PERP_SHORT_PX_TREE),
@@ -287,6 +314,7 @@ impl DrvAccount for PerpTradeAccountHeader<{ account_type::PERP_SHORT_PX_TREE }>
 }
 
 impl DrvAccount for PerpTradeAccountHeader<{ account_type::PERP_REBALANCE_TIME_TREE }> {
+    const TAG: u32 = account_type::PERP_REBALANCE_TIME_TREE;
     const PDA: PdaRef = PdaRef::new(&[
         Seed::ParamU32("version"),
         Seed::ConstU32(account_type::PERP_REBALANCE_TIME_TREE),
