@@ -219,11 +219,11 @@ pub mod voting {
     pub const MIN_VOTING_QUORUM: i64 = 5;
 
     /// Topic 1 - Fee rate
-    pub const MIN_FEE_RATE: u32 = 10;
+    pub const MIN_FEE_RATE: u32 = 4;
     pub const MAX_FEE_RATE: u32 = 30;
     pub const FEE_RATE_STEP: f64 = 0.0005;
-    pub const START_SPOT_FEE_RATE: u32 = 10;
-    pub const START_PERP_FEE_RATE: u32 = 10;
+    pub const START_SPOT_FEE_RATE: u32 = 4;
+    pub const START_PERP_FEE_RATE: u32 = 4;
 
     /// Topic 2 - Pool ratio
     pub const MIN_POOL_RATIO: u32 = 4;
