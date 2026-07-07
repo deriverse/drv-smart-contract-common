@@ -31,6 +31,7 @@ pub mod candles {
             &self.candles
         }
     }
+
     pub const CANDLES: CandleRegister = CandleRegister {
         candles: &[
             CandleParams {

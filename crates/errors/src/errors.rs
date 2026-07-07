@@ -920,9 +920,9 @@ pub enum DeriverseErrorKind {
 
     #[error(
         code = 334,
-        msg = "Couldnt find withdrawal address {withdrawal_address}"
+        msg = "Vm Record with tag {tag} and address {address} was not found in whitelist"
     )]
-    WithdrawalAddressWasNotFound { withdrawal_address: Pubkey },
+    VmRecordWasNotFound { tag: u32, address: Pubkey },
 
     #[error(
         code = 335,
@@ -1088,6 +1088,9 @@ pub enum DeriverseErrorKind {
         reserve_address: Pubkey,
         obligation_address: Pubkey,
     },
+
+    #[error(code = 365, msg = "VM Whitelist Record datau corrutpion")]
+    VmWhitelistRecordDataCorruption,
 }
 
 #[derive(Debug, Serialize, Deserialize, PartialEq)]

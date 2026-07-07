@@ -2,11 +2,10 @@ use crate::{
     new_types::{instrument::InstrId, version::Version},
     state::{
         masks::instr_mask::InstrInputMask,
-        types::{quote_status::QuoteMask, vm_status::VmMask, CappedI64},
+        types::{quote_status::QuoteMask, vm_status::VmMask, CappedI64, Provider},
     },
 };
 use bytemuck::{Pod, Zeroable};
-use solana_pubkey::Pubkey;
 
 #[repr(C)]
 #[derive(Clone, Copy, Pod, Zeroable)]
@@ -942,4 +941,24 @@ pub struct KaminoChangePositionData {
 pub struct SetForeignDepositData {
     pub tag: u8,
     pub foreign_deposit: u8,
+}
+
+#[repr(C)]
+#[derive(Clone, Copy, Pod, Zeroable)]
+pub struct ExternalSwapData {
+    pub tag: u8,
+    pub routing_length: u8,
+    pub padding_u16: u16,
+    pub instr_id: InstrId,
+    pub in_token_id: u32,
+    pub out_token_id: u32,
+    pub amount_in: i64,
+    pub min_amount_out: i64,
+}
+
+#[repr(C)]
+#[derive(Clone, Copy, Pod, Zeroable)]
+pub struct VmAddProgramIdData {
+    pub tag: u8,
+    pub provider: Provider,
 }
