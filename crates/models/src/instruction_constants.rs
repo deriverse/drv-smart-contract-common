@@ -216,7 +216,7 @@ impl DrvInstruction for SellMarketSeatInstruction {
 pub struct TerminatePrivateModeInstruction;
 impl DrvInstruction for TerminatePrivateModeInstruction {
     const INSTRUCTION_NUMBER: u8 = 50;
-    const MIN_ACCOUNTS: usize = 3;
+    const MIN_ACCOUNTS: usize = 2;
 }
 
 pub struct ChangePointsProgramExpirationInstruction;
