@@ -6,7 +6,6 @@ pub mod holder;
 pub mod instrument;
 pub mod masks;
 pub mod perps;
-pub mod private_mode;
 pub mod root;
 pub mod spots;
 pub mod token;
