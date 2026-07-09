@@ -111,7 +111,6 @@ pub mod account_type {
     pub const PERP_LONG_PX_TREE: u32 = 48;
     pub const PERP_SHORT_PX_TREE: u32 = 49;
     pub const PERP_REBALANCE_TIME_TREE: u32 = 50;
-    pub const PRIVATE_CLIENTS: u32 = 51;
     pub const VM_CLIENT: u32 = 52;
 
     #[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
@@ -151,7 +150,6 @@ pub mod account_type {
         PerpLongPxTree = 48,
         PerpShortPxTree = 49,
         PerpRebalanceTimeTree = 50,
-        PrivateClients = 51,
         VmClient = 52,
         KaminoClient = 53,
         ProgramTokenAccount,
@@ -196,7 +194,6 @@ pub mod account_type {
                 48 => Self::PerpLongPxTree,
                 49 => Self::PerpShortPxTree,
                 50 => Self::PerpRebalanceTimeTree,
-                51 => Self::PrivateClients,
                 52 => Self::VmClient,
                 53 => Self::KaminoClient,
 

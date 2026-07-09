@@ -630,9 +630,6 @@ pub enum DeriverseErrorKind {
         crncy_token_id: u32,
     },
 
-    #[error(code = 288, msg = "{client_address} is not in private queue")]
-    ClientIsNotInPrivate { client_address: Pubkey },
-
     #[error(
         code = 289,
         msg = "Invalid tokens decimals amount: {decs_count}, expected to be in range {min}..={max}"
@@ -643,11 +640,6 @@ pub enum DeriverseErrorKind {
         max: u32,
         token_address: Pubkey,
     },
-    #[error(
-        code = 290,
-        msg = "Clients wallet is already in private queue on index {index}"
-    )]
-    WalletIsInPrivateQueue { index: u32, wallet_address: Pubkey },
 
     #[error(
         code = 291,
