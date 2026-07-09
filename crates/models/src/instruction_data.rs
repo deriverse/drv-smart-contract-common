@@ -605,23 +605,6 @@ pub struct SellMarketSeatData {
 
 #[repr(C)]
 #[derive(Clone, Copy, Pod, Zeroable)]
-/// New Private Client
-///
-/// **Used in:** `new_private_client` instruction
-///
-/// **Tag:** `49`
-///
-/// ### Fields
-/// - `expiration_time` - Clients position in queue expiration time
-pub struct NewPrivateClient {
-    pub tag: u8,
-    pub padding_u8: u8,
-    pub padding_u16: u16,
-    pub expiration_time: u32,
-}
-
-#[repr(C)]
-#[derive(Clone, Copy, Pod, Zeroable)]
 /// Points Program Expiration
 ///
 /// **Used in:** `change_points_program_expiration` instruction
