@@ -213,16 +213,10 @@ impl DrvInstruction for SellMarketSeatInstruction {
     const MIN_ACCOUNTS: usize = 20;
 }
 
-pub struct NewPrivateClientInstruction;
-impl DrvInstruction for NewPrivateClientInstruction {
-    const INSTRUCTION_NUMBER: u8 = 49;
-    const MIN_ACCOUNTS: usize = 6;
-}
-
 pub struct TerminatePrivateModeInstruction;
 impl DrvInstruction for TerminatePrivateModeInstruction {
     const INSTRUCTION_NUMBER: u8 = 50;
-    const MIN_ACCOUNTS: usize = 3;
+    const MIN_ACCOUNTS: usize = 2;
 }
 
 pub struct ChangePointsProgramExpirationInstruction;

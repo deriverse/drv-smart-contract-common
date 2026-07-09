@@ -303,13 +303,6 @@ pub mod ref_constants {
     pub const MAX_REF_RATIO: f64 = 0.5;
 }
 
-pub mod private_mode {
-    // #[cfg(not(feature = "test-sbf"))]
-    pub const MAX_PRIVATE_CLIENTS_IN_QUEUE: u32 = 512;
-    // #[cfg(feature = "test-sbf")]
-    // pub const MAX_PRIVATE_CLIENTS_IN_QUEUE: u32 = 2;
-}
-
 #[cfg(feature = "competition")]
 pub mod competition {
     pub const COMPETITION_ID: u8 = 3;

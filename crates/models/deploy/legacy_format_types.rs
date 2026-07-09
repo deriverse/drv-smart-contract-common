@@ -61,7 +61,6 @@ pub mod account_type {
     pub const PERP_LONG_PX_TREE: u32 = 48;
     pub const PERP_SHORT_PX_TREE: u32 = 49;
     pub const PERP_REBALANCE_TIME_TREE: u32 = 50;
-    pub const PRIVATE_CLIENTS: u32 = 51;
     pub const CLIENT_VM: u32 = 52;
 }
 
@@ -664,19 +663,4 @@ pub struct PxOrders {
     pub link: u32,
     pub begin: u32,
     pub end: u32,
-}
-
-#[repr(C)]
-#[derive(Pod, Zeroable, Clone, Copy, Default, Debug)]
-pub struct PrivateClientHeader {
-    pub tag: u32,
-    pub version: u32,
-}
-
-#[repr(C)]
-#[derive(Pod, Zeroable, Clone, Copy, Default, Debug)]
-pub struct PrivateClient {
-    pub creation_time: u32,
-    pub expiration_time: u32,
-    pub wallet: Pubkey,
 }
