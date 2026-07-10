@@ -5,8 +5,6 @@ pub mod log_type {
     // Client logs
     pub const DEPOSIT: u8 = 1;
     pub const WITHDRAW: u8 = 2;
-    pub const FEES_DEPOSIT: u8 = 5;
-    pub const FEES_WITHDRAW: u8 = 6;
     pub const EARNINGS: u8 = 8;
     pub const DRVS_AIRDROP: u8 = 9;
     pub const VM_INIT_ACTIVATE: u8 = 36;
@@ -115,34 +113,6 @@ pub struct DepositReport {
     pub time: u32,
     pub amount: i64,
     pub custom_id: i64,
-}
-
-#[repr(C)]
-#[derive(Copy, Clone, Zeroable, Pod, Default)]
-pub struct FeesDepositReport {
-    pub tag: u8,
-    pub padding_u8: u8,
-    pub padding_u16: u16,
-    pub padding_u32: u32,
-    pub seq_no: u32,
-    pub client_id: u32,
-    pub token_id: u32,
-    pub time: u32,
-    pub amount: i64,
-}
-
-#[repr(C)]
-#[derive(Copy, Clone, Zeroable, Pod, Default)]
-pub struct FeesWithdrawReport {
-    pub tag: u8,
-    pub padding_u8: u8,
-    pub padding_u16: u16,
-    pub padding_u32: u32,
-    pub seq_no: u32,
-    pub client_id: u32,
-    pub token_id: u32,
-    pub time: u32,
-    pub amount: i64,
 }
 
 #[repr(C)]
