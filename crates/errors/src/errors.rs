@@ -432,9 +432,6 @@ pub enum DeriverseErrorKind {
     )]
     TooEarlyToWithdrawFees { limit_time: u32, current_time: u32 },
 
-    #[error(code = 236, msg = "Fees withdrawal is too large")]
-    FeesWithdrawalIsTooLarge { value: i64 },
-
     #[error(code = 237, msg = "Invalid oracle feed")]
     InvalidOracleFeed {
         expected_address: Pubkey,
@@ -939,12 +936,6 @@ pub enum DeriverseErrorKind {
         msg = "Impossible to close account with unclosed {asset_record}"
     )]
     ImpossibleToCloseAccountUnclosedAsset { asset_record: AssetRecord },
-
-    #[error(
-        code = 340,
-        msg = "Uncollected fees prepayment for token with id {crncy_token_id}"
-    )]
-    UncollectedFeesPrepayment { crncy_token_id: u32 },
 
     #[error(
         code = 341,

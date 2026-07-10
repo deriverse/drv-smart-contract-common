@@ -33,12 +33,6 @@ impl DrvInstruction for NewBaseCrncyInstruction {
     const MIN_ACCOUNTS: usize = 8;
 }
 
-pub struct FeesDepositInstruction;
-impl DrvInstruction for FeesDepositInstruction {
-    const INSTRUCTION_NUMBER: u8 = 5;
-    const MIN_ACCOUNTS: usize = 6;
-}
-
 pub struct DepositInstruction;
 impl DrvInstruction for DepositInstruction {
     const INSTRUCTION_NUMBER: u8 = 7;
@@ -157,12 +151,6 @@ pub struct PerpChangeLeverageInstruction;
 impl DrvInstruction for PerpChangeLeverageInstruction {
     const INSTRUCTION_NUMBER: u8 = 37;
     const MIN_ACCOUNTS: usize = 20;
-}
-
-pub struct FeesWithdrawInstruction;
-impl DrvInstruction for FeesWithdrawInstruction {
-    const INSTRUCTION_NUMBER: u8 = 39;
-    const MIN_ACCOUNTS: usize = 6;
 }
 
 pub struct SetInstrReadyForPerpUpgradeInstruction;
