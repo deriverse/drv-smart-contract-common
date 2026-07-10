@@ -238,15 +238,15 @@ pub mod voting {
     pub const START_MARGIN_CALL_PENALTY_RATE: u32 = 10;
 
     /// Topic 4 - Fee prepayment for max discount
-    pub const PADDING_START_FEES_PREPAYMENT_FOR_MAX_DISCOUNT: u32 = 50;
-    pub const PADDING_FEES_PREPAYMENT_STEP: f64 = 1000.0;
-    pub const PADDING_MIN_FEES_PREPAYMENT_FOR_MAX_DISCOUNT: u32 = 10;
+    pub const START_FEES_PREPAYMENT_FOR_MAX_DISCOUNT: u32 = 50;
+    pub const FEES_PREPAYMENT_STEP: f64 = 1000.0;
+    pub const MIN_FEES_PREPAYMENT_FOR_MAX_DISCOUNT: u32 = 10;
 
     /// Topic 5 - Max discount rate
-    pub const PADDING_MIN_MAX_DISCOUNT_RATE: u32 = 10;
-    pub const PADDING_MAX_MAX_DISCOUNT_RATE: u32 = 30;
-    pub const PADDING_MAX_DISCOUNT_STEP: f64 = 0.025;
-    pub const PADDING_START_MAX_DISCOUNT: u32 = 20;
+    pub const MIN_MAX_DISCOUNT_RATE: u32 = 10;
+    pub const MAX_MAX_DISCOUNT_RATE: u32 = 30;
+    pub const MAX_DISCOUNT_STEP: f64 = 0.025;
+    pub const START_MAX_DISCOUNT: u32 = 20;
 }
 
 pub mod trading_limitations {
