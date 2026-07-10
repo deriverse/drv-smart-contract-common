@@ -23,11 +23,11 @@ use crate::{new_types::client::ClientId, state::types::CappedI64};
 pub struct ClientCommunityRecord {
     pub dividends_rate: f64,
     pub dividends_value: CappedI64,
-    pub fees_prepayment: CappedI64,
-    pub fees_ratio: f64,
+    pub padding_fees_prepayment: CappedI64,
+    pub padding_fees_ratio: f64,
     pub ref_rewards: CappedI64,
     pub ref_payments: CappedI64,
-    pub last_fees_prepayment_time: u32,
+    pub padding_last_fees_prepayment_time: u32,
     pub crncy_token_id: u32,
 }
 

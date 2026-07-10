@@ -253,44 +253,6 @@ pub struct DepositData {
 
 #[repr(C)]
 #[derive(Clone, Copy, Pod, Zeroable)]
-/// Fees Deposit Data
-///
-/// **Used in:** `fees_deposit` instruction
-///
-/// **Tag:** `5`
-///
-/// ### Fields
-/// - `token_id` - Id of token in the system, must be base crncy
-/// - `amount` - Amount of tokens client wants to prepay
-pub struct FeesDepositData {
-    pub tag: u8,
-    pub padding_u8: u8,
-    pub padding_u16: u16,
-    pub token_id: u32,
-    pub amount: CappedI64,
-}
-
-#[repr(C)]
-#[derive(Clone, Copy, Pod, Zeroable)]
-/// Fees Withdraw Data
-///
-/// **Used in:** `fees_withdraw` instruction
-///
-/// **Tag:** `39`
-///
-/// ### Fields
-/// - `token_id` - Id of token in the system, must be base crncy
-/// - `amount` - Amount of tokens client wants to withdraw
-pub struct FeesWithdrawData {
-    pub tag: u8,
-    pub padding_u8: u8,
-    pub padding_u16: u16,
-    pub token_id: u32,
-    pub amount: CappedI64,
-}
-
-#[repr(C)]
-#[derive(Clone, Copy, Pod, Zeroable)]
 /// Perp Deposit Data
 ///
 /// **Used in:** `perp_deposit` instruction
