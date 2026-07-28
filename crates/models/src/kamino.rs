@@ -38,6 +38,15 @@ pub struct InitObligationFarmsForReserveArgs {
 
 #[repr(C)]
 #[derive(Clone, Copy, Pod, Zeroable)]
+pub struct LastUpdate {
+    pub slot: u64,
+    pub stale: u8,
+    pub price_status: u8,
+    pub placeholder: [u8; 6],
+}
+
+#[repr(C)]
+#[derive(Clone, Copy, Pod, Zeroable)]
 pub struct ObligationCollateral {
     pub deposit_reserve: Pubkey,
     pub deposited_amount: u64,
@@ -153,7 +162,7 @@ pub struct ReserveConfig {
 pub struct ObligationPrefix {
     pub discriminator: [u8; 8],
     pub tag: u64,
-    pub last_update: [u8; 16],
+    pub last_update: LastUpdate,
     pub lending_market: Pubkey,
     pub owner: Pubkey,
     pub deposits: [ObligationCollateral; 8],
