@@ -432,3 +432,9 @@ impl DrvInstruction for SetForeignDepositInstruction {
     const INSTRUCTION_NUMBER: u8 = 87;
     const MIN_ACCOUNTS: usize = 3;
 }
+
+pub struct SpotQuotesReplaceInstructionV2;
+impl DrvInstruction for SpotQuotesReplaceInstructionV2 {
+    const INSTRUCTION_NUMBER: u8 = 88;
+    const MIN_ACCOUNTS: usize = 14;
+}

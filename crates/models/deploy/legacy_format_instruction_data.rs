@@ -704,3 +704,28 @@ pub struct SetForeignDepositData {
     pub tag: u8,
     pub foreign_deposit: u8,
 }
+
+#[repr(C)]
+#[derive(Clone, Copy, Pod, Zeroable)]
+/// Spot Quotes Replace Data
+///
+/// **Used in:** `spot_quotes_replace` instruction
+///
+/// **Tag:** `34`
+///
+/// ### Fields
+/// - `mask` - Multiple quotes order manager
+/// - `instr_id` - Instr pair id
+pub struct SpotQuotesReplaceDataV2 {
+    pub tag: u8,
+    pub bump: u8,
+    pub order_type: u8,
+    pub config: u8,
+    pub quotes_sides: u32,
+    pub instr_id: u32,
+    pub quotes_amount: u8,
+    pub padding_u8: u8,
+    pub padding_u16: u16,
+    pub price_tick: i64,
+    pub qty_tick: i64,
+}

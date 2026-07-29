@@ -105,8 +105,6 @@ pub const EMA_COEFFICIENT: f64 = 2.0;
 
 pub const SWAP_FEE_RATE: f64 = 0.0;
 
-pub const MAX_QUOTE_ORDERS: u8 = 12;
-
 pub const MULTISIG_FLAG: i64 = 0x80;
 pub const FOREIGN_DEPOSIT: i64 = 0x100;
 

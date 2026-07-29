@@ -605,7 +605,7 @@ pub mod vm_status {
 }
 
 pub mod quote_status {
-    use crate::constants::MAX_QUOTE_ORDERS;
+    pub const MAX_QUOTE_ORDERS: usize = 12;
 
     use super::*;
 
@@ -774,6 +774,174 @@ pub mod quote_status {
             }
 
             let entries: Vec<QuoteEntry> = mask.into_iter().collect();
+            assert_eq!(entries.len(), 7);
+
+            for (i, entry) in entries.iter().enumerate() {
+                assert_eq!(entry.position, i);
+                if i % 2 == 0 {
+                    assert_eq!(entry.quote_side, OrderSide::Bid);
+                } else {
+                    assert_eq!(entry.quote_side, OrderSide::Ask);
+                }
+            }
+        }
+    }
+}
+
+pub mod quote_status_v2 {
+    pub const MAX_QUOTE_ORDERS: u8 = 32;
+
+    use crate::instruction_data::SpotQuotesReplaceDataV2;
+
+    use super::*;
+
+    #[repr(u8)]
+    #[derive(Debug, Clone, Copy, PartialEq, Eq)]
+    pub enum QuotesFlag {
+        MassCancel = 0x1,
+        BailOnOrderNotFound = 0x2,
+    }
+
+    #[repr(transparent)]
+    #[derive(Clone, Copy, Debug, Zeroable, Pod, Default)]
+    pub struct QuotesConfig(pub u8);
+
+    impl QuotesConfig {
+        pub fn get_flag(&self, flag: QuotesFlag) -> bool {
+            self.0 & flag as u8 != 0
+        }
+
+        pub fn set_flag(&mut self, flag: QuotesFlag) {
+            self.0 |= flag as u8;
+        }
+
+        pub fn clear_flag(&mut self, flag: QuotesFlag) {
+            self.0 &= !(flag as u8);
+        }
+    }
+
+    #[repr(transparent)]
+    #[derive(Clone, Copy, Debug, Zeroable, Pod, Default)]
+    //array of booleans where bid = 1 and ask = 0
+    pub struct QuoteSides(pub u32);
+
+    #[repr(C)]
+    #[derive(Clone, Copy, Debug, Zeroable, Pod)]
+    pub struct QuoteOrderPacked {
+        pub price: u32,
+        pub qty: u32,
+    }
+
+    #[derive(Clone, Copy, Debug, PartialEq, Eq)]
+    pub struct QuoteEntry {
+        pub position: usize,
+        pub quote_side: OrderSide,
+    }
+
+    impl SpotQuotesReplaceDataV2 {
+        pub fn quote_sides_iter(&self) -> QuoteSidesIter {
+            self.quotes_sides.into_iter(self.quotes_amount as usize)
+        }
+    }
+
+    impl QuoteSides {
+        const QUOTE_ARRAY_SIZE: usize = MAX_QUOTE_ORDERS as usize;
+
+        pub fn quote_side(&self, position: usize) -> OrderSide {
+            if (self.0 >> position as u32) & 1 == 0 {
+                OrderSide::Bid
+            } else {
+                OrderSide::Ask
+            }
+        }
+
+        /// bid: false for Bid, true for Ask
+        pub fn set_quote(&mut self, position: usize, order_side: OrderSide) {
+            assert!(position < Self::QUOTE_ARRAY_SIZE, "Position must be 0-32");
+
+            match order_side {
+                OrderSide::Bid => self.0 &= !(1 << position as u32),
+                OrderSide::Ask => self.0 |= 1 << position as u32,
+            }
+        }
+
+        pub fn clear_quotes(&mut self) {
+            self.0 = 0;
+        }
+
+        pub fn into_iter(self, amount: usize) -> QuoteSidesIter {
+            QuoteSidesIter {
+                mask: self,
+                len: amount,
+                position: 0,
+            }
+        }
+    }
+
+    pub struct QuoteSidesIter {
+        mask: QuoteSides,
+        len: usize,
+        position: usize,
+    }
+
+    impl Iterator for QuoteSidesIter {
+        type Item = QuoteEntry;
+
+        fn next(&mut self) -> Option<Self::Item> {
+            if self.position >= self.len {
+                return None;
+            }
+
+            let current_position = self.position;
+            self.position += 1;
+
+            Some(QuoteEntry {
+                position: current_position,
+                quote_side: self.mask.quote_side(current_position),
+            })
+        }
+    }
+
+    #[cfg(test)]
+    mod tests {
+        use super::*;
+
+        #[test]
+        fn test_quote_mask_quotes() {
+            let mut mask = QuoteSides::default();
+
+            for i in 0..3 as usize {
+                assert_eq!(mask.quote_side(i), OrderSide::Bid);
+            }
+
+            mask.set_quote(0, OrderSide::Ask);
+            mask.set_quote(5, OrderSide::Ask);
+            mask.set_quote(11, OrderSide::Ask);
+
+            assert_eq!(mask.quote_side(0), OrderSide::Ask);
+            assert_eq!(mask.quote_side(5), OrderSide::Ask);
+            assert_eq!(mask.quote_side(11), OrderSide::Ask);
+
+            assert_eq!(mask.quote_side(1), OrderSide::Bid);
+            assert_eq!(mask.quote_side(6), OrderSide::Bid);
+            assert_eq!(mask.quote_side(1), OrderSide::Bid);
+        }
+
+        #[test]
+        fn test_quote_mask_iterator() {
+            let mut mask = QuoteSides::default();
+            for i in 0..7 as usize {
+                mask.set_quote(
+                    i,
+                    if i % 2 == 0 {
+                        OrderSide::Bid
+                    } else {
+                        OrderSide::Ask
+                    },
+                );
+            }
+
+            let entries: Vec<QuoteEntry> = mask.into_iter(7).collect();
             assert_eq!(entries.len(), 7);
 
             for (i, entry) in entries.iter().enumerate() {
