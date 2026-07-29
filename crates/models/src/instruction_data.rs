@@ -2,11 +2,12 @@ use crate::{
     new_types::{instrument::InstrId, version::Version},
     state::{
         masks::instr_mask::InstrInputMask,
-        types::{quote_status::QuoteMask, vm_status::VmMask, CappedI64},
+        types::{
+            quote_status::QuoteMask, quote_status_v2::QuoteSides, vm_status::VmMask, CappedI64,
+        },
     },
 };
 use bytemuck::{Pod, Zeroable};
-use solana_pubkey::Pubkey;
 
 #[repr(C)]
 #[derive(Clone, Copy, Pod, Zeroable)]
@@ -370,6 +371,31 @@ pub struct SpotQuotesReplaceData {
     pub padding_u16: u16,
     pub instr_id: InstrId,
     pub padding_u32: u32,
+}
+
+#[repr(C)]
+#[derive(Clone, Copy, Pod, Zeroable)]
+/// Spot Quotes Replace Data
+///
+/// **Used in:** `spot_quotes_replace` instruction
+///
+/// **Tag:** `34`
+///
+/// ### Fields
+/// - `mask` - Multiple quotes order manager
+/// - `instr_id` - Instr pair id
+pub struct SpotQuotesReplaceDataV2 {
+    pub tag: u8,
+    pub bump: u8,
+    pub order_type: u8,
+    pub config_flags: u8, // bail on order not found | mass_cancel
+    pub quotes_side: QuoteSides,
+    pub instr_id: InstrId,
+    pub quotes_amount: u8,
+    pub padding_u8: u8,
+    pub padding_u16: u16,
+    pub price_tick: i64,
+    pub qty_tick: i64,
 }
 
 #[repr(C)]
