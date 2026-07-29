@@ -789,7 +789,9 @@ pub mod quote_status {
 }
 
 pub mod quote_status_v2 {
-    pub const MAX_QUOTE_ORDERS: usize = 32;
+    pub const MAX_QUOTE_ORDERS: u8 = 32;
+
+    use crate::instruction_data::SpotQuotesReplaceDataV2;
 
     use super::*;
 
@@ -836,8 +838,14 @@ pub mod quote_status_v2 {
         pub quote_side: OrderSide,
     }
 
+    impl SpotQuotesReplaceDataV2 {
+        pub fn quote_sides_iter(&self) -> QuoteSidesIter {
+            self.quotes_sides.into_iter(self.quotes_amount as usize)
+        }
+    }
+
     impl QuoteSides {
-        const QUOTE_ARRAY_SIZE: usize = MAX_QUOTE_ORDERS;
+        const QUOTE_ARRAY_SIZE: usize = MAX_QUOTE_ORDERS as usize;
 
         pub fn quote_side(&self, position: usize) -> OrderSide {
             if (self.0 >> position as u32) & 1 == 0 {
