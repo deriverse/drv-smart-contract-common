@@ -793,6 +793,31 @@ pub mod quote_status_v2 {
 
     use super::*;
 
+    #[repr(u8)]
+    #[derive(Debug, Clone, Copy, PartialEq, Eq)]
+    pub enum QuotesFlag {
+        MassCancel = 0x1,
+        BailOnOrderNotFound = 0x2,
+    }
+
+    #[repr(transparent)]
+    #[derive(Clone, Copy, Debug, Zeroable, Pod, Default)]
+    pub struct QuotesConfig(pub u8);
+
+    impl QuotesConfig {
+        pub fn get_flag(&self, flag: QuotesFlag) -> bool {
+            self.0 & flag as u8 != 0
+        }
+
+        pub fn set_flag(&mut self, flag: QuotesFlag) {
+            self.0 |= flag as u8;
+        }
+
+        pub fn clear_flag(&mut self, flag: QuotesFlag) {
+            self.0 &= !(flag as u8);
+        }
+    }
+
     #[repr(transparent)]
     #[derive(Clone, Copy, Debug, Zeroable, Pod, Default)]
     //array of booleans where bid = 1 and ask = 0

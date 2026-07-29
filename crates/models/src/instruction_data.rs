@@ -3,7 +3,10 @@ use crate::{
     state::{
         masks::instr_mask::InstrInputMask,
         types::{
-            quote_status::QuoteMask, quote_status_v2::QuoteSides, vm_status::VmMask, CappedI64,
+            quote_status::QuoteMask,
+            quote_status_v2::{QuotesConfig, QuoteSides},
+            vm_status::VmMask,
+            CappedI64,
         },
     },
 };
@@ -388,7 +391,7 @@ pub struct SpotQuotesReplaceDataV2 {
     pub tag: u8,
     pub bump: u8,
     pub order_type: u8,
-    pub config_flags: u8, // bail on order not found | mass_cancel
+    pub config: QuotesConfig,
     pub quotes_side: QuoteSides,
     pub instr_id: InstrId,
     pub quotes_amount: u8,
