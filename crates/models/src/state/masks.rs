@@ -60,7 +60,8 @@ pub mod instr_mask {
         pub const ALLOWED_FLAGS: u32 = InstrFlag::ZeroFees as u32
             | InstrFlag::FixedFees as u32
             | InstrFlag::SimilarAssets as u32
-            | InstrFlag::UsdStablecoin as u32;
+            | InstrFlag::UsdStablecoin as u32
+            | InstrFlag::Forex as u32;
     }
 
     impl SimpleInstrMask for InstrInputMask {
@@ -96,7 +97,7 @@ pub mod instr_mask {
 
         instr_mask.merge(input_instr_mask);
 
-        assert!(instr_mask.get_flag(InstrFlag::Forex));
+        assert!(!instr_mask.get_flag(InstrFlag::Forex));
         assert!(instr_mask.get_flag(InstrFlag::ReadyToPerpUpgrade));
         assert!(instr_mask.get_flag(InstrFlag::SimilarAssets));
     }
