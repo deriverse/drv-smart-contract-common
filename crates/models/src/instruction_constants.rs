@@ -316,7 +316,7 @@ impl DrvInstruction for VmInitDeactivateCancel {
 pub struct VmFinalizeDeactivate;
 impl DrvInstruction for VmFinalizeDeactivate {
     const INSTRUCTION_NUMBER: u8 = 68;
-    const MIN_ACCOUNTS: usize = 3;
+    const MIN_ACCOUNTS: usize = 4;
 }
 
 pub struct VmInitWithdraw;
