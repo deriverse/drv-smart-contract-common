@@ -35,9 +35,9 @@ pub mod instr_mask {
     }
 
     struct FlagRule {
-        flag: InstrFlag,
-        requires: &'static [u32],
-        forbids: u32,
+        pub flag: InstrFlag,
+        pub requires: &'static [u32],
+        pub forbids: u32,
     }
 
     pub const RULES: &[FlagRule] = &[
