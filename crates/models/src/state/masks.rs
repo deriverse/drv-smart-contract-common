@@ -18,22 +18,6 @@ pub mod instr_mask {
         ExpandableCandles = 0x100,
     }
 
-    impl InstrFlag {
-        pub const ALL: [InstrFlag; 11] = [
-            InstrFlag::PerpActive,
-            InstrFlag::ReadyToPerpUpgrade,
-            InstrFlag::ZeroFees,
-            InstrFlag::FixedFees,
-            InstrFlag::SimilarAssets,
-            InstrFlag::UsdStablecoin,
-            InstrFlag::Forex,
-            InstrFlag::Suspended,
-            InstrFlag::LongMarginCall,
-            InstrFlag::ShortMarginCall,
-            InstrFlag::ExpandableCandles,
-        ];
-    }
-
     impl std::fmt::Display for InstrFlag {
         fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
             write!(f, "{:?}", self)
@@ -56,7 +40,7 @@ pub mod instr_mask {
         forbids: u32,
     }
 
-    const RULES: &[FlagRule] = &[
+    pub const RULES: &[FlagRule] = &[
         FlagRule {
             flag: InstrFlag::PerpActive,
             requires: &[],
@@ -124,53 +108,6 @@ pub mod instr_mask {
     #[derive(Clone, Copy, Pod, Zeroable, Debug, Default, PartialEq, Eq)]
     #[repr(transparent)]
     pub struct InstrMask(pub u32);
-
-    impl InstrMask {
-        pub const KNOWN_FLAGS: u32 = bits(&InstrFlag::ALL);
-
-        pub fn validate(&self) -> Result<(), InstrMaskError> {
-            let raw_mask = self.0;
-
-            let unknown = raw_mask & !Self::KNOWN_FLAGS;
-            if unknown != 0 {
-                return Err(InstrMaskError::UnknownBits(unknown));
-            }
-
-            for rule in RULES {
-                if raw_mask & rule.flag as u32 == 0 {
-                    continue;
-                }
-                for &clause in rule.requires {
-                    if raw_mask & clause == 0 {
-                        return Err(InstrMaskError::MissingRequired {
-                            flag: rule.flag,
-                            required: clause,
-                        });
-                    }
-                }
-                let forbidden = raw_mask & rule.forbids;
-                if forbidden != 0 {
-                    return Err(InstrMaskError::Forbidden {
-                        flag: rule.flag,
-                        forbidden,
-                    });
-                }
-            }
-            Ok(())
-        }
-
-        pub fn merge(&mut self, input: InstrInputMask) {
-            self.0 |= (input.0 as u32) & InstrInputMask::ALLOWED_FLAGS;
-        }
-
-        pub fn try_merge(&mut self, input: InstrInputMask) -> Result<(), InstrMaskError> {
-            let mut next = *self;
-            next.merge(input);
-            next.validate()?;
-            *self = next;
-            Ok(())
-        }
-    }
 
     impl SimpleInstrMask for InstrMask {
         fn get_flag(&self, flag: InstrFlag) -> bool {
