@@ -880,23 +880,14 @@ pub enum DeriverseErrorKind {
     #[error(code = 330, msg = "Pool deposit is disabled for ZeroFees market")]
     PoolDepositDisabled { mask: u32 },
 
-    #[error(
-        code = 330,
-        msg = "Can not set instr flag {flag} without {required_flag} flag up"
-    )]
-    CanNotSetInstrFlag {
-        flag: InstrFlag,
-        required_flag: InstrFlag,
-    },
+    #[error(code = 330, msg = "Missing required flag to set {flag}")]
+    MissingRequiredFlag { flag: InstrFlag, mask: u32 },
 
     #[error(code = 331, msg = "Impossible to create SAM market with SAMCrncy flag")]
     ImpossibleToCreateSAMWithSAMCrncy,
 
-    #[error(
-        code = 332,
-        msg = "Can not set instr flag {flag} as {up_flag} flag is up"
-    )]
-    ConflictInstrFlags { flag: InstrFlag, up_flag: InstrFlag },
+    #[error(code = 332, msg = "Flag {flag} is forbidden for InstrMask")]
+    ForbiddenFlag { flag: InstrFlag, mask: u32 },
 
     #[error(
         code = 333,
@@ -1071,6 +1062,9 @@ pub enum DeriverseErrorKind {
         reserve_address: Pubkey,
         obligation_address: Pubkey,
     },
+
+    #[error(code = 365, msg = "Unknown InstrFlag was found in InstrMask")]
+    UnknownInstrFlag { mask: u32 },
 }
 
 #[derive(Debug, Serialize, Deserialize, PartialEq)]
