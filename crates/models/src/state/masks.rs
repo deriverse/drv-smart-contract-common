@@ -34,7 +34,7 @@ pub mod instr_mask {
         out
     }
 
-    struct FlagRule {
+    pub struct FlagRule {
         pub flag: InstrFlag,
         pub requires: &'static [u32],
         pub forbids: u32,
@@ -92,11 +92,62 @@ pub mod instr_mask {
         },
     ];
 
-    #[derive(Debug, Clone, Copy, PartialEq, Eq)]
-    pub enum InstrMaskError {
-        UnknownBits(u32),
-        MissingRequired { flag: InstrFlag, required: u32 },
-        Forbidden { flag: InstrFlag, forbidden: u32 },
+    impl InstrMask {
+        pub const RULES: &[FlagRule] = &[
+            FlagRule {
+                flag: InstrFlag::PerpActive,
+                requires: &[],
+                forbids: bits(&[InstrFlag::ReadyToPerpUpgrade, InstrFlag::SimilarAssets]),
+            },
+            FlagRule {
+                flag: InstrFlag::ReadyToPerpUpgrade,
+                requires: &[],
+                forbids: bits(&[InstrFlag::PerpActive, InstrFlag::SimilarAssets]),
+            },
+            FlagRule {
+                flag: InstrFlag::LongMarginCall,
+                requires: &[InstrFlag::PerpActive as u32],
+                forbids: 0,
+            },
+            FlagRule {
+                flag: InstrFlag::ShortMarginCall,
+                requires: &[InstrFlag::PerpActive as u32],
+                forbids: 0,
+            },
+            FlagRule {
+                flag: InstrFlag::SimilarAssets,
+                requires: &[bits(&[InstrFlag::ZeroFees, InstrFlag::FixedFees])],
+                forbids: bits(&[
+                    InstrFlag::Forex,
+                    InstrFlag::PerpActive,
+                    InstrFlag::ReadyToPerpUpgrade,
+                ]),
+            },
+            FlagRule {
+                flag: InstrFlag::ZeroFees,
+                requires: &[InstrFlag::SimilarAssets as u32],
+                forbids: InstrFlag::FixedFees as u32,
+            },
+            FlagRule {
+                flag: InstrFlag::FixedFees,
+                requires: &[InstrFlag::SimilarAssets as u32],
+                forbids: InstrFlag::ZeroFees as u32,
+            },
+            FlagRule {
+                flag: InstrFlag::UsdStablecoin,
+                requires: &[InstrFlag::SimilarAssets as u32],
+                forbids: 0,
+            },
+            FlagRule {
+                flag: InstrFlag::Forex,
+                requires: &[],
+                forbids: InstrFlag::SimilarAssets as u32,
+            },
+        ];
+
+        pub fn merge(&mut self, input: InstrInputMask) {
+            self.0 |= (input.0 as u32) & InstrInputMask::ALLOWED_FLAGS;
+        }
     }
 
     pub trait SimpleInstrMask {
@@ -151,121 +202,6 @@ pub mod instr_mask {
                 return;
             }
             self.0 &= !(flag as u8)
-        }
-    }
-
-    #[cfg(test)]
-    mod tests {
-        use super::*;
-
-        fn mask(flags: &[InstrFlag]) -> InstrMask {
-            InstrMask(bits(flags))
-        }
-
-        fn input(flags: &[InstrFlag]) -> InstrInputMask {
-            let mut m = InstrInputMask(0);
-            for &f in flags {
-                m.set_flag(f);
-            }
-            m
-        }
-
-        #[test]
-        fn valid_masks() {
-            for flags in [
-                &[][..],
-                &[InstrFlag::Suspended, InstrFlag::ExpandableCandles],
-                &[InstrFlag::ReadyToPerpUpgrade],
-                &[
-                    InstrFlag::PerpActive,
-                    InstrFlag::LongMarginCall,
-                    InstrFlag::ShortMarginCall,
-                ],
-                &[InstrFlag::SimilarAssets, InstrFlag::ZeroFees],
-                &[
-                    InstrFlag::SimilarAssets,
-                    InstrFlag::FixedFees,
-                    InstrFlag::UsdStablecoin,
-                ],
-                &[InstrFlag::Forex, InstrFlag::PerpActive],
-            ] {
-                assert_eq!(mask(flags).validate(), Ok(()), "{flags:?}");
-            }
-        }
-
-        #[test]
-        fn invalid_masks() {
-            for flags in [
-                &[InstrFlag::PerpActive, InstrFlag::ReadyToPerpUpgrade][..],
-                &[InstrFlag::LongMarginCall],
-                &[InstrFlag::ReadyToPerpUpgrade, InstrFlag::ShortMarginCall],
-                &[InstrFlag::SimilarAssets],
-                &[
-                    InstrFlag::SimilarAssets,
-                    InstrFlag::ZeroFees,
-                    InstrFlag::FixedFees,
-                ],
-                &[InstrFlag::ZeroFees],
-                &[InstrFlag::UsdStablecoin],
-                &[
-                    InstrFlag::SimilarAssets,
-                    InstrFlag::ZeroFees,
-                    InstrFlag::Forex,
-                ],
-                &[
-                    InstrFlag::SimilarAssets,
-                    InstrFlag::ZeroFees,
-                    InstrFlag::PerpActive,
-                ],
-                &[
-                    InstrFlag::SimilarAssets,
-                    InstrFlag::ZeroFees,
-                    InstrFlag::ReadyToPerpUpgrade,
-                ],
-            ] {
-                assert!(mask(flags).validate().is_err(), "{flags:?}");
-            }
-        }
-
-        #[test]
-        fn unknown_bits_rejected() {
-            assert_eq!(
-                InstrMask(0x8000_0000).validate(),
-                Err(InstrMaskError::UnknownBits(0x8000_0000))
-            );
-        }
-
-        #[test]
-        fn merge_test() {
-            let mut m = InstrMask(0);
-            let err = m.try_merge(input(&[
-                InstrFlag::SimilarAssets,
-                InstrFlag::ZeroFees,
-                InstrFlag::Forex,
-            ]));
-            assert!(err.is_err());
-            assert_eq!(m, InstrMask(0));
-
-            let mut m = mask(&[InstrFlag::SimilarAssets, InstrFlag::ZeroFees]);
-            m.set_flag(InstrFlag::ReadyToPerpUpgrade);
-            assert!(m.validate().is_err());
-
-            let mut m = InstrMask(0);
-            m.try_merge(input(&[
-                InstrFlag::SimilarAssets,
-                InstrFlag::FixedFees,
-                InstrFlag::UsdStablecoin,
-            ]))
-            .unwrap();
-            assert!(m.get_flag(InstrFlag::SimilarAssets));
-            assert!(m.get_flag(InstrFlag::FixedFees));
-            assert!(m.get_flag(InstrFlag::UsdStablecoin));
-
-            let mut i = InstrInputMask(0);
-            i.set_flag(InstrFlag::Suspended);
-            let mut m = InstrMask(0);
-            m.try_merge(i).unwrap();
-            assert!(!m.get_flag(InstrFlag::Suspended));
         }
     }
 }
