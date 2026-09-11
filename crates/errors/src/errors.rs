@@ -1057,6 +1057,9 @@ pub enum DeriverseErrorKind {
         obligation_address: Pubkey,
     },
 
+    #[error(code = 365, msg = "Unknown InstrFlag was found in InstrMask")]
+    UnknownInstrFlag { mask: u32 },
+
     #[error(code = 366, msg = "SAMCrncy is Crncy TokenState flag only")]
     SAMCrncyCrncyTokenFlagOnly,
 }
