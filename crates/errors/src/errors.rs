@@ -1067,11 +1067,7 @@ pub enum DeriverseErrorKind {
         code = 367,
         msg = "Token {mint} can not be SAMCrncy and BaseCrncy at the same time"
     )]
-    SamCrncyBaseCrncyConflict {
-        mint: Pubkey,
-        token_state_address: Pubkey,
-        mask: u32,
-    },
+    SamCrncyBaseCrncyConflict { mint: Pubkey, mask: u32 },
 }
 
 #[derive(Debug, Serialize, Deserialize, PartialEq)]
