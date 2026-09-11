@@ -24,7 +24,7 @@ pub mod instr_mask {
         }
     }
 
-    const fn bits(flags: &[InstrFlag]) -> u32 {
+    pub const fn bits(flags: &[InstrFlag]) -> u32 {
         let mut out = 0;
         let mut i = 0;
         while i < flags.len() {
