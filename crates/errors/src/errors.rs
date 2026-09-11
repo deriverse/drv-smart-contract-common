@@ -1036,12 +1036,6 @@ pub enum DeriverseErrorKind {
         actual_discriminator: [u8; 8],
     },
 
-    #[error(code = 361, msg = "Invalid operation for empty obligation")]
-    InvalidOperationForEmptyObligation {
-        borrow_delta: i64,
-        collateral_delta: i64,
-    },
-
     #[error(code = 362, msg = "Kamino Reserve {reserve_address} is missing")]
     KaminoReserveIsMissing { reserve_address: Pubkey },
 
@@ -1063,10 +1057,7 @@ pub enum DeriverseErrorKind {
         obligation_address: Pubkey,
     },
 
-    #[error(code = 365, msg = "Unknown InstrFlag was found in InstrMask")]
-    UnknownInstrFlag { mask: u32 },
-
-    #[error(code = 366, msg = "SAMCrncy is CrncyTokenState flag only")]
+    #[error(code = 366, msg = "SAMCrncy is Crncy TokenState flag only")]
     SAMCrncyCrncyTokenFlagOnly,
 }
 
