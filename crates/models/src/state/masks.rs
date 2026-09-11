@@ -42,7 +42,7 @@ pub mod instr_mask {
 
     impl InstrMask {
         pub fn merge(&mut self, input: InstrInputMask) {
-            self.0 |= (input.0 as u32) & InstrInputMask::ALLOWED_FLAGS;
+            self.0 |= (input.0 as u32) & InstrInputMask::allowed_flags();
         }
     }
 
