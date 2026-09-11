@@ -1,5 +1,5 @@
 use proc_macro::TokenStream;
-use quote::quote;
+use quote::{format_ident, quote};
 use syn::{parse_macro_input, Data, DeriveInput, Fields, Lit};
 
 #[proc_macro_derive(DrvError, attributes(error))]
@@ -64,19 +64,32 @@ pub fn solana_error_derive(input: TokenStream) -> TokenStream {
         quote! { #pattern => #code }
     });
 
-    // Generate to_json() method
-    let json_arms = error_meta
-        .iter()
-        .map(|(variant_name, code, msg, fields)| match fields {
+    // Generate to_json() match arms + per-variant helper functions.
+    // Each helper is marked `#[inline(never)]` + `#[cold]` so the compiler
+    // doesn't inline every json! expansion into a single giant frame that
+    // blows the stack (workaround for stack overflow in the generated
+    // `to_json` when there are many variants).
+    let mut json_arms = Vec::with_capacity(error_meta.len());
+    let mut json_helpers = Vec::with_capacity(error_meta.len());
+
+    for (variant_name, code, msg, fields) in &error_meta {
+        let fn_name = format_ident!("to_json_{}", variant_name);
+
+        match fields {
             Fields::Unit => {
-                quote! {
-                    #name::#variant_name => {
+                json_arms.push(quote! {
+                    #name::#variant_name => Self::#fn_name()
+                });
+                json_helpers.push(quote! {
+                    #[inline(never)]
+                    #[cold]
+                    fn #fn_name() -> serde_json::Value {
                         serde_json::json!({
                             "code": #code,
                             "msg": #msg,
                         })
                     }
-                }
+                });
             }
             Fields::Named(fields_named) => {
                 let field_names: Vec<_> = fields_named
@@ -84,6 +97,7 @@ pub fn solana_error_derive(input: TokenStream) -> TokenStream {
                     .iter()
                     .map(|f| f.ident.as_ref().unwrap())
                     .collect();
+                let field_types: Vec<_> = fields_named.named.iter().map(|f| f.ty.clone()).collect();
 
                 let mut msg_format_str = msg.clone();
                 let mut format_args = Vec::new();
@@ -119,20 +133,26 @@ pub fn solana_error_derive(input: TokenStream) -> TokenStream {
                     quote! { format!(#msg_format_str, #(#format_args),*) }
                 };
 
-                quote! {
-                    #name::#variant_name { #(#field_names),* } => {
+                json_arms.push(quote! {
+                    #name::#variant_name { #(#field_names),* } => Self::#fn_name(#(#field_names),*)
+                });
+                json_helpers.push(quote! {
+                    #[inline(never)]
+                    #[cold]
+                    fn #fn_name(#(#field_names: &#field_types),*) -> serde_json::Value {
                         serde_json::json!({
                             "code": #code,
                             "msg": #msg_generation,
                             #(#json_fields),*
                         })
                     }
-                }
+                });
             }
             Fields::Unnamed(_) => {
                 panic!("Unnamed fields are not supported for DrvError");
             }
-        });
+        }
+    }
 
     // Generate Display implementation
     let display_arms = error_meta
@@ -180,6 +200,7 @@ pub fn solana_error_derive(input: TokenStream) -> TokenStream {
         });
 
     let expanded = quote! {
+        #[allow(non_snake_case)]
         impl #name {
             pub fn code(&self) -> u32 {
                 match self {
@@ -192,6 +213,8 @@ pub fn solana_error_derive(input: TokenStream) -> TokenStream {
                     #(#json_arms),*
                 }
             }
+
+            #(#json_helpers)*
         }
 
         impl std::fmt::Display for #name {
