@@ -34,12 +34,6 @@ pub mod instr_mask {
         out
     }
 
-    pub struct FlagRule {
-        pub flag: InstrFlag,
-        pub requires: &'static [u32],
-        pub forbids: u32,
-    }
-
     impl InstrMask {
         pub fn merge(&mut self, input: InstrInputMask) {
             self.0 |= (input.0 as u32) & InstrInputMask::allowed_flags();
@@ -72,12 +66,18 @@ pub mod instr_mask {
     #[repr(transparent)]
     pub struct InstrInputMask(pub u8);
 
+    pub struct FlagRule {
+        pub flag: InstrFlag,
+        pub requires: &'static [u32],
+        pub forbids: u32,
+    }
+
     impl InstrInputMask {
         pub const RULES: &[FlagRule] = &[
             FlagRule {
                 flag: InstrFlag::SimilarAssets,
                 requires: &[bits(&[InstrFlag::ZeroFees, InstrFlag::FixedFees])],
-                forbids: bits(&[InstrFlag::Forex]),
+                forbids: InstrFlag::Forex as u32,
             },
             FlagRule {
                 flag: InstrFlag::ZeroFees,
@@ -101,6 +101,26 @@ pub mod instr_mask {
             },
         ];
 
+        const fn rules_fit_in_u8() -> bool {
+            let max = u8::MAX as u32;
+            let mut i = 0;
+            while i < Self::RULES.len() {
+                let rule = &Self::RULES[i];
+                if rule.flag as u32 > max || rule.forbids > max {
+                    return false;
+                }
+                let mut j = 0;
+                while j < rule.requires.len() {
+                    if rule.requires[j] > max {
+                        return false;
+                    }
+                    j += 1;
+                }
+                i += 1;
+            }
+            true
+        }
+
         pub const fn allowed_flags() -> u32 {
             let mut mask = 0;
             let mut i = 0;
@@ -111,6 +131,11 @@ pub mod instr_mask {
             mask
         }
     }
+
+    const _: () = assert!(
+        InstrInputMask::rules_fit_in_u8(),
+        "InstrInputMask::RULES contains a flag more then u8::MAX"
+    );
 
     impl SimpleInstrMask for InstrInputMask {
         fn get_flag(&self, flag: InstrFlag) -> bool {
