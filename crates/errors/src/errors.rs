@@ -1062,6 +1062,13 @@ pub enum DeriverseErrorKind {
 
     #[error(code = 366, msg = "SAMCrncy is Crncy TokenState flag only")]
     SAMCrncyCrncyTokenFlagOnly,
+
+    #[error(code = 367, msg "Token {mint} can not be SAMCrncy and BaseCrncy at the same time")]
+    SamCrncyBaseCrncyConflict {
+        mint: Pubkey,
+        token_state_address: Pubkey,
+        mask: u32,
+    },
 }
 
 #[derive(Debug, Serialize, Deserialize, PartialEq)]
