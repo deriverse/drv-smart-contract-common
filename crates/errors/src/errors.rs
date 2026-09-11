@@ -1065,6 +1065,9 @@ pub enum DeriverseErrorKind {
 
     #[error(code = 365, msg = "Unknown InstrFlag was found in InstrMask")]
     UnknownInstrFlag { mask: u32 },
+
+    #[error(code = 366, msg = "SAMCrncy is CrncyTokenState flag only")]
+    SAMCrncyCrncyTokenFlagOnly,
 }
 
 #[derive(Debug, Serialize, Deserialize, PartialEq)]

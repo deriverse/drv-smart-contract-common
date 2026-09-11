@@ -159,7 +159,7 @@ pub mod instr_mask {
     }
 
     #[test]
-    fn merge_test() {
+    fn merge_test_valid() {
         let mut instr_mask = InstrMask(0);
         instr_mask.set_flag(InstrFlag::ReadyToPerpUpgrade);
 
@@ -173,6 +173,31 @@ pub mod instr_mask {
         assert!(instr_mask.get_flag(InstrFlag::Forex));
         assert!(instr_mask.get_flag(InstrFlag::ReadyToPerpUpgrade));
         assert!(instr_mask.get_flag(InstrFlag::SimilarAssets));
+    }
+
+    #[test]
+    fn merge_test_un_allowed_flag() {
+        let mut instr_mask = InstrMask(0);
+        instr_mask.set_flag(InstrFlag::ReadyToPerpUpgrade);
+
+        let mut input_instr_mask = InstrInputMask(0);
+
+        input_instr_mask.set_flag(InstrFlag::SimilarAssets);
+        input_instr_mask.set_flag(InstrFlag::Forex);
+        input_instr_mask.set_flag(InstrFlag::Suspended);
+        input_instr_mask.set_flag(InstrFlag::ExpandableCandles);
+        input_instr_mask.set_flag(InstrFlag::LongMarginCall);
+        input_instr_mask.set_flag(InstrFlag::ShortMarginCall);
+
+        instr_mask.merge(input_instr_mask);
+
+        assert!(instr_mask.get_flag(InstrFlag::Forex));
+        assert!(instr_mask.get_flag(InstrFlag::ReadyToPerpUpgrade));
+        assert!(instr_mask.get_flag(InstrFlag::SimilarAssets));
+        assert!(!instr_mask.get_flag(InstrFlag::Suspended));
+        assert!(!instr_mask.get_flag(InstrFlag::ExpandableCandles));
+        assert!(!instr_mask.get_flag(InstrFlag::LongMarginCall));
+        assert!(!instr_mask.get_flag(InstrFlag::ShortMarginCall));
     }
 }
 
