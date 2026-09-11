@@ -880,23 +880,14 @@ pub enum DeriverseErrorKind {
     #[error(code = 330, msg = "Pool deposit is disabled for ZeroFees market")]
     PoolDepositDisabled { mask: u32 },
 
-    #[error(
-        code = 330,
-        msg = "Can not set instr flag {flag} without {required_flag} flag up"
-    )]
-    CanNotSetInstrFlag {
-        flag: InstrFlag,
-        required_flag: InstrFlag,
-    },
+    #[error(code = 330, msg = "Missing required flag to set {flag}")]
+    MissingRequiredFlag { flag: InstrFlag, mask: u32 },
 
     #[error(code = 331, msg = "Impossible to create SAM market with SAMCrncy flag")]
     ImpossibleToCreateSAMWithSAMCrncy,
 
-    #[error(
-        code = 332,
-        msg = "Can not set instr flag {flag} as {up_flag} flag is up"
-    )]
-    ConflictInstrFlags { flag: InstrFlag, up_flag: InstrFlag },
+    #[error(code = 332, msg = "Flag {flag} is forbidden for InstrMask")]
+    ForbiddenFlag { flag: InstrFlag, mask: u32 },
 
     #[error(
         code = 333,
@@ -1045,12 +1036,6 @@ pub enum DeriverseErrorKind {
         actual_discriminator: [u8; 8],
     },
 
-    #[error(code = 361, msg = "Invalid operation for empty obligation")]
-    InvalidOperationForEmptyObligation {
-        borrow_delta: i64,
-        collateral_delta: i64,
-    },
-
     #[error(code = 362, msg = "Kamino Reserve {reserve_address} is missing")]
     KaminoReserveIsMissing { reserve_address: Pubkey },
 
@@ -1071,6 +1056,18 @@ pub enum DeriverseErrorKind {
         reserve_address: Pubkey,
         obligation_address: Pubkey,
     },
+
+    #[error(code = 365, msg = "Unknown InstrFlag was found in InstrMask")]
+    UnknownInstrFlag { mask: u32 },
+
+    #[error(code = 366, msg = "SAMCrncy is Crncy TokenState flag only")]
+    SAMCrncyCrncyTokenFlagOnly,
+
+    #[error(
+        code = 367,
+        msg = "Token {mint} can not be SAMCrncy and BaseCrncy at the same time"
+    )]
+    SamCrncyBaseCrncyConflict { mint: Pubkey, mask: u32 },
 }
 
 #[derive(Debug, Serialize, Deserialize, PartialEq)]

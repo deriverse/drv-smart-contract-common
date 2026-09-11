@@ -24,6 +24,22 @@ pub mod instr_mask {
         }
     }
 
+    pub const fn bits(flags: &[InstrFlag]) -> u32 {
+        let mut out = 0;
+        let mut i = 0;
+        while i < flags.len() {
+            out |= flags[i] as u32;
+            i += 1;
+        }
+        out
+    }
+
+    impl InstrMask {
+        pub fn merge(&mut self, input: InstrInputMask) {
+            self.0 |= (input.0 as u32) & InstrInputMask::allowed_flags();
+        }
+    }
+
     pub trait SimpleInstrMask {
         fn get_flag(&self, flag: InstrFlag) -> bool;
         fn set_flag(&mut self, flag: InstrFlag);
@@ -33,12 +49,6 @@ pub mod instr_mask {
     #[derive(Clone, Copy, Pod, Zeroable, Debug, Default, PartialEq, Eq)]
     #[repr(transparent)]
     pub struct InstrMask(pub u32);
-
-    impl InstrMask {
-        pub fn merge(&mut self, input: InstrInputMask) {
-            self.0 |= (input.0 as u32) & InstrInputMask::ALLOWED_FLAGS;
-        }
-    }
 
     impl SimpleInstrMask for InstrMask {
         fn get_flag(&self, flag: InstrFlag) -> bool {
@@ -54,15 +64,78 @@ pub mod instr_mask {
 
     #[derive(Clone, Copy, Pod, Zeroable, Debug, Default, PartialEq, Eq)]
     #[repr(transparent)]
-    pub struct InstrInputMask(u8);
+    pub struct InstrInputMask(pub u8);
+
+    pub struct FlagRule {
+        pub flag: InstrFlag,
+        pub requires: &'static [u32],
+        pub forbids: u32,
+    }
 
     impl InstrInputMask {
-        pub const ALLOWED_FLAGS: u32 = InstrFlag::ZeroFees as u32
-            | InstrFlag::FixedFees as u32
-            | InstrFlag::SimilarAssets as u32
-            | InstrFlag::UsdStablecoin as u32
-            | InstrFlag::Forex as u32;
+        pub const RULES: &[FlagRule] = &[
+            FlagRule {
+                flag: InstrFlag::SimilarAssets,
+                requires: &[bits(&[InstrFlag::ZeroFees, InstrFlag::FixedFees])],
+                forbids: InstrFlag::Forex as u32,
+            },
+            FlagRule {
+                flag: InstrFlag::ZeroFees,
+                requires: &[InstrFlag::SimilarAssets as u32],
+                forbids: InstrFlag::FixedFees as u32,
+            },
+            FlagRule {
+                flag: InstrFlag::FixedFees,
+                requires: &[InstrFlag::SimilarAssets as u32],
+                forbids: InstrFlag::ZeroFees as u32,
+            },
+            FlagRule {
+                flag: InstrFlag::UsdStablecoin,
+                requires: &[InstrFlag::SimilarAssets as u32],
+                forbids: 0,
+            },
+            FlagRule {
+                flag: InstrFlag::Forex,
+                requires: &[],
+                forbids: InstrFlag::SimilarAssets as u32,
+            },
+        ];
+
+        const fn rules_fit_in_u8() -> bool {
+            let max = u8::MAX as u32;
+            let mut i = 0;
+            while i < Self::RULES.len() {
+                let rule = &Self::RULES[i];
+                if rule.flag as u32 > max || rule.forbids > max {
+                    return false;
+                }
+                let mut j = 0;
+                while j < rule.requires.len() {
+                    if rule.requires[j] > max {
+                        return false;
+                    }
+                    j += 1;
+                }
+                i += 1;
+            }
+            true
+        }
+
+        pub const fn allowed_flags() -> u32 {
+            let mut mask = 0;
+            let mut i = 0;
+            while i < Self::RULES.len() {
+                mask |= Self::RULES[i].flag as u32;
+                i += 1;
+            }
+            mask
+        }
     }
+
+    const _: () = assert!(
+        InstrInputMask::rules_fit_in_u8(),
+        "InstrInputMask::RULES contains a flag more then u8::MAX"
+    );
 
     impl SimpleInstrMask for InstrInputMask {
         fn get_flag(&self, flag: InstrFlag) -> bool {
@@ -86,7 +159,7 @@ pub mod instr_mask {
     }
 
     #[test]
-    fn merge_test() {
+    fn merge_test_valid() {
         let mut instr_mask = InstrMask(0);
         instr_mask.set_flag(InstrFlag::ReadyToPerpUpgrade);
 
@@ -97,9 +170,34 @@ pub mod instr_mask {
 
         instr_mask.merge(input_instr_mask);
 
-        assert!(!instr_mask.get_flag(InstrFlag::Forex));
+        assert!(instr_mask.get_flag(InstrFlag::Forex));
         assert!(instr_mask.get_flag(InstrFlag::ReadyToPerpUpgrade));
         assert!(instr_mask.get_flag(InstrFlag::SimilarAssets));
+    }
+
+    #[test]
+    fn merge_test_un_allowed_flag() {
+        let mut instr_mask = InstrMask(0);
+        instr_mask.set_flag(InstrFlag::ReadyToPerpUpgrade);
+
+        let mut input_instr_mask = InstrInputMask(0);
+
+        input_instr_mask.set_flag(InstrFlag::SimilarAssets);
+        input_instr_mask.set_flag(InstrFlag::Forex);
+        input_instr_mask.set_flag(InstrFlag::Suspended);
+        input_instr_mask.set_flag(InstrFlag::ExpandableCandles);
+        input_instr_mask.set_flag(InstrFlag::LongMarginCall);
+        input_instr_mask.set_flag(InstrFlag::ShortMarginCall);
+
+        instr_mask.merge(input_instr_mask);
+
+        assert!(instr_mask.get_flag(InstrFlag::Forex));
+        assert!(instr_mask.get_flag(InstrFlag::ReadyToPerpUpgrade));
+        assert!(instr_mask.get_flag(InstrFlag::SimilarAssets));
+        assert!(!instr_mask.get_flag(InstrFlag::Suspended));
+        assert!(!instr_mask.get_flag(InstrFlag::ExpandableCandles));
+        assert!(!instr_mask.get_flag(InstrFlag::LongMarginCall));
+        assert!(!instr_mask.get_flag(InstrFlag::ShortMarginCall));
     }
 }
 
