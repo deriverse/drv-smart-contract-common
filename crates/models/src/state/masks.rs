@@ -93,58 +93,6 @@ pub mod instr_mask {
     ];
 
     impl InstrMask {
-        pub const RULES: &[FlagRule] = &[
-            FlagRule {
-                flag: InstrFlag::PerpActive,
-                requires: &[],
-                forbids: bits(&[InstrFlag::ReadyToPerpUpgrade, InstrFlag::SimilarAssets]),
-            },
-            FlagRule {
-                flag: InstrFlag::ReadyToPerpUpgrade,
-                requires: &[],
-                forbids: bits(&[InstrFlag::PerpActive, InstrFlag::SimilarAssets]),
-            },
-            FlagRule {
-                flag: InstrFlag::LongMarginCall,
-                requires: &[InstrFlag::PerpActive as u32],
-                forbids: 0,
-            },
-            FlagRule {
-                flag: InstrFlag::ShortMarginCall,
-                requires: &[InstrFlag::PerpActive as u32],
-                forbids: 0,
-            },
-            FlagRule {
-                flag: InstrFlag::SimilarAssets,
-                requires: &[bits(&[InstrFlag::ZeroFees, InstrFlag::FixedFees])],
-                forbids: bits(&[
-                    InstrFlag::Forex,
-                    InstrFlag::PerpActive,
-                    InstrFlag::ReadyToPerpUpgrade,
-                ]),
-            },
-            FlagRule {
-                flag: InstrFlag::ZeroFees,
-                requires: &[InstrFlag::SimilarAssets as u32],
-                forbids: InstrFlag::FixedFees as u32,
-            },
-            FlagRule {
-                flag: InstrFlag::FixedFees,
-                requires: &[InstrFlag::SimilarAssets as u32],
-                forbids: InstrFlag::ZeroFees as u32,
-            },
-            FlagRule {
-                flag: InstrFlag::UsdStablecoin,
-                requires: &[InstrFlag::SimilarAssets as u32],
-                forbids: 0,
-            },
-            FlagRule {
-                flag: InstrFlag::Forex,
-                requires: &[],
-                forbids: InstrFlag::SimilarAssets as u32,
-            },
-        ];
-
         pub fn merge(&mut self, input: InstrInputMask) {
             self.0 |= (input.0 as u32) & InstrInputMask::ALLOWED_FLAGS;
         }
@@ -182,6 +130,34 @@ pub mod instr_mask {
             | InstrFlag::SimilarAssets as u32
             | InstrFlag::UsdStablecoin as u32
             | InstrFlag::Forex as u32;
+
+        pub const RULES: &[FlagRule] = &[
+            FlagRule {
+                flag: InstrFlag::SimilarAssets,
+                requires: &[bits(&[InstrFlag::ZeroFees, InstrFlag::FixedFees])],
+                forbids: bits(&[InstrFlag::Forex]),
+            },
+            FlagRule {
+                flag: InstrFlag::ZeroFees,
+                requires: &[InstrFlag::SimilarAssets as u32],
+                forbids: InstrFlag::FixedFees as u32,
+            },
+            FlagRule {
+                flag: InstrFlag::FixedFees,
+                requires: &[InstrFlag::SimilarAssets as u32],
+                forbids: InstrFlag::ZeroFees as u32,
+            },
+            FlagRule {
+                flag: InstrFlag::UsdStablecoin,
+                requires: &[InstrFlag::SimilarAssets as u32],
+                forbids: 0,
+            },
+            FlagRule {
+                flag: InstrFlag::Forex,
+                requires: &[],
+                forbids: InstrFlag::SimilarAssets as u32,
+            },
+        ];
     }
 
     impl SimpleInstrMask for InstrInputMask {
@@ -203,6 +179,23 @@ pub mod instr_mask {
             }
             self.0 &= !(flag as u8)
         }
+    }
+
+    #[test]
+    fn merge_test() {
+        let mut instr_mask = InstrMask(0);
+        instr_mask.set_flag(InstrFlag::ReadyToPerpUpgrade);
+
+        let mut input_instr_mask = InstrInputMask(0);
+
+        input_instr_mask.set_flag(InstrFlag::SimilarAssets);
+        input_instr_mask.set_flag(InstrFlag::Forex);
+
+        instr_mask.merge(input_instr_mask);
+
+        assert!(instr_mask.get_flag(InstrFlag::Forex));
+        assert!(instr_mask.get_flag(InstrFlag::ReadyToPerpUpgrade));
+        assert!(instr_mask.get_flag(InstrFlag::SimilarAssets));
     }
 }
 
