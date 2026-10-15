@@ -917,3 +917,18 @@ pub struct SetForeignDepositData {
     pub tag: u8,
     pub foreign_deposit: u8,
 }
+
+#[repr(C)]
+#[derive(Clone, Copy, Pod, Zeroable)]
+/// Vm Add Orca Whirlpool Data
+///
+/// **Tag:** `89`
+///
+/// ### Fields
+/// - `instr_id` - Instr pair id
+pub struct VmAddOrcaWhirlpoolData {
+    pub tag: u8,
+    pub padding_u8: u8,
+    pub padding_u16: u16,
+    pub instr_id: InstrId,
+}
