@@ -985,6 +985,7 @@ pub enum VmWhitelistTag {
     ProgramId = 2,
     MarketId = 3,
     Kamino = 4,
+    Orca = 5,
 }
 
 impl std::fmt::Display for VmWhitelistTag {
