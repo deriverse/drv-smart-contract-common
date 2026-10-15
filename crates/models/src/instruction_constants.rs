@@ -439,8 +439,8 @@ impl DrvInstruction for SpotQuotesReplaceInstructionV2 {
     const MIN_ACCOUNTS: usize = 14;
 }
 
-pub struct VmAddOrcaWhirlpoolData;
-impl DrvInstruction for VmAddOrcaWhirlpoolData {
+pub struct VmAddOrcaWhirlpoolInstruction;
+impl DrvInstruction for VmAddOrcaWhirlpoolInstruction {
     const INSTRUCTION_NUMBER: u8 = 89;
     const MIN_ACCOUNTS: usize = 6;
 }
