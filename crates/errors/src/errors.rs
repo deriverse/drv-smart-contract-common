@@ -1068,6 +1068,9 @@ pub enum DeriverseErrorKind {
         msg = "Token {mint} can not be SAMCrncy and BaseCrncy at the same time"
     )]
     SamCrncyBaseCrncyConflict { mint: Pubkey, mask: u32 },
+
+    #[error(code = 386, msg = "Account {address} is not a valid Orca whirlpool")]
+    InvalidOrcaWhirlpool { address: Pubkey },
 }
 
 #[derive(Debug, Serialize, Deserialize, PartialEq)]
