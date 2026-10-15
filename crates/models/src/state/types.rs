@@ -152,6 +152,7 @@ pub mod account_type {
         PerpRebalanceTimeTree = 50,
         VmClient = 52,
         KaminoClient = 53,
+        OrcaWhirlpool = 54,
         ProgramTokenAccount,
         DrvsAuthority,
     }
