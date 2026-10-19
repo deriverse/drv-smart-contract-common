@@ -949,7 +949,8 @@ pub struct VmAddOrcaWhirlpoolData {
 pub struct OrcaSwapData {
     pub tag: u8,
     pub input_crncy: u8,
-    pub padding_u16: u16,
+    pub extra_orca_accounts_slices_length: u8,
+    pub padding_u8: u8,
     pub instr_id: InstrId,
     pub amount: CappedI64,
     pub min_amount_out: i64,
