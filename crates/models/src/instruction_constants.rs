@@ -448,5 +448,5 @@ impl DrvInstruction for VmAddOrcaWhirlpoolInstruction {
 pub struct OrcaSwapInstruction;
 impl DrvInstruction for OrcaSwapInstruction {
     const INSTRUCTION_NUMBER: u8 = 90;
-    const MIN_ACCOUNTS: usize = 0;
+    const MIN_ACCOUNTS: usize = 22;
 }

@@ -1104,16 +1104,6 @@ pub enum DeriverseErrorKind {
 
     #[error(
         code = 391,
-        msg = "Unexpected vault {token_acc_address} balance change: {balance_before} -> {balance_after}"
-    )]
-    UnexpectedVaultBalanceChange {
-        token_acc_address: Pubkey,
-        balance_before: u64,
-        balance_after: u64,
-    },
-
-    #[error(
-        code = 392,
         msg = "Invalid remaining accounts slice (account_type={account_type}, length={length})"
     )]
     InvalidRemainingAccountsSlice { account_type: u8, length: u8 },
