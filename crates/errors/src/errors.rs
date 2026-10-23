@@ -1109,7 +1109,7 @@ pub enum DeriverseErrorKind {
     InvalidRemainingAccountsSlice { account_type: u8, length: u8 },
 
     #[error(code = 392, msg = "Invalid Orca Whirlpool Program Id")]
-    InvaldiWhirlpoolProgramId,
+    InvalidWhirlpoolProgramId,
 }
 
 #[derive(Debug, Serialize, Deserialize, PartialEq)]
