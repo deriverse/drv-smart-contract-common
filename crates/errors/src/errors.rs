@@ -1071,6 +1071,52 @@ pub enum DeriverseErrorKind {
 
     #[error(code = 386, msg = "Account {address} is not a valid Orca whirlpool")]
     InvalidOrcaWhirlpool { address: Pubkey },
+
+    #[error(
+        code = 387,
+        msg = "Orca whirlpool {address} is not whitelisted for this client"
+    )]
+    OrcaWhirlpoolNotWhitelistedForClient { address: Pubkey },
+
+    #[error(
+        code = 388,
+        msg = "Mint does not match instrument mint (passed={actual_mint}, instrument={instrument_mint})"
+    )]
+    InstrumentMintMismatch {
+        instrument_mint: Pubkey,
+        actual_mint: Pubkey,
+    },
+
+    #[error(
+        code = 389,
+        msg = "Account {address} is not a valid spl token account, data len {len}"
+    )]
+    InvalidTokenAccountLayout { address: Pubkey, len: usize },
+
+    #[error(
+        code = 390,
+        msg = "Exact-in rule violation: requested {expected_amount_in}, swapped {actual_amount_in}"
+    )]
+    OrcaSwapExactInViolation {
+        expected_amount_in: u64,
+        actual_amount_in: u64,
+    },
+
+    #[error(
+        code = 391,
+        msg = "Unexpected vault {token_acc_address} balance change: {balance_before} -> {balance_after}"
+    )]
+    UnexpectedVaultBalanceChange {
+        token_acc_address: Pubkey,
+        balance_before: u64,
+        balance_after: u64,
+    },
+
+    #[error(
+        code = 392,
+        msg = "Invalid remaining accounts slice (account_type={account_type}, length={length})"
+    )]
+    InvalidRemainingAccountsSlice { account_type: u8, length: u8 },
 }
 
 #[derive(Debug, Serialize, Deserialize, PartialEq)]
