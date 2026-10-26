@@ -750,3 +750,11 @@ pub struct OrcaSwapData {
     pub amount: i64,
     pub min_amount_out: i64,
 }
+
+#[repr(C)]
+#[derive(Clone, Copy, Pod, Zeroable)]
+pub struct VmRemoveOrcaWhirlpoolData {
+    pub tag: u8,
+    pub padding_u8: u8,
+    pub padding_u16: u16,
+}
