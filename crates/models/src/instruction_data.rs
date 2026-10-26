@@ -917,3 +917,41 @@ pub struct SetForeignDepositData {
     pub tag: u8,
     pub foreign_deposit: u8,
 }
+
+#[repr(C)]
+#[derive(Clone, Copy, Pod, Zeroable)]
+/// Vm Add Orca Whirlpool Data
+///
+/// **Tag:** `89`
+///
+/// ### Fields
+/// - `instr_id` - Instr pair id
+pub struct VmAddOrcaWhirlpoolData {
+    pub tag: u8,
+    pub padding_u8: u8,
+    pub padding_u16: u16,
+    pub instr_id: InstrId,
+}
+
+#[repr(C)]
+#[derive(Clone, Copy, Pod, Zeroable)]
+/// New Orca Swap Data
+///
+/// **Used in:** `swap` instruction
+///
+/// **Tag:** `26`
+///
+/// ### Fields
+/// - `input_crncy`: u8 - Flag if 0 sell `crncy` else sell `asset`
+/// - `instr_id` - Instr pair id
+/// - `amount` - Swaps qty in base crncy
+/// - `min_amount_out` - Min amount threshold for trade result, 0 by default
+pub struct OrcaSwapData {
+    pub tag: u8,
+    pub input_crncy: u8,
+    pub extra_orca_accounts_slices_length: u8,
+    pub padding_u8: u8,
+    pub instr_id: InstrId,
+    pub amount: CappedI64,
+    pub min_amount_out: i64,
+}
