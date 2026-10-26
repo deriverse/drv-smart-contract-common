@@ -685,10 +685,10 @@ pub struct OrcaSwapReport {
 #[derive(Copy, Clone, Zeroable, Pod, Default, Debug)]
 pub struct VmChangeWhitelistReport {
     pub tag: u8,
-    pub vm_whitelist_tag: u8,
     // self.add != 0 -> add to whitelist, self.add == 0 -> remove from whitelist
     pub add_to_whitelist: u8,
-    pub padding_u8: u8,
+    pub padding_u16: u16,
+    pub vm_whitelist_tag: u32,
     pub time: u32,
     pub client_id: ClientId,
     pub seq_no: u32,
