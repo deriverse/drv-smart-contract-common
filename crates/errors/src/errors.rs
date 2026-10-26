@@ -1110,6 +1110,9 @@ pub enum DeriverseErrorKind {
 
     #[error(code = 392, msg = "Invalid Orca Whirlpool Program Id")]
     InvalidWhirlpoolProgramId,
+
+    #[error(code = 393, msg = "Expected Vm Whitelist records was not found")]
+    VmWhitelistRecordNotFound { tag: u8, address: Pubkey },
 }
 
 #[derive(Debug, Serialize, Deserialize, PartialEq)]
