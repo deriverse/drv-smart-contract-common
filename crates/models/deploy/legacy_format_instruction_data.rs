@@ -729,3 +729,24 @@ pub struct SpotQuotesReplaceDataV2 {
     pub price_tick: i64,
     pub qty_tick: i64,
 }
+
+#[repr(C)]
+#[derive(Clone, Copy, Pod, Zeroable)]
+pub struct VmAddOrcaWhirlpoolData {
+    pub tag: u8,
+    pub padding_u8: u8,
+    pub padding_u16: u16,
+    pub instr_id: u32,
+}
+
+#[repr(C)]
+#[derive(Clone, Copy, Pod, Zeroable)]
+pub struct OrcaSwapData {
+    pub tag: u8,
+    pub input_crncy: u8,
+    pub extra_orca_accounts_slices_length: u8,
+    pub padding_u8: u8,
+    pub instr_id: u32,
+    pub amount: i64,
+    pub min_amount_out: i64,
+}

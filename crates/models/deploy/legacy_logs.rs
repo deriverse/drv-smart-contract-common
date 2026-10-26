@@ -2,6 +2,7 @@ use crate::new_types::{client::u32, instrument::u32};
 use bytemuck::{Pod, Zeroable};
 
 pub mod log_type {
+
     // Client logs
     pub const DEPOSIT: u8 = 1;
     pub const WITHDRAW: u8 = 2;
@@ -49,6 +50,7 @@ pub mod log_type {
     pub const SWAP_ORDER: u8 = 31;
     pub const SWAP_FEES: u8 = 35;
     pub const PERP_LOSS_COVERAGE: u8 = 46;
+    pub const ORCA_SWAP: u8 = 49;
 }
 
 #[repr(C)]
@@ -662,4 +664,18 @@ pub struct KaminoChangePositionReport {
     pub borrow_delta: i64,
     pub collateral_delta: i64,
     pub custom_id: i64,
+}
+
+#[repr(C)]
+#[derive(Copy, Clone, Zeroable, Pod, Default, Debug)]
+pub struct OrcaSwapReport {
+    pub tag: u8,
+    pub side: u8,
+    pub padding_u16: u16,
+    pub time: u32,
+    pub client_id: ClientId,
+    pub instr_id: InstrId,
+    pub amount_in: i64,
+    pub amount_out: i64,
+    pub seq_no: i64,
 }
