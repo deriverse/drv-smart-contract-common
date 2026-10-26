@@ -21,6 +21,7 @@ pub mod log_type {
     pub const MOVE_SPOT: u8 = 32;
     pub const VM_DIRECT_WITHDRAW: u8 = 47;
     pub const KAMINO_CHANGE_POSITION: u8 = 48;
+    pub const VM_CHANGE_WHITELIST: u8 = 50;
 
     // Instrument logs
     pub const PERP_DEPOSIT: u8 = 3;
