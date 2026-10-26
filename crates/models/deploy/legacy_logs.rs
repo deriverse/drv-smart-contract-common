@@ -21,6 +21,7 @@ pub mod log_type {
     pub const CHANGED_POINTS: u8 = 34;
     pub const MOVE_SPOT: u8 = 32;
     pub const VM_DIRECT_WITHDRAW: u8 = 47;
+    pub const VM_CHANGE_WHITELIST: u8 = 50;
 
     // Instrument logs
     pub const PERP_DEPOSIT: u8 = 3;
@@ -678,4 +679,17 @@ pub struct OrcaSwapReport {
     pub amount_in: i64,
     pub amount_out: i64,
     pub seq_no: i64,
+}
+
+#[repr(C)]
+#[derive(Copy, Clone, Zeroable, Pod, Default, Debug)]
+pub struct VmChangeWhitelistReport {
+    pub tag: u8,
+    // self.add != 0 -> add to whitelist, self.add == 0 -> remove from whitelist
+    pub add_to_whitelist: u8,
+    pub padding_u16: u16,
+    pub vm_whitelist_tag: u32,
+    pub time: u32,
+    pub client_id: ClientId,
+    pub seq_no: u32,
 }
