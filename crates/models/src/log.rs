@@ -670,7 +670,7 @@ pub struct KaminoChangePositionReport {
 #[derive(Copy, Clone, Zeroable, Pod, Default, Debug)]
 pub struct OrcaSwapReport {
     pub tag: u8,
-    pub padding_u8: u8,
+    pub side: u8,
     pub padding_u16: u16,
     pub time: u32,
     pub client_id: ClientId,
