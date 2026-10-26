@@ -937,9 +937,9 @@ pub struct VmAddOrcaWhirlpoolData {
 #[derive(Clone, Copy, Pod, Zeroable)]
 /// New Orca Swap Data
 ///
-/// **Used in:** `swap` instruction
+/// **Used in:** `orca_swap` instruction
 ///
-/// **Tag:** `26`
+/// **Tag:** `90`
 ///
 /// ### Fields
 /// - `input_crncy`: u8 - Flag if 0 sell `crncy` else sell `asset`
@@ -954,4 +954,16 @@ pub struct OrcaSwapData {
     pub instr_id: InstrId,
     pub amount: CappedI64,
     pub min_amount_out: i64,
+}
+
+#[repr(C)]
+#[derive(Clone, Copy, Pod, Zeroable)]
+/// Vm Remove Orca Whirlpool Data
+///
+/// **Tag:** `91`
+///
+pub struct VmRemoveOrcaWhirlpoolData {
+    pub tag: u8,
+    pub padding_u8: u8,
+    pub padding_u16: u16,
 }

@@ -450,3 +450,9 @@ impl DrvInstruction for OrcaSwapInstruction {
     const INSTRUCTION_NUMBER: u8 = 90;
     const MIN_ACCOUNTS: usize = 22;
 }
+
+pub struct VmRemoveOrcaWhirlpoolInstruction;
+impl DrvInstruction for VmRemoveOrcaWhirlpoolInstruction {
+    const INSTRUCTION_NUMBER: u8 = 91;
+    const MIN_ACCOUNTS: usize = 5;
+}
