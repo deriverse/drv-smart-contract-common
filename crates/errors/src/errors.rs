@@ -1112,7 +1112,7 @@ pub enum DeriverseErrorKind {
     InvalidWhirlpoolProgramId,
 
     #[error(code = 393, msg = "Expected Vm Whitelist records was not found")]
-    VmWhitelistRecordNotFound { tag: u8, address: Pubkey },
+    VmWhitelistRecordNotFound { tag: u32, address: Pubkey },
 }
 
 #[derive(Debug, Serialize, Deserialize, PartialEq)]
