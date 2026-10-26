@@ -679,3 +679,14 @@ pub struct OrcaSwapReport {
     pub amount_out: i64,
     pub seq_no: i64,
 }
+
+#[repr(C)]
+#[derive(Copy, Clone, Zeroable, Pod, Default, Debug)]
+pub struct VmChangeWhitelistReport {
+    pub tag: u8,
+    pub vm_whitelist_tag: u8,
+    pub padding_u16: u16,
+    pub time: u32,
+    pub client_id: ClientId,
+    pub seq_no: u32,
+}
