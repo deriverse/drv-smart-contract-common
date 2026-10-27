@@ -1113,6 +1113,13 @@ pub enum DeriverseErrorKind {
 
     #[error(code = 393, msg = "Expected Vm Whitelist records was not found")]
     VmWhitelistRecordNotFound { tag: u32, address: Pubkey },
+
+    #[error(code = 394, msg = "Invalid Vm whitelist record reference")]
+    InvalidVmWhitelistRecordReference {
+        tag: u32,
+        expected: u32,
+        actual: u32,
+    },
 }
 
 #[derive(Debug, Serialize, Deserialize, PartialEq)]
