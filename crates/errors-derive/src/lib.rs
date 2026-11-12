@@ -64,11 +64,6 @@ pub fn solana_error_derive(input: TokenStream) -> TokenStream {
         quote! { #pattern => #code }
     });
 
-    // Generate to_json() match arms + per-variant helper functions.
-    // Each helper is marked `#[inline(never)]` + `#[cold]` so the compiler
-    // doesn't inline every json! expansion into a single giant frame that
-    // blows the stack (workaround for stack overflow in the generated
-    // `to_json` when there are many variants).
     let mut json_arms = Vec::with_capacity(error_meta.len());
     let mut json_helpers = Vec::with_capacity(error_meta.len());
 
