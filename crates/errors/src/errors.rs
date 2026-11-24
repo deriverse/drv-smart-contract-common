@@ -1120,6 +1120,9 @@ pub enum DeriverseErrorKind {
         expected: u32,
         actual: u32,
     },
+
+    #[error(code = 395, msg = "Trade rounds too small and rounds to zero")]
+    TradeRoundsToZero { qty: i64 },
 }
 
 #[derive(Debug, Serialize, Deserialize, PartialEq)]
