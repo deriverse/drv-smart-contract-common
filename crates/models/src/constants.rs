@@ -110,6 +110,8 @@ pub const SWAP_FEE_RATE: f64 = 0.0;
 pub const MULTISIG_FLAG: i64 = 0x80;
 pub const FOREIGN_DEPOSIT: i64 = 0x100;
 
+pub const ORDER_SUM_REVOKE_PC: i64 = 1;
+
 pub mod nulls {
     pub const NULL_NODE: u32 = 0xFFFFFFFF;
     pub const NULL_ORDER: u32 = 0xFFFF;
